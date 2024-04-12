@@ -1,7 +1,7 @@
 import { Request, Response} from 'express';
 import { CreateAlunoUseCase } from './CreateAlunoUseCase';
 
-export class CreateAlunoUseController {
+export class CreateAlunoController {
     async handle(req: Request, res: Response){
         const { name, email, password} = req.body;
 
