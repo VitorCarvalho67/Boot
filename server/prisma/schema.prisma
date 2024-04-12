@@ -38,7 +38,7 @@ model Admin {
 
 model Curso {
     id        String   @id @default(uuid())
-    nome      String
+    name      String
     periodo   String
     turno     Turno
     duracao   String
@@ -71,9 +71,9 @@ model Turma {
 
 model Empresa {
     id           String   @id @default(uuid())
-    nome         String
+    name         String
     email        String   @unique
-    senha        String
+    password        String
     cnpj         String
     endereco     String
     telefone     String
