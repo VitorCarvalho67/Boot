@@ -10,31 +10,42 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model User {
-    id       String @id @default(uuid())
-    name     String
-    email    String @unique
-    password String
+model Aluno {
+    id             String   @id @default(uuid())
+    name           String
+    email          String   @unique
+    password       String
+    turmas         String? // Formato "id1,id2,id3"
+    dataNascimento String? // Formato "AAAA-MM-DD"
+    disciplina     String?
+    rm             String?
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
 
-    @@map("users")
+    @@map("alunos")
 }
 
 model Admin {
-    id       String @id @default(uuid())
-    name     String
-    email    String @unique
-    password String
+    id        String   @id @default(uuid())
+    name      String
+    email     String   @unique
+    password  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("admins")
 }
 
 model Curso {
-    id      String  @id @default(uuid())
-    nome    String
-    periodo String
-    turno   Turno
-    duracao String
-    turma   Turma[]
+    id        String   @id @default(uuid())
+    nome      String
+    periodo   String
+    turno     Turno
+    duracao   String
+    turma     Turma[]
+    vaga      Vaga[]
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("cursos")
 }
@@ -47,8 +58,48 @@ enum Turno {
 }
 
 model Turma {
-    id      String @id @default(uuid())
-    ano     String
-    curso   Curso  @relation(fields: [cursoId], references: [id])
-    cursoId String
+    id        String   @id @default(uuid())
+    inicio    String // Formato "AAAA-MM-DD"
+    fim       String // Formato "AAAA-MM-DD"
+    curso     Curso    @relation(fields: [cursoId], references: [id])
+    cursoId   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("turmas")
+}
+
+model Empresa {
+    id           String   @id @default(uuid())
+    nome         String
+    email        String   @unique
+    senha        String
+    cnpj         String
+    endereco     String
+    telefone     String
+    patrocinador Boolean
+    vaga         Vaga[]
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("empresas")
+}
+
+model Vaga {
+    id           String   @id @default(uuid())
+    Curso        Curso    @relation(fields: [cursoId], references: [id])
+    cursoId      String
+    Empresa      Empresa  @relation(fields: [empresaId], references: [id])
+    empresaId    String
+    requisitos   String
+    beneficios   String
+    remuneracao  String
+    cargaHoraria String
+    dataInicio   String
+    dataFim      String
+    status       String
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("vagas")
 }
