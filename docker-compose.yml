@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  client:
+    build: ./client
+    ports: 
+      - "5173:5173"
+    depends_on:
+      - api01
+    networks:
+      - boot
+      
+  api01: &api
+    build: ./server
+    ports:
+      - "3333:3333"
+    command: sh -c "sleep 10 && npx prisma migrate deploy"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.4GB'
+    depends_on:
+      - database
+    networks:
+      - boot
+
+  api02:
+    <<: *api
+    ports:
+      - "3334:3333"
+
+  api03:
+    <<: *api
+    ports:
+      - "3335:3333"
+
+  nginx:
+    image: nginx:latest
+
+
+
+  database:
+    image: mariadb
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123pass
+      MYSQL_DATABASE: bootdb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: 123pass
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - boot
+
+networks:
+  boot:
+
