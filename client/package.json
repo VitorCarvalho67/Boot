@@ -1,18 +1,20 @@
 {
-  "name": "client",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.4.21"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.2.0"
-  }
+    "name": "client",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "axios": "^1.6.8",
+        "vue": "^3.4.21",
+        "vue-router": "^4.3.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.0.4",
+        "vite": "^5.2.0"
+    }
 }
