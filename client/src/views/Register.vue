@@ -1,6 +1,5 @@
 <template>
     <div class="register">
-      <h1>Registrar Aluno</h1>
       <form @submit.prevent="submitForm">
         <div>
           <label for="name">Nome:</label>
@@ -16,14 +15,14 @@
         </div>
         <div>
           <label for="confirmPassword">Confirmar Senha:</label>
-          <input type="password" id="confirmPassword" required>
+          <input type="password" id="confirmPassword" v-model="userAluno.confirmPassword" required>
         </div>
         <button type="submit">Registrar</button>
       </form>
     </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import { registerAluno } from '../services/api.js';
   
   export default {
