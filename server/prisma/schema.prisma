@@ -73,7 +73,7 @@ model Empresa {
     id           String   @id @default(uuid())
     name         String
     email        String   @unique
-    password        String
+    password     String
     cnpj         String
     endereco     String
     telefone     String
@@ -102,4 +102,17 @@ model Vaga {
     updatedAt    DateTime @updatedAt
 
     @@map("vagas")
+}
+
+model PreAluno {
+    id    String @id @default(uuid())
+    name String
+    email String @unique
+    password String
+    token String
+    tentativasRestantes Int @default(5)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("pre_alunos")
 }

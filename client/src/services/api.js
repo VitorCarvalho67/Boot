@@ -11,7 +11,15 @@ export const registerAluno = async (userAluno) => {
         return response.data;
     }catch(err){
         console.log(err.responde.data.detail);
-        console.log(oiiiiiii);
+    }
+}
+
+export const loginAluno = async (userAluno) =>{
+    try{
+        const response = await api.post('alunos/login/', userAluno);
+        return response.data;
+    }catch(err){
+        console.log(err.responde.data.detail);
     }
 }
 

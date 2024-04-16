@@ -1,4 +1,5 @@
 <template>
+    <Header />
     <div class="register">
       <form @submit.prevent="submitForm">
         <div>
@@ -20,39 +21,60 @@
         <button type="submit">Registrar</button>
       </form>
     </div>
+    <Footer />
 </template>
   
 <script>
-  import { registerAluno } from '../services/api.js';
-  
-  export default {
-    data() {
-      return {
-        userAluno: {
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: ''
-        }
-      }
-    },
-    methods: {
-      async submitForm() {
-        if (this.userAluno.password !== this.userAluno.confirmPassword) {
-          alert('Senhas não conferem');
-        }else{
-            try {
-                const data = await registerAluno({
-                    name: this.userAluno.name,
-                    email: this.userAluno.email,
-                    password: this.userAluno.password
-                });
-                alert('Aluno registrado com sucesso');
-            } catch (error) {
-                alert('Erro ao registrar aluno');
+    import { registerAluno } from '../services/api.js';
+    import { loginAluno } from '../services/api.js';
+    import Header from '../components/Header.vue';
+    import Footer from '../components/Footer.vue';
+
+    export default {
+        name: 'Register',
+        components: {
+            Header,
+            Footer
+        },
+        data() {
+        return {
+            userAluno: {
+            name: '',
+            email: '',
+            password: '',
+            confirmPassword: ''
             }
         }
-      }
+    },
+    methods: {
+        async submitForm() {
+            if (this.userAluno.password !== this.userAluno.confirmPassword) {
+            alert('Senhas não conferem');
+            }else{
+                try {
+                    const data = await registerAluno({
+                        name: this.userAluno.name,
+                        email: this.userAluno.email,
+                        password: this.userAluno.password
+                    });
+                    alert('Aluno registrado com sucesso');
+
+                    try {
+                        const data = await loginAluno({
+                            email: this.userAluno.email,
+                            password: this.userAluno.password
+                        });
+                        alert('Aluno logado com sucesso');
+                        console.log(data);
+                        document.cookie = `token=${data.token}`;
+                    } catch (error) {
+                        alert('Erro ao logar');
+                    }
+                } catch (error) {
+                    alert('Erro ao registrar aluno');
+                }
+            }
+        }
     }
   }
 </script>

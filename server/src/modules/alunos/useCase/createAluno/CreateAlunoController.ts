@@ -3,11 +3,11 @@ import { CreateAlunoUseCase } from './CreateAlunoUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response){
-        const { name, email, password} = req.body;
+        const { email, token } = req.body;
 
         const createAlunoUseCase = new CreateAlunoUseCase();
 
-        const result = await createAlunoUseCase.execute({name, email, password});
+        const result = await createAlunoUseCase.execute({ email, token });
 
         return res.status(201).json(result);
     }

@@ -6,31 +6,39 @@ import { AppError } from "../../../../errors/error";
 const bcrypt = require('bcrypt');
 
 export class CreateAlunoUseCase {
-    async execute({name, email, password} : CreateAlunoDTO): Promise<Aluno>{
-       
-        // verificar se o email já existe
-        const alunoAlreadyExists = await prisma.aluno.findUnique({
+    async execute({email, token} : CreateAlunoDTO): Promise<Aluno>{
+
+        const preAluno = await prisma.preAluno.findUnique({
+            where: {
+                email,
+                token
+            }
+        });
+
+        if (!preAluno){
+            throw new AppError("PreAluno não existe");
+        }
+
+        const aluno = await prisma.aluno.create({
+            data:{
+                name: preAluno.name,
+                email,
+                password: preAluno.password
+            }
+        });
+
+        // Deletar preAluno
+        await prisma.preAluno.delete({
             where: {
                 email
             }
         });
+
+        // ir decrementando a quantidade de tentativas validas caso ele encontre o email
+        // mas com o token errado
+
+        // deletar caso as tentativas sejam 0 e caso o tempo de validade tenha passado(10min)
         
-        if (alunoAlreadyExists){
-            throw new AppError("Aluno already exists");
-        }
-
-        // Criar usuário
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt); 
-
-        const aluno = await prisma.aluno.create({
-            data:{
-                name,
-                email,
-                password: hash
-            }
-        });
-     
         return aluno;
     }
 }
