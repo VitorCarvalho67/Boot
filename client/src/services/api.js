@@ -5,6 +5,15 @@ const api =  axios.create({
     baseURL: 'http://localhost:3333/'
 });
 
+export const registerPreAluno = async (userPreAluno) =>{
+    try{
+        const response = await api.post('prealunos/create/', userPreAluno);
+        return response.data;
+    }catch{
+        console.log(err.responde.data.detail);
+    }
+}
+
 export const registerAluno = async (userAluno) => {
     try{
         const response = await api.post('alunos/create/', userAluno);

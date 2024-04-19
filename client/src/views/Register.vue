@@ -25,8 +25,8 @@
 </template>
   
 <script>
-    import { registerAluno } from '../services/api.js';
-    import { loginAluno } from '../services/api.js';
+    import { registerPreAluno } from '../services/api.js';
+    // import { loginAluno } from '../services/api.js';
     import Header from '../components/Header.vue';
     import Footer from '../components/Footer.vue';
 
@@ -52,24 +52,24 @@
             alert('Senhas não conferem');
             }else{
                 try {
-                    const data = await registerAluno({
+                    const data = await registerPreAluno({
                         name: this.userAluno.name,
                         email: this.userAluno.email,
                         password: this.userAluno.password
                     });
                     alert('Aluno registrado com sucesso');
 
-                    try {
-                        const data = await loginAluno({
-                            email: this.userAluno.email,
-                            password: this.userAluno.password
-                        });
-                        alert('Aluno logado com sucesso');
-                        console.log(data);
-                        document.cookie = `token=${data.token}`;
-                    } catch (error) {
-                        alert('Erro ao logar');
-                    }
+                    // try {
+                    //     const data = await loginAluno({
+                    //         email: this.userAluno.email,
+                    //         password: this.userAluno.password
+                    //     });
+                    //     alert('Aluno logado com sucesso');
+                    //     console.log(data);
+                    //     document.cookie = `token=${data.token}`;
+                    // } catch (error) {
+                    //     alert('Erro ao logar');
+                    // }
                 } catch (error) {
                     alert('Erro ao registrar aluno');
                 }

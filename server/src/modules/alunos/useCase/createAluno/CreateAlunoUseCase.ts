@@ -37,7 +37,7 @@ export class CreateAlunoUseCase {
                             password: preAluno.password
                         }
                     });
-            
+                    
                     await prisma.preAluno.delete({
                         where: {
                             email
