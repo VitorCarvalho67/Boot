@@ -57,7 +57,10 @@
                         email: this.userAluno.email,
                         password: this.userAluno.password
                     });
+
                     alert('Aluno registrado com sucesso');
+
+                    document.cookie = `email=${data.email}`;
 
                     // try {
                     //     const data = await loginAluno({
@@ -70,6 +73,7 @@
                     // } catch (error) {
                     //     alert('Erro ao logar');
                     // }
+
                 } catch (error) {
                     alert('Erro ao registrar aluno');
                 }
