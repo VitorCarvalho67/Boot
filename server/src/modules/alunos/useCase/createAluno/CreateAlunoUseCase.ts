@@ -22,7 +22,9 @@ export class CreateAlunoUseCase {
             });
 
             if (preAluno){
-                if(preAluno.tentativasRestantes <= 0 || (preAluno.createdAt.setMinutes(preAluno.createdAt.getMinutes() + 10)) > Date.now()) {
+                const expirationTime = new Date(preAluno.createdAt.getTime());
+                expirationTime.setMinutes(expirationTime.getMinutes() + 10);
+                if(preAluno.tentativasRestantes <= 0 || expirationTime.getTime() < Date.now()) {
                     await prisma.preAluno.delete({
                         where: {
                             email
