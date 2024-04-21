@@ -1,6 +1,15 @@
 <template>
     <header>
-        OIIIII
+        <div>
+            <img src="" alt="img">
+        </div>
+        <nav>
+            <ul>
+                <li>Rankings</li>
+                <li>estágios</li>
+                <li><img src="" alt="">Perfil</li>
+            </ul>
+        </nav>
     </header>
 </template>
 
@@ -21,10 +30,27 @@
 </script>
 
 <style scoped>
-    .header {
-        background-color: #333;
-        color: white;
-        text-align: center;
-        padding: 10px;
+    header {
+        background-color: transparent;
+        padding: 10px 20px;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header div{
+        width: 100px;
+        height: 100%;
+    }
+
+    header nav ul{
+        display: flex;
+        list-style-type: none;
+    }
+
+    header nav ul li{
+        margin-inline: 10px;
     }
 </style>
