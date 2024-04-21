@@ -1,13 +1,13 @@
 <template>
     <header>
         <div>
-            <img src="" alt="img">
+            <img src="" alt="Img">
         </div>
         <nav>
             <ul>
-                <li>Rankings</li>
-                <li>estágios</li>
-                <li><img src="" alt="">Perfil</li>
+                <li><router-link to="/">Rankings</router-link></li>
+                <li><router-link to="/">Estágios</router-link></li>
+                <li><router-link to="/"><img src="" alt="">Perfil</router-link></li>
             </ul>
         </nav>
     </header>
@@ -38,19 +38,30 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        font-family: "Raleway", sans-serif;
+        font-weight: 400;
     }
 
-    header div{
+    header div {
         width: 100px;
         height: 100%;
     }
 
-    header nav ul{
+    header div img {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    header nav ul {
         display: flex;
         list-style-type: none;
     }
 
-    header nav ul li{
+    header nav ul li a {
         margin-inline: 10px;
+        text-decoration: none;
     }
 </style>
