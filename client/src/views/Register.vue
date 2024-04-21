@@ -27,11 +27,13 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+
 import { registerPreAluno } from '../services/api.js';
 // import { loginAluno } from '../services/api.js';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
+import router from '../router/index.js'
+import Cookies from 'js-cookie';
 
 export default {
     name: 'Register',
@@ -64,7 +66,8 @@ export default {
                     alert('Aluno registrado com sucesso');
 
                     Cookies.set('email', `${data.email}`, { expires: 10 });
-
+                    router.push({ name: 'TokenRegister' })
+                    
                     // try {
                     //     const data = await loginAluno({
                     //         email: this.userAluno.email,
@@ -76,7 +79,6 @@ export default {
                     // } catch (error) {
                     //     alert('Erro ao logar');
                     // }
-
                 } catch (error) {
                     alert('Erro ao registrar aluno');
                 }

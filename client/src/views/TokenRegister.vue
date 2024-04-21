@@ -15,10 +15,11 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
 import { registerAluno } from '../services/api.js';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
+import Cookies from 'js-cookie';
+import router from '../router/index.js'
 
 export default {
     name: 'TokenRegister',
@@ -44,6 +45,8 @@ export default {
 
                 Cookies.remove('email');
                 alert('Aluno registrado com sucesso');
+                
+                router.push({ name: 'Login' })
             } catch (error) {
                 alert('Erro ao registrar aluno');
             }
