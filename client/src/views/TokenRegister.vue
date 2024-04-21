@@ -42,6 +42,7 @@ export default {
                     token: this.userAluno.token
                 });
 
+                Cookies.remove('email');
                 alert('Aluno registrado com sucesso');
             } catch (error) {
                 alert('Erro ao registrar aluno');

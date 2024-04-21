@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie';
 import { registerPreAluno } from '../services/api.js';
 // import { loginAluno } from '../services/api.js';
 import Header from '../components/Header.vue';
@@ -62,7 +63,7 @@ export default {
 
                     alert('Aluno registrado com sucesso');
 
-                    document.cookie = `email=${data.email}`;
+                    Cookies.set('email', `${data.email}`, { expires: 10 });
 
                     // try {
                     //     const data = await loginAluno({
