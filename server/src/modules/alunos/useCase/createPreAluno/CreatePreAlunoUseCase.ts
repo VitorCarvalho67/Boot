@@ -2,7 +2,7 @@ import { PreAluno } from "@prisma/client";
 import { prisma } from "../../../../prisma/client";
 import { CreatePreAlunoDTO } from "../../dtos/CreatePreAlunoDTO";
 import { AppError } from "../../../../errors/error";
-import { generateEmailHTML } from "../../../../mail/templates/register";
+import { generateRegisterEmail } from "../../../../mail/templates/register";
 import transporter from "../../../../mail/config/email"; 
 import nodemailer from 'nodemailer';
 
@@ -27,7 +27,7 @@ export class CreatePreAlunoUseCase {
             } 
             
             else {
-                const dominio_cps = "";
+                const dominio_cps = "@etec.sp.gov.br";
         
                 if (!email.includes(dominio_cps)){
                     throw new AppError("Email inválido");
@@ -38,13 +38,14 @@ export class CreatePreAlunoUseCase {
                     const hash = bcrypt.hashSync(password, salt);
             
                     const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
-                    
+                    const tokenHash = bcrypt.hashSync(token, salt);
+
                     const PreAluno = await prisma.preAluno.create({
                         data:{
                             name: name.trim(),
                             email,
                             password: hash,
-                            token
+                            token: tokenHash
                         }
                     });
                     
@@ -54,12 +55,12 @@ export class CreatePreAlunoUseCase {
                         from: process.env.EMAIL,
                         to: email,
                         subject: 'Boot - Código de verificação',
-                        html: generateEmailHTML(nome, token)
+                        html: generateRegisterEmail(nome, token)
                     };
     
                     transporter.sendMail(mailOptions, function(error, info) {
                         if (error) {
-                            throw new AppError("Erro ao enviar email: " + error + " " + process.env.EMAIL + " " + process.env.SENHA_EMAIL);
+                            throw new AppError("Erro ao enviar email: " + error);
                         } else {
                             console.log('E-mail enviado:', info.response);
                         }

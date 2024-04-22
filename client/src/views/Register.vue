@@ -63,8 +63,6 @@ export default {
                         password: this.userAluno.password
                     });
 
-                    alert('Aluno registrado com sucesso');
-
                     Cookies.set('email', `${data.email}`, { expires: 10 });
                     router.push({ name: 'TokenRegister' })
                     

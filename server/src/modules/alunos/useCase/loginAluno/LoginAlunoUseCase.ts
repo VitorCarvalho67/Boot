@@ -7,7 +7,7 @@ import { generateAccessToken } from "../../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginAlunoUseCase {
-    async execute({email, password} : LoginAlunoDTO): Promise<{token: string, aluno: Omit<Aluno, 'password' | 'turmas' | 'dataNascimento' | 'disciplina' | 'rm' | 'createdAt' | 'updatedAt'>}>{
+    async execute({email, password} : LoginAlunoDTO): Promise<{token: string, aluno: Omit<Aluno, 'password' | 'turmas' | 'dataNascimento' | 'disciplina' | 'rm' | 'createdAt' | 'updatedAt' | 'recoveryPass'>}>{
        
         const aluno = await prisma.aluno.findFirst({
             where: {

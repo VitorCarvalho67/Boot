@@ -32,4 +32,22 @@ export const loginAluno = async (userAluno) =>{
     }
 }
 
+export const recoveryAluno = async (infoAluno) =>{
+    try {
+        const response = await api.post('alunos/recovery', infoAluno);
+        return response.data
+    } catch (err) {
+        console.log(err.response.data.detail)
+    }
+}
+
+export const validateRecovery = async (infoAluno) => {
+    try {
+        const response = await api.post('alunos/recovery/validate', infoAluno);
+        return response.data
+    } catch (err) {
+        console.log(err.response.data.detail) 
+    }
+}
+
 export default api;

@@ -4,6 +4,8 @@ import { CreateAlunoDTO } from "../../dtos/CreateAlunoDTO";
 import { AppError } from "../../../../errors/error";
 import e from "express";
 
+const bcrypt = require('bcrypt');
+
 export class CreateAlunoUseCase {
     async execute({email, token} : CreateAlunoDTO): Promise<Aluno>{
 
@@ -14,14 +16,9 @@ export class CreateAlunoUseCase {
         });
 
         if (preAluno){
-            const preAluno = await prisma.preAluno.findUnique({
-                where: {
-                    email,
-                    token
-                }
-            });
+            const istokenValid = bcrypt.compareSync(token, preAluno.token);
 
-            if (preAluno){
+            if (istokenValid){
                 const expirationTime = new Date(preAluno.createdAt.getTime());
                 expirationTime.setMinutes(expirationTime.getMinutes() + 10);
                 if(preAluno.tentativasRestantes <= 0 || expirationTime.getTime() < Date.now()) {
@@ -59,6 +56,7 @@ export class CreateAlunoUseCase {
                         }
                     }
                 });
+
                 throw new AppError("Token inválido");
             }
         }else {

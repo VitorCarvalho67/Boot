@@ -3,6 +3,8 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import TokenRegister from '../views/TokenRegister.vue';
+import RecoveryAluno from '../views/RecoveryAluno.vue';
+import ValidateRecovery from '../views/ValidateRecovery.vue';
 
 const routes = [{
         path: '/',
@@ -23,7 +25,18 @@ const routes = [{
         path: '/register/token',
         name: 'TokenRegister',
         component: TokenRegister
-    }
+    },
+    {
+        path: '/recovery',
+        name: 'RecoveryAluno',
+        component: RecoveryAluno
+    },
+    {
+        path: '/recovery/validate',
+        name: 'ValidateRecovery',
+        component: ValidateRecovery
+    },
+
 ];
 
 const router = createRouter({

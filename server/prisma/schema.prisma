@@ -15,6 +15,7 @@ model Aluno {
     name           String
     email          String   @unique
     password       String
+    recoveryPass   String?
     turmas         String? // Formato "id1,id2,id3"
     dataNascimento String? // Formato "AAAA-MM-DD"
     disciplina     String?
@@ -105,14 +106,14 @@ model Vaga {
 }
 
 model PreAluno {
-    id    String @id @default(uuid())
-    name String
-    email String @unique
-    password String
-    token String
-    tentativasRestantes Int @default(5)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id                  String   @id @default(uuid())
+    name                String
+    email               String   @unique
+    password            String
+    token               String
+    tentativasRestantes Int      @default(5)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
 
     @@map("pre_alunos")
 }
