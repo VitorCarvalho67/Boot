@@ -2,7 +2,7 @@ import { Aluno } from "@prisma/client";
 import { prisma } from "../../../../prisma/client";
 import { validateRecoveryDTO } from "../../dtos/validateRecoveryDTO";
 import { AppError } from "../../../../errors/error";
-import { generateAccessToken } from "../../../../jwt/jwtServices";
+import { generateAccessTokenAluno } from "../../../../jwt/jwtServices";
 
 const bcrypt = require('bcrypt');
 
@@ -34,7 +34,7 @@ export class ValidateRecoveryUseCase {
                     }
                 });
                 
-                const token = generateAccessToken(aluno);
+                const token = generateAccessTokenAluno(aluno);
     
                 if (!token){
                     throw new AppError("Email ou senha inválidos");

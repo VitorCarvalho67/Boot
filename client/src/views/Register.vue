@@ -29,7 +29,6 @@
 <script>
 
 import { registerPreAluno } from '../services/api.js';
-// import { loginAluno } from '../services/api.js';
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
 import router from '../router/index.js'

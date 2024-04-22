@@ -50,4 +50,13 @@ export const validateRecovery = async (infoAluno) => {
     }
 }
 
+export const loginAdmin = async (userAdmin) =>{
+    try{
+        const response = await api.post('admin/login', userAdmin);
+        return response.data;
+    }catch(err){
+        console.log(err.responde.data.detail);
+    }
+}
+
 export default api;

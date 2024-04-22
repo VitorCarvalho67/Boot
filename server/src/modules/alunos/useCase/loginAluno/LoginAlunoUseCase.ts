@@ -2,7 +2,7 @@ import { Aluno } from "@prisma/client";
 import { prisma } from "../../../../prisma/client";
 import { LoginAlunoDTO } from "../../dtos/LoginAlunoDTO";
 import { AppError } from "../../../../errors/error";
-import { generateAccessToken } from "../../../../jwt/jwtServices";
+import { generateAccessTokenAluno } from "../../../../jwt/jwtServices";
 
 const bcrypt = require('bcrypt');
 
@@ -25,7 +25,7 @@ export class LoginAlunoUseCase {
             throw new AppError("Email ou senha inválidos");
         }
 
-        const token = generateAccessToken(aluno);
+        const token = generateAccessTokenAluno(aluno);
 
         if (!token){
             throw new AppError("Email ou senha inválidos");

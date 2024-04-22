@@ -5,6 +5,7 @@ import Register from '../views/Register.vue';
 import TokenRegister from '../views/TokenRegister.vue';
 import RecoveryAluno from '../views/RecoveryAluno.vue';
 import ValidateRecovery from '../views/ValidateRecovery.vue';
+import LoginAdmin from '../views/LoginAdmin.vue';
 
 const routes = [{
         path: '/',
@@ -36,7 +37,11 @@ const routes = [{
         name: 'ValidateRecovery',
         component: ValidateRecovery
     },
-
+    {
+        path: '/admin/login',
+        name: 'LoginAdmin',
+        component: LoginAdmin
+    }
 ];
 
 const router = createRouter({
