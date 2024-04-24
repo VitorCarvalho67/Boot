@@ -26,6 +26,19 @@ model Aluno {
     @@map("alunos")
 }
 
+model PreAluno {
+    id                  String   @id @default(uuid())
+    name                String
+    email               String   @unique
+    password            String
+    token               String
+    tentativasRestantes Int      @default(5)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
+
+    @@map("pre_alunos")
+}
+
 model Admin {
     id        String   @id @default(uuid())
     name      String
@@ -38,15 +51,15 @@ model Admin {
 }
 
 model Curso {
-    id        String   @id @default(uuid())
-    name      String
-    turno     Turno
-    duracao   String
+    id          String   @id @default(uuid())
+    name        String
+    turno       Turno
+    duracao     String
     coordenador String
-    turma     Turma[]
-    vaga      Vaga[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    turma       Turma[]
+    vaga        Vaga[]
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     @@map("cursos")
 }
@@ -105,15 +118,33 @@ model Vaga {
     @@map("vagas")
 }
 
-model PreAluno {
-    id                  String   @id @default(uuid())
+model Professor {
+    id                  String        @id @default(uuid())
     name                String
-    email               String   @unique
+    email               String        @unique
     password            String
     token               String
-    tentativasRestantes Int      @default(5)
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
+    tentativasRestantes Int           @default(5)
+    titulo_principal    String
+    createdAt           DateTime      @default(now())
+    updatedAt           DateTime      @updatedAt
+    coordenador         Coordenador[]
 
-    @@map("pre_alunos")
+    @@map("professores")
+}
+
+model Coordenador {
+    id                  String    @id @default(uuid())
+    name                String
+    email               String    @unique
+    password            String
+    token               String
+    tentativasRestantes Int       @default(5)
+    professor           Professor @relation(fields: [professorId], references: [id])
+    professorId         String
+
+    createdAt           DateTime  @default(now())
+    updatedAt           DateTime  @updatedAt
+
+    @@map("coordenadores")
 }
