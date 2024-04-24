@@ -126,9 +126,9 @@ model Professor {
     token               String
     tentativasRestantes Int           @default(5)
     titulo_principal    String
+    coordenador         Coordenador[]
     createdAt           DateTime      @default(now())
     updatedAt           DateTime      @updatedAt
-    coordenador         Coordenador[]
 
     @@map("professores")
 }
@@ -142,7 +142,6 @@ model Coordenador {
     tentativasRestantes Int       @default(5)
     professor           Professor @relation(fields: [professorId], references: [id])
     professorId         String
-
     createdAt           DateTime  @default(now())
     updatedAt           DateTime  @updatedAt
 
