@@ -6,10 +6,17 @@ import TokenRegister from '../views/TokenRegister.vue';
 import RecoveryAluno from '../views/RecoveryAluno.vue';
 import ValidateRecovery from '../views/ValidateRecovery.vue';
 import LoginAdmin from '../views/LoginAdmin.vue';
+import NotFound from '../views/NotFound.vue';
 
-const routes = [{
-        path: '/',
+const routes = [
+    {
+        path: '/home',
         name: 'Home',
+        component: Home
+    },
+    {
+        path: '/',
+        name: 'Home2',
         component: Home
     },
     {
@@ -41,6 +48,11 @@ const routes = [{
         path: '/admin/login',
         name: 'LoginAdmin',
         component: LoginAdmin
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound
     }
 ];
 

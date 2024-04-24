@@ -40,9 +40,9 @@ model Admin {
 model Curso {
     id        String   @id @default(uuid())
     name      String
-    periodo   String
     turno     Turno
     duracao   String
+    coordenador String
     turma     Turma[]
     vaga      Vaga[]
     createdAt DateTime @default(now())

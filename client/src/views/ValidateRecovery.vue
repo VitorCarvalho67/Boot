@@ -48,18 +48,22 @@ export default {
     methods: {
         async submitForm() {
             const emailCookies = Cookies.get('email');
-            try {
-                const data = await validateRecovery({
-                    email: emailCookies,
-                    recoveryPassword: this.infoAluno.recoveryPass,
-                    newPass: this.infoAluno.newPass
-                });
+            if (this.infoAluno.newPass === this.infoAluno.confirmNewPass){    
+                try {
+                    const data = await validateRecovery({
+                        email: emailCookies,
+                        recoveryPassword: this.infoAluno.recoveryPass,
+                        newPass: this.infoAluno.newPass
+                    });
 
-                alert('Conta recuperada com sucesso');
-                
-                router.push({ name: 'Login' })
-            } catch (error) {
-                alert('Erro ao recuperar conta');
+                    alert('Conta recuperada com sucesso');
+                    
+                    router.push({ name: 'Login' })
+                } catch (error) {
+                    alert('Erro ao recuperar conta');
+                }
+            } else{
+                alert("As senhas devem ser iguais!");
             }
         }
     }

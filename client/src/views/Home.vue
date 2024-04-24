@@ -21,3 +21,9 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    main {
+        color: $red;
+    }
+</style>
