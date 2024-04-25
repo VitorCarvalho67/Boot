@@ -7,4 +7,10 @@
 export default {
     name: 'App'
 }
-</script>  
+</script>
+
+<style lang="scss">
+
+body { @include theme-color('dark'); }
+
+</style>

@@ -1,5 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
+$font-color-light: #000000;
+$font-color-dark: #f5f5f5;
+$bg-color-light: #f5f5f5;
+$bg-color-dark: #000000;
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin color($color, $bg-color) {
+    color: $color;
+    background-color: $bg-color;
+}
+
+@mixin theme-color($theme) {
+    @if $theme =='light' {
+        @include color($font-color-light, $bg-color-light);
+    }
+
+    @else if $theme =='dark' {
+        @include color($font-color-dark, $bg-color-dark);
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
