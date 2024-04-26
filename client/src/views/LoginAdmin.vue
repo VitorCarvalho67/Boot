@@ -26,6 +26,7 @@ import { loginAdmin } from '../services/api.js';
 import router from '../router/index.js'
 import Header from '../components/Header.vue';
 import Footer from '../components/Footer.vue';
+import Cookies from 'js-cookie';
 
 export default {
     name: 'LoginAdmin',
@@ -49,7 +50,11 @@ export default {
                     password: this.userAdmin.password
                 });
                 alert('Admin logado com sucesso');
-                console.log(data);
+                const tokenExists = Cookies.get('token');
+                
+                if (tokenExists) {
+                    Cookies.remove('token');
+                }
                 document.cookie = `token=${data.token}`;
             } catch (error) {
                 alert('Email ou senha inválidos');

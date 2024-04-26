@@ -7,7 +7,7 @@ import { generateAccessTokenAdmin } from "../../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginAdminUseCase {
-    async execute({email, password} : LoginAdminDTO):  Promise<{token: string, admin: Omit<Admin, 'password' | 'createdAt' | 'updatedAt'>}>{
+    async execute({email, password} : LoginAdminDTO):  Promise<{token: string, admin: Omit<Admin, 'password' | 'adminImagem' | 'createdAt' | 'updatedAt'>}>{
        
         const admin = await prisma.admin.findUnique({
             where: {

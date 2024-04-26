@@ -8,7 +8,7 @@ interface RequestWithAdmin extends Request {
 }
 
 export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, next: NextFunction) {
-    try{
+        try{
             // Authorization: YOUR_JWT_TOKEN
 
             const token = req.headers.authorization;
@@ -20,7 +20,7 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
             const decoded = verfifyAccessTokenAdmin(token);
     
             if (!decoded || typeof decoded === 'string') {
-                throw new Error('Invalid token');
+                throw new Error('Invalid token')
             }
     
             const admin = await prisma.admin.findUnique({
@@ -35,6 +35,6 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
     
             next();
         } catch (error) {
-            res.status(401).json({ message: 'Invalid token' });
+            res.status(401).json({ message: 'Invalid token ' + error});
         }
     }

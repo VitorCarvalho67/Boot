@@ -59,12 +59,91 @@ export const loginAdmin = async (userAdmin) =>{
     }
 }
 
-export const AuthAdmin = async (token) =>{
+export const authAdmin = async (token) =>{
     try {
-        const response = await api.post('admin/auth', token);
+        const response = await api.post('admin/auth', {}, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
         return response.data;
     } catch (error) {
-        console.log(err.response.data.detail);
+        console.log(error.response.data.detail);
+    }
+}
+
+export const registerProfessor = async (infoProfessor, token) =>{
+    try {
+        const response = await api.post('admin/register/professor', infoProfessor, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data.detail);
+    }
+}
+
+export const getProfessores = async (token) =>{
+    try {
+        const response = await api.post('admin/professores', {}, {
+            headers: {
+                authorization: `${token}`
+            }
+    });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const registerCoordenador = async (name, token) =>{
+    try {
+        const response = await api.post('admin/register/coordenador',
+            {
+                name: name
+            },
+            {
+                headers: {
+                    authorization: `${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data.detail);
+    }
+}
+
+export const getCoordenadores = async (token) =>{
+    try {
+        const response = await api.post('admin/coordenadores', {}, 
+            {
+                headers: {
+                    authorization: `${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const registerCurso = async (infoCurso, token) =>{
+    try {
+        const response = await api.post('admin/register/course',
+            infoCurso,
+            {
+                headers: {
+                    authorization: `${token}`
+                }
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data.detail);
     }
 }
 

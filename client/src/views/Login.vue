@@ -49,6 +49,9 @@ export default {
                 });
                 alert('Aluno logado com sucesso');
                 console.log(data);
+                if(Cookies.get('token')){
+                    Cookies.remove('token');
+                }
                 document.cookie = `token=${data.token}`;
             } catch (error) {
                 alert('Email ou senha inválidos');

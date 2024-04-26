@@ -8,6 +8,8 @@ import ValidateRecovery from '../views/ValidateRecovery.vue';
 import LoginAdmin from '../views/LoginAdmin.vue';
 import NotFound from '../views/NotFound.vue';
 import RegisterProfessor from '../views/RegisterProfessor.vue';
+import RegisterCoordenador from '../views/RegisterCoordenador.vue';
+import RegisterCurso from '../views/RegisterCurso.vue';
 
 const routes = [
     {
@@ -59,6 +61,16 @@ const routes = [
         path: '/admin/register/professor', 
         name : "RegisterProfessor",
         component: RegisterProfessor
+    },
+    {
+        path: '/admin/register/coordenador', 
+        name : "RegisterCoordenador",
+        component: RegisterCoordenador
+    },
+    {
+        path: '/admin/register/curso', 
+        name : "RegisterCurso",
+        component: RegisterCurso
     }
 ];
 

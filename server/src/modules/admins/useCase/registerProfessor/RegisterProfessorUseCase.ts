@@ -2,6 +2,10 @@ import { Professor } from "@prisma/client";
 import { prisma } from "../../../../prisma/client";
 import { RegisterProfessorDTO } from "../../dtos/RegisterProfessorDTO";
 import { AppError } from "../../../../errors/error";
+import { generateRegisterProfessorEmail } from "../../../../mail/templates/registerProfessor";
+import transporter from "../../../../mail/config/email"; 
+
+const bcrypt = require('bcrypt');
 
 export class RegisterProfessorUseCase{
     async execute({ name, email, password, tituloPrincipal } : RegisterProfessorDTO):  Promise< Professor >{
@@ -15,11 +19,34 @@ export class RegisterProfessorUseCase{
         if (emailAlreadyExists){
             throw new AppError("Email já cadastrado!");
         } else {
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(password, salt);
+
+            const nome = name.split(' ').shift()?.toString() ?? 'professor(a)';
+
+            const mailOptions = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: 'Boot - Credenciais de login do professor',
+                html: generateRegisterProfessorEmail(nome, email, password)
+            };
+
+            var emailEnviado = false;
+
+            transporter.sendMail(mailOptions, function(error, info) {
+                if (error) {
+                    throw new AppError("Erro ao enviar email: " + error);
+                } else {
+                    console.log('E-mail enviado:', info.response);
+                    emailEnviado = true
+                }
+            });
+            
             const professorRegister = await prisma.professor.create({
                 data: {
                     name,
                     email,
-                    password,
+                    password: hash,
                     tituloPrincipal
                 }
             });
