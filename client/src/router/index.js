@@ -7,8 +7,14 @@ import RecoveryAluno from '../views/RecoveryAluno.vue';
 import ValidateRecovery from '../views/ValidateRecovery.vue';
 import LoginAdmin from '../views/LoginAdmin.vue';
 import NotFound from '../views/NotFound.vue';
+import RegisterProfessor from '../views/RegisterProfessor.vue';
 
 const routes = [
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFound
+    },
     {
         path: '/home',
         name: 'Home',
@@ -50,9 +56,9 @@ const routes = [
         component: LoginAdmin
     },
     {
-        path: '/:pathMatch(.*)*',
-        name: 'NotFound',
-        component: NotFound
+        path: '/admin/register/professor', 
+        name : "RegisterProfessor",
+        component: RegisterProfessor
     }
 ];
 

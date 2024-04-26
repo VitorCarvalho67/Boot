@@ -16,6 +16,7 @@ model Aluno {
     email          String   @unique
     password       String
     recoveryPass   String?
+    alunoImagem    String?
     turmas         String? // Formato "id1,id2,id3"
     dataNascimento String? // Formato "AAAA-MM-DD"
     disciplina     String?
@@ -40,26 +41,28 @@ model PreAluno {
 }
 
 model Admin {
-    id        String   @id @default(uuid())
-    name      String
-    email     String   @unique
-    password  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          String   @id @default(uuid())
+    name        String
+    email       String   @unique
+    password    String
+    adminImagem String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     @@map("admins")
 }
 
 model Curso {
-    id          String   @id @default(uuid())
-    name        String
-    turno       Turno
-    duracao     String
-    coordenador String
-    turma       Turma[]
-    vaga        Vaga[]
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id            String      @id @default(uuid())
+    name          String
+    turno         Turno
+    duracao       String
+    coordenador   Coordenador @relation(fields: [coordenadorId], references: [id])
+    coordenadorId String
+    turma         Turma[]
+    vaga          Vaga[]
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
 
     @@map("cursos")
 }
@@ -84,66 +87,100 @@ model Turma {
 }
 
 model Empresa {
-    id           String   @id @default(uuid())
-    name         String
-    email        String   @unique
-    password     String
-    cnpj         String
-    endereco     String
-    telefone     String
-    patrocinador Boolean
-    vaga         Vaga[]
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
+    id            String   @id @default(uuid())
+    name          String
+    email         String   @unique
+    password      String
+    empresaImagem String?
+    cnpj          String
+    endereco      String
+    telefone      String
+    patrocinador  Boolean
+    vaga          Vaga[]
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
 
     @@map("empresas")
 }
 
 model Vaga {
-    id           String   @id @default(uuid())
-    Curso        Curso    @relation(fields: [cursoId], references: [id])
-    cursoId      String
-    Empresa      Empresa  @relation(fields: [empresaId], references: [id])
-    empresaId    String
-    requisitos   String
-    beneficios   String
-    remuneracao  String
-    cargaHoraria String
-    dataInicio   String
-    dataFim      String
-    status       String
-    createdAt    DateTime @default(now())
-    updatedAt    DateTime @updatedAt
+    id            String      @id @default(uuid())
+    Curso         Curso       @relation(fields: [cursoId], references: [id])
+    cursoId       String
+    Empresa       Empresa     @relation(fields: [empresaId], references: [id])
+    empresaId     String
+    requisitos    String
+    beneficios    String
+    remuneracao   String
+    cargaHoraria  String
+    dataInicio    String
+    dataFim       String
+    status        String
+    funcionario   Funcionario @relation(fields: [cadastradorId], references: [id])
+    cadastradorId String
+    createdAt     DateTime    @default(now())
+    updatedAt     DateTime    @updatedAt
 
     @@map("vagas")
 }
 
 model Professor {
-    id                  String        @id @default(uuid())
-    name                String
-    email               String        @unique
-    password            String
-    token               String
-    tentativasRestantes Int           @default(5)
-    titulo_principal    String
-    coordenador         Coordenador[]
-    createdAt           DateTime      @default(now())
-    updatedAt           DateTime      @updatedAt
+    id              String        @id @default(uuid())
+    name            String
+    email           String        @unique
+    password        String
+    tituloPrincipal String
+    professorImagem String?
+    coordenador     Coordenador[]
+    atide           Atidade[]
+    createdAt       DateTime      @default(now())
+    updatedAt       DateTime      @updatedAt
 
     @@map("professores")
 }
 
 model Coordenador {
-    id                  String    @id @default(uuid())
-    name                String
-    email               String    @unique
-    password            String
-    token               String
-    tentativasRestantes Int       @default(5)
-    professor           Professor @relation(fields: [professorId], references: [id])
-    professorId         String
-    createdAt           DateTime  @default(now())
-    updatedAt           DateTime  @updatedAt
+    id          String    @id @default(uuid())
+    name        String
+    professor   Professor @relation(fields: [professorId], references: [id])
+    professorId String
+    curso       Curso[]
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 
     @@map("coordenadores")
+}
+
+model Funcionario {
+    id                String   @id @default(uuid())
+    name              String
+    email             String   @unique
+    password          String
+    funcionarioImagem String?
+    cargo             Cargo
+    vaga              Vaga[]
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+
+    @@map("funcionarios")
+}
+
+enum Cargo {
+    GESTAO
+    ADMINTRACAO
+    DIRECAO
+    ORIENTACAO
+}
+
+model Atidade {
+    id              String    @id @default(uuid())
+    title           String
+    descricao       String    @db.VarChar(1000)
+    professor       Professor @relation(fields: [professorId], references: [id])
+    professorId     String
+    atividadeImagem String?
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+
+    @@map("atividades")
 }

@@ -22,11 +22,9 @@ export class CreatePreAlunoUseCase {
                 }
             });
             
-            if (alunoAlreadyExists || preAlunoAlreadyExists){
+            if (alunoAlreadyExists){
                 throw new AppError("Aluno already exists");
-            } 
-            
-            else {
+            } else {
                 const dominio_cps = "@etec.sp.gov.br";
         
                 if (!email.includes(dominio_cps)){
@@ -34,12 +32,41 @@ export class CreatePreAlunoUseCase {
                 }
                 
                 else{
+
                     const salt = bcrypt.genSaltSync(10);
                     const hash = bcrypt.hashSync(password, salt);
             
                     const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
                     const tokenHash = bcrypt.hashSync(token, salt);
 
+                    const nome = name.split(' ').shift()?.toString() ?? 'aluno';
+    
+                    const mailOptions = {
+                        from: process.env.EMAIL,
+                        to: email,
+                        subject: 'Boot - Código de verificação',
+                        html: generateRegisterEmail(nome, token)
+                    };
+
+                    var emailEnviado = false;
+    
+                    transporter.sendMail(mailOptions, function(error, info) {
+                        if (error) {
+                            throw new AppError("Erro ao enviar email: " + error);
+                        } else {
+                            console.log('E-mail enviado:', info.response);
+                            emailEnviado = true
+                        }
+                    });
+
+                    if (preAlunoAlreadyExists){
+                        const deletePreAluno = await prisma.preAluno.delete({
+                            where:{
+                                email
+                            },
+                        });
+                    }
+                    
                     const PreAluno = await prisma.preAluno.create({
                         data:{
                             name: name.trim(),
@@ -49,23 +76,6 @@ export class CreatePreAlunoUseCase {
                         }
                     });
                     
-                    const nome = name.split(' ').shift()?.toString() ?? 'aluno';
-    
-                    const mailOptions = {
-                        from: process.env.EMAIL,
-                        to: email,
-                        subject: 'Boot - Código de verificação',
-                        html: generateRegisterEmail(nome, token)
-                    };
-    
-                    transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                            throw new AppError("Erro ao enviar email: " + error);
-                        } else {
-                            console.log('E-mail enviado:', info.response);
-                        }
-                    });
-                 
                     return PreAluno;
                 }
             }

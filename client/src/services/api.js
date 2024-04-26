@@ -59,4 +59,13 @@ export const loginAdmin = async (userAdmin) =>{
     }
 }
 
+export const AuthAdmin = async (token) =>{
+    try {
+        const response = await api.post('admin/auth', token);
+        return response.data;
+    } catch (error) {
+        console.log(err.response.data.detail);
+    }
+}
+
 export default api;

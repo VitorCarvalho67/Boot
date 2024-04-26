@@ -44,8 +44,9 @@
                     <input type="text" id="confirmPassword" v-model="userAluno.confirmPassword" @input="checkData" required>
                 </div>
 
-                <p v-show="confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="!confirmPass">✓ As senhas devem ser iguais</p>
+                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
+                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
+
                 <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
                 <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
                 <br>
@@ -129,6 +130,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
     
 </style>
