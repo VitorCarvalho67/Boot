@@ -2,7 +2,8 @@ import axios from 'axios';
 import alter from '../router/index.js';
 
 const api =  axios.create({
-    baseURL: 'http://localhost:3333/'
+    baseURL: 'https://2679-190-115-67-244.ngrok-free.app'
+    // baseURL: 'http://localhost:3333/'
 });
 
 export const registerPreAluno = async (userPreAluno) =>{
