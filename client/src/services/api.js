@@ -148,4 +148,17 @@ export const registerCurso = async (infoCurso, token) =>{
     }
 }
 
+export const registerFuncionario = async (infoFuncionario, token) =>{
+    try {
+        const response = await api.post('admin/register/funcionario', infoFuncionario, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data.detail);
+    }
+}
+
 export default api;

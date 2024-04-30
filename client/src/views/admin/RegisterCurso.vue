@@ -47,13 +47,13 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
-import router from '../router/index.js'
-import { authAdmin } from '../services/api';
-import { getCoordenadores } from '../services/api';
-import { registerCurso } from '../services/api';
+import router from '../../router/index.js'
+import { authAdmin } from '../../services/api';
+import { getCoordenadores } from '../../services/api';
+import { registerCurso } from '../../services/api';
 
 export default {
     name: 'RegisterCurso',

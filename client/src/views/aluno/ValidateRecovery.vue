@@ -24,11 +24,11 @@
 </template>
 
 <script>
-import { validateRecovery } from '../services/api.js';
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import { validateRecovery } from '../../services/api.js';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
-import router from '../router/index.js'
+import router from '../../router/index.js'
 
 export default {
     name: 'ValidateRecovery',

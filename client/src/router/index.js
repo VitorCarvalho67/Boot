@@ -1,15 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import Login from '../views/Login.vue';
-import Register from '../views/Register.vue';
-import TokenRegister from '../views/TokenRegister.vue';
-import RecoveryAluno from '../views/RecoveryAluno.vue';
-import ValidateRecovery from '../views/ValidateRecovery.vue';
-import LoginAdmin from '../views/LoginAdmin.vue';
+import Login from '../views/aluno/Login.vue';
+import Register from '../views/aluno/Register.vue';
+import TokenRegister from '../views/aluno/TokenRegister.vue';
+import RecoveryAluno from '../views/aluno/RecoveryAluno.vue';
+import ValidateRecovery from '../views/aluno/ValidateRecovery.vue';
+import LoginAdmin from '../views/admin/LoginAdmin.vue';
 import NotFound from '../views/NotFound.vue';
-import RegisterProfessor from '../views/RegisterProfessor.vue';
-import RegisterCoordenador from '../views/RegisterCoordenador.vue';
-import RegisterCurso from '../views/RegisterCurso.vue';
+import RegisterProfessor from '../views/admin/RegisterProfessor.vue';
+import RegisterCoordenador from '../views/admin/RegisterCoordenador.vue';
+import RegisterCurso from '../views/admin/RegisterCurso.vue';
+import RegisterFuncionario from '../views/admin/RegisterFuncionario.vue';
 
 const routes = [
     {
@@ -71,6 +72,11 @@ const routes = [
         path: '/admin/register/curso', 
         name : "RegisterCurso",
         component: RegisterCurso
+    },
+    {
+        path: '/admin/register/funcionario',
+        name: 'RegisterFuncionario',
+        component: RegisterFuncionario
     }
 ];
 

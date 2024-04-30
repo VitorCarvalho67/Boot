@@ -167,7 +167,7 @@ model Funcionario {
 
 enum Cargo {
     GESTAO
-    ADMINTRACAO
+    ADMINISTRACAO
     DIRECAO
     ORIENTACAO
 }
