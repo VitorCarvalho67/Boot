@@ -18,7 +18,7 @@ model Aluno {
     recoveryPass   String?
     alunoImagem    String?
     turmas         String? // Formato "id1,id2,id3"
-    dataNascimento String? // Formato "AAAA-MM-DD"
+    dataNascimento DateTime?
     disciplina     String?
     rm             String?
     createdAt      DateTime @default(now())
@@ -131,6 +131,7 @@ model Professor {
     password        String
     tituloPrincipal String
     professorImagem String?
+    validated       Boolean       @default(false)
     coordenador     Coordenador[]
     atide           Atidade[]
     createdAt       DateTime      @default(now())

@@ -2,8 +2,8 @@ import axios from 'axios';
 import alter from '../router/index.js';
 
 const api =  axios.create({
-    baseURL: 'https://2679-190-115-67-244.ngrok-free.app'
-    // baseURL: 'http://localhost:3333/'
+    // baseURL: 'https://2679-190-115-67-244.ngrok-free.app'
+    baseURL: 'http://localhost:3333/'
 });
 
 export const registerPreAluno = async (userPreAluno) =>{
@@ -151,6 +151,19 @@ export const registerCurso = async (infoCurso, token) =>{
 export const registerFuncionario = async (infoFuncionario, token) =>{
     try {
         const response = await api.post('admin/register/funcionario', infoFuncionario, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error.response.data.detail);
+    }
+}
+
+export const validateProfessor = async (infoProfessor, token) =>{
+    try {
+        const response = await api.post('professor/validate', infoProfessor, {
             headers: {
                 authorization: `${token}`
             }

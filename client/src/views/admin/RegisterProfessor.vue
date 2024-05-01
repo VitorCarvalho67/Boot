@@ -17,42 +17,8 @@
                     <input type="email" id="email" v-model="professor.email" @input="checkData" required>
                 </div>
                 <br>
-                <div>
-                    <label for="password">Senha:</label>
-                    <input type="text" id="password" v-model="professor.password" @input="checkData" required>
-                </div>
 
-                <p v-show="!allRequirementsMet">A senha deve conter pelo menos:</p>
-                <p v-show="allRequirementsMet">Sua senha contém ao menos:</p>
-                <br>
-
-                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
-                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
-
-                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
-                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
-
-                <p v-show="!number">× Um número (0-9)</p>
-                <p v-show="number">✓ Um número (0-9)</p>
-
-                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
-                <p v-show="specialCharacter">✓ Um caractere especial</p>
-
-                <p v-show="!length">× 8 caracteres</p>
-                <p v-show="length">✓ 8 caracteres</p>
-                <br>
-
-                <div>
-                    <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="professor.confirmPassword" @input="checkData"
-                        required>
-                </div>
-
-                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
-
-                <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
-                <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
+                <button type="submit">Registrar</button>
                 <br>
 
             </form>
@@ -81,56 +47,26 @@ export default {
             professor: {
                 name: '',
                 tituloPrincipal: '',
-                email: '',
-                password: '',
-                confirmPassword: ''
-            },
-            uppercase: false,
-            lowercase: false,
-            number: false,
-            specialCharacter: false,
-            length: false,
-            confirmPass: false
-        }
-    },
-    computed: {
-        allRequirementsMet() {
-            return this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length;
+                email: ''
+            }
         }
     },
     methods: {
-        checkData() {
-            const password = this.professor.password;
-            const passwordConfirm = this.professor.confirmPassword;
-            const email = this.professor.email;
-            this.confirmPass = (password == passwordConfirm);
-            this.uppercase = /[A-Z]/.test(password);
-            this.lowercase = /[a-z]/.test(password);
-            this.number = /[0-9]/.test(password);
-            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
-            this.length = password.length >= 8;
-        },
-
         async submitForm() {
-            if (this.professor.password !== this.professor.confirmPassword) {
-                alert('Senhas não conferem');
-            } else {
-                const token = Cookies.get('token');
-                if (token){
-                    try {
-                        const data = await registerProfessor({
-                            name: this.professor.name,
-                            tituloPrincipal: this.professor.tituloPrincipal,
-                            email: this.professor.email,
-                            password: this.professor.password
-                        }, token);
-                        alert("tudo certo 😂")
-                    } catch (error) {
-                        alert('Erro ao registrar professor');
-                    }
-                } else{
-                    alert("Cookie de token não encontrado")
+            const token = Cookies.get('token');
+            if (token){
+                try {
+                    const data = await registerProfessor({
+                        name: this.professor.name,
+                        tituloPrincipal: this.professor.tituloPrincipal,
+                        email: this.professor.email
+                    }, token);
+                    alert("tudo certo 😂")
+                } catch (error) {
+                    alert('Erro ao registrar professor');
                 }
+            } else{
+                alert("Cookie de token não encontrado")
             }
         },
 

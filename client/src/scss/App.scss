@@ -1,9 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 
 $font-color-light: #000000;
-$font-color-dark: #f5f5f5;
-$bg-color-light: #f5f5f5;
+$font-color-dark: #fcf3ee;
+$bg-color-light: #fff0e6;
 $bg-color-dark: #000000;
+
+// Default Colors
+
+$primary-color-blue: #1a1a1a;
+$secondary-color-blue: #202020;
+$terciary-color-blue: #0a2139;
+$primary-color-orange: #ff872b;
+$secondary-color-orange: #f8b179;
+
+@mixin font-inter($weight) {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: $weight;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
 
 @mixin flex-center {
     display: flex;
@@ -11,17 +27,23 @@ $bg-color-dark: #000000;
     align-items: center;
 }
 
+@mixin flex ($direction, $justify, $align) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+
 @mixin color($color, $bg-color) {
     color: $color;
     background-color: $bg-color;
 }
 
 @mixin theme-color($theme) {
-    @if $theme =='light' {
+    @if $theme == "light" {
         @include color($font-color-light, $bg-color-light);
-    }
-
-    @else if $theme =='dark' {
+    } @else if $theme == "dark" {
         @include color($font-color-dark, $bg-color-dark);
     }
 }
@@ -41,7 +63,5 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 80px);
+    // min-height: calc(100vh - 80px);
 }
-
-$red: green;

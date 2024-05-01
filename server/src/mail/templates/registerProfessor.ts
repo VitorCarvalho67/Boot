@@ -65,7 +65,7 @@ export function generateRegisterProfessorEmail(firstName: string, email: string,
                     </p>
                     <div class="credenciais">
                         <p>Email: ${email}</p><br>
-                        <p>Senha: ${password}</p>
+                        <p>Senha temporária: ${password}</p>
                     </div>
                     <p class="instructions">
                         Caso esse email não faça sentido para você por favor ignore este e-mail. Não compartilhe esse suas credenciais com ninguém.

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { LoginAdminController } from "../modules/admins/useCase/loginAdmin/LoginAdminController";
 import { RegisterCursosController } from "../modules/admins/useCase/registerCursos/RegisterCursosController";
-import { adminAuthMiddleware } from '../middleware/adminAutentication';
+import { adminAuthMiddleware } from '../middleware/autentication';
 import { RegisterProfessorController } from "../modules/admins/useCase/registerProfessor/RegisterProfessorController";
 import { RegisterFuncionarioController } from "../modules/admins/useCase/registerFuncionario/RegisterFuncionarioController";
 import { RegisterCoordenadorController } from "../modules/admins/useCase/registerCoordenador/RegisterCoordenadorController";
@@ -25,7 +25,7 @@ adminRoutes.post("/register/funcionario", adminAuthMiddleware, registerFuncionar
 adminRoutes.post("/register/coordenador", adminAuthMiddleware, registerCoordenadorController.handle);
 
 adminRoutes.post("/auth", adminAuthMiddleware, (req, res) => {
-    res.status(200).send("Usuário autenticado com sucesso.");
+    res.status(200).send("Admin autenticado com sucesso.");
 });
 
 adminRoutes.post("/professores", adminAuthMiddleware, getAllProfessorController.handle);

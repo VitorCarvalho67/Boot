@@ -3,14 +3,15 @@ import Home from '../views/Home.vue';
 import Login from '../views/aluno/Login.vue';
 import Register from '../views/aluno/Register.vue';
 import TokenRegister from '../views/aluno/TokenRegister.vue';
-import RecoveryAluno from '../views/aluno/RecoveryAluno.vue';
+import RecoveryAluno from '../views/aluno/Recovery.vue';
 import ValidateRecovery from '../views/aluno/ValidateRecovery.vue';
-import LoginAdmin from '../views/admin/LoginAdmin.vue';
+import LoginAdmin from '../views/admin/Login.vue';
 import NotFound from '../views/NotFound.vue';
 import RegisterProfessor from '../views/admin/RegisterProfessor.vue';
 import RegisterCoordenador from '../views/admin/RegisterCoordenador.vue';
 import RegisterCurso from '../views/admin/RegisterCurso.vue';
 import RegisterFuncionario from '../views/admin/RegisterFuncionario.vue';
+import ValidateProfessor from '../views/professor/Validate.vue';
 
 const routes = [
     {
@@ -77,6 +78,11 @@ const routes = [
         path: '/admin/register/funcionario',
         name: 'RegisterFuncionario',
         component: RegisterFuncionario
+    },
+    {
+        path: '/professor/validate',
+        name: 'ValidateProfessor',
+        component: ValidateProfessor
     }
 ];
 
