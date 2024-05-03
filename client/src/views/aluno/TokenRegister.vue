@@ -38,19 +38,22 @@ export default {
         async submitForm() {
             const emailCookies = Cookies.get('email');
             try {
-                const data = await registerAluno({
+                const response = await registerAluno({
                     email: emailCookies,
                     token: this.userAluno.token
                 });
 
-                Cookies.remove('email');
-                alert('Aluno registrado com sucesso');
-                
-                router.push({ name: 'Login' })
-            } catch (error) {
-                alert('Erro ao registrar aluno');
-            }
+                if (200 <= response.status && response.status < 300) {
+                    Cookies.remove('email');
+                    router.push({ name: 'Login' });
 
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+            }
         }
     }
 }

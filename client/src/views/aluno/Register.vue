@@ -108,22 +108,23 @@ export default {
         },
 
         async submitForm() {
-            if (this.userAluno.password !== this.userAluno.confirmPassword) {
-                alert('Senhas não conferem');
-            } else {
-                try {
-                    const data = await registerPreAluno({
-                        name: this.userAluno.name,
-                        email: this.userAluno.email,
-                        password: this.userAluno.password
-                    });
+            try {
+                const response = await registerPreAluno({
+                    name: this.userAluno.name,
+                    email: this.userAluno.email,
+                    password: this.userAluno.password
+                });
 
-                    Cookies.set('email', `${data.email}`, { expires: 10 });
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('email', `${response.data.email}`, { expires: 10 });
                     router.push({ name: 'TokenRegister' })
                     
-                } catch (error) {
-                    alert('Erro ao registrar aluno');
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     }

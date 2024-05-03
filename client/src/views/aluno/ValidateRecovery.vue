@@ -50,17 +50,21 @@ export default {
             const emailCookies = Cookies.get('email');
             if (this.infoAluno.newPass === this.infoAluno.confirmNewPass){    
                 try {
-                    const data = await validateRecovery({
+                    const response = await validateRecovery({
                         email: emailCookies,
                         recoveryPassword: this.infoAluno.recoveryPass,
                         newPass: this.infoAluno.newPass
                     });
 
-                    alert('Conta recuperada com sucesso');
-                    
-                    router.push({ name: 'Login' })
-                } catch (error) {
-                    alert('Erro ao recuperar conta');
+                    if (200 <= response.status && response.status < 300) {
+                        router.push({ name: 'Login' });
+
+                        alert("Tudo certo! 😉");
+                    } else{
+                        alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    }
+                } catch(error){
+                    alert("Ops.. Algo deu errado. 😕\n" + error.message);
                 }
             } else{
                 alert("As senhas devem ser iguais!");

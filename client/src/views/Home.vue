@@ -3,23 +3,22 @@
     <Slides />
     <div id="app">
         <main>
-            <div class="box" id="box1">
-                <div class="info">
-                    <h1>Venha mostrar para o mundo o profissional que você é.</h1>
-                    <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma que
-                        facilite a introdução do aluno ao mercado de trabalho.</p>
-                    <router-link to="/">Saiba Mais</router-link>
+            <div class="content">
+                <div class="box" id="box1">
+
+                    <div class="info">
+                        <h1>Venha mostrar para o mundo o profissional que você é.</h1>
+                        <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
+                            que
+                            facilite a introdução do aluno ao mercado de trabalho.</p>
+                        <router-link to="/">Saiba Mais</router-link>
+                    </div>
+                </div>
+                <div class="box" id="box2">
                 </div>
             </div>
-            <div class="box" id="box2">
-            </div>
         </main>
-        <section class="aboutUs">
-            <H1>About Us</H1>
-            <br>
-            <br>
-            <br>
-        </section>
+        
         <br>
 
         <router-link to="/login">Login Aluno</router-link>
@@ -62,57 +61,63 @@ export default {
 
 <style lang="scss" scoped>
 main {
-    background-color: $secondary-color-blue;
-    @include flex(row, space-evenly, center);
-    height: 70vh;
+    min-height: auto;
+    background-color: $secondary-color-dark;
 
-    .box {
-        width: 30%;
-        height: 100%;
-        @include flex(column, center, center);
-        @include font-inter(400);
+    .content {
+        @include flex(row-reverse, center, center);
+        height: 45vh;
+        width: 100%;
 
-        * {
-            margin: 20px 0;
+        .box {
+            padding: 30px;
+            width: 40%;
+            height: 100%;
+            @include flex(column, center, center);
+            @include font-inter(400);
+
+            * {
+                margin: 20px 0;
+            }
+
+            .info {
+                @include flex(column, center, flex-start);
+                // width: 40%;
+            }
+
+            h1 {
+                color: $secondary-color-orange;
+                @include font-inter(500);
+            }
+
+            p {
+                width: 70%;
+            }
+
+            a {
+                background-color: $primary-color-orange;
+                padding: 10px 20px;
+                border-radius: 20px;
+                text-decoration: none;
+                @include color($secondary-color-dark, $primary-color-orange);
+            }
         }
 
-        .info{
-            @include flex(column, center, flex-start);
-            // width: 40%;
-        }
-
-        h1 {
-            color: $secondary-color-orange;
-            @include font-inter(500);
-        }
-
-        p {
-            width: 70%;
-        }
-
-        a {
-            background-color: $primary-color-orange;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            @include color($primary-color-blue, $primary-color-orange) ;
+        #box2 {
+            background-image: url(../assets/imageMain.png);
+            background-position: center;
+            background-size: 50%;
+            background-repeat: no-repeat;
         }
     }
 
-    #box2 {
-        background-image: url(../assets/imageMain.png);
-        background-position: center;
-        background-size: 80%;
-        transform: rotateY(180deg);
-        background-repeat: no-repeat;
-    }
 }
 
-.aboutUs{
+.aboutUs {
     padding: 20px 40px;
-    background-color: $primary-color-blue;
+    background-color: $secondary-color-dark;
 
-    h1{
+    h1 {
         @include font-inter(500);
         color: $secondary-color-orange;
         height: 10vh;

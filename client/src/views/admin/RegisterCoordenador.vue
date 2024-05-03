@@ -46,17 +46,24 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await registerCoordenador(this.coordenador.name, this.token);
-                alert("CERTINHO 🙏")
+                const response = await registerCoordenador(this.coordenador.name, this.token);
+                
+                if (response.status >= 200 && response.status < 300) {
+                    alert("Tudo certo! 😉");
+                    await this.GetProfessores();
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
             } catch (error) {
-                alert('Erro ao registrar coordenador ' + error);
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
         async GetProfessores() {
             try {
-                this.professores = await getProfessores(this.token);
+                const response = await getProfessores(this.token);
+                this.professores = response.data
             } catch (error) {
-                console.error('Erro ao recuperar a lista de professores:', error);
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },

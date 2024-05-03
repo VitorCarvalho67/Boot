@@ -45,21 +45,24 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await loginProfessor({
+                const response = await loginProfessor({
                     email: this.professor.email,
                     password: this.professor.password
                 });
 
-                alert('Professor logado com sucesso');
-                console.log(data);
-                
-                if(Cookies.get('token')){
-                    Cookies.remove('token');
+                if (200 <= response.status && response.status < 300) {
+                    if(Cookies.get('token')){
+                        Cookies.remove('token');
+                    }
+                    
+                    document.cookie = `token=${response.token}`;
+                    
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-                
-                document.cookie = `token=${data.token}`;
-            } catch (error) {
-                alert('Email ou senha inválidos');
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
 

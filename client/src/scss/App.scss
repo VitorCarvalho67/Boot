@@ -7,9 +7,10 @@ $bg-color-dark: #202020;
 
 // Default Colors
 
-$primary-color-blue: #1a1a1a;
-$secondary-color-blue: #202020;
-$terciary-color-blue: #0a2139;
+$primary-color-dark: #161616;
+$secondary-color-dark: #1a1a1a;
+$terciary-color-dark: #202020;
+
 $primary-color-orange: #ff872b;
 $secondary-color-orange: #f8b179;
 
@@ -27,13 +28,12 @@ $secondary-color-orange: #f8b179;
     align-items: center;
 }
 
-@mixin flex ($direction, $justify, $align) {
+@mixin flex($direction, $justify, $align) {
     display: flex;
     flex-direction: $direction;
     justify-content: $justify;
     align-items: $align;
 }
-
 
 @mixin color($color, $bg-color) {
     color: $color;
@@ -41,10 +41,13 @@ $secondary-color-orange: #f8b179;
 }
 
 @mixin theme-color($theme) {
-    @if $theme == "light" {
-        @include color($font-color-light, $bg-color-light);
-    } @else if $theme == "dark" {
-        @include color($font-color-dark, $bg-color-dark);
+    @if $theme=="light" {
+        @include color($font-color-light,
+        $bg-color-light);
+    }
+    @else if $theme=="dark" {
+        @include color($font-color-dark,
+        $bg-color-dark);
     }
 }
 
@@ -52,6 +55,7 @@ $secondary-color-orange: #f8b179;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    list-style: none;
 }
 
 body {
@@ -63,5 +67,5 @@ body {
 }
 
 main {
-    // min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
 }

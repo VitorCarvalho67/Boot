@@ -45,19 +45,26 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await loginAdmin({
+                const response = await loginAdmin({
                     email: this.userAdmin.email,
                     password: this.userAdmin.password
                 });
-                alert('Admin logado com sucesso');
-                const tokenExists = Cookies.get('token');
-                
-                if (tokenExists) {
-                    Cookies.remove('token');
+
+                if ( 200 <= response.status && response.status < 300) {
+                    const tokenExists = Cookies.get('token');
+
+                    if (tokenExists) {
+                        Cookies.remove('token');
+                    }
+
+                    document.cookie = `token=${response.data.token}`;
+
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-                document.cookie = `token=${data.token}`;
-            } catch (error) {
-                alert('Email ou senha inválidos');
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     }

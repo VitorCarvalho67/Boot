@@ -67,7 +67,7 @@ export default {
         },
         async submitForm() {
             try {
-                const data = await registerTurma(
+                const response = await registerTurma(
                     {
                         inicio: this.turma.inicio,
                         fim: this.turma.fim,
@@ -75,17 +75,23 @@ export default {
                     }, 
                     this.token
                 );
-                alert("CERTINHO 🙏")
-            } catch (error) {
-                alert('Erro ao registrar curso ' + error);
+
+                if (response.status >= 200 && response.status < 300) {
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
 
         async GetCursos() {
             try {
-                this.cursos = await getCursos(this.token);
+                const response = await getCursos(this.token);
+                this.cursos = response.data
             } catch (error) {
-                console.log(error);
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },

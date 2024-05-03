@@ -77,7 +77,7 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await registerCurso(
+                const response = await registerCurso(
                     {
                         cursoName: this.curso.name,
                         turno: this.curso.turno,
@@ -86,16 +86,22 @@ export default {
                     },
                     this.token
                 );
-                alert("CERTINHO 🙏")
-            } catch (error) {
-                alert('Erro ao registrar curso ' + error);
+
+                if (response.status >= 200 && response.status < 300) {
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
         async GetCoordenadores() {
             try {
-                this.coordenadores = await getCoordenadores(this.token);
+                const response = await getCoordenadores(this.token);
+                this.coordenadores = response.data;
             } catch (error) {
-                console.log(error);
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },

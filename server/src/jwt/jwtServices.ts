@@ -1,5 +1,5 @@
 import { sign, verify, JwtPayload } from "jsonwebtoken";
-import { Aluno, Admin, Professor } from "@prisma/client";
+import { Aluno, Admin, Professor, Funcionario } from "@prisma/client";
 
 export function generateAccessTokenAluno(aluno: Aluno): string {
     return sign({ alunoId: aluno.id }, process.env.JWT_ACCESS_SECRET as string, {
@@ -19,6 +19,12 @@ export function generateAccessTokenProfessor(professor: Professor): string {
     });
 }
 
+export function generateAccessTokenFuncionario(funcionario: Funcionario): string {
+    return sign({ funcionarioId: funcionario.id }, process.env.JWT_ACCESS_SECRET as string, {
+        expiresIn: '50m',
+    });
+}
+
 export function verfifyAccessTokenAluno(token: string): string | JwtPayload {
     return verify(token, process.env.JWT_ACCESS_SECRET as string);
 }
@@ -28,5 +34,9 @@ export function verfifyAccessTokenAdmin(token: string): string | JwtPayload {
 }
 
 export function verfifyAccessTokenProfessor(token: string): string | JwtPayload {
+    return verify(token, process.env.JWT_ACCESS_SECRET as string);
+}
+
+export function verfifyAccessTokenFuncinario(token: string): string | JwtPayload {
     return verify(token, process.env.JWT_ACCESS_SECRET as string);
 }

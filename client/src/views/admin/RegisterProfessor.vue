@@ -53,7 +53,7 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await registerProfessor(
+                const response = await registerProfessor(
                     {
                         name: this.professor.name,
                         tituloPrincipal: this.professor.tituloPrincipal,
@@ -61,9 +61,14 @@ export default {
                     }, 
                     this.token
                 );
-                alert("Tudo certo 😂")
-            } catch (error) {
-                alert('Erro ao registrar professor');
+
+                if (response.status >= 200 && response.status < 300) {
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },

@@ -11,9 +11,9 @@ datasource db {
 }
 
 model Aluno {
-    id             String   @id @default(uuid())
+    id             String    @id @default(uuid())
     name           String
-    email          String   @unique
+    email          String    @unique
     password       String
     recoveryPass   String?
     alunoImagem    String?
@@ -21,8 +21,8 @@ model Aluno {
     dataNascimento DateTime?
     disciplina     String?
     rm             String?
-    createdAt      DateTime @default(now())
-    updatedAt      DateTime @updatedAt
+    createdAt      DateTime  @default(now())
+    updatedAt      DateTime  @updatedAt
 
     @@map("alunos")
 }
@@ -133,7 +133,7 @@ model Professor {
     professorImagem String?
     validated       Boolean       @default(false)
     coordenador     Coordenador[]
-    atide           Atidade[]
+    atide           Atividade[]
     createdAt       DateTime      @default(now())
     updatedAt       DateTime      @updatedAt
 
@@ -160,6 +160,7 @@ model Funcionario {
     funcionarioImagem String?
     cargo             Cargo
     vaga              Vaga[]
+    validated         Boolean  @default(false)
     createdAt         DateTime @default(now())
     updatedAt         DateTime @updatedAt
 
@@ -173,7 +174,7 @@ enum Cargo {
     ORIENTACAO
 }
 
-model Atidade {
+model Atividade {
     id              String    @id @default(uuid())
     title           String
     descricao       String    @db.VarChar(1000)

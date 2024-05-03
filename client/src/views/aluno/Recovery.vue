@@ -48,17 +48,21 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const data = await recoveryAluno({
+                const response = await recoveryAluno({
                     name: this.userAluno.name,
                     email: this.userAluno.email
                 });
 
-                Cookies.set('email', `${this.userAluno.email}`, { expires: 10 });
-                alert('Senha temporária enviada com sucesso!');
-
-                router.push({name: 'ValidateRecovery'});
-            } catch (error) {
-                alert('Email ou nome inválidos');
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('email', `${this.userAluno.email}`, { expires: 10 });
+                    router.push({name: 'ValidateRecovery'});
+                
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     }

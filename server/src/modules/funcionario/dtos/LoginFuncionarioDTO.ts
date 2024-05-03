@@ -1,4 +1,4 @@
-export interface LoginFuncionario {
+export interface LoginFuncionarioDTO {
     email: string,
     password: string
 }

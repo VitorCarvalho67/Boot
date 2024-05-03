@@ -2,17 +2,17 @@
     <Header />
     <div id="app">
         <main>
+            <H1>Login de funcionario</H1>
             <form @submit.prevent="submitForm">
                 <div>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="userAluno.email" required>
+                    <p> {{ this.funcionario.email }}</p> <router-link to="/funcionario/init">Editar</router-link>
                 </div>
                 <div>
                     <label for="password">Senha:</label>
-                    <input type="password" id="password" v-model="userAluno.password" required>
+                    <input type="password" id="password" v-model="funcionario.password" required>
                 </div>
                 <div>
-                    <p>Ainda não tem conta? registre-se aqui: <router-link to="/register">Registro</router-link></p>
                     <button type="submit">Login</button>
                 </div>
             </form>
@@ -21,22 +21,22 @@
     <Footer />
 
 </template>
-
 <script>
-import { loginAluno } from '../../services/api.js';
+import { loginFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
+import router from '../../router/index.js'
 
 export default {
-    name: 'Login',
+    name: 'LoginFuncionario',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            userAluno: {
+            funcionario: {
                 email: '',
                 password: ''
             }
@@ -45,16 +45,17 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const response = await loginAluno({
-                    email: this.userAluno.email,
-                    password: this.userAluno.password
+                const response = await loginFuncionario({
+                    email: this.funcionario.email,
+                    password: this.funcionario.password
                 });
                 
-                if (response.status >= 200 && response.status < 300) {
+                if (200 <= response.status && response.status < 300) {
                     if(Cookies.get('token')){
                         Cookies.remove('token');
                     }
-                    document.cookie = `token=${response.data.token}`;
+                    
+                    document.cookie = `token=${response.token}`;
                     
                     alert("Tudo certo! 😉");
                 } else{
@@ -63,7 +64,19 @@ export default {
             } catch(error){
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
+        },
+
+        async getEmail(){
+            if(Cookies.get('emailFuncionario')){
+                this.funcionario.email = Cookies.get('emailFuncionario');
+            }
+            else{
+                router.push({path: "/funcionario/init"});
+            }
         }
+    },
+    async created(){
+        await this.getEmail();
     }
 }
 </script>

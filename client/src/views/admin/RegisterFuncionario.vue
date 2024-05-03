@@ -22,39 +22,7 @@
                     <input type="email" id="email" v-model="funcionario.email" @input="checkData" required>
                 </div>
                 <br>
-                <div>
-                    <label for="password">Senha:</label>
-                    <input type="text" id="password" v-model="funcionario.password" @input="checkData" required>
-                </div>
-
-                <p v-show="!allRequirementsMet">A senha deve conter pelo menos:</p>
-                <p v-show="allRequirementsMet">Sua senha contém ao menos:</p>
-                <br>
-
-                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
-                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
-
-                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
-                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
-
-                <p v-show="!number">× Um número (0-9)</p>
-                <p v-show="number">✓ Um número (0-9)</p>
-
-                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
-                <p v-show="specialCharacter">✓ Um caractere especial</p>
-
-                <p v-show="!length">× 8 caracteres</p>
-                <p v-show="length">✓ 8 caracteres</p>
-                <br>
-
-                <div>
-                    <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="funcionario.confirmPassword" @input="checkData"
-                        required>
-                </div>
-
-                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
+        
 
                 <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
                 <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
@@ -88,60 +56,45 @@ export default {
                 name: '',
                 tituloPrincipal: '',
                 email: '',
-                password: '',
-                confirmPassword: ''
             },
-            uppercase: false,
-            lowercase: false,
-            number: false,
-            specialCharacter: false,
-            length: false,
-            confirmPass: false
         }
     },
     computed: {
         allRequirementsMet() {
-            return this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length;
+            return this.funcionario.name && this.funcionario.email && this.funcionario.cargo;
         }
     },
     methods: {
         checkData() {
-            const password = this.funcionario.password;
-            const passwordConfirm = this.funcionario.confirmPassword;
+            const name = this.funcionario.name;
             const email = this.funcionario.email;
-            this.confirmPass = (password == passwordConfirm);
-            this.uppercase = /[A-Z]/.test(password);
-            this.lowercase = /[a-z]/.test(password);
-            this.number = /[0-9]/.test(password);
-            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
-            this.length = password.length >= 8;
+            const cargo = this.funcionario.cargo;
         },
 
         async submitForm() {
-            if (this.funcionario.password !== this.funcionario.confirmPassword) {
-                alert('Senhas não conferem');
-            } else {
-                try {
-                    const data = await registerFuncionario(
-                        {
-                            name: this.funcionario.name,
-                            email: this.funcionario.email,
-                            password: this.funcionario.password,
-                            cargo: this.funcionario.cargo
-                        }, 
-                        this.token
-                    );
-                    alert("tudo certo 😂")
-                } catch (error) {
-                    alert('Erro ao registrar funcionário');
+            try {
+                const response = await registerFuncionario(
+                    {
+                        name: this.funcionario.name,
+                        email: this.funcionario.email,
+                        cargo: this.funcionario.cargo
+                    }, 
+                    this.token
+                );
+                
+                if (response.status >= 200 && response.status < 300) {
+                    alert("Tudo certo! 😉");
+                } else{
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },
     mixins: [authMixin],
     async created() {
         this.authenticate();
-        await this.Authenticate();
     }
 }
 

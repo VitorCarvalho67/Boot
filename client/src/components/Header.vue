@@ -38,20 +38,15 @@ header {
     background-color: transparent;
     padding: 10px 80px;
     height: 80px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $primary-color-blue;
+    @include flex(row, space-between, center);
+    background-color: $secondary-color-dark;
     div {
         width: 100px;
 
         img {
             height: 100%;
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include flex(row, center, center);
         }
     }
 
@@ -64,6 +59,7 @@ header {
             text-decoration: none;
             text-transform: uppercase;
             color: $font-color-dark;
+            font-size: .8rem;
             @include font-inter(400);
         }
 
@@ -71,7 +67,7 @@ header {
             background-color: $primary-color-orange;
             padding: 10px 20px;
             border-radius: 20px;
-            color: $primary-color-blue;
+            color: $secondary-color-dark;
         }
     }
 }

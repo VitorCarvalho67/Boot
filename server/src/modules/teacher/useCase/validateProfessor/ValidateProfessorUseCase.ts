@@ -8,6 +8,16 @@ const bcrypt = require('bcrypt');
 export class ValidateProfessorUseCase{
     async execute({ email, temporaryPassword, newPassword } : ValidateProfessorDTO):  Promise< Professor >{
 
+        const professorEmail = await prisma.professor.findFirst({
+            where: {
+                email,
+            }
+        });
+
+        if (!professorEmail){
+            throw new AppError("Email não cadastrado!");
+        }
+
         const professor = await prisma.professor.findFirst({
             where: {
                 email,
@@ -16,7 +26,7 @@ export class ValidateProfessorUseCase{
         });
 
         if (!professor){
-            throw new AppError("Email não cadastrado ou professor já validado!");
+            throw new AppError("Professor já validado!");
         } 
 
         

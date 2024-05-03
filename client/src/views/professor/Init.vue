@@ -36,26 +36,27 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const professorResult = await initProfessor(this.professor.email);
+                const response = await initProfessor(this.professor.email);
 
-                console.log(professorResult);
-
-                alert(professorResult.professor.validated);
-
-                if(Cookies.get('emailProfessor')){
-                    Cookies.remove('emailProfessor');
-                }
-                
-                Cookies.set('emailProfessor', `${this.professor.email}`, { expires: 10 });
-                
-                if(!professorResult.professor.validated){
-                    router.push({ name: 'ValidateProfessor'});
+                if (200 <= response.status && response.status < 300) {
+                    if(Cookies.get('emailProfessor')){
+                        Cookies.remove('emailProfessor');
+                    }
+                    
+                    Cookies.set('emailProfessor', `${this.professor.email}`, { expires: 10 });
+                    
+                    if(!response.data.professor.validated){
+                        router.push({ name: 'ValidateProfessor'});
+                    } else{
+                        router.push({ name: 'LoginProfessor'});
+                    }
+                    
+                    alert("Tudo certo! 😉");
                 } else{
-                    router.push({ name: 'LoginProfessor'});
+                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-
-            } catch (error) {
-                alert('Erro ao buscar professor');
+            } catch(error){
+                alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
 
         }

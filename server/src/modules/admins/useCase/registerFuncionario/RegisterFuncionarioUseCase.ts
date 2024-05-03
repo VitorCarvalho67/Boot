@@ -8,7 +8,7 @@ import transporter from "../../../../mail/config/email";
 const bcrypt = require('bcrypt');
 
 export class RegisterFuncionarioUseCase{
-    async execute({ name, email, password, cargo } : RegisterFuncionarioDTO):  Promise< Funcionario >{
+    async execute({ name, email, cargo } : RegisterFuncionarioDTO):  Promise< Funcionario >{
 
         const emailAlreadyExists = await prisma.funcionario.findFirst({
             where: {
@@ -20,6 +20,7 @@ export class RegisterFuncionarioUseCase{
             throw new AppError("Email já cadastrado!");
         } else {
             const salt = bcrypt.genSaltSync(10);
+            const password: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
             const hash = bcrypt.hashSync(password, salt);
 
             const nome = name.split(' ').shift()?.toString() ?? 'profissional de ' + cargo.toLowerCase();

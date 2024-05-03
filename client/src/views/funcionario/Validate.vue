@@ -4,13 +4,13 @@
         <div class="register">
             <form @submit.prevent="submitForm">
                 <h1>Complete seu cadastro:</h1>
-                <p>Email:</p><p>{{ this.professor.email }}</p><router-link to="/professor/init">Editar</router-link>
+                <p>Email:</p><p>{{ this.funcionario.email }}</p><router-link to="/funcionario/init">Editar</router-link>
                 
                 <p>Senha temporária (enviada no email):</p>
-                <input type="text" id="temporaryPassword" v-model="professor.temporaryPassword" required>
+                <input type="text" id="temporaryPassword" v-model="funcionario.temporaryPassword" required>
                 
                 <p>Nova Senha:</p>
-                <input type="text" id="newPassword" v-model="professor.newPassword" @input="checkData" required>
+                <input type="text" id="newPassword" v-model="funcionario.newPassword" @input="checkData" required>
                 
                 <p v-show="!allRequirements">A senha deve conter pelo menos:</p>
                 <p v-show="allRequirements">Sua senha contém ao menos:</p>
@@ -34,7 +34,7 @@
 
                 <div>
                     <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="professor.confirmPassword" @input="checkData" required>
+                    <input type="text" id="confirmPassword" v-model="funcionario.confirmPassword" @input="checkData" required>
                 </div>
 
                 <p v-show="!confirmPass">× As senhas devem ser iguais</p>
@@ -49,21 +49,21 @@
 </template>
 
 <script>
-import { validateProfessor } from '../../services/api.js';
+import { validateFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 
 export default {
-    name: 'ValidateProfessor',
+    name: 'ValidateFuncionario',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            professor: {
+            funcionario: {
                 email: '',
                 temporaryPassword: '',
                 newPassword: ''
@@ -83,8 +83,8 @@ export default {
     },
     methods: {
         checkData() {
-            const password = this.professor.newPassword;
-            const passwordConfirm = this.professor.confirmPassword;
+            const password = this.funcionario.newPassword;
+            const passwordConfirm = this.funcionario.confirmPassword;
             this.confirmPass = (password == passwordConfirm);
             this.uppercase = /[A-Z]/.test(password);
             this.lowercase = /[a-z]/.test(password);
@@ -95,15 +95,16 @@ export default {
 
         async submitForm() {
             try {
-                const response = await validateProfessor({
-                    email: this.professor.email,
-                    temporaryPassword: this.professor.temporaryPassword,
-                    newPassword: this.professor.newPassword
+                const response = await validateFuncionario({
+                    email: this.funcionario.email,
+                    temporaryPassword: this.funcionario.temporaryPassword,
+                    newPassword: this.funcionario.newPassword
                 });
-                
+
                 if (200 <= response.status && response.status < 300) {
-                    Cookies.remove('email');                    
-                    router.push({ path: '/professor/login' });
+                    Cookies.remove('email');
+                    
+                    router.push({ path: '/funcionario/login' });
                     
                     alert("Tudo certo! 😉");
                 } else{
@@ -116,11 +117,11 @@ export default {
         },
 
         async getEmail(){
-            if(Cookies.get('emailProfessor')){
-                this.professor.email = Cookies.get('emailProfessor');
+            if(Cookies.get('emailFuncionario')){
+                this.funcionario.email = Cookies.get('emailFuncionario');
             }
             else{
-                router.push({path: "/professor/init"});
+                router.push({path: "/funcionario/init"});
             }
         }
     },

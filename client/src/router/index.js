@@ -15,9 +15,11 @@ import ValidateProfessor from '../views/professor/Validate.vue';
 import InitProfessor from '../views/professor/Init.vue';
 import LoginProfessor from '../views/professor/Login.vue';
 import RegisterTurma from '../views/admin/RegisterTurma.vue';
+import ValidateFuncionario from '../views/funcionario/Validate.vue';
+import InitFuncionario from '../views/funcionario/Init.vue';
+import LoginFuncionario from '../views/funcionario/Login.vue';
 
-const routes = [
-    {
+const routes = [{
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
         component: NotFound
@@ -63,24 +65,23 @@ const routes = [
         component: LoginAdmin
     },
     {
-        path: '/admin/register/professor', 
-        name : 'RegisterProfessor',
+        path: '/admin/register/professor',
+        name: 'RegisterProfessor',
         component: RegisterProfessor
     },
     {
-        path: '/admin/register/coordenador', 
-        name : 'RegisterCoordenador',
+        path: '/admin/register/coordenador',
+        name: 'RegisterCoordenador',
         component: RegisterCoordenador
     },
     {
-        path: '/admin/register/curso', 
-        name : 'RegisterCurso',
+        path: '/admin/register/curso',
+        name: 'RegisterCurso',
         component: RegisterCurso
-    },
-    ,
+    }, ,
     {
-        path: '/admin/register/turma', 
-        name : 'RegisterTurma',
+        path: '/admin/register/turma',
+        name: 'RegisterTurma',
         component: RegisterTurma
     },
     {
@@ -102,6 +103,21 @@ const routes = [
         path: '/professor/login',
         name: 'LoginProfessor',
         component: LoginProfessor
+    },
+    {
+        path: '/funcionario/init',
+        name: 'InitFuncionario',
+        component: InitFuncionario
+    },
+    {
+        path: '/funcionario/validate',
+        name: 'ValidateFuncionario',
+        component: ValidateFuncionario
+    },
+    {
+        path: '/funcionario/login',
+        name: 'LoginFuncionario',
+        component: LoginFuncionario
     }
 ];
 

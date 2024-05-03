@@ -94,75 +94,63 @@ export default defineComponent({
 
 <!-- Aqui o resto do seu código CSS -->
 
-
 <style lang="scss" scoped>
 section {
     padding: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    flex-direction: row-reverse;
-    background-color: #161616;
+    background-color: $terciary-color-dark;
+    @include flex(row-reverse, space-around, center);
 }
 
 .box {
-        width: 30%;
-        height: 100%;
-        @include flex(column, center, center);
-        @include font-inter(400);
+    width: 30%;
+    height: 100%;
+    @include flex(column, center, center);
+    @include font-inter(400);
 
-        * {
-            margin: 20px 0;
-        }
-
-        .info{
-            @include flex(column, center, flex-start);
-            width: 70%;
-        }
-
-        h1 {
-            color: $secondary-color-orange;
-            @include font-inter(500);
-        }
-
-        p {
-            width: 70%;
-        }
-
-        a {
-            background-color: $primary-color-orange;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            @include color($primary-color-blue, $primary-color-orange) ;
-        }
+    * {
+        margin: 20px 0;
     }
+
+    .info {
+        @include flex(column, center, flex-start);
+        width: 70%;
+    }
+
+    h1 {
+        color: $secondary-color-orange;
+        @include font-inter(500);
+    }
+
+    p {
+        width: 70%;
+    }
+
+    a {
+        @include color($secondary-color-dark, $primary-color-orange);
+        padding: 10px 20px;
+        border-radius: 20px;
+        text-decoration: none;
+    }
+}
 
 .carrossel {
     position: relative;
-    width: 60%;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    width: 50%;
+    height: 70vh;
+    @include flex(column, center, center);
     border-radius: 20px;
 }
 
 .slides {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex(column, center, center);
 }
 
 .slide {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex(row, center, center);
     position: absolute;
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -183,48 +171,43 @@ section {
 .slide-content {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex(column, center, center);
     position: absolute;
     color: white;
     text-align: center;
-}
 
-.slide-content h2 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
+    h2 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
 
-.slide-content p {
-    font-size: 1.5rem;
+    p {
+        font-size: 1.5rem;
+    }
 }
 
 .buttons {
     width: 100%;
     height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(row, space-between, center);
     position: absolute;
     bottom: 0;
     padding: 1rem;
-}
 
-.buttons button {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid rgb(68, 75, 77);
-    background-color: transparent;
-    color: #fff;
-    cursor: pointer;
-    width: 50px;
-    height: 100%;
-    opacity: 0.2;
-}
+    button {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: 1px solid rgb(68, 75, 77);
+        background-color: transparent;
+        color: #fff;
+        cursor: pointer;
+        width: 50px;
+        height: 100%;
+        opacity: 0.2;
 
-.buttons button:hover {
-    background-color: rgb(53, 57, 59);
+        &:hover {
+            background-color: rgb(53, 57, 59);
+        }
+    }
 }
 </style>
