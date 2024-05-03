@@ -19,8 +19,6 @@
                 <br>
 
                 <button type="submit">Registrar</button>
-                <br>
-
             </form>
         </div>
     </main>
@@ -33,7 +31,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { authAdmin } from '../../services/api';
+import { authMixin } from '../../util/mixinAdmin.js';
 import { registerProfessor } from '../../services/api';
 
 export default {
@@ -44,6 +42,7 @@ export default {
     },
     data() {
         return {
+            token: '',
             professor: {
                 name: '',
                 tituloPrincipal: '',
@@ -53,41 +52,24 @@ export default {
     },
     methods: {
         async submitForm() {
-            const token = Cookies.get('token');
-            if (token){
-                try {
-                    const data = await registerProfessor({
+            try {
+                const data = await registerProfessor(
+                    {
                         name: this.professor.name,
                         tituloPrincipal: this.professor.tituloPrincipal,
                         email: this.professor.email
-                    }, token);
-                    alert("tudo certo 😂")
-                } catch (error) {
-                    alert('Erro ao registrar professor');
-                }
-            } else{
-                alert("Cookie de token não encontrado")
-            }
-        },
-
-        async Authenticate() {
-            const token = Cookies.get('token');
-            if (token == undefined) {
-                router.push({ path: '/admin/login' });
-            } else {
-                try {
-                    const auth = await authAdmin(token);
-
-                    if (auth !== "Usuário autenticado com sucesso.") {
-                        router.push({ path: "/admin/login" })
-                    }
-                } catch (error) {
-                    alert(error);
-                }
+                    }, 
+                    this.token
+                );
+                alert("Tudo certo 😂")
+            } catch (error) {
+                alert('Erro ao registrar professor');
             }
         }
     },
+    mixins: [authMixin],
     async created() {
+        this.authenticate();
         await this.Authenticate();
     }
 }

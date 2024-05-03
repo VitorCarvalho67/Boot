@@ -1,26 +1,35 @@
 <template>
     <Header />
-    <main>
-        <div class="register">
+    <div id="app">
+        <main>
+            <H1>Login de professor</H1>
             <form @submit.prevent="submitForm">
-                <h1>Faça seu login como professor:</h1>
-                <p>Email:</p>
-                <button type="submit">Continuar</button>
+                <div>
+                    <label for="email">Email:</label>
+                    <p> {{ this.professor.email }}</p> <router-link to="/professor/init">Editar</router-link>
+                </div>
+                <div>
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" v-model="professor.password" required>
+                </div>
+                <div>
+                    <button type="submit">Login</button>
+                </div>
             </form>
-        </div>
-    </main>
+        </main>
+    </div>
     <Footer />
-</template>
 
+</template>
 <script>
-import { validateProfessor } from '../../services/api.js';
+import { loginProfessor } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 
 export default {
-    name: 'ValidateProfessor',
+    name: 'LoginProfessor',
     components: {
         Header,
         Footer
@@ -28,30 +37,43 @@ export default {
     data() {
         return {
             professor: {
-                temporaryPassord: '',
-                newPassord: ''
+                email: '',
+                password: ''
             }
         }
     },
     methods: {
         async submitForm() {
-            const emailCookies = Cookies.get('email');
             try {
-                await validateProfessor({
-                    email: emailCookies,
-                    temporaryPassord: this.professor.temporaryPassord,
-                    newPassord: this.professor.newPassord
+                const data = await loginProfessor({
+                    email: this.professor.email,
+                    password: this.professor.password
                 });
 
-                Cookies.remove('email');
                 alert('Professor logado com sucesso');
+                console.log(data);
                 
-                router.push({ name: 'Login' })
+                if(Cookies.get('token')){
+                    Cookies.remove('token');
+                }
+                
+                document.cookie = `token=${data.token}`;
             } catch (error) {
-                alert('Erro ao loogar como professor');
+                alert('Email ou senha inválidos');
             }
+        },
 
+        async getEmail(){
+            if(Cookies.get('emailProfessor')){
+                this.professor.email = Cookies.get('emailProfessor');
+            }
+            else{
+                router.push({path: "/professor/init"});
+            }
         }
+    },
+    async created(){
+        await this.getEmail();
     }
 }
 </script>

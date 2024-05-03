@@ -12,6 +12,9 @@ import RegisterCoordenador from '../views/admin/RegisterCoordenador.vue';
 import RegisterCurso from '../views/admin/RegisterCurso.vue';
 import RegisterFuncionario from '../views/admin/RegisterFuncionario.vue';
 import ValidateProfessor from '../views/professor/Validate.vue';
+import InitProfessor from '../views/professor/Init.vue';
+import LoginProfessor from '../views/professor/Login.vue';
+import RegisterTurma from '../views/admin/RegisterTurma.vue';
 
 const routes = [
     {
@@ -61,18 +64,24 @@ const routes = [
     },
     {
         path: '/admin/register/professor', 
-        name : "RegisterProfessor",
+        name : 'RegisterProfessor',
         component: RegisterProfessor
     },
     {
         path: '/admin/register/coordenador', 
-        name : "RegisterCoordenador",
+        name : 'RegisterCoordenador',
         component: RegisterCoordenador
     },
     {
         path: '/admin/register/curso', 
-        name : "RegisterCurso",
+        name : 'RegisterCurso',
         component: RegisterCurso
+    },
+    ,
+    {
+        path: '/admin/register/turma', 
+        name : 'RegisterTurma',
+        component: RegisterTurma
     },
     {
         path: '/admin/register/funcionario',
@@ -80,9 +89,19 @@ const routes = [
         component: RegisterFuncionario
     },
     {
+        path: '/professor/init',
+        name: 'InitProfessor',
+        component: InitProfessor
+    },
+    {
         path: '/professor/validate',
         name: 'ValidateProfessor',
         component: ValidateProfessor
+    },
+    {
+        path: '/professor/login',
+        name: 'LoginProfessor',
+        component: LoginProfessor
     }
 ];
 

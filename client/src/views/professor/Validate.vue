@@ -3,13 +3,45 @@
     <main>
         <div class="register">
             <form @submit.prevent="submitForm">
-                <H1>Token de acesso:</H1>
-                <p>Informe a senha temporária enviada para o seu email</p>
-                <p>Senha temporária:</p>
-                <input type="text" id="temporaryPassord" v-model="professor.temporaryPassord" required>
+                <h1>Complete seu cadastro:</h1>
+                <p>Email:</p><p>{{ this.professor.email }}</p><router-link to="/professor/init">Editar</router-link>
+                
+                <p>Senha temporária (enviada no email):</p>
+                <input type="text" id="temporaryPassword" v-model="professor.temporaryPassword" required>
+                
                 <p>Nova Senha:</p>
-                <input type="text" id="temporaryPassord" v-model="professor.newPassord" required>
-                <button type="submit">Verificar</button>
+                <input type="text" id="newPassword" v-model="professor.newPassword" @input="checkData" required>
+                
+                <p v-show="!allRequirements">A senha deve conter pelo menos:</p>
+                <p v-show="allRequirements">Sua senha contém ao menos:</p>
+                <br>
+
+                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
+                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
+
+                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
+                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
+                
+                <p v-show="!number">× Um número (0-9)</p>
+                <p v-show="number">✓ Um número (0-9)</p>
+                
+                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
+                <p v-show="specialCharacter">✓ Um caractere especial</p>
+                
+                <p v-show="!length">× 8 caracteres</p>
+                <p v-show="length">✓ 8 caracteres</p>
+                <br>
+
+                <div>
+                    <label for="confirmPassword">Confirmar Senha:</label>
+                    <input type="text" id="confirmPassword" v-model="professor.confirmPassword" @input="checkData" required>
+                </div>
+
+                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
+                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
+
+                <button type="submit" v-show="allRequirements">Concluir</button>
+                <button type="button" v-show="!allRequirements">Concluir</button>
             </form>
         </div>
     </main>
@@ -32,30 +64,64 @@ export default {
     data() {
         return {
             professor: {
-                temporaryPassord: '',
-                newPassord: ''
-            }
+                email: '',
+                temporaryPassword: '',
+                newPassword: ''
+            },
+            uppercase: false,
+            lowercase: false,
+            number: false,
+            specialCharacter: false,
+            length: false,
+            confirmPass: false,
+        }
+    },
+    computed: {
+        allRequirements(){
+            return (this.confirmPass && this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length)
         }
     },
     methods: {
+        checkData() {
+            const password = this.professor.newPassword;
+            const passwordConfirm = this.professor.confirmPassword;
+            this.confirmPass = (password == passwordConfirm);
+            this.uppercase = /[A-Z]/.test(password);
+            this.lowercase = /[a-z]/.test(password);
+            this.number = /[0-9]/.test(password);
+            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
+            this.length = password.length >= 8;
+        },
+
         async submitForm() {
-            const emailCookies = Cookies.get('email');
             try {
                 await validateProfessor({
-                    email: emailCookies,
-                    temporaryPassord: this.professor.temporaryPassord,
-                    newPassord: this.professor.newPassord
+                    email: this.professor.email,
+                    temporaryPassword: this.professor.temporaryPassword,
+                    newPassword: this.professor.newPassword
                 });
 
                 Cookies.remove('email');
-                alert('Professor logado com sucesso');
+                alert('Cadastro concluído 😊');
                 
-                router.push({ name: 'Login' })
+                router.push({ path: '/professor/login' })
             } catch (error) {
-                alert('Erro ao loogar como professor');
+                alert('Erro ao concluir seu cadastro como professor');
             }
 
+        },
+
+        async getEmail(){
+            if(Cookies.get('emailProfessor')){
+                this.professor.email = Cookies.get('emailProfessor');
+            }
+            else{
+                router.push({path: "/professor/init"});
+            }
         }
+    },
+    async created(){
+        await this.getEmail();
     }
 }
 </script>

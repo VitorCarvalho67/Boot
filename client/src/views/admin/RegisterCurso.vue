@@ -30,11 +30,12 @@
                         </select>
                     </div>
                 </div>
-                
+
                 <label for="coordenador">Coordenador:</label>
                 <select id="coordenador" v-model="curso.coordenador" required>
                     <option value="" disabled>Selecione um coordenador</option>
-                    <option v-for="coordenador in coordenadores" :key="coordenador.name" :value="coordenador.name">{{ coordenador.name }}</option>
+                    <option v-for="coordenador in coordenadores" :key="coordenador.name" :value="coordenador.name">{{
+                        coordenador.name }}</option>
                 </select>
                 <br>
                 <button type="submit">Registrar</button>
@@ -51,9 +52,8 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { authAdmin } from '../../services/api';
-import { getCoordenadores } from '../../services/api';
-import { registerCurso } from '../../services/api';
+import { authMixin } from '../../util/mixinAdmin.js';
+import { getCoordenadores, registerCurso } from '../../services/api';
 
 export default {
     name: 'RegisterCurso',
@@ -63,6 +63,7 @@ export default {
     },
     data() {
         return {
+            token: '',
             curso: {
                 name: '',
                 turno: '',
@@ -75,53 +76,33 @@ export default {
     },
     methods: {
         async submitForm() {
-            const token = Cookies.get('token');
-           
-            if (token){
-                try {
-                    const data = await registerCurso(
-                        {
-                            cursoName: this.curso.name,
-                            turno: this.curso.turno,
-                            duracao: (this.curso.duracao_quantidade + " " + this.curso.duracao_periodo),
-                            coordenador: this.curso.coordenador
-                        }, 
-                        token
-                    );
-                    alert("CERTINHO 🙏")
-                } catch (error) {
-                    alert('Erro ao registrar curso ' + error);
-                }
-            } else{
-                alert("Cookie de token não encontrado");
+            try {
+                const data = await registerCurso(
+                    {
+                        cursoName: this.curso.name,
+                        turno: this.curso.turno,
+                        duracao: (this.curso.duracao_quantidade + " " + this.curso.duracao_periodo),
+                        coordenador: this.curso.coordenador
+                    },
+                    this.token
+                );
+                alert("CERTINHO 🙏")
+            } catch (error) {
+                alert('Erro ao registrar curso ' + error);
             }
         },
-
-        async Authenticate() {
-            const token = Cookies.get('token');
-            if (token == undefined) {
-                router.push({ path: '/admin/login' });
-            } else {
-                try {
-                    const auth = await authAdmin(token);
-
-                    if (auth !== "Usuário autenticado com sucesso.") {
-                        router.push({ path: "/admin/login" });
-                    }
-
-                    try {
-                        this.coordenadores = await getCoordenadores(token);
-                    } catch (error) {
-                        console.log(error);
-                    }
-                } catch (error) {
-                    alert(error);
-                }
+        async GetCoordenadores() {
+            try {
+                this.coordenadores = await getCoordenadores(this.token);
+            } catch (error) {
+                console.log(error);
             }
         }
     },
+    mixins: [authMixin],
     async created() {
-        await this.Authenticate();
+        this.authenticate();
+        await this.GetCoordenadores();
     }
 }
 

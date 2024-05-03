@@ -72,8 +72,8 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { authAdmin } from '../../services/api';
 import { registerFuncionario } from '../../services/api';
+import { authMixin } from '../../util/mixinAdmin.js';
 
 export default {
     name: 'RegisterFuncionario',
@@ -83,6 +83,7 @@ export default {
     },
     data() {
         return {
+            token: '',
             funcionario: {
                 name: '',
                 tituloPrincipal: '',
@@ -120,43 +121,26 @@ export default {
             if (this.funcionario.password !== this.funcionario.confirmPassword) {
                 alert('Senhas não conferem');
             } else {
-                const token = Cookies.get('token');
-                if (token){
-                    try {
-                        const data = await registerFuncionario({
+                try {
+                    const data = await registerFuncionario(
+                        {
                             name: this.funcionario.name,
                             email: this.funcionario.email,
                             password: this.funcionario.password,
                             cargo: this.funcionario.cargo
-                        }, token);
-                        alert("tudo certo 😂")
-                    } catch (error) {
-                        alert('Erro ao registrar funcionário');
-                    }
-                } else{
-                    alert("Cookie de token não encontrado")
-                }
-            }
-        },
-
-        async Authenticate() {
-            const token = Cookies.get('token');
-            if (token == undefined) {
-                router.push({ path: '/admin/login' });
-            } else {
-                try {
-                    const auth = await authAdmin(token);
-
-                    if (auth !== "Usuário autenticado com sucesso.") {
-                        router.push({ path: "/admin/login" })
-                    }
+                        }, 
+                        this.token
+                    );
+                    alert("tudo certo 😂")
                 } catch (error) {
-                    alert(error);
+                    alert('Erro ao registrar funcionário');
                 }
             }
         }
     },
+    mixins: [authMixin],
     async created() {
+        this.authenticate();
         await this.Authenticate();
     }
 }
