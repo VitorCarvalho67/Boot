@@ -60,6 +60,7 @@ export default {
                     document.cookie = `token=${response.data.token}`;
 
                     alert("Tudo certo! 😉");
+                    router.push({path: "/admin"});
                 } else{
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }

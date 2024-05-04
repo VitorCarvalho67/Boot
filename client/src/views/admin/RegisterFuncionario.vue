@@ -41,7 +41,7 @@ import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 import { registerFuncionario } from '../../services/api';
-import { authMixin } from '../../util/mixinAdmin.js';
+import { mixinAdmin } from '../../util/mixinAdmin.js';
 
 export default {
     name: 'RegisterFuncionario',
@@ -92,9 +92,9 @@ export default {
             }
         }
     },
-    mixins: [authMixin],
+    mixins: [mixinAdmin],
     async created() {
-        this.authenticate();
+        this.getToken();
     }
 }
 

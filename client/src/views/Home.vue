@@ -40,12 +40,14 @@
         <router-link to="/admin/register/curso">Registro de Curso pelo admin</router-link>
         <br>
     </div>
+    <ContactUs />
     <Footer />
 
 </template>
 
 <script>
 import Header from '../components/Header.vue';
+import ContactUs from '../components/ContactUs.vue';
 import Footer from '../components/Footer.vue';
 import Slides from '../components/Slides.vue';
 
@@ -54,6 +56,7 @@ export default {
     components: {
         Header,
         Slides,
+        ContactUs,
         Footer
     }
 }

@@ -1,28 +1,22 @@
 import Cookies from 'js-cookie';
 import router from '../router/index.js';
-import { authAdmin } from '../services/api';
 
-export const authMixin = {
+export const mixinAdmin = {
     data() {
         return {
-            token: ''
+            token: '',
         }
     },
     methods: {
-        async authenticate() {
+        async getToken() {
             this.token = Cookies.get('token');
             if (!this.token) {
                 router.push({ path: '/admin/login' });
-            } else {
-                try {
-                    const response = await authAdmin(this.token);
-                    if (response.data !== "Admin autenticado com sucesso.") {
-                        router.push({ path: "/admin/login" });
-                    }
-                } catch (error) {
-                    alert(error);
-                }
             }
+        },
+        logout() {
+            Cookies.remove('token');
+            router.push({ path: '/admin/login' });
         }
     }
 };

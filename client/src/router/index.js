@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+
 import Home from '../views/Home.vue';
 import Login from '../views/aluno/Login.vue';
 import Register from '../views/aluno/Register.vue';
@@ -18,6 +19,10 @@ import RegisterTurma from '../views/admin/RegisterTurma.vue';
 import ValidateFuncionario from '../views/funcionario/Validate.vue';
 import InitFuncionario from '../views/funcionario/Init.vue';
 import LoginFuncionario from '../views/funcionario/Login.vue';
+import Admin from '../views/admin/Dashboard.vue';
+
+import { isAuthAdmin } from '../util/authUtils.js';
+
 
 const routes = [{
         path: '/:pathMatch(.*)*',
@@ -33,6 +38,14 @@ const routes = [{
         path: '/',
         name: 'Home2',
         component: Home
+    },
+    {
+        path: '/admin',
+        name: 'Admin',
+        component: Admin,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthAdmin()) ? next(): next("/admin/login");
+        }
     },
     {
         path: '/login',
@@ -67,27 +80,40 @@ const routes = [{
     {
         path: '/admin/register/professor',
         name: 'RegisterProfessor',
-        component: RegisterProfessor
+        component: RegisterProfessor,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthAdmin()) ? next(): next("/admin/login");
+        }
     },
     {
         path: '/admin/register/coordenador',
         name: 'RegisterCoordenador',
-        component: RegisterCoordenador
+        component: RegisterCoordenador,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthAdmin()) ? next(): next("/admin/login");
+        }
     },
     {
         path: '/admin/register/curso',
         name: 'RegisterCurso',
-        component: RegisterCurso
-    }, ,
+        component: RegisterCurso,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthAdmin()) ? next(): next("/admin/login");
+        }
+    },
     {
         path: '/admin/register/turma',
         name: 'RegisterTurma',
-        component: RegisterTurma
+        component: RegisterTurma,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthAdmin()) ? next(): next("/admin/login");
+        }
     },
     {
         path: '/admin/register/funcionario',
         name: 'RegisterFuncionario',
-        component: RegisterFuncionario
+        component: RegisterFuncionario,
+
     },
     {
         path: '/professor/init',

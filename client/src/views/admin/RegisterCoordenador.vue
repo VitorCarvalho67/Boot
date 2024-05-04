@@ -25,7 +25,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
-import { authMixin } from '../../util/mixinAdmin.js';
+import { mixinAdmin } from '../../util/mixinAdmin.js';
 import { getProfessores, registerCoordenador } from '../../services/api';
 
 export default {
@@ -67,9 +67,9 @@ export default {
             }
         }
     },
-    mixins: [authMixin],
+    mixins: [mixinAdmin],
     async created() {
-        this.authenticate();
+        this.getToken();
         await this.GetProfessores();
     }
 }

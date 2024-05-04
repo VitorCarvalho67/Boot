@@ -35,7 +35,7 @@ import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 import { getCursos, registerTurma } from '../../services/api';
-import { authMixin } from '../../util/mixinAdmin.js';
+import { mixinAdmin } from '../../util/mixinAdmin.js';
 
 export default {
     name: 'RegisterTurma',
@@ -95,9 +95,9 @@ export default {
             }
         }
     },
-    mixins: [authMixin],
+    mixins: [mixinAdmin],
     async created() {
-        this.authenticate();
+        this.getToken();
         await this.GetCursos();
     }
 }
