@@ -18,7 +18,6 @@ Digital platform tailored for the educational environment, designed to facilitat
 [Axios](https://axios-http.com/) -
 [SCSS](https://sass-lang.com/) -
 [Tauri](https://tauri.app/) -
-[React Native](https://reactnative.dev/) -
 [MariaDB](https://mariadb.org/) -
 [TypeScript](https://www.typescriptlang.org/) -
 [Prisma](https://www.prisma.io/) -
