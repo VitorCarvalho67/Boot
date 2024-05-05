@@ -36,7 +36,7 @@ Digital platform tailored for the educational environment, designed to facilitat
 
 Clone the repository
 ```bash
-git clone https://github.com/VitorCarvalho67/Grafhy-SSM.git
+git clone https://github.com/VitorCarvalho67/Boot.git
 ```
 
 Navigate to the project directory on sever side
