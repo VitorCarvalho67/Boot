@@ -1,56 +1,89 @@
 <template>
     <Header />
     <main>
-        <div class="register">
+        <div class="box" id="box1">
+            <img :src="imagem" alt="Img">
+        </div>
+        <div class="box" id="box2">
+            <nav>
+                <ul>
+                    <li>
+                        <router-link to="/login">Login</router-link>
+                    </li>
+                    <li>
+                        <p>Cadastro</p>
+                    </li>
+                </ul>
+            </nav>
             <form @submit.prevent="submitForm">
-                <div>
-                    <label for="name">Nome:</label>
-                    <input type="text" id="name" v-model="userAluno.name" required>
+                <div class="content">
+                    <h1>Registre-se</h1>
+                    <div class="input-box" :class="{ 'focused': focused.nameFocused }">
+                        <label for="name">Nome</label>
+
+                        <input type="text" id="name" v-model="userAluno.name" @focus="focused.nameFocused = true"
+                            @blur="focused.nameFocused = false" required>
+
+                    </div>
+                    
+                    <div class="input-box" :class="{ 'focused': focused.emailFocused }">
+                        <label for="email">E-Mail</label>
+
+                        <input type="email" id="email" v-model="userAluno.email" @input="checkEmail"
+                            @focus="focused.emailFocused = true" @blur="focused.emailFocused = false" required>
+                        <span class="alert" v-show="alerts.alertDominio">Seu email deve possuir domínio
+                            etec.sp.gov.br</span>
+
+                    </div>
+
+                    <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
+                        <div class="d1">
+                            <label for="password">Senha</label>
+                            <input :type="inputType" id="password" v-model="userAluno.password" @input="checkPassword"
+                                @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"
+                                required>
+                            <span class="alert" v-show="alerts.alertUppercase">
+                                A senha deve conter ao menos uma letra maiúscula(A-Z)
+                            </span>
+                            <span class="alert" v-show="alerts.alertLowercase">
+                                A senha deve conter ao menos uma letra minúscula(a-z)
+                            </span>
+                            <span class="alert" v-show="alerts.alertNumber">
+                                A senha deve conter ao menos um número (0-9)
+                            </span>
+                            <span class="alert" v-show="alerts.alertSpecial">
+                                A senha deve conter ao menos um caractere especial (*, !, @, #, $, %, &, /, -, .)
+                            </span>
+                            <span class="alert" v-show="alerts.alertLenght">
+                                A senha deve conter ao menos 8 caracteres
+                            </span>
+                        </div>
+                        <div class="d2">
+                            <button type="button" @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"
+                                @click="togglePasswordVisibility" :class="buttonClass"></button>
+                        </div>
+                    </div>
+
+                    <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
+                        <div class="d1">
+                            <label for="confirmPassword">Confirmar Senha:</label>
+                            <input :type="inputTypeConfirm" id="confirmPass" v-model="userAluno.confirmPassword"
+                                @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                                @input="checkConfirmPassword" required>
+                            <span v-show="alerts.alertPass" class="alert">
+                                As senhas devem ser iguais
+                            </span>
+                        </div>
+                        <div class="d2">
+                            <button type="button" @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                                @click="togglePasswordConfirmVisibility" :class="buttonClassConfirm"></button>
+                        </div>
+                    </div>
+                    <div class="button-box">
+                        <button v-show="allRequirementsMet" type="submit">Registrar</button>
+                        <button v-show="!allRequirementsMet" type="button">Registrar</button>
+                    </div>
                 </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="userAluno.email" @input="checkData" required>
-                </div>
-                <p v-show="!dominio">× Possuir domínio etec.sp.gov.br</p>
-                <p v-show="dominio">✓ Possuir domínio etec.sp.gov.br</p>
-                <br>
-                <div>
-                    <label for="password">Senha:</label>
-                    <input type="text" id="password" v-model="userAluno.password" @input="checkData" required>
-                </div>
-
-                <p v-show="!allRequirementsMet">A senha deve conter pelo menos:</p>
-                <p v-show="allRequirementsMet">Sua senha contém ao menos:</p>
-                <br>
-
-                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
-                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
-
-                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
-                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
-                
-                <p v-show="!number">× Um número (0-9)</p>
-                <p v-show="number">✓ Um número (0-9)</p>
-                
-                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
-                <p v-show="specialCharacter">✓ Um caractere especial</p>
-                
-                <p v-show="!length">× 8 caracteres</p>
-                <p v-show="length">✓ 8 caracteres</p>
-                <br>
-
-                <div>
-                    <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="userAluno.confirmPassword" @input="checkData" required>
-                </div>
-
-                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
-
-                <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
-                <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
-                <br>
-
             </form>
         </div>
     </main>
@@ -64,6 +97,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
+import logo from '../../assets/imageMain.png';
 
 export default {
     name: 'Register',
@@ -79,34 +113,100 @@ export default {
                 password: '',
                 confirmPassword: ''
             },
-            dominio: false,
-            uppercase: false,
-            lowercase: false,
-            number: false,
-            specialCharacter: false,
-            length: false,
-            confirmPass: false
+            alerts: {
+                alertUppercase: false,
+                alertLowercase: false,
+                alertNumber: false,
+                alertSpecial: false,
+                alertLenght: false,
+                alertDominio: false,
+                alertPass: false
+            },
+            focused: {
+                nameFocused: false,
+                emailFocused: false,
+                passwordFocused: false,
+                confirmFocused: false
+            },
+            showPassword: false,
+            showPasswordConfirm: false,
+            imagem: logo
         }
     },
     computed: {
+        inputType() {
+            return this.showPassword ? 'text' : 'password';
+        },
+        buttonClass() {
+            return this.showPassword ? 'hide' : 'show';
+        },
+        inputTypeConfirm() {
+            return this.showPasswordConfirm ? 'text' : 'password';
+        },
+        buttonClassConfirm() {
+            return this.showPasswordConfirm ? 'hide' : 'show';
+        },
         allRequirementsMet() {
-            return this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length;
+            const email = this.userAluno.email;
+            const password = this.userAluno.password;
+            const passwordConfirm = this.userAluno.confirmPassword;
+
+            return (
+                (/[A-Z]/.test(password)) &&
+                (/[a-z]/.test(password)) &&
+                (/[0-9]/.test(password)) &&
+                (/[*!@#$%&\./\\-]/.test(password)) &&
+                (password.length >= 8) &&
+                (/@etec\.sp\.gov\.br$/.test(email)) &&
+                (password == passwordConfirm)
+            );
         }
     },
     methods: {
-        checkData() {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+            console.log("Mudando visibilidade da senha");
+        },
+        togglePasswordConfirmVisibility() {
+            this.showPasswordConfirm = !this.showPasswordConfirm;
+            console.log("Mudanso visibilidade do confirmar senha");
+        },
+        checkEmail() {
+            const email = this.userAluno.email;
+
+            this.alerts.alertDominio = false;
+
+            if (!(/@etec\.sp\.gov\.br$/.test(email))) {
+                this.alerts.alertDominio = true;
+            }
+        },
+        checkPassword() {
+            const password = this.userAluno.password;
+
+            this.alerts.alertUppercase = false;
+            this.alerts.alertLowercase = false;
+            this.alerts.alertNumber = false;
+            this.alerts.alertSpecial = false;
+            this.alerts.alertLenght = false;
+
+            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
+            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
+            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
+            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
+
+            this.checkConfirmPassword();
+        },
+        checkConfirmPassword() {
             const password = this.userAluno.password;
             const passwordConfirm = this.userAluno.confirmPassword;
-            const email = this.userAluno.email;
-            this.dominio =/@etec\.sp\.gov\.br$/.test(email);
-            this.confirmPass = (password == passwordConfirm);
-            this.uppercase = /[A-Z]/.test(password);
-            this.lowercase = /[a-z]/.test(password);
-            this.number = /[0-9]/.test(password);
-            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
-            this.length = password.length >= 8;
-        },
 
+            this.alerts.alertPass = false;
+
+            if (!(password == passwordConfirm)) {
+                this.alerts.alertPass = true;
+            }
+        },
         async submitForm() {
             try {
                 const response = await registerPreAluno({
@@ -117,13 +217,13 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email', `${response.data.email}`, { expires: 10 });
-                    router.push({ name: 'TokenRegister' })
-                    
+                    router.push({ name: 'ValidateRegister' })
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -132,5 +232,206 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    
+main {
+    height: calc(100vh - 80px);
+    background-color: $primary-color-dark;
+    @include flex(row, center, center);
+}
+
+.alert {
+    font-size: .8rem;
+    color: rgb(158, 20, 20);
+
+    & .input-box input {
+        margin-top: 2px;
+    }
+}
+
+.box {
+    height: 65%;
+    width: 30%;
+    border-radius: 20px;
+    padding: 20px;
+    color: $font-color-dark;
+
+    nav {
+        width: 100%;
+
+        ul {
+            @include flex(row, flex-start, center);
+
+            li {
+                font-size: .9rem;
+                @include font-inter(300);
+                margin-inline: 20px;
+
+                p {
+                    @include flex(column, center, center);
+                    @include font-inter(400);
+                    width: 80px;
+                    @include line;
+
+                    &:after {
+                        width: 100%;
+                        height: 3px;
+                        margin-top: 3px;
+                        background-color: $secondary-color-orange;
+                    }
+
+                    &:hover::after {
+                        animation: none;
+                    }
+                }
+
+                a {
+                    text-decoration: none;
+                    color: $font-color-dark-2;
+                    @include flex(column, center, center);
+                    @include font-inter(400);
+                    width: 60px;
+                    @include line;
+
+                    &:after {
+                        margin-top: 3px;
+                        height: 3px;
+                        background-color: $secondary-color-orange;
+                    }
+                }
+            }
+        }
+    }
+
+    form {
+        padding: 20px;
+
+        h1 {
+            @include font-inter(300);
+            font-size: 2.5rem;
+            margin-top: 10px;
+        }
+
+        .input-box {
+            height: 65px;
+            @include flex(column, center, flex-start);
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: $terciary-color-dark;
+            border-left: solid 3px $terciary-color-dark;
+            margin: 15px 0px;
+
+            &.focused {
+                border-left: solid 3px $secondary-color-orange;
+                border-radius: 0px 5px 5px 0px;
+            }
+
+            label {
+                letter-spacing: 1.5px;
+                @include font-inter(200);
+                font-size: .8rem;
+                color: $font-color-dark-2;
+            }
+
+            input {
+                background-color: transparent;
+                width: 100%;
+                margin-top: 5px;
+                outline: none;
+                color: $font-color-dark;
+                border: none;
+                @include font-inter(400);
+                font-size: 1rem;
+            }
+
+            div input:last-child {
+                font-size: 1rem;
+            }
+        }
+
+        .password {
+            @include flex(row, flex-start, center);
+
+            div {
+                @include flex(column, center, flex-start)
+            }
+
+            .d1 {
+                width: 95%;
+            }
+
+            .d2 {
+                width: 5%;
+
+                button {
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    background-color: transparent;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: invert(100%);
+                    cursor: pointer;
+                }
+
+                .show {
+                    background-image: url('../../assets/icons/olho-1.png');
+                }
+
+                .hide {
+                    background-image: url('../../assets/icons/olho-2.png');
+                }
+            }
+        }
+    }
+}
+
+p {
+    width: 100%;
+    @include flex(row, flex-end, center);
+
+    a {
+        text-decoration: none;
+        color: $font-color-dark-2;
+        @include font-inter(300);
+        font-size: .8rem;
+    }
+}
+
+.button-box {
+    width: 100%;
+    margin-top: 10px;
+    @include flex(row, flex-start, center);
+
+    button {
+        padding: 12px 75px;
+        background-color: $primary-color-orange;
+        border: none;
+        border-radius: 3px;
+        @include font-inter(400);
+        font-size: .9rem;
+        color: $secondary-color-dark;
+        border: solid 1px $primary-color-orange;
+        cursor: pointer;
+        transition: .1s linear;
+
+        &:hover {
+            background-color: $secondary-color-dark;
+            color: $primary-color-orange;
+        }
+    }
+}
+
+
+#box1 {
+    @include flex-center;
+
+    img {
+        height: 80%;
+    }
+}
+
+#box2 {
+    background-color: $secondary-color-dark;
+}
 </style>

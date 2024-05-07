@@ -8,7 +8,7 @@
                 <li><router-link to="/">Rankings</router-link></li>
                 <li><router-link to="/">Estágios</router-link></li>
                 <li><router-link to="/">About Us</router-link></li>
-                <li><router-link to="/register">Castre-se Agora</router-link></li>
+                <li><router-link to="/register">Cadastre-se Agora</router-link></li>
                 <li><router-link to="/login">Entrar</router-link></li>
             </ul>
         </nav>

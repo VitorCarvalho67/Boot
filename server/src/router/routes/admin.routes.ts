@@ -1,14 +1,16 @@
 import { Router } from "express";
-import { LoginAdminController } from "../modules/admins/useCase/loginAdmin/LoginAdminController";
-import { RegisterCursosController } from "../modules/admins/useCase/registerCursos/RegisterCursosController";
-import { adminAuthMiddleware } from '../middleware/autentication';
-import { RegisterProfessorController } from "../modules/admins/useCase/registerProfessor/RegisterProfessorController";
-import { RegisterFuncionarioController } from "../modules/admins/useCase/registerFuncionario/RegisterFuncionarioController";
-import { RegisterCoordenadorController } from "../modules/admins/useCase/registerCoordenador/RegisterCoordenadorController";
-import { GetAllProfessorController } from "../modules/admins/useCase/getAllProfessores/GetAllProfessorController";
-import { GetCoordenadorController } from "../modules/admins/useCase/getCoordenadores/GetCoordenadoresController";
-import { GetCursosController } from "../modules/admins/useCase/getCursos/GetCursosController";
-import { RegisterTurmaController } from "../modules/admins/useCase/registerTurmas/RegisterTurmasController";
+import { adminAuthMiddleware } from '../../middleware/autentication';
+import { 
+    LoginAdminController,
+    RegisterCursosController,
+    RegisterProfessorController,
+    RegisterFuncionarioController,
+    RegisterCoordenadorController,
+    GetAllProfessorController,
+    GetCoordenadorController,
+    GetCursosController,
+    RegisterTurmaController
+} from "../../modules/controllers/adminControllers";
 
 const loginAdminController = new LoginAdminController();
 const registerCursosController = new RegisterCursosController();

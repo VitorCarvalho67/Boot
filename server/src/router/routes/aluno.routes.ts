@@ -1,9 +1,13 @@
 import { Router } from "express";
-import { CreateAlunoController } from "../modules/alunos/useCase/createAluno/CreateAlunoController";
-import { LoginAlunoController } from "../modules/alunos/useCase/loginAluno/LoginAlunoController";
-import { RecoveryAlunoController } from "../modules/alunos/useCase/recoveryAluno/RecoveryAlunoController";
-import { ValidateRecoveryController } from "../modules/alunos/useCase/validateRecovery/validateRecoveryController";
+import { 
+    CreateAlunoController, 
+    CreatePreAlunoController,
+    LoginAlunoController, 
+    RecoveryAlunoController, 
+    ValidateRecoveryController
+} from "../../modules/controllers/alunoControllers";
 
+const createPreAlunoController = new CreatePreAlunoController();
 const createAlunoUseController = new CreateAlunoController();
 const loginAlunoController = new LoginAlunoController();
 const recoveryAlunoController = new RecoveryAlunoController();
@@ -11,6 +15,7 @@ const validateRecoveryController = new ValidateRecoveryController();
 
 const alunoRoutes = Router();
 
+alunoRoutes.post("/create/prealuno", createPreAlunoController.handle);
 alunoRoutes.post("/create", createAlunoUseController.handle);
 alunoRoutes.post("/login", loginAlunoController.handle);
 alunoRoutes.post("/recovery", recoveryAlunoController.handle);

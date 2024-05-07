@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { ValidateProfessorController } from "../modules/teacher/useCase/validateProfessor/ValidateProfessorController";
-import { LoginProfessorController } from "../modules/teacher/useCase/loginProfessor/LoginProfessorController";
-import { InitProfessorController } from "../modules/teacher/useCase/initProfessor/InitProfessorController";
-import { professorAuthMiddleware } from '../middleware/autentication';
+import { professorAuthMiddleware } from '../../middleware/autentication';
+import {
+    ValidateProfessorController,
+    LoginProfessorController,
+    InitProfessorController
+} from "../../modules/controllers/professorControllers";
 
 const validateProfessorController = new ValidateProfessorController();
 const loginProfessorController = new LoginProfessorController();

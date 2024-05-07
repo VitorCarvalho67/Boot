@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { ValidateFuncionarioController } from "../modules/funcionario/useCase/validateFuncionario/ValidateFuncionarioController";
-import { LoginFuncionarioController } from "../modules/funcionario/useCase/loginFuncionario/LoginFuncionarioController";
-import { InitFuncionarioController } from "../modules/funcionario/useCase/initFuncionario/InitFuncionarioController";
 // import { funcionarioAuthMiddleware } from '../middleware/autentication';
+import { 
+    ValidateFuncionarioController,
+    LoginFuncionarioController,
+    InitFuncionarioController
+} from "../../modules/controllers/funcionarioControllers";
 
 const validateFuncionarioController = new ValidateFuncionarioController();
 const loginFuncionarioController = new LoginFuncionarioController();
@@ -14,8 +16,8 @@ funcionarioRoutes.post("/validate", validateFuncionarioController.handle);
 funcionarioRoutes.post("/login", loginFuncionarioController.handle);
 
 // funcionarioRoutes.post("/auth", funcionarioAuthMiddleware, (req, res) => {
-    //     res.status(200).send("Funcionario autenticado com sucesso.");
-    // });
+//     res.status(200).send("Funcionario autenticado com sucesso.");
+// });
     
 funcionarioRoutes.get("/init", initFuncionarioController.handle);
 

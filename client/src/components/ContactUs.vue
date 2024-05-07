@@ -122,6 +122,7 @@ export default defineComponent({
                     border: none;
                     border: solid 1px $primary-color-orange;
                     transition: .1s linear;
+                    cursor: pointer;
 
                     &:hover {
                         background-color: transparent;

@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import Login from '../views/aluno/Login.vue';
 import Register from '../views/aluno/Register.vue';
-import TokenRegister from '../views/aluno/TokenRegister.vue';
+import ValidateRegister from '../views/aluno/ValidateRegister.vue';
 import RecoveryAluno from '../views/aluno/Recovery.vue';
 import ValidateRecovery from '../views/aluno/ValidateRecovery.vue';
 import LoginAdmin from '../views/admin/Login.vue';
@@ -58,9 +58,9 @@ const routes = [{
         component: Register
     },
     {
-        path: '/register/token',
-        name: 'TokenRegister',
-        component: TokenRegister
+        path: '/register/validate',
+        name: 'ValidateRegister',
+        component: ValidateRegister
     },
     {
         path: '/recovery',

@@ -2,13 +2,13 @@ import axios from 'axios';
 import alter from '../router/index.js';
 
 const api = axios.create({
-    baseURL: 'https://fcb4e731b20e9aba5626622a7d9de4b6.serveo.net/'
+    baseURL: 'https://ee96c1521b821e87285e37398926f1f3.serveo.net'
     // baseURL: 'http://localhost:3333/'
 });
 
 export const registerPreAluno = async(userPreAluno) => {
     try {
-        const response = await api.post('prealunos/create/', userPreAluno);
+        const response = await api.post('aluno/create/prealuno', userPreAluno);
         return response;
     } catch {
         return error.response.data;
@@ -17,7 +17,7 @@ export const registerPreAluno = async(userPreAluno) => {
 
 export const registerAluno = async(userAluno) => {
     try {
-        const response = await api.post('alunos/create/', userAluno);
+        const response = await api.post('aluno/create/', userAluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -26,7 +26,7 @@ export const registerAluno = async(userAluno) => {
 
 export const loginAluno = async(userAluno) => {
     try {
-        const response = await api.post('alunos/login/', userAluno);
+        const response = await api.post('aluno/login/', userAluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -35,7 +35,7 @@ export const loginAluno = async(userAluno) => {
 
 export const recoveryAluno = async(infoAluno) => {
     try {
-        const response = await api.post('alunos/recovery', infoAluno);
+        const response = await api.post('aluno/recovery', infoAluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -44,7 +44,7 @@ export const recoveryAluno = async(infoAluno) => {
 
 export const validateRecovery = async(infoAluno) => {
     try {
-        const response = await api.post('alunos/recovery/validate', infoAluno);
+        const response = await api.post('aluno/recovery/validate', infoAluno);
         return response;
     } catch (error) {
         return error.response.data;

@@ -22,13 +22,14 @@
                                 @focus="emailFocused = true" @blur="emailFocused = false">
                         </div>
                         <div class="input-box" :class="{ 'focused': passwordFocused }">
-                            <div>
+                            <div class="d1">
                                 <label for="password">Senha</label>
-                                <input type="password" id="password" v-model="userAluno.password" required
+                                <input :type="inputType" id="password" v-model="userAluno.password" required
                                     @focus="passwordFocused = true" @blur="passwordFocused = false">
                             </div>
-                            <div>
-                                <button>mostrar</button>
+                            <div class="d2">
+                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false" 
+                                @click="togglePasswordVisibility" :class="buttonClass"></button>
                             </div>
                         </div>
                     </div>
@@ -39,7 +40,7 @@
                 </form>
             </div>
             <div class="box" id="box2">
-
+                <img :src="imagem" alt="Img">
             </div>
         </main>
     </div>
@@ -52,6 +53,7 @@ import { loginAluno } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
+import logo from '../../assets/imageMain.png';
 
 export default {
     name: 'Login',
@@ -66,10 +68,23 @@ export default {
                 password: ''
             },
             emailFocused: false,
-            passwordFocused: false
+            passwordFocused: false,
+            imagem: logo,
+            showPassword: false,
+        }
+    },
+    computed: {
+        inputType() {
+            return this.showPassword ? 'text' : 'password';
+        },
+        buttonClass() {
+            return this.showPassword ? 'hide' : 'show';
         }
     },
     methods: {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
         async submitForm() {
             try {
                 const response = await loginAluno({
@@ -99,7 +114,7 @@ export default {
 main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
-    @include flex(row, space-evenly, center);
+    @include flex(row, center, center);
 }
 
 .box {
@@ -198,7 +213,7 @@ main {
             }
 
             div input:last-child {
-                font-size: .7rem;
+                font-size: 1rem;
             }
         }
 
@@ -208,13 +223,42 @@ main {
             div {
                 @include flex(column, center, flex-start)
             }
+
+            .d1 {
+                width: 95%;
+            }
+
+            .d2 {
+                width: 5%;
+
+                button {
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    background-color: transparent;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: invert(100%);
+                    cursor: pointer;
+                }
+
+                .show {
+                    background-image: url('../../assets/icons/olho-1.png');
+                }
+
+                .hide {
+                    background-image: url('../../assets/icons/olho-2.png');
+                }
+            }
+
         }
 
-        p{
+        p {
             width: 100%;
             @include flex(row, flex-end, center);
-            
-            a{
+
+            a {
                 text-decoration: none;
                 color: $font-color-dark-2;
                 @include font-inter(300);
@@ -222,12 +266,12 @@ main {
             }
         }
 
-        .button-box{
+        .button-box {
             width: 100%;
             margin-top: 40px;
             @include flex(row, flex-start, center);
 
-            button{
+            button {
                 padding: 12px 75px;
                 background-color: $primary-color-orange;
                 border: none;
@@ -235,14 +279,29 @@ main {
                 @include font-inter(400);
                 font-size: .9rem;
                 color: $secondary-color-dark;
+                border: solid 1px $primary-color-orange;
+                cursor: pointer;
+                transition: .1s linear;
+
+                &:hover{
+                    background-color: $secondary-color-dark;
+                    color: $primary-color-orange;
+                }
             }
         }
-
     }
-
 }
 
 #box1 {
     background-color: $secondary-color-dark;
+}
+
+#box2 {
+    @include flex-center;
+
+    img {
+        height: 80%;
+        transform: rotatey(180deg);
+    }
 }
 </style>
