@@ -2,8 +2,8 @@ import axios from 'axios';
 import alter from '../router/index.js';
 
 const api = axios.create({
-    // baseURL: 'https://2f991a18953ed4513949005dfa6d53f8.serveo.net'
-    baseURL: 'http://localhost:3333/'
+    baseURL: 'https://fcb4e731b20e9aba5626622a7d9de4b6.serveo.net/'
+    // baseURL: 'http://localhost:3333/'
 });
 
 export const registerPreAluno = async(userPreAluno) => {

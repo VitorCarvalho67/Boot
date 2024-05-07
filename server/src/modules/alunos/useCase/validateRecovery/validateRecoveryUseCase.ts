@@ -30,7 +30,8 @@ export class ValidateRecoveryUseCase {
                         email
                     },
                     data: {
-                        password: hash
+                        password: hash,
+                        tentativasRestantes: 5
                     }
                 });
                 

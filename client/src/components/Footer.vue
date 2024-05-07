@@ -8,6 +8,9 @@
                     <router-link to="/">About Us</router-link>
                 </li>
                 <li>
+                    <a href="https://github.com/VitorCarvalho67/Boot" target="_blank">GitHub</a>
+                </li>
+                <li>
                     <router-link to="/">Ranking</router-link>
                 </li>
                 <li>
@@ -60,6 +63,11 @@ footer {
                 margin: 0px;
                 text-decoration: none;
                 color: $font-color-dark;
+                transition: .1s linear;
+
+                &:hover {
+                    color: $secondary-color-orange;
+                }
             }
         }
     }

@@ -71,6 +71,10 @@ export default defineComponent({
             font-size: 2rem
         }
 
+        p:last-child {
+            color: $primary-color-orange;
+        }
+
         form {
             @include flex(column, center, flex-start);
 
@@ -116,6 +120,14 @@ export default defineComponent({
                     color: $font-color-dark;
                     background-color: $primary-color-orange;
                     border: none;
+                    border: solid 1px $primary-color-orange;
+                    transition: .1s linear;
+
+                    &:hover {
+                        background-color: transparent;
+                        border: solid 1px $primary-color-orange;
+                        color: $primary-color-orange;
+                    }
                 }
             }
         }

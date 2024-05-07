@@ -19,11 +19,11 @@
         </div>
         <div class="box">
             <div class="info">
-            <h1>Venha mostrar para o mundo o profissional que você é.</h1>
-            <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma que
-                facilite a introdução do aluno ao mercado de trabalho.</p>
-            <router-link to="/">Saiba Mais</router-link>
-        </div>
+                <h1>Venha mostrar para o mundo o profissional que você é.</h1>
+                <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma que
+                    facilite a introdução do aluno ao mercado de trabalho.</p>
+                <router-link to="/">Saiba Mais</router-link>
+            </div>
         </div>
     </section>
 
@@ -127,9 +127,17 @@ section {
 
     a {
         @include color($secondary-color-dark, $primary-color-orange);
+        border: solid 1px $primary-color-orange;
+        transition: .1s linear;
         padding: 10px 20px;
         border-radius: 20px;
         text-decoration: none;
+
+        &:hover {
+            background-color: transparent;
+            border: solid 1px $primary-color-orange;
+            color: $primary-color-orange;
+        }
     }
 }
 
@@ -137,76 +145,78 @@ section {
     position: relative;
     width: 50%;
     height: 70vh;
+    @include font-inter(400);
     @include flex(column, center, center);
     border-radius: 20px;
-}
 
-.slides {
-    width: 100%;
-    height: 100%;
-    @include flex(column, center, center);
-}
-
-.slide {
-    width: 100%;
-    height: 100%;
-    @include flex(row, center, center);
-    position: absolute;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.slide.active {
-    opacity: 1;
-}
-
-.slide img {
-    width: 100%;
-    height: 100%;
-    opacity: 0.7;
-    object-fit: cover;
-    border-radius: 20px;
-}
-
-.slide-content {
-    width: 100%;
-    height: 100%;
-    @include flex(column, center, center);
-    position: absolute;
-    color: white;
-    text-align: center;
-
-    h2 {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-    }
-
-    p {
-        font-size: 1.5rem;
-    }
-}
-
-.buttons {
-    width: 100%;
-    height: 100%;
-    @include flex(row, space-between, center);
-    position: absolute;
-    bottom: 0;
-    padding: 1rem;
-
-    button {
-        padding: 0.5rem;
-        border-radius: 5px;
-        border: 1px solid rgb(68, 75, 77);
-        background-color: transparent;
-        color: #fff;
-        cursor: pointer;
-        width: 50px;
+    .slides {
+        width: 100%;
         height: 100%;
-        opacity: 0.2;
+        @include flex(column, center, center);
 
-        &:hover {
-            background-color: rgb(53, 57, 59);
+        .slide {
+            width: 100%;
+            height: 100%;
+            @include flex(row, center, center);
+            position: absolute;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+
+            img {
+                width: 100%;
+                height: 100%;
+                opacity: 0.7;
+                object-fit: cover;
+                border-radius: 20px;
+            }
+
+            .slide-content {
+                width: 100%;
+                height: 100%;
+                @include flex(column, center, center);
+                position: absolute;
+                color: white;
+                text-align: center;
+
+                h2 {
+                    font-size: 3rem;
+                    margin-bottom: 1rem;
+                }
+
+                p {
+                    font-size: 1.5rem;
+                }
+            }
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+    }
+
+    .buttons {
+        width: 100%;
+        height: 100%;
+        @include flex(row, space-between, center);
+        position: absolute;
+        bottom: 0;
+        padding: 1rem;
+
+        button {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid rgb(68, 75, 77);
+            transition: .1s linear;
+            background-color: transparent;
+            color: #fff;
+            cursor: pointer;
+            width: 50px;
+            height: 100%;
+            opacity: 0.2;
+
+            &:hover {
+                background-color: rgb(53, 57, 59);
+            }
         }
     }
 }

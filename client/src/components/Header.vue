@@ -8,7 +8,7 @@
                 <li><router-link to="/">Rankings</router-link></li>
                 <li><router-link to="/">Estágios</router-link></li>
                 <li><router-link to="/">About Us</router-link></li>
-                <li><router-link to="/">Castre-se Agora</router-link></li>
+                <li><router-link to="/register">Castre-se Agora</router-link></li>
                 <li><router-link to="/login">Entrar</router-link></li>
             </ul>
         </nav>
@@ -34,12 +34,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
 header {
     background-color: transparent;
     padding: 10px 80px;
     height: 80px;
     @include flex(row, space-between, center);
     background-color: $secondary-color-dark;
+
     div {
         width: 100px;
 
@@ -51,7 +53,7 @@ header {
     }
 
     nav ul {
-        display: flex;
+        @include flex(row, center, center);
         list-style-type: none;
 
         li a {
@@ -60,7 +62,9 @@ header {
             text-transform: uppercase;
             color: $font-color-dark;
             font-size: .8rem;
+            @include flex(column, center, flex-start);
             @include font-inter(400);
+            @include line;
         }
 
         li:last-child a {
@@ -68,6 +72,20 @@ header {
             padding: 10px 20px;
             border-radius: 20px;
             color: $secondary-color-dark;
+            border: solid 1px $primary-color-orange;
+            transition: .1s linear;
+            @include line;
+            @include flex-center;
+
+            &:after {
+                height: 0;
+            }
+
+            &:hover{
+                background-color: transparent;
+                border: solid 1px $primary-color-orange;
+                color: $primary-color-orange;
+            }
         }
     }
 }

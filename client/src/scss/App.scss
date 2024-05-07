@@ -2,6 +2,7 @@
 
 $font-color-light: #000000;
 $font-color-dark: #fcf3ee;
+$font-color-dark-2: #9c9794;
 $bg-color-light: #fff0e6;
 $bg-color-dark: #202020;
 
@@ -12,7 +13,7 @@ $secondary-color-dark: #1a1a1a;
 $terciary-color-dark: #202020;
 
 $primary-color-orange: #ff872b;
-$secondary-color-orange: #f8b179;
+$secondary-color-orange: #deb99b;
 
 @mixin font-inter($weight) {
     font-family: "Inter", sans-serif;
@@ -48,6 +49,35 @@ $secondary-color-orange: #f8b179;
     @else if $theme=="dark" {
         @include color($font-color-dark,
         $bg-color-dark);
+    }
+}
+
+@mixin line {
+    &:after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        display: flex;
+        flex-direction: column;
+        content: '';
+        height: 2px;
+        width: 0%;
+        background-color: $primary-color-orange;
+    }
+
+    &:hover::after {
+        animation: afterLoad .8s ease-out;
+        width: 100%;
+    }
+
+    @keyframes afterLoad {
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
     }
 }
 
