@@ -92,12 +92,13 @@
 
 <script>
 
-import { registerPreAluno } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import router from '../../router/index.js'
-import Cookies from 'js-cookie';
 import logo from '../../assets/imageMain.png';
+
+import Cookies from 'js-cookie';
+import router from '../../router/index.js'
+import { registerPreAluno } from '../../services/api/aluno';
 
 export default {
     name: 'Register',

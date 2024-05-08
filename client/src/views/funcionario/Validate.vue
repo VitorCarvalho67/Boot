@@ -49,11 +49,12 @@
 </template>
 
 <script>
-import { validateFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { validateFuncionario } from '../../services/api/funcionario';
 
 export default {
     name: 'ValidateFuncionario',
@@ -102,7 +103,7 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    Cookies.remove('email');
+                    Cookies.remove('email-funcionario');
                     
                     router.push({ path: '/funcionario/login' });
                     

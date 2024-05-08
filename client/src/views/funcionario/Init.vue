@@ -24,11 +24,12 @@
 </template>
 
 <script>
-import { initFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { initFuncionario } from '../../services/api/funcionario';
 
 export default {
     name: 'InitFuncionario',
@@ -65,7 +66,7 @@ export default {
                         router.push({ name: 'LoginFuncionario'});
                     }
 
-                    alert("Tudo certo! 😉 " + response.status);
+                    alert("Tudo certo! 😉");
                 } else{
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }

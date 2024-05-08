@@ -24,16 +24,20 @@ import RecoveryProfessor from '../views/professor/Recovery.vue';
 import ValidateRecoveryProfessor from '../views/professor/ValidateRecovery.vue';
 import RecoveryFuncionario from '../views/funcionario/Recovery.vue';
 import ValidateRecoveryFuncionario from '../views/funcionario/ValidateRecovery.vue';
+import Professor from '../views/professor/Dashboard.vue';
+import Funcionario from '../views/funcionario/Dashboard.vue';
 
 import { 
     isAuthAdmin,
+    isAuthProfessor,
+    isAuthFuncionario,
     isRegistering,
     isRecoverigAluno,
     isInitingProfessor,
     isRecoverigProfessor,
     isInitingFuncionario,
     isRecoverigFuncionario
- } from '../util/guarders.js';
+ } from './guards/guards.js';
 
 
 const routes = [{
@@ -168,6 +172,14 @@ const routes = [{
         }
     },
     {
+        path: "/professor",
+        name: "Professor",
+        component: Professor,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthProfessor()) ? next(): next("/professor/init");
+        }
+    },
+    {
         path: '/funcionario/init',
         name: 'InitFuncionario',
         component: InitFuncionario
@@ -175,12 +187,18 @@ const routes = [{
     {
         path: '/funcionario/validate',
         name: 'ValidateFuncionario',
-        component: ValidateFuncionario
+        component: ValidateFuncionario,
+        beforeEnter: async(to, from, next) => {
+            (await isInitingFuncionario()) ? next(): next("/funcionario/init");
+        }
     },
     {
         path: '/funcionario/login',
         name: 'LoginFuncionario',
-        component: LoginFuncionario
+        component: LoginFuncionario,
+        beforeEnter: async(to, from, next) => {
+            (await isInitingFuncionario()) ? next(): next("/funcionario/init");
+        }
     },
     {
         path: '/funcionario/recovery',
@@ -193,6 +211,14 @@ const routes = [{
         component: ValidateRecoveryFuncionario,
         beforeEnter: async(to, from, next) => {
             (await isRecoverigFuncionario()) ? next(): next("/funcionario/recovery");
+        }
+    },
+    {
+        path: "/funcionario",
+        name: "Funcionario",
+        component: Funcionario,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthFuncionario()) ? next(): next("/funcionario/init");
         }
     },
 ];

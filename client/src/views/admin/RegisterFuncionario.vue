@@ -38,10 +38,9 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import Cookies from 'js-cookie';
-import router from '../../router/index.js'
-import { registerFuncionario } from '../../services/api';
-import { mixinAdmin } from '../../util/mixinAdmin.js';
+
+import { mixinAdmin } from '../../util/mixins.js';
+import { registerFuncionario } from '../../services/api/admin';
 
 export default {
     name: 'RegisterFuncionario',
@@ -69,6 +68,8 @@ export default {
             const name = this.funcionario.name;
             const email = this.funcionario.email;
             const cargo = this.funcionario.cargo;
+
+            return (name, email, cargo);
         },
 
         async submitForm() {

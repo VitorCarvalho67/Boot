@@ -60,11 +60,12 @@
 </template>
 
 <script>
-import { registerAluno } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { registerAluno } from '../../services/api/aluno';
 
 export default {
     name: 'ValidateRegister',
