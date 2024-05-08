@@ -32,10 +32,9 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import Cookies from 'js-cookie';
-import router from '../../router/index.js'
-import { getCursos, registerTurma } from '../../services/api';
-import { mixinAdmin } from '../../util/mixinAdmin.js';
+
+import { mixinAdmin } from '../../util/mixins.js';
+import { registerTurma,  getCursos} from '../../services/api/admin';
 
 export default {
     name: 'RegisterTurma',

@@ -1,13 +1,8 @@
 <template>
     <Header />
     <main>
-        <h1>Bem-vindo admin!</h1>
+        <h1>Bem-vindo professor!</h1>
         <nav>
-            <router-link to="/admin/register/coordenador">Coordenadores</router-link>
-            <router-link to="/admin/register/professor">Professores</router-link>
-            <router-link to="/admin/register/funcionario">Funcionários</router-link>
-            <router-link to="/admin/register/curso">Cursos</router-link>
-            <router-link to="/admin/register/turma">Turmas</router-link>
             <button @click="logout">Logout</button>
         </nav>
     </main>
@@ -18,11 +13,11 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import router from '../../router/index.js'
-import { mixinAdmin } from '../../util/mixins.js';
+import router from '../../router/index.js';
+import { mixinProfessor } from '../../util/mixins.js';
 
 export default {
-    name: 'Admin',
+    name: 'Professor',
     components: {
         Header,
         Footer
@@ -35,7 +30,7 @@ export default {
     methods: {
 
     },
-    mixins: [mixinAdmin],
+    mixins: [mixinProfessor],
     async created() {
         this.getToken();
     }

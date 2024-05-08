@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { verfifyAccessTokenAdmin } from '../jwt/jwtServices';
+import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor,verfifyAccessTokenFuncinario } from '../jwt/jwtServices';
 import { prisma }  from '../prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
 
@@ -43,7 +43,7 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
 
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token ' + error});
+        res.status(401).json({ message: 'Invalid token  ' + error});
     }
 }
 
@@ -77,7 +77,7 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
     }
 }
 
-export async function funcionarioAuthMiddleware(req: RequestWithProfessor, res: Response, next: NextFunction) {
+export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res: Response, next: NextFunction) {
     try{
         const token = req.headers.authorization;
 
@@ -85,7 +85,7 @@ export async function funcionarioAuthMiddleware(req: RequestWithProfessor, res: 
             throw new Error('Token not found');
         }
 
-        const decoded = verfifyAccessTokenProfessor(token);
+        const decoded = verfifyAccessTokenFuncinario(token);
 
         if (!decoded || typeof decoded === 'string') {
             throw new Error('Invalid token');

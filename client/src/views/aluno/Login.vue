@@ -51,11 +51,12 @@
 </template>
 
 <script>
-import { loginAluno } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import Cookies from 'js-cookie';
 import logo from '../../assets/imageMain.png';
+
+import Cookies from 'js-cookie';
+import { loginAluno } from '../../services/api/aluno';
 
 export default {
     name: 'Login',

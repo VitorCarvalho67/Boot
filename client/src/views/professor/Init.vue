@@ -6,6 +6,7 @@
                 <h1>Faça seu login como professor:</h1>
                 <p>Email:</p>
                 <input type="text" id="email" v-model="professor.email">
+                
                 <button type="submit">Continuar</button>
             </form>
         </div>
@@ -14,11 +15,12 @@
 </template>
 
 <script>
-import { initProfessor } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { initProfessor } from '../../services/api/professor';
 
 export default {
     name: 'InitProfessor',
@@ -53,10 +55,10 @@ export default {
                     
                     alert("Tudo certo! 😉");
                 } else{
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    alert("Ops.. Algo deu errado... 😕\n" + response.message);
                 }
             } catch(error){
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                alert("Ops.. Algo deu errado... 😕\n" + error.message);
             }
 
         }

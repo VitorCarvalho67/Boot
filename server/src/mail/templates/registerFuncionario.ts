@@ -54,7 +54,7 @@ export function generateRegisterFuncionarioEmail(firstName: string, email: strin
         <body>
             <div class="email-body">
                 <div class="header">
-                    Crredenciais temporárias de acesso à plataforma:
+                    Credenciais temporárias de acesso à plataforma:
                 </div>
                 <div class="logo" width="100%" align="center">
                     <img src="https://github.com/VitorCarvalho67/Boot/assets/102667323/dd1fc8b6-12ac-4b2a-8e20-52145bfac526" alt="Logo da BOOT" width="400px">

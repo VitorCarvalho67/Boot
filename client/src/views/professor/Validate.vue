@@ -3,45 +3,89 @@
     <main>
         <div class="register">
             <form @submit.prevent="submitForm">
-                <h1>Complete seu cadastro:</h1>
-                <p>Email:</p><p>{{ this.professor.email }}</p><router-link to="/professor/init">Editar</router-link>
-                
-                <p>Senha temporária (enviada no email):</p>
-                <input type="text" id="temporaryPassword" v-model="professor.temporaryPassword" required>
-                
-                <p>Nova Senha:</p>
-                <input type="text" id="newPassword" v-model="professor.newPassword" @input="checkData" required>
-                
-                <p v-show="!allRequirements">A senha deve conter pelo menos:</p>
-                <p v-show="allRequirements">Sua senha contém ao menos:</p>
-                <br>
-
-                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
-                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
-
-                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
-                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
-                
-                <p v-show="!number">× Um número (0-9)</p>
-                <p v-show="number">✓ Um número (0-9)</p>
-                
-                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
-                <p v-show="specialCharacter">✓ Um caractere especial</p>
-                
-                <p v-show="!length">× 8 caracteres</p>
-                <p v-show="length">✓ 8 caracteres</p>
-                <br>
-
-                <div>
-                    <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="professor.confirmPassword" @input="checkData" required>
+                <h1>Valide seu cadastro:</h1>
+                <div class="input-box focused">
+                    <div class="d1">
+                        <label for="email">Email:</label>
+                        <p>{{ this.professor.email }}</p>
+                    </div>
+                    <div class="d2">
+                        <router-link to="/professor/init" class="editMail"></router-link>
+                    </div>
                 </div>
-
-                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
-
-                <button type="submit" v-show="allRequirements">Concluir</button>
-                <button type="button" v-show="!allRequirements">Concluir</button>
+                <div class="token">
+                    <label>Senha Temporária enviada em seu e-mail:</label>
+                    <div class="box-token">
+                        <input ref="tempPassword1" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[0]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 1)" @paste="handlePaste($event, 1)" required>
+                        <input ref="tempPassword2" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[1]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 2)" @paste="handlePaste($event, 2)" required>
+                        <input ref="tempPassword3" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[2]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 3)" @paste="handlePaste($event, 3)" required>
+                        <input ref="tempPassword4" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[3]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 4)" @paste="handlePaste($event, 4)" required>
+                        <input ref="tempPassword5" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[4]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 5)" @paste="handlePaste($event, 5)" required>
+                        <input ref="tempPassword6" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[5]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 6)" @paste="handlePaste($event, 6)" required>
+                        <input ref="tempPassword7" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[6]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 7)" @paste="handlePaste($event, 7)" required>
+                        <input ref="tempPassword8" type="text" pattern="[A-Z0-9]" 
+                        v-model="professor.temporaryPassword[7]" maxlength="1" 
+                        @keydown="handleKeyDown($event, 8)" @paste="handlePaste($event, 8)" required>
+                    </div>
+                </div>
+                <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
+                    <div class="d1">
+                        <label for="newPassword">Nova Senha:</label>
+                        <input :type="inputType" id="newPassword" v-model="professor.newPassword" @input="checkPassword"
+                        @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
+                        <span class="alert" v-show="alerts.alertUppercase">
+                            A senha deve conter ao menos uma letra maiúscula(A-Z)
+                        </span>
+                        <span class="alert" v-show="alerts.alertLowercase">
+                            A senha deve conter ao menos uma letra minúscula(a-z)
+                        </span>
+                        <span class="alert" v-show="alerts.alertNumber">
+                            A senha deve conter ao menos um número (0-9)
+                        </span>
+                        <span class="alert" v-show="alerts.alertSpecial">
+                            A senha deve conter ao menos um caractere especial (*, !, @, #, $, %, &, /, -, .)
+                        </span>
+                        <span class="alert" v-show="alerts.alertLenght">
+                            A senha deve conter ao menos 8 caracteres
+                        </span>
+                    </div>
+                    <div class="d2">
+                        <button type="button" @click="togglePasswordVisibility" :class="buttonClass"
+                        @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"></button>
+                    </div>
+                </div>
+                <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
+                    <div class="d1">
+                        <label for="confirmPassword">Confirmar Senha:</label>
+                        <input :type="inputTypeConfirm" id="confirmPassword" v-model="professor.confirmPassword" 
+                        @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                        @input="checkConfirmPassword" required>
+                        <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
+                    </div>
+                    <div class="d2">
+                        <button type="button" @click="togglePasswordConfirmVisibility" 
+                        @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                        :class="buttonClassConfirm"></button>
+                    </div>
+                </div>
+                <div class="button-box">
+                    <button v-show="allRequirements" type="submit">Validar</button>
+                    <button v-show="!allRequirements" type="button">Validar</button>
+                </div>
             </form>
         </div>
     </main>
@@ -49,11 +93,12 @@
 </template>
 
 <script>
-import { validateProfessor } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { validateProfessor } from '../../services/api/professor';
 
 export default {
     name: 'ValidateProfessor',
@@ -65,61 +110,172 @@ export default {
         return {
             professor: {
                 email: '',
-                temporaryPassword: '',
-                newPassword: ''
+                temporaryPassword: Array(8).fill(''),
+                newPassword: '',
+                confirmPassword: ''
             },
-            uppercase: false,
-            lowercase: false,
-            number: false,
-            specialCharacter: false,
-            length: false,
-            confirmPass: false,
+            alerts: {
+                alertUppercase: false,
+                alertLowercase: false,
+                alertNumber: false,
+                alertSpecial: false,
+                alertLenght: false,
+                alertDominio: false,
+                alertPass: false
+            },
+            focused: {
+                passwordFocused: false,
+                confirmFocused: false
+            },
+            showPassword: false,
+            showPasswordConfirm: false,
         }
     },
     computed: {
         allRequirements(){
-            return (this.confirmPass && this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length)
-        }
+            return (this.confirmPass && this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length);
+        },
+        inputType() {
+            return this.showPassword ? 'text' : 'password';
+        },
+        buttonClass() {
+            return this.showPassword ? 'hide' : 'show';
+        },
+        inputTypeConfirm() {
+            return this.showPasswordConfirm ? 'text' : 'password';
+        },
+        buttonClassConfirm() {
+            return this.showPasswordConfirm ? 'hide' : 'show';
+        },
     },
     methods: {
-        checkData() {
+        handleKeyDown(event, index) {
+            const input = event.target;
+            
+            if (event.key === 'ArrowRight') {
+                if (index < 8 && this.$refs[`tempPassword${index + 1}`]) {
+                    const nextInput = this.$refs[`tempPassword${index + 1}`];
+                    if (nextInput && typeof nextInput.focus === 'function') {
+                        nextInput.focus();
+                        nextInput.setSelectionRange(0, nextInput.value.length);
+                    }
+                } else if (/^[0-9A-Za-z]$/.test(event.key)) {
+                    event.preventDefault();
+                    input.value = event.key.toUpperCase();
+                    this.professor.temporaryPassword[index - 1] = event.key.toUpperCase();
+    
+                    if (index < 8 && this.$refs[`tempPassword${index + 1}`]) {
+                        const nextInput = this.$refs[`tempPassword${index + 1}`];
+                        if (nextInput && typeof nextInput.focus === 'function') {
+                            nextInput.focus();
+                            nextInput.setSelectionRange(0, nextInput.value.length);
+                        }
+                    }
+                }
+            } else if (event.key === 'Backspace') {
+                input.value = '';
+                this.professor.temporaryPassword[index - 1] = '';
+            
+                if (index > 1 && this.$refs[`tempPassword${index - 1}`]) {
+                    const previousInput = this.$refs[`tempPassword${index - 1}`];
+                    if (previousInput && typeof previousInput.focus === 'function') {
+                        previousInput.focus();
+                        previousInput.setSelectionRange(0, previousInput.value.length);
+                    }
+                }
+            } else if (event.key === 'ArrowLeft') {
+                if (index > 1 && this.$refs[`tempPassword${index - 1}`]) {
+                    const previousInput = this.$refs[`tempPassword${index - 1}`];
+                    if (previousInput && typeof previousInput.focus === 'function') {
+                        previousInput.focus();
+                        previousInput.setSelectionRange(0, previousInput.value.length);
+                    }
+                }
+            }
+        },
+        handlePaste(event, index) {
+            event.preventDefault();
+
+            const pastedText = event.clipboardData.getData('text/plain').trim();
+
+            if (pastedText.length > 8) {
+                return;
+            }
+
+            if (!/^[0-9A-Za-z]+$/.test(pastedText)) {
+                return;
+            }
+
+            const characters = pastedText.split('');
+
+            characters.forEach((char, i) => {
+                const nextIndex = index + i;
+                if (nextIndex <= 8) {
+                    const input = this.$refs[`tempPassword${nextIndex}`];
+                    if (input) {
+                        input.focus();
+                        input.setSelectionRange(0, 0);
+                        input.value = char.toUpperCase();
+                        this.professor.temporaryPassword[nextIndex - 1] = char.toUpperCase();
+                    }
+                }
+            });
+        },
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
+        togglePasswordConfirmVisibility() {
+            this.showPasswordConfirm = !this.showPasswordConfirm;
+        },
+        checkPassword() {
+            const password = this.professor.newPassword;
+
+            this.alerts.alertUppercase = false;
+            this.alerts.alertLowercase = false;
+            this.alerts.alertNumber = false;
+            this.alerts.alertSpecial = false;
+            this.alerts.alertLenght = false;
+
+            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
+            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
+            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
+            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
+
+            this.checkConfirmPassword();
+        },
+        checkConfirmPassword() {
             const password = this.professor.newPassword;
             const passwordConfirm = this.professor.confirmPassword;
-            this.confirmPass = (password == passwordConfirm);
-            this.uppercase = /[A-Z]/.test(password);
-            this.lowercase = /[a-z]/.test(password);
-            this.number = /[0-9]/.test(password);
-            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
-            this.length = password.length >= 8;
-        },
 
+            this.alerts.alertPass = false;
+
+            if (!(password == passwordConfirm)) {
+                this.alerts.alertPass = true;
+            }
+        },
         async submitForm() {
             try {
                 const response = await validateProfessor({
                     email: this.professor.email,
-                    temporaryPassword: this.professor.temporaryPassword,
+                    temporaryPassword: this.professor.temporaryPassword.join(''),
                     newPassword: this.professor.newPassword
                 });
-                
                 if (200 <= response.status && response.status < 300) {
-                    Cookies.remove('email');                    
+                    Cookies.remove('email');
                     router.push({ path: '/professor/login' });
-                    
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
             } catch(error){
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
-
         },
-
         async getEmail(){
-            if(Cookies.get('email-init-professor')){
+            if (Cookies.get('email-init-professor')) {
                 this.professor.email = Cookies.get('email-init-professor');
-            }
-            else{
+            } else {
                 router.push({path: "/professor/init"});
             }
         }
@@ -129,3 +285,206 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+main {
+    height: calc(100vh - 80px);
+    background-color: $primary-color-dark;
+    @include flex(row, center, center);
+    @include font-inter(200);
+
+    *{
+        @include font-inter(200);
+    }
+}
+
+.register {
+    height: 75%;
+    width: 30%;
+    border-radius: 20px;
+    padding: 20px;
+    color: $font-color-dark;
+    background-color: $secondary-color-dark;
+}
+
+.input-box {
+    height: 65px;
+    @include flex(row, flex-start, center);
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: $terciary-color-dark;
+    margin: 25px 0px;
+    border-radius: 0px 5px 5px 0px;
+
+    input {
+        background-color: transparent;
+        width: 100%;
+        margin-top: 5px;
+        outline: none;
+        color: $font-color-dark;
+        border: none;
+        @include font-inter(400);
+        font-size: 1rem;
+    }
+
+    &.focused {
+        border-left: solid 3px $secondary-color-orange;
+    }
+
+    label {
+        letter-spacing: 1.5px;
+        @include font-inter(200);
+        font-size: .8rem;
+        color: $font-color-dark-2;
+    }
+
+    p {
+        background-color: transparent;
+        width: 100%;
+        margin-top: 5px;
+        outline: none;
+        color: $font-color-dark;
+        border: none;
+        @include font-inter(400);
+        font-size: 1rem;
+    }
+
+    a {
+        height: 18px;
+        width: 18px;
+        border: none;
+        background-color: transparent;
+        background-position: center;
+        background-image: url('../../assets/icons/lapis.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        filter: invert(100%);
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .d1 {
+        width: 95%;
+
+        .alert {
+            font-size: .8rem;
+            color: rgb(158, 20, 20);
+
+            & .input-box input {
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .d2 {
+        width: 5%;
+        button {
+            height: 20px;
+            width: 20px;
+            border: none;
+            background-color: transparent;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: invert(100%);
+            cursor: pointer;
+        }
+    }
+
+    .alerts {
+        @include flex(column, center, flex-start);
+        font-size: .8rem;
+        color: rgb(158, 20, 20);
+    }
+}
+
+.password {
+    @include flex(row, flex-start, center);
+    div {
+        @include flex(column, center, flex-start)
+    }
+
+    .d1 {
+        width: 95%;
+    }
+
+    .d2 {
+        width: 5%;
+        button {
+            height: 20px;
+            width: 20px;
+            border: none;
+            background-color: transparent;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: invert(100%);
+            cursor: pointer;
+        }
+        .show {
+            background-image: url('../../assets/icons/olho-1.png');
+        }
+        .hide {
+            background-image: url('../../assets/icons/olho-2.png');
+        }
+    }
+}
+
+.token {
+    width: 100%;
+    @include flex(column, center, flex-start);
+    label {
+        padding-inline: 10px;
+        letter-spacing: 1.5px;
+        margin-top: 10px; 
+        @include font-inter(200);
+        font-size: .8rem;
+        color: $font-color-dark-2;
+    }
+    .box-token {
+        @include flex(row, space-around, center);
+        margin: 5px 0px 10px 0px;
+        input {
+            border: none;
+            outline: none;
+            border-radius: 7px;
+            height: 65px;
+            width: 12%;
+            font-size: 1.8rem;
+            text-align: center;
+            @include flex-center;
+            color: $font-color-dark;
+            caret-color: $font-color-dark;
+            @include font-inter(500);
+            background-color: $terciary-color-dark;
+            &:focus {
+                border: solid 2px $primary-color-orange;
+            }
+            text-transform: uppercase
+        }
+    }
+}
+
+.button-box {
+    width: 100%;
+    margin-top: 10px;
+    @include flex(row, flex-start, center);
+    button {
+        padding: 12px 75px;
+        background-color: $primary-color-orange;
+        border: none;
+        border-radius: 3px;
+        @include font-inter(400);
+        font-size: .9rem;
+        color: $secondary-color-dark;
+        border: solid 1px $primary-color-orange;
+        cursor: pointer;
+        transition: .1s linear;
+        &:hover {
+            background-color: $secondary-color-dark;
+            color: $primary-color-orange;
+        }
+    }
+}
+</style>
