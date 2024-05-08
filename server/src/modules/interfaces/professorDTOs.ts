@@ -12,3 +12,14 @@ export interface ValidateProfessorDTO {
     temporaryPassword: string,
     newPassword: string
 }
+
+export interface RecoveryProfessorDTO {
+    name: string;
+    email: string;
+}
+
+export interface ValidateRecoveryDTO {
+    email: string;
+    recoveryPass: string;
+    newPass: string;
+}

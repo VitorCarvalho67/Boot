@@ -1,23 +1,23 @@
-import { Aluno } from "@prisma/client";
+import { Funcionario } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
-import { validateRecoveryDTO } from "../../interfaces/alunoDTOs"
+import { ValidateRecoveryDTO } from "../../interfaces/funcionarioDTOs"
 import { AppError } from "../../../errors/error";
-import { generateAccessTokenAluno } from "../../../jwt/jwtServices";
+import { generateAccessTokenFuncionario } from "../../../jwt/jwtServices";
 
 const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryUseCase {
-    async execute({email, recoveryPassword, newPass} : validateRecoveryDTO): Promise<{token: string, aluno: Omit<Aluno, 'password' | 'alunoImagem' | 'turmas' | 'dataNascimento' | 'disciplina' | 'rm' | 'createdAt' | 'updatedAt' | 'recoveryPass' | 'tentativasRestantes'>}>{
-        const aluno = await prisma.aluno.findFirst({
+    async execute({email, recoveryPass, newPass} : ValidateRecoveryDTO): Promise<{token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'id' | 'cargo'>}>{
+        const funcionario = await prisma.funcionario.findFirst({
             where: {
                 email
             }
         });
 
-        if (!aluno){
+        if (!funcionario){
             throw new AppError("Email ou senha de recuperação inválidos");
         } else{
-            const isPasswordValid = bcrypt.compareSync(recoveryPassword, aluno.recoveryPass);
+            const isPasswordValid = bcrypt.compareSync(recoveryPass, funcionario.recoveryPass);
 
             if (!isPasswordValid){
                 throw new AppError("Senha temporária inválida");
@@ -25,7 +25,7 @@ export class ValidateRecoveryUseCase {
                 const salt = bcrypt.genSaltSync(10);
                 const hash = bcrypt.hashSync(newPass, salt); 
                 
-                await prisma.aluno.update({
+                await prisma.funcionario.update({
                     where: {
                         email
                     },
@@ -35,7 +35,7 @@ export class ValidateRecoveryUseCase {
                     }
                 });
                 
-                const token = generateAccessTokenAluno(aluno);
+                const token = generateAccessTokenFuncionario(funcionario);
     
                 if (!token){
                     throw new AppError("Email ou senha inválidos");
@@ -43,11 +43,13 @@ export class ValidateRecoveryUseCase {
     
                 return {
                     token: token,
-                    aluno: {
-                    id: aluno.id,
-                    name: aluno.name,
-                    email: aluno.email
-                }}
+                    funcionario: {
+                        id: funcionario.id,
+                        name: funcionario.name,
+                        email: funcionario.email,
+                        cargo: funcionario.cargo
+                    }
+                }
             }
         }
     }

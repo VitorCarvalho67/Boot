@@ -168,11 +168,11 @@ export const registerFuncionario = async(infoFuncionario, token) => {
     }
 }
 
-export const initProfessor = async(emailProfessor) => {
+export const initProfessor = async(email) => {
     try {
         const response = await api.get('professor/init', {
             params: {
-                email: `${emailProfessor}`
+                email: `${email}`
             }
         });
         return response;
@@ -239,6 +239,42 @@ export const validateFuncionario = async(infoFuncionario) => {
 export const loginFuncionario = async(infoFuncionario) => {
     try {
         const response = await api.post('funcionario/login/', infoFuncionario);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const recoveryProfessor = async(infoProfessor) => {
+    try {
+        const response = await api.post('professor/recovery', infoProfessor);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const validateRecoveryProfessor = async(infoProfessor) => {
+    try {
+        const response = await api.post('professor/recovery/validate', infoProfessor);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const recoveryFuncionario = async(infoFuncionario) => {
+    try {
+        const response = await api.post('funcionario/recovery', infoFuncionario);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const validateRecoveryFuncionario = async(infoFuncionario) => {
+    try {
+        const response = await api.post('funcionario/recovery/validate', infoFuncionario);
         return response;
     } catch (error) {
         return error.response.data;

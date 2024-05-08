@@ -53,11 +53,11 @@ export default {
                 );
 
                 if (200 <= response.status && response.status < 300) {
-                    if(Cookies.get('emailFuncionario')){
-                        Cookies.remove('emailFuncionario');
+                    if(Cookies.get('email-init-funcionario')){
+                        Cookies.remove('email-init-funcionario');
                     }
                     
-                    Cookies.set('emailFuncionario', `${this.funcionario.email}`, { expires: 10 });
+                    Cookies.set('email-init-funcionario', `${this.funcionario.email}`, { expires: 10 });
                     
                     if(!response.data.funcionario.validated){
                         router.push({ name: 'ValidateFuncionario'});

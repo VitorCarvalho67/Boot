@@ -20,3 +20,14 @@ export interface ValidateFuncionarioDTO {
     temporaryPassword: string,
     newPassword: string
 }
+
+export interface RecoveryFuncionarioDTO {
+    name: string;
+    email: string;
+}
+
+export interface ValidateRecoveryDTO {
+    email: string;
+    recoveryPass: string;
+    newPass: string;
+}

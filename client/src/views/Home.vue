@@ -1,6 +1,6 @@
 <template>
     <Header />
-    <Slides />
+    <!-- <Slides /> -->
     <div id="app">
         <main>
             <div class="content">
@@ -10,6 +10,8 @@
                         <h1>Venha mostrar para o mundo o profissional que você é.</h1>
                         <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
                             que
+                            facilite a introdução do aluno ao mercado de trabalho.Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
+                            que
                             facilite a introdução do aluno ao mercado de trabalho.</p>
                         <router-link to="/">Saiba Mais</router-link>
                     </div>
@@ -18,28 +20,8 @@
                 </div>
             </div>
         </main>
-        
-        <br>
-
-        <router-link to="/login">Login Aluno</router-link>
-        <br>
-        <router-link to="/admin/login">Login Admin</router-link>
-        <br>
-        <router-link to="/register">Register Aluno</router-link>
-        <br>
-        <router-link to="/register/token">Confirmação do token</router-link>
-        <br>
-        <router-link to="/recovery">Recuperar senha</router-link>
-        <br>
-        <router-link to="/recovery/validate">Token de recuperação de senha</router-link>
-        <br>
-        <router-link to="/admin/register/professor">Registro de professores pelo admin</router-link>
-        <br>
-        <router-link to="/admin/register/coordenador">Registro de Coordenador pelo admin</router-link>
-        <br>
-        <router-link to="/admin/register/curso">Registro de Curso pelo admin</router-link>
-        <br>
     </div>
+    <Cards />
     <ContactUs />
     <Footer />
 
@@ -50,14 +32,16 @@ import Header from '../components/Header.vue';
 import ContactUs from '../components/ContactUs.vue';
 import Footer from '../components/Footer.vue';
 import Slides from '../components/Slides.vue';
+import Cards from '../components/Cards.vue';
 
 export default {
     name: 'Home',
     components: {
         Header,
         Slides,
+        Cards,
         ContactUs,
-        Footer
+        Footer,
     }
 }
 </script>
@@ -66,10 +50,18 @@ export default {
 main {
     min-height: auto;
     background-color: $secondary-color-dark;
+    
+    >h1{
+        text-align: center;
+        padding-top: 20px;
+        @include font-inter(600);
+        letter-spacing: .3cm;
+        color: $primary-color-orange;
+    }
 
     .content {
         @include flex(row-reverse, center, center);
-        height: 45vh;
+        height: 55vh;
         width: 100%;
 
         .box {
@@ -86,12 +78,16 @@ main {
             .info {
                 @include flex(column, center, flex-start);
                 // width: 40%;
+
             }
 
             h1 {
                 color: $secondary-color-orange;
+                font-size: 2rem;
                 @include font-inter(500);
             }
+
+
 
             p {
                 width: 70%;

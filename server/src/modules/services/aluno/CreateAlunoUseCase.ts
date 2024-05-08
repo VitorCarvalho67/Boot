@@ -28,7 +28,7 @@ export class CreateAlunoUseCase {
                         }
                     });
                     throw new AppError("Token expirado");    
-                }else {
+                } else {
                     const aluno = await prisma.aluno.create({
                         data:{
                             name: preAluno.name,
@@ -45,19 +45,28 @@ export class CreateAlunoUseCase {
                     return aluno;
                 }
 
-            }else {
-                await prisma.preAluno.update({
-                    where: {
-                        email
-                    },
-                    data: {
-                        tentativasRestantes: {
-                            decrement: 1
+            } else {
+                const expirationTime = new Date(preAluno.createdAt.getTime());
+                if(preAluno.tentativasRestantes <= 0 || expirationTime.getTime() < Date.now()) {
+                    await prisma.preAluno.delete({
+                        where: {
+                            email
                         }
-                    }
-                });
-
+                    });
+                    throw new AppError("Tentativas insuficientes ou tempo esgotado");    
+                }else{
+                    await prisma.preAluno.update({
+                        where: {
+                            email
+                        },
+                        data: {
+                            tentativasRestantes: {
+                                decrement: 1
+                            }
+                        }
+                    });
                 throw new AppError("Token inválido");
+                }
             }
         }else {
             throw new AppError("Email não encontrado");

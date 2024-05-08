@@ -8,13 +8,13 @@
                 <p>Caso não tenha recebino o email</p> <button>Retornar para a página anterior</button>
                 <br>
                 <label for="recoveryPass">Senha temporária enviada no email:</label>
-                <input type="text" id="recoveryPass" v-model="infoAluno.recoveryPass" required>
+                <input type="text" id="recoveryPass" v-model="infoFuncionario.recoveryPass" required>
                 <br>
                 <label for="newPass">Nova senha:</label>
-                <input type="password" id="newPass" v-model="infoAluno.newPass" required>
+                <input type="password" id="newPass" v-model="infoFuncionario.newPass" required>
                 <br>
                 <label for="confirmNewPass">Confirmar nova senha:</label>
-                <input type="password" id="confirmNewPass" v-model="infoAluno.confirmNewPass" required>
+                <input type="password" id="confirmNewPass" v-model="infoFuncionario.confirmNewPass" required>
                 <br>
                 <button type="submit">Recuperar</button>
             </form>
@@ -24,21 +24,21 @@
 </template>
 
 <script>
-import { validateRecovery } from '../../services/api.js';
+import { validateRecoveryFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 
 export default {
-    name: 'ValidateRecovery',
+    name: 'ValidateRecoveryFuncionario',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            infoAluno: {
+            infoFuncionario: {
                 recoveryPass: '',
                 newPass: '',
                 confirmNewPass: ''
@@ -47,13 +47,13 @@ export default {
     },
     methods: {
         async submitForm() {
-            const emailCookies = Cookies.get('email-recovery-aluno');
-            if (this.infoAluno.newPass === this.infoAluno.confirmNewPass){    
+            const emailCookies = Cookies.get('email-recovery-funcionario');
+            if (this.infoFuncionario.newPass === this.infoFuncionario.confirmNewPass){    
                 try {
                     const response = await validateRecovery({
                         email: emailCookies,
-                        recoveryPassword: this.infoAluno.recoveryPass,
-                        newPass: this.infoAluno.newPass
+                        recoveryPassword: this.infoFuncionario.recoveryPass,
+                        newPass: this.infoFuncionario.newPass
                     });
 
                     if (200 <= response.status && response.status < 300) {

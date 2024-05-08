@@ -1,24 +1,24 @@
-import { Professor } from "@prisma/client";
+import { Funcionario } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
-import { RecoveryProfessorDTO } from "../../interfaces/professorDTOs"
+import { RecoveryFuncionarioDTO } from "../../interfaces/funcionarioDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRecoveryEmailProfessor } from "../../../mail/templates/recoveryProfessor";
+import { generateRecoveryEmailFuncionario } from "../../../mail/templates/recoveryFuncionario";
 import transporter from "../../../mail/config/email";
 import nodemailer from 'nodemailer';
 
 const bcrypt = require('bcrypt');
 
-export class RecoveryProfessorUseCase {
-    async execute({ name, email }: RecoveryProfessorDTO) {
+export class RecoveryFuncionarioUseCase {
+    async execute({ name, email }: RecoveryFuncionarioDTO) {
         if (name && email && name.trim() !== "" && email.trim() !== "") {
-            const professorExists = await prisma.professor.findUnique({
+            const funcionarioExists = await prisma.funcionario.findUnique({
                 where: {
                     name,
                     email
                 }
             });
 
-            if (!professorExists) {
+            if (!funcionarioExists) {
                 throw new AppError("Nome ou email inválidos");
             }
 
@@ -27,7 +27,7 @@ export class RecoveryProfessorUseCase {
                 const token: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
                 const hash = bcrypt.hashSync(token, salt);
 
-                await prisma.professor.update({
+                await prisma.funcionario.update({
                     where: {
                         name,
                         email
@@ -37,13 +37,13 @@ export class RecoveryProfessorUseCase {
                     }
                 });
 
-                const nome = professorExists.name.split(' ').shift()?.toString() ?? 'professor';
+                const nome = funcionarioExists.name.split(' ').shift()?.toString() ?? 'funcionario';
 
                 const mailOptions = {
                     from: process.env.EMAIL,
                     to: email,
                     subject: 'Boot - Código de recuperação',
-                    html: generateRecoveryEmailProfessor(nome, token)
+                    html: generateRecoveryEmailFuncionario(nome, token)
                 };
 
                 transporter.sendMail(mailOptions, function (error, info) {

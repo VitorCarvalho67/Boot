@@ -165,11 +165,9 @@ export default {
     methods: {
         togglePasswordVisibility() {
             this.showPassword = !this.showPassword;
-            console.log("Mudando visibilidade da senha");
         },
         togglePasswordConfirmVisibility() {
             this.showPasswordConfirm = !this.showPasswordConfirm;
-            console.log("Mudanso visibilidade do confirmar senha");
         },
         checkEmail() {
             const email = this.userAluno.email;
@@ -216,7 +214,7 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('email', `${response.data.email}`, { expires: 10 });
+                    Cookies.set('email-registro-aluno', `${response.data.email}`, { expires: 10 });
                     router.push({ name: 'ValidateRegister' })
 
                     alert("Tudo certo! 😉");
@@ -235,7 +233,7 @@ export default {
 main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
-    @include flex(row, center, center);
+    @include flex(row-reverse, center, center);
 }
 
 .alert {
@@ -400,11 +398,12 @@ p {
 
 .button-box {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 40px;
     @include flex(row, flex-start, center);
 
     button {
-        padding: 12px 75px;
+        height: 40px;
+        width: 140px;
         background-color: $primary-color-orange;
         border: none;
         border-radius: 3px;
@@ -428,6 +427,7 @@ p {
 
     img {
         height: 80%;
+        transform: rotatey(180deg);
     }
 }
 

@@ -99,3 +99,8 @@ body {
 main {
     min-height: calc(100vh - 80px);
 }
+
+img, button, a{
+    -webkit-user-select: none;
+    user-select: none;
+}

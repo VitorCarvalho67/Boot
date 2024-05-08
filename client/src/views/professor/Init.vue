@@ -39,11 +39,11 @@ export default {
                 const response = await initProfessor(this.professor.email);
 
                 if (200 <= response.status && response.status < 300) {
-                    if(Cookies.get('emailProfessor')){
-                        Cookies.remove('emailProfessor');
+                    if(Cookies.get('email-init-professor')){
+                        Cookies.remove('email-init-professor');
                     }
                     
-                    Cookies.set('emailProfessor', `${this.professor.email}`, { expires: 10 });
+                    Cookies.set('email-init-professor', `${this.professor.email}`, { expires: 10 });
                     
                     if(!response.data.professor.validated){
                         router.push({ name: 'ValidateProfessor'});

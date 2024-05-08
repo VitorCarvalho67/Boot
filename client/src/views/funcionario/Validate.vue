@@ -117,8 +117,8 @@ export default {
         },
 
         async getEmail(){
-            if(Cookies.get('emailFuncionario')){
-                this.funcionario.email = Cookies.get('emailFuncionario');
+            if(Cookies.get('email-init-funcionario')){
+                this.funcionario.email = Cookies.get('email-init-funcionario');
             }
             else{
                 router.push({path: "/funcionario/init"});

@@ -11,6 +11,10 @@ interface RequestWithProfessor extends Request {
     professor?: { id: String};
 }
 
+interface RequestWithFuncionario extends Request {
+    funcionario?: { id: String};
+}
+
 export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, next: NextFunction) {
     try{
         // Authorization: YOUR_JWT_TOKEN
@@ -51,7 +55,7 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
             throw new Error('Token not found');
         }
 
-        const decoded = verfifyAccessTokenAdmin(token);
+        const decoded = verfifyAccessTokenProfessor(token);
 
         if (!decoded || typeof decoded === 'string') {
             throw new Error('Invalid token');
@@ -62,10 +66,40 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
         });
 
         if (!professor) {
-            throw new Error('Admin not found');
+            throw new Error('Professor not found');
         }
 
         req.professor = { id: professor.id};
+
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Invalid token ' + error});
+    }
+}
+
+export async function funcionarioAuthMiddleware(req: RequestWithProfessor, res: Response, next: NextFunction) {
+    try{
+        const token = req.headers.authorization;
+
+        if (!token) {
+            throw new Error('Token not found');
+        }
+
+        const decoded = verfifyAccessTokenProfessor(token);
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new Error('Invalid token');
+        }
+
+        const funcionario = await prisma.funcionario.findUnique({
+            where: { id: (decoded as JwtPayload).funcionarioId }
+        });
+
+        if (!funcionario) {
+            throw new Error('Funcionário not found');
+        }
+
+        req.funcionario = { id: funcionario.id};
 
         next();
     } catch (error) {

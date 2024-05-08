@@ -7,11 +7,11 @@
                 <p>É necessário informar alguns dados para que seja enviado uma senha temporária para acesso a conta novamente.</p>
                 <div>
                     <label for="name">Nome:</label>
-                    <input type="text" id="name" v-model="userAluno.name" required>
+                    <input type="text" id="name" v-model="userFuncionario.name" required>
                 </div>
                 <div>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="userAluno.email" required>
+                    <input type="email" id="email" v-model="userFuncionario.email" required>
                 </div>
                 <div>
                     <button type="submit">Enviar senha temporária</button>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { recoveryAluno } from '../../services/api.js';
+import { recoveryFuncionario } from '../../services/api.js';
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
@@ -32,14 +32,14 @@ import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 
 export default {
-    name: 'RecoveryAluno',
+    name: 'RecoveryFuncionario',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            userAluno: {
+            userFuncionario: {
                 name: '',
                 email: ''
             }
@@ -48,13 +48,13 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const response = await recoveryAluno({
-                    name: this.userAluno.name,
-                    email: this.userAluno.email
+                const response = await recoveryFuncionario({
+                    name: this.userFuncionario.name,
+                    email: this.userFuncionario.email
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('email-recovery-aluno', `${this.userAluno.email}`, { expires: 10 });
+                    Cookies.set('email-recovery-funcionario', `${this.userFuncionario.email}`, { expires: 10 });
                     router.push({name: 'ValidateRecovery'});
                 
                     alert("Tudo certo! 😉");

@@ -20,8 +20,20 @@ import ValidateFuncionario from '../views/funcionario/Validate.vue';
 import InitFuncionario from '../views/funcionario/Init.vue';
 import LoginFuncionario from '../views/funcionario/Login.vue';
 import Admin from '../views/admin/Dashboard.vue';
+import RecoveryProfessor from '../views/professor/Recovery.vue';
+import ValidateRecoveryProfessor from '../views/professor/ValidateRecovery.vue';
+import RecoveryFuncionario from '../views/funcionario/Recovery.vue';
+import ValidateRecoveryFuncionario from '../views/funcionario/ValidateRecovery.vue';
 
-import { isAuthAdmin } from '../util/authUtils.js';
+import { 
+    isAuthAdmin,
+    isRegistering,
+    isRecoverigAluno,
+    isInitingProfessor,
+    isRecoverigProfessor,
+    isInitingFuncionario,
+    isRecoverigFuncionario
+ } from '../util/guarders.js';
 
 
 const routes = [{
@@ -60,7 +72,10 @@ const routes = [{
     {
         path: '/register/validate',
         name: 'ValidateRegister',
-        component: ValidateRegister
+        component: ValidateRegister,
+        beforeEnter: async(to, from, next) => {
+            (await isRegistering()) ? next(): next("/register");
+        }
     },
     {
         path: '/recovery',
@@ -70,7 +85,10 @@ const routes = [{
     {
         path: '/recovery/validate',
         name: 'ValidateRecovery',
-        component: ValidateRecovery
+        component: ValidateRecovery,
+        beforeEnter: async(to, from, next) => {
+            (await isRecoverigAluno()) ? next(): next("/recovery");
+        }
     },
     {
         path: '/admin/login',
@@ -123,12 +141,31 @@ const routes = [{
     {
         path: '/professor/validate',
         name: 'ValidateProfessor',
-        component: ValidateProfessor
+        component: ValidateProfessor,
+        beforeEnter: async(to, from, next) => {
+            (await isInitingProfessor()) ? next(): next("/professor/init");
+        }
     },
     {
         path: '/professor/login',
         name: 'LoginProfessor',
-        component: LoginProfessor
+        component: LoginProfessor,
+        beforeEnter: async(to, from, next) => {
+            (await isInitingProfessor()) ? next(): next("/professor/init");
+        }
+    },
+    {
+        path: '/professor/recovery',
+        name: 'RecoveryProfessor',
+        component: RecoveryProfessor
+    },
+    {
+        path: '/professor/recovery/validate',
+        name: 'ValidateRecoveryProfessor',
+        component: ValidateRecoveryProfessor,
+        beforeEnter: async(to, from, next) => {
+            (await isRecoverigProfessor()) ? next(): next("/professor/recovery");
+        }
     },
     {
         path: '/funcionario/init',
@@ -144,7 +181,20 @@ const routes = [{
         path: '/funcionario/login',
         name: 'LoginFuncionario',
         component: LoginFuncionario
-    }
+    },
+    {
+        path: '/funcionario/recovery',
+        name: 'RecoveryFuncionario',
+        component: RecoveryFuncionario
+    },
+    {
+        path: '/funcionario/recovery/validate',
+        name: 'ValidateRecoveryFuncionario',
+        component: ValidateRecoveryFuncionario,
+        beforeEnter: async(to, from, next) => {
+            (await isRecoverigFuncionario()) ? next(): next("/funcionario/recovery");
+        }
+    },
 ];
 
 const router = createRouter({

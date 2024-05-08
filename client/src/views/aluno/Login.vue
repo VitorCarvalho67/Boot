@@ -16,6 +16,7 @@
                 <form @submit.prevent="submitForm">
                     <div class="content">
                         <h1>Bem vindo!</h1>
+                        <p>Entre com suas credencias de acesso do aluno</p>
                         <div class="input-box" :class="{ 'focused': emailFocused }">
                             <label for="email">E-Mail</label>
                             <input type="email" id="email" v-model="userAluno.email" required
@@ -34,6 +35,7 @@
                         </div>
                     </div>
                     <p><router-link to="/recovery">Esqueceu a senha?</router-link></p>
+                    <p><router-link to="/register">Ainda não possui conta?</router-link></p>
                     <div class="button-box">
                         <button type="submit">Entrar</button>
                     </div>
@@ -180,6 +182,15 @@ main {
             margin-top: 50px;
         }
 
+        p{
+            width: 100%;
+            font-size: .8rem;
+            @include flex(row, flex-start, center);
+            color: $font-color-dark-2;
+            @include font-inter(200);
+            margin-bottom: 50px;
+        }
+
         .input-box {
             @include flex(column, center, flex-start);
             width: 100%;
@@ -254,8 +265,9 @@ main {
 
         }
 
-        p {
+        >p {
             width: 100%;
+            margin-bottom: 10px;
             @include flex(row, flex-end, center);
 
             a {
@@ -272,7 +284,8 @@ main {
             @include flex(row, flex-start, center);
 
             button {
-                padding: 12px 75px;
+                height: 40px;
+                width: 140px;
                 background-color: $primary-color-orange;
                 border: none;
                 border-radius: 3px;

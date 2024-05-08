@@ -67,8 +67,8 @@ export default {
         },
 
         async getEmail(){
-            if(Cookies.get('emailProfessor')){
-                this.professor.email = Cookies.get('emailProfessor');
+            if(Cookies.get('email-init-professor')){
+                this.professor.email = Cookies.get('email-init-professor');
             }
             else{
                 router.push({path: "/professor/init"});

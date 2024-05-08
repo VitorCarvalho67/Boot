@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { InitProfessorUseCase } from "../services/professor/InitProfessorUseCase";
 import { LoginProfessorUseCase } from "../services/professor/LoginProfessorUseCase";
 import { ValidateProfessorUseCase } from "../services/professor/ValidateProfessorUseCase";
+import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfessoruseCase";
+import { ValidateRecoveryUseCase } from "../services/professor/ValidateRecoveryUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
@@ -34,6 +36,30 @@ export class ValidateProfessorController {
         const validateProfessorUseCase = new ValidateProfessorUseCase();
 
         const result = await validateProfessorUseCase.execute({ email, temporaryPassword, newPassword });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RecoveryProfessorController {
+    async handle(req: Request, res: Response) {
+        const { name, email } = req.body;
+
+        const recoveryProfessorUSecase = new RecoveryProfessorUseCase();
+
+        const result = await recoveryProfessorUSecase.execute({ name, email });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class ValidateRecoveryController {
+    async handle(req: Request, res: Response) {
+        const { email, recoveryPass, newPass } = req.body;
+
+        const validateRecoveryUseCase = new ValidateRecoveryUseCase();
+
+        const result = await validateRecoveryUseCase.execute({ email, recoveryPass, newPass });
 
         return res.status(201).json(result);
     }
