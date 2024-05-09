@@ -78,7 +78,7 @@ export default {
 main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
-    @include flex(row, center, center);
+    @include flex-center;
 }
 
 .box {
