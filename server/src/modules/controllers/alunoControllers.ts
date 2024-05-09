@@ -1,12 +1,12 @@
-import { Request, Response} from 'express';
+import { Request, Response } from 'express';
 import { CreateAlunoUseCase } from '../services/aluno/CreateAlunoUseCase';
 import { CreatePreAlunoUseCase } from '../services/aluno/CreatePreAlunoUseCase';
 import { LoginAlunoUseCase } from "../services/aluno/LoginAlunoUseCase";
 import { RecoveryAluno } from "../services/aluno/RecoveryAlunoUseCase";
-import { ValidateRecoveryUseCase } from "../services/aluno/validateRecoveryUseCase";
+import { ValidateRecoveryUseCase } from "../services/aluno/ValidateRecoveryUseCase";
 
 export class CreateAlunoController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { email, token } = req.body;
 
         const createAlunoUseCase = new CreateAlunoUseCase();
@@ -18,12 +18,12 @@ export class CreateAlunoController {
 }
 
 export class CreatePreAlunoController {
-    async handle(req: Request, res: Response){
-        const { name, email, password} = req.body;
+    async handle(req: Request, res: Response) {
+        const { name, email, password } = req.body;
 
         const createAlunoUseCase = new CreatePreAlunoUseCase();
 
-        const result = await createAlunoUseCase.execute({name, email, password});
+        const result = await createAlunoUseCase.execute({ name, email, password });
 
         return res.status(201).json(result);
     }
@@ -59,7 +59,7 @@ export class ValidateRecoveryController {
 
         const validateRecovery = new ValidateRecoveryUseCase();
 
-        const result = await validateRecovery.execute({ email, recoveryPassword, newPass});
+        const result = await validateRecovery.execute({ email, recoveryPassword, newPass });
 
         return res.status(201).json(result);
     }

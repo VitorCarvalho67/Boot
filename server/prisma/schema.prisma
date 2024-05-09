@@ -88,19 +88,21 @@ model Turma {
 }
 
 model Empresa {
-    id            String   @id @default(uuid())
-    name          String
-    email         String   @unique
-    password      String
-    empresaImagem String?
-    cnpj          String
-    endereco      String?
-    telefone      String?
-    token         String?
-    patrocinador  Boolean  @default(false)
-    vaga          Vaga[]
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+    id                  String   @id @default(uuid())
+    name                String
+    email               String   @unique
+    password            String
+    empresaImagem       String?
+    cnpj                String   @unique
+    endereco            String?
+    telefone            String?
+    token               String?
+    patrocinador        Boolean  @default(false)
+    validated           Boolean  @default(false)
+    vaga                Vaga[]
+    tentativasRestantes Int      @default(5)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
 
     @@map("empresas")
 }

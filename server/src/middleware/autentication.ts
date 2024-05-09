@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { AppError } from '../errors/error'; 
 import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor,verfifyAccessTokenFuncinario } from '../jwt/jwtServices';
 import { prisma }  from '../prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
@@ -22,13 +23,13 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
         const token = req.headers.authorization;
 
         if (!token) {
-            throw new Error('Token not found');
+            throw new AppError('Token not found');
         }
 
         const decoded = verfifyAccessTokenAdmin(token);
 
         if (!decoded || typeof decoded === 'string') {
-            throw new Error('Invalid token');
+            throw new AppError('Invalid token');
         }
 
         const admin = await prisma.admin.findUnique({
@@ -36,7 +37,7 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
         });
 
         if (!admin) {
-            throw new Error('Admin not found');
+            throw new AppError('Admin not found');
         } 
 
         req.admin = { id: admin.id};
@@ -52,13 +53,13 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
         const token = req.headers.authorization;
 
         if (!token) {
-            throw new Error('Token not found');
+            throw new AppError('Token not found');
         }
 
         const decoded = verfifyAccessTokenProfessor(token);
 
         if (!decoded || typeof decoded === 'string') {
-            throw new Error('Invalid token');
+            throw new AppError('Invalid token');
         }
 
         const professor = await prisma.professor.findUnique({
@@ -66,7 +67,7 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
         });
 
         if (!professor) {
-            throw new Error('Professor not found');
+            throw new AppError('Professor not found');
         }
 
         req.professor = { id: professor.id};
@@ -82,13 +83,13 @@ export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res
         const token = req.headers.authorization;
 
         if (!token) {
-            throw new Error('Token not found');
+            throw new AppError('Token not found');
         }
 
         const decoded = verfifyAccessTokenFuncinario(token);
 
         if (!decoded || typeof decoded === 'string') {
-            throw new Error('Invalid token');
+            throw new AppError('Invalid token');
         }
 
         const funcionario = await prisma.funcionario.findUnique({
@@ -96,7 +97,7 @@ export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res
         });
 
         if (!funcionario) {
-            throw new Error('Funcionário not found');
+            throw new AppError('Funcionário not found');
         }
 
         req.funcionario = { id: funcionario.id};

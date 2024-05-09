@@ -101,7 +101,7 @@ header {
                     height: 0;
                 }
 
-                >&:hover {
+                &:hover {
                     background-color: transparent;
                     border: solid 1px $primary-color-orange;
                     color: $primary-color-orange;
@@ -132,11 +132,7 @@ header {
                         &:after {
                             height: 0;
                         }
-
-                        >&:hover {
-                            
-                        }
-                }
+                    }
                 }
             }
         }

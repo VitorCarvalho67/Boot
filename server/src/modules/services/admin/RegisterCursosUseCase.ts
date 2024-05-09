@@ -4,7 +4,7 @@ import { RegisterCursosDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
 
 export class RegisterCursosUseCase {
-    async execute({ cursoName, turno, duracao, coordenador } : RegisterCursosDTO):  Promise< Curso >{
+    async execute({ cursoName, turno, duracao, coordenador }: RegisterCursosDTO): Promise<Pick<Curso, "name" | "turno" | "duracao">> {
 
         const coordenadorExists = await prisma.coordenador.findFirst({
             where: {
@@ -12,7 +12,7 @@ export class RegisterCursosUseCase {
             }
         });
 
-        if (!coordenadorExists){
+        if (!coordenadorExists) {
             throw new AppError("Coordenador inválido!")
         } else {
 
@@ -25,7 +25,7 @@ export class RegisterCursosUseCase {
                 }
             });
 
-            if (cursoAlreadyExists){
+            if (cursoAlreadyExists) {
                 throw new AppError("Curso já cadastrado!");
             } else {
                 const cursoRegister = await prisma.curso.create({
@@ -36,12 +36,16 @@ export class RegisterCursosUseCase {
                         coordenadorId: coordenadorExists.id
                     }
                 });
-        
-                if (!cursoRegister){
+
+                if (!cursoRegister) {
                     throw new AppError("Erro ao cadastrar curso!");
                 }
-        
-                return cursoRegister;
+
+                return {
+                    name: cursoRegister.name,
+                    turno: cursoRegister.turno,
+                    duracao: cursoRegister.duracao
+                };
             }
         }
     }

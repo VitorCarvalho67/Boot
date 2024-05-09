@@ -7,24 +7,24 @@ import { generateAccessTokenProfessor } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryUseCase {
-    async execute({email, recoveryPass, newPass} : ValidateRecoveryDTO): Promise<{token: string, professor: Pick<Professor, 'name' | 'email' | 'id' | 'tituloPrincipal'>}>{
+    async execute({ email, recoveryPass, newPass }: ValidateRecoveryDTO): Promise<{ token: string, professor: Pick<Professor, 'name' | 'email' | 'id' | 'tituloPrincipal'> }> {
         const professor = await prisma.professor.findFirst({
             where: {
                 email
             }
         });
 
-        if (!professor){
+        if (!professor) {
             throw new AppError("Email ou senha de recuperação inválidos");
-        } else{
+        } else {
             const isPasswordValid = bcrypt.compareSync(recoveryPass, professor.recoveryPass);
 
-            if (!isPasswordValid){
+            if (!isPasswordValid) {
                 throw new AppError("Senha temporária inválida");
-            }  else{
+            } else {
                 const salt = bcrypt.genSaltSync(10);
-                const hash = bcrypt.hashSync(newPass, salt); 
-                
+                const hash = bcrypt.hashSync(newPass, salt);
+
                 await prisma.professor.update({
                     where: {
                         email
@@ -34,13 +34,13 @@ export class ValidateRecoveryUseCase {
                         tentativasRestantes: 5
                     }
                 });
-                
+
                 const token = generateAccessTokenProfessor(professor);
-    
-                if (!token){
+
+                if (!token) {
                     throw new AppError("Email ou senha inválidos");
                 }
-    
+
                 return {
                     token: token,
                     professor: {

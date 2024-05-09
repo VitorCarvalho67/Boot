@@ -96,6 +96,7 @@ export default {
                     document.cookie = `token-funcionario=${response.data.token}`;
                     
                     alert("Tudo certo! 😉");
+                    router.push({name: "Funcionario"})
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }

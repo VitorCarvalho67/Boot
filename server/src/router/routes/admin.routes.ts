@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { adminAuthMiddleware } from '../../middleware/autentication';
-import { 
+import {
     LoginAdminController,
     RegisterCursosController,
     RegisterProfessorController,

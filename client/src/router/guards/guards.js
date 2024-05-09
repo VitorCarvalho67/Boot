@@ -72,6 +72,7 @@ export async function isAuthFuncionario(){
         try {
             const response = await authFuncionario(token);
             if (response.data !== "Funcionário autenticado com sucesso.") {
+                console.log(response.data);
                 return false;
             } else {
                 return true;

@@ -55,7 +55,7 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-recovery-professor', `${this.userProfessor.email}`, { expires: 10 });
-                    router.push({name: 'ValidateRecovery'});
+                    router.push({name: 'ValidateRecoveryProfessor'});
                 
                     alert("Tudo certo! 😉");
                 } else{

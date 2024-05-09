@@ -1,9 +1,9 @@
 import { Router } from "express";
 // import { empresaAuthMiddleware } from '../../middleware/autentication';
 import {
-    RegisterEmpresaController
-    // ValidateEmpresaController,
-    // LoginEmpresaController,
+    RegisterEmpresaController,
+    ValidateEmpresaController,
+    LoginEmpresaController,
     // InitEmpresaController,
     // RecoveryEmpresaController,
     // ValidateRecoveryController
@@ -12,8 +12,8 @@ import {
 
 
 const registerEmpresaController = new RegisterEmpresaController();
-// const validateEmpresaController = new ValidateEmpresaController();
-// const loginEmpresaController = new LoginEmpresaController();
+const validateEmpresaController = new ValidateEmpresaController();
+const loginEmpresaController = new LoginEmpresaController();
 // const initEmpresaController = new InitEmpresaController();
 // const recoveryEmpresaController = new RecoveryEmpresaController();
 // const validateRecoveryController= new ValidateRecoveryController();
@@ -21,8 +21,8 @@ const registerEmpresaController = new RegisterEmpresaController();
 const empresaRoutes = Router();
 
 empresaRoutes.post("/register", registerEmpresaController.handle);
-// empresaRoutes.post("/validate", validateEmpresaController.handle);
-// empresaRoutes.post("/login", loginEmpresaController.handle);
+empresaRoutes.post("/validate", validateEmpresaController.handle);
+empresaRoutes.post("/login", loginEmpresaController.handle);
 // empresaRoutes.post("/recovery", recoveryEmpresaController.handle);
 // empresaRoutes.post("/recovery/validate", validateRecoveryController.handle);
 

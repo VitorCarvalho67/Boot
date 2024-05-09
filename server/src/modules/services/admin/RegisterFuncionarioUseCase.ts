@@ -3,12 +3,12 @@ import { prisma } from "../../../prisma/client";
 import { RegisterFuncionarioDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
 import { generateRegisterFuncionarioEmail } from "../../../mail/templates/registerFuncionario";
-import transporter from "../../../mail/config/email"; 
+import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');
 
-export class RegisterFuncionarioUseCase{
-    async execute({ name, email, cargo } : RegisterFuncionarioDTO):  Promise< Funcionario >{
+export class RegisterFuncionarioUseCase {
+    async execute({ name, email, cargo }: RegisterFuncionarioDTO): Promise<Pick<Funcionario, "name" | "email" | "cargo">> {
 
         const emailAlreadyExists = await prisma.funcionario.findFirst({
             where: {
@@ -16,7 +16,7 @@ export class RegisterFuncionarioUseCase{
             }
         });
 
-        if (emailAlreadyExists){
+        if (emailAlreadyExists) {
             throw new AppError("Email já cadastrado!");
         } else {
             const salt = bcrypt.genSaltSync(10);
@@ -34,7 +34,7 @@ export class RegisterFuncionarioUseCase{
 
             var emailEnviado = false;
 
-            transporter.sendMail(mailOptions, function(error, info) {
+            transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     throw new AppError("Erro ao enviar email: " + error);
                 } else {
@@ -42,7 +42,7 @@ export class RegisterFuncionarioUseCase{
                     emailEnviado = true
                 }
             });
-            
+
             const funcionarioRegister = await prisma.funcionario.create({
                 data: {
                     name,
@@ -51,12 +51,16 @@ export class RegisterFuncionarioUseCase{
                     cargo: cargo
                 }
             });
-    
-            if (!funcionarioRegister){
+
+            if (!funcionarioRegister) {
                 throw new AppError("Erro ao cadastrar funcionário!");
             }
-    
-            return funcionarioRegister;
+
+            return {
+                name: funcionarioRegister.name,
+                email: funcionarioRegister.email,
+                cargo: funcionarioRegister.cargo
+            };
         }
     }
 }

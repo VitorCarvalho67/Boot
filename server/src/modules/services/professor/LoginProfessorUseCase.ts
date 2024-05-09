@@ -7,8 +7,8 @@ import { generateAccessTokenProfessor } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginProfessorUseCase {
-    async execute({email, password} : LoginProfessorDTO): Promise<{token: string, professor: Pick<Professor, 'name' | 'email' | 'tituloPrincipal'>}>{
-       
+    async execute({ email, password }: LoginProfessorDTO): Promise<{ token: string, professor: Pick<Professor, 'name' | 'email' | 'tituloPrincipal'> }> {
+
         const professor = await prisma.professor.findFirst({
             where: {
                 email,
@@ -16,19 +16,19 @@ export class LoginProfessorUseCase {
             }
         });
 
-        if (!professor){
+        if (!professor) {
             throw new AppError("Prrofessor não encontrado ou não validado");
         }
 
         const isPasswordValid = bcrypt.compareSync(password, professor.password);
 
-        if (!isPasswordValid){
+        if (!isPasswordValid) {
             throw new AppError("Email ou senha inválidos");
         }
 
         const token = generateAccessTokenProfessor(professor);
 
-        if (!token){
+        if (!token) {
             throw new AppError("Email ou senha inválidos");
         }
 

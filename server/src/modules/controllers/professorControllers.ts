@@ -2,15 +2,15 @@ import { Request, Response } from "express";
 import { InitProfessorUseCase } from "../services/professor/InitProfessorUseCase";
 import { LoginProfessorUseCase } from "../services/professor/LoginProfessorUseCase";
 import { ValidateProfessorUseCase } from "../services/professor/ValidateProfessorUseCase";
-import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfessoruseCase";
 import { ValidateRecoveryUseCase } from "../services/professor/ValidateRecoveryUseCase";
+import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfessorUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
         const email = req.query.email as string;
 
         const initProfessorUseCase = new InitProfessorUseCase();
-        
+
         const result = await initProfessorUseCase.execute({ email });
 
         return res.status(201).json(result);

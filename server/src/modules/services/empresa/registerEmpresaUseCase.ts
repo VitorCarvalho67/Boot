@@ -61,7 +61,7 @@ export class RegisterEmpresaUseCase {
                 });
 
                 console.log(name, email, cnpj, hash, tokenHash);
-                
+
                 const empresaRegister = await prisma.empresa.create({
                     data: {
                         name,
@@ -76,7 +76,11 @@ export class RegisterEmpresaUseCase {
                     throw new AppError("Erro ao cadastrar empresa!");
                 }
 
-                return empresaRegister;
+                return {
+                    name: empresaRegister.name,
+                    email: empresaRegister.email,
+                    cnpj: empresaRegister.cnpj
+                };
             }
         }
     }

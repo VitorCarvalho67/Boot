@@ -25,7 +25,7 @@ export interface RegisterFuncionarioDTO {
     name: string,
     email: string,
     password: string,
-    cargo: Cargo 
+    cargo: Cargo
 }
 
 enum Cargo {

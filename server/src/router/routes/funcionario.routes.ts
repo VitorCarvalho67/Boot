@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { funcionarioAuthMiddleware } from '../../middleware/autentication';
-import { 
+import {
     ValidateFuncionarioController,
     LoginFuncionarioController,
     InitFuncionarioController,
@@ -23,9 +23,9 @@ funcionarioRoutes.post("/recovery/validate", validateRecoveryController.handle);
 
 
 funcionarioRoutes.post("/auth", funcionarioAuthMiddleware, (req, res) => {
-    res.status(200).send("Funcionario autenticado com sucesso.");
+    res.status(200).send("Funcionário autenticado com sucesso.");
 });
-    
+
 funcionarioRoutes.get("/init", initFuncionarioController.handle);
 
 export { funcionarioRoutes };

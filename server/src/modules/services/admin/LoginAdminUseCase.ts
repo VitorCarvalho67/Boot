@@ -7,34 +7,33 @@ import { generateAccessTokenAdmin } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginAdminUseCase {
-    async execute({email, password} : LoginAdminDTO):  Promise<{token: string, admin: Omit<Admin, 'password' | 'adminImagem' | 'createdAt' | 'updatedAt'>}>{
-       
+    async execute({ email, password }: LoginAdminDTO): Promise<{ token: string, admin: Pick<Admin, 'name' | 'email'> }> {
+
         const admin = await prisma.admin.findUnique({
             where: {
                 email
             }
         });
 
-        if (!admin){
+        if (!admin) {
             throw new AppError("Email ou senha inválidos");
         }
 
         const isPasswordValid = bcrypt.compareSync(password, admin.password);
 
-        if (!isPasswordValid){
+        if (!isPasswordValid) {
             throw new AppError("Email ou senha inválidos");
         }
 
         const token = generateAccessTokenAdmin(admin);
 
-        if (!token){
+        if (!token) {
             throw new AppError("Email ou senha inválidos");
         }
 
         return {
             token: token,
             admin: {
-                id: admin.id,
                 name: admin.name,
                 email: admin.email
             }

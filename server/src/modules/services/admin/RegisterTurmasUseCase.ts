@@ -4,7 +4,7 @@ import { RegisterTurmaDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
 
 export class RegisterTurmasUseCase {
-    async execute({ inicio, fim, cursoName } : RegisterTurmaDTO):  Promise< { cursoName: string, turma: Pick<Turma, 'inicio' | 'fim' > } >{
+    async execute({ inicio, fim, cursoName }: RegisterTurmaDTO): Promise<{ cursoName: string, turma: Pick<Turma, 'inicio' | 'fim'> }> {
 
         const Curso = await prisma.curso.findFirst({
             where: {
@@ -12,7 +12,7 @@ export class RegisterTurmasUseCase {
             }
         });
 
-        if(!Curso){
+        if (!Curso) {
             throw new AppError("Curso inválido!")
         }
 
@@ -24,7 +24,7 @@ export class RegisterTurmasUseCase {
             }
         });
 
-        if (turmaAlreadyExists){
+        if (turmaAlreadyExists) {
             throw new AppError("Turma já existente!")
         } else {
 
@@ -35,11 +35,11 @@ export class RegisterTurmasUseCase {
                     cursoId: Curso.id
                 }
             });
-    
-            if (!turma){
+
+            if (!turma) {
                 throw new AppError("Erro ao cadastrar turma!");
             }
-    
+
             return {
                 cursoName: cursoName,
                 turma: {

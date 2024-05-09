@@ -16,21 +16,21 @@
                     <div class="img">
 
                     </div>
-                    <h2>Kristina Zasiadko</h2>
+                    <h2>xxxxxxxxxxxxxxxx</h2>
                     <span>2</span>
                 </li>
                 <li class="card">
                     <div class="img">
 
                     </div>
-                    <h2>Donald Horton</h2>
+                    <h2>xxxxxxxxxxxxxxxx</h2>
                     <span>3</span>
                 </li>
                 <li class="card">
                     <div class="img">
 
                     </div>
-                    <h2>Blanche Pearson</h2>
+                    <h2>xxxxxxxxxxxxxxxx</h2>
                     <span>4</span>
                 </li>
             </ul>
@@ -89,7 +89,7 @@ export default {
 
         function dragStop() {
             isDragging.value = false;
-            carousel.value.classList.remove('dragging');
+            // carousel.value.classList.remove('dragging');
         }
 
         function scrollCarousel(direction) {
@@ -173,11 +173,12 @@ export default {
         background-size: 50px;
         background-repeat: no-repeat;
         filter: invert(100%);
+        opacity: .7;
         transition: transform 0.1s linear;
     }
 
     .wrapper i:first-child {
-        left: -12px;
+        left: -22px;
     }
 
     .wrapper i:last-child {

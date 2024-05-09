@@ -94,12 +94,12 @@ main {
                     border-radius: 20px;
                     text-decoration: none;
                     transition: .7s;
-                    @include color($secondary-color-dark, $primary-color-orange);
-
-                    >&:hover {
-                        background-color: transparent;
-                        border: solid 1px $primary-color-orange;
-                        color: $primary-color-orange;
+                    border: solid 1px $primary-color-orange;
+                    background-color: transparent;
+                    color: $primary-color-orange;
+                    
+                    &:hover {
+                        @include color($secondary-color-dark, $primary-color-orange);
                     }
                 }
             }

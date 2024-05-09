@@ -3,22 +3,22 @@ import { prisma } from "../../../prisma/client";
 import { RegisterCoordenadorDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
 
-export class RegisterCoordenadorUseCase{
-    async execute({ name } : RegisterCoordenadorDTO):  Promise< Coordenador >{
+export class RegisterCoordenadorUseCase {
+    async execute({ name }: RegisterCoordenadorDTO): Promise<Pick<Coordenador, "name">> {
         const isProfessor = await prisma.professor.findFirst({
             where: {
                 name
             }
         });
-        
-        if (isProfessor){
+
+        if (isProfessor) {
             const coordenadorAlreadyExists = await prisma.coordenador.findFirst({
                 where: {
                     name
                 }
             });
-            
-            if (!coordenadorAlreadyExists){
+
+            if (!coordenadorAlreadyExists) {
                 const coordenadorRegister = await prisma.coordenador.create({
                     data: {
                         name,
@@ -27,17 +27,19 @@ export class RegisterCoordenadorUseCase{
                 });
 
                 console.log("Break point ⭕");
-                
-                if (!coordenadorRegister){
+
+                if (!coordenadorRegister) {
                     throw new AppError("Erro ao cadastrar professor!");
-                } else{
-                    return coordenadorRegister;
+                } else {
+                    return  {
+                        name: coordenadorRegister.name
+                    };
                 }
             } else {
                 throw new AppError("Coordenador já cadastrado!");
             }
-        } else{
-            throw new Error("Esse nome não corresponde a um professor!");    
+        } else {
+            throw new AppError("Esse nome não corresponde a um professor!");
         }
     }
 }

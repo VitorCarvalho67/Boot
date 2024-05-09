@@ -1,10 +1,8 @@
-import { Professor } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { RecoveryProfessorDTO } from "../../interfaces/professorDTOs"
 import { AppError } from "../../../errors/error";
 import { generateRecoveryEmailProfessor } from "../../../mail/templates/recoveryProfessor";
 import transporter from "../../../mail/config/email";
-import nodemailer from 'nodemailer';
 
 const bcrypt = require('bcrypt');
 

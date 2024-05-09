@@ -53,12 +53,12 @@ export default {
                 try {
                     const response = await validateRecovery({
                         email: emailCookies,
-                        recoveryPassword: this.infoProfessor.recoveryPass,
+                        recoveryPass: this.infoProfessor.recoveryPass,
                         newPass: this.infoProfessor.newPass
                     });
 
                     if (200 <= response.status && response.status < 300) {
-                        router.push({ name: 'Login' });
+                        router.push({ name: 'LoginProfessor' });
 
                         alert("Tudo certo! 😉");
                     } else{

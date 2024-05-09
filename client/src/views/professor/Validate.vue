@@ -121,7 +121,14 @@ export default {
     },
     computed: {
         allRequirements() {
-            return (this.confirmPass && this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length);
+            return (
+                !this.alerts.alertUppercase &&
+                !this.alerts.alertLowercase &&
+                !this.alerts.alertNumber &&
+                !this.alerts.alertSpecial &&
+                !this.alerts.alertLenght &&
+                !this.alerts.alertPass
+            );
         },
         inputType() {
             return this.showPassword ? 'text' : 'password';
@@ -174,11 +181,11 @@ export default {
             try {
                 const response = await validateProfessor({
                     email: this.professor.email,
-                    temporaryPassword: this.professor.temporaryPassword,
+                    temporaryPassword: (this.professor.temporaryPassword).toUpperCase(),
                     newPassword: this.professor.newPassword
                 });
                 if (200 <= response.status && response.status < 300) {
-                    Cookies.remove('email');
+                    Cookies.remove('email-init-professor');
                     router.push({ path: '/professor/login' });
                     alert("Tudo certo! 😉");
                 } else {

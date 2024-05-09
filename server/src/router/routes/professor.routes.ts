@@ -12,7 +12,7 @@ const validateProfessorController = new ValidateProfessorController();
 const loginProfessorController = new LoginProfessorController();
 const initProfessorController = new InitProfessorController();
 const recoveryProfessorController = new RecoveryProfessorController();
-const validateRecoveryController= new ValidateRecoveryController();
+const validateRecoveryController = new ValidateRecoveryController();
 
 const professorRoutes = Router();
 

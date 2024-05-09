@@ -59,7 +59,7 @@ export class LoginAdminController {
 
 
 export class RegisterCoordenadorController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { name } = req.body;
 
         const registerControllerUseCase = new RegisterCoordenadorUseCase();
@@ -72,7 +72,7 @@ export class RegisterCoordenadorController {
 
 
 export class RegisterCursosController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { cursoName, turno, duracao, coordenador } = req.body;
 
         const registerCursosUseCase = new RegisterCursosUseCase();
@@ -85,7 +85,7 @@ export class RegisterCursosController {
 
 
 export class RegisterFuncionarioController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { name, email, password, cargo } = req.body;
 
         const registerFuncionarioUseCase = new RegisterFuncionarioUseCase();
@@ -98,7 +98,7 @@ export class RegisterFuncionarioController {
 
 
 export class RegisterProfessorController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { name, email, password, tituloPrincipal } = req.body;
 
         const registerProfessorUseCase = new RegisterProfessorUseCase();
@@ -111,7 +111,7 @@ export class RegisterProfessorController {
 
 
 export class RegisterTurmaController {
-    async handle(req: Request, res: Response){
+    async handle(req: Request, res: Response) {
         const { inicio, fim, cursoName } = req.body;
 
         const registerTurmaUseCase = new RegisterTurmasUseCase();

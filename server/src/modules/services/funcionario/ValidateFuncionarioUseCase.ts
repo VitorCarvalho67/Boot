@@ -5,8 +5,8 @@ import { AppError } from "../../../errors/error";
 
 const bcrypt = require('bcrypt');
 
-export class ValidateFuncionarioUseCase{
-    async execute({ email, temporaryPassword, newPassword } : ValidateFuncionarioDTO):  Promise< Funcionario >{
+export class ValidateFuncionarioUseCase {
+    async execute({ email, temporaryPassword, newPassword }: ValidateFuncionarioDTO): Promise< Pick<Funcionario, "name" | "email" | "cargo" | "validated" >> {
 
         const funcionario = await prisma.funcionario.findFirst({
             where: {
@@ -15,17 +15,16 @@ export class ValidateFuncionarioUseCase{
             }
         });
 
-        if (!funcionario){
+        if (!funcionario) {
             throw new AppError("Email não cadastrado ou funcionário já validado!");
-        } 
+        }
 
-        
         const isPasswordValid = bcrypt.compareSync(temporaryPassword, funcionario.password);
-        
-        if(!isPasswordValid){
+
+        if (!isPasswordValid) {
             throw new AppError("Senha inválida!");
         }
-        
+
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(newPassword, salt);
 
@@ -33,16 +32,21 @@ export class ValidateFuncionarioUseCase{
             where: {
                 email,
             },
-            data:{
+            data: {
                 password: hash,
                 validated: true
             }
         });
 
-        if (!funcionarioUpdate){
+        if (!funcionarioUpdate) {
             throw new AppError("Erro ao autenticar funcionário!");
         }
 
-        return funcionarioUpdate;
+        return {
+            name: funcionarioUpdate.name,
+            email: funcionarioUpdate.email,
+            cargo: funcionarioUpdate.cargo,
+            validated: funcionarioUpdate.validated
+        };
     }
 }

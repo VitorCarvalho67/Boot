@@ -7,24 +7,24 @@ import { generateAccessTokenFuncionario } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryUseCase {
-    async execute({email, recoveryPass, newPass} : ValidateRecoveryDTO): Promise<{token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'id' | 'cargo'>}>{
+    async execute({ email, recoveryPass, newPass }: ValidateRecoveryDTO): Promise<{ token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'cargo'> }> {
         const funcionario = await prisma.funcionario.findFirst({
             where: {
                 email
             }
         });
 
-        if (!funcionario){
+        if (!funcionario) {
             throw new AppError("Email ou senha de recuperação inválidos");
-        } else{
+        } else {
             const isPasswordValid = bcrypt.compareSync(recoveryPass, funcionario.recoveryPass);
 
-            if (!isPasswordValid){
+            if (!isPasswordValid) {
                 throw new AppError("Senha temporária inválida");
-            }  else{
+            } else {
                 const salt = bcrypt.genSaltSync(10);
-                const hash = bcrypt.hashSync(newPass, salt); 
-                
+                const hash = bcrypt.hashSync(newPass, salt);
+
                 await prisma.funcionario.update({
                     where: {
                         email
@@ -34,17 +34,16 @@ export class ValidateRecoveryUseCase {
                         tentativasRestantes: 5
                     }
                 });
-                
+
                 const token = generateAccessTokenFuncionario(funcionario);
-    
-                if (!token){
+
+                if (!token) {
                     throw new AppError("Email ou senha inválidos");
                 }
-    
+
                 return {
                     token: token,
                     funcionario: {
-                        id: funcionario.id,
                         name: funcionario.name,
                         email: funcionario.email,
                         cargo: funcionario.cargo

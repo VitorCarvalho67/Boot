@@ -5,8 +5,8 @@ import { AppError } from "../../../errors/error";
 
 const bcrypt = require('bcrypt');
 
-export class ValidateProfessorUseCase{
-    async execute({ email, temporaryPassword, newPassword } : ValidateProfessorDTO):  Promise< Professor >{
+export class ValidateProfessorUseCase {
+    async execute({ email, temporaryPassword, newPassword }: ValidateProfessorDTO): Promise<Pick<Professor, "name" | "email" | "tituloPrincipal">> {
 
         const professorEmail = await prisma.professor.findFirst({
             where: {
@@ -14,7 +14,7 @@ export class ValidateProfessorUseCase{
             }
         });
 
-        if (!professorEmail){
+        if (!professorEmail) {
             throw new AppError("Email não cadastrado!");
         }
 
@@ -25,17 +25,17 @@ export class ValidateProfessorUseCase{
             }
         });
 
-        if (!professor){
+        if (!professor) {
             throw new AppError("Professor já validado!");
-        } 
+        }
 
-        
+
         const isPasswordValid = bcrypt.compareSync(temporaryPassword, professor.password);
-        
-        if(!isPasswordValid){
+
+        if (!isPasswordValid) {
             throw new AppError("Senha invalida!");
         }
-        
+
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(newPassword, salt);
 
@@ -43,16 +43,20 @@ export class ValidateProfessorUseCase{
             where: {
                 email,
             },
-            data:{
+            data: {
                 password: hash,
                 validated: true
             }
         });
 
-        if (!professorUpdate){
+        if (!professorUpdate) {
             throw new AppError("Erro ao autenticar professor!");
         }
 
-        return professorUpdate;
+        return {
+            name: professorUpdate.name,
+            email: professorUpdate.email,
+            tituloPrincipal: professorUpdate.tituloPrincipal
+        };
     }
 }

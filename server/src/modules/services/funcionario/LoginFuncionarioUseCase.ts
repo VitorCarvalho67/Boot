@@ -7,8 +7,8 @@ import { generateAccessTokenFuncionario } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginFuncionarioUseCase {
-    async execute({email, password} : LoginFuncionarioDTO): Promise<{token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'cargo'>}>{
-       
+    async execute({ email, password }: LoginFuncionarioDTO): Promise<{ token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'cargo'> }> {
+
         const funcionario = await prisma.funcionario.findFirst({
             where: {
                 email,
@@ -16,19 +16,19 @@ export class LoginFuncionarioUseCase {
             }
         });
 
-        if (!funcionario){
+        if (!funcionario) {
             throw new AppError("Funcionário não encontrado ou não validado");
         }
 
         const isPasswordValid = bcrypt.compareSync(password, funcionario.password);
 
-        if (!isPasswordValid){
+        if (!isPasswordValid) {
             throw new AppError("Email ou senha inválidos");
         }
 
         const token = generateAccessTokenFuncionario(funcionario);
 
-        if (!token){
+        if (!token) {
             throw new AppError("Email ou senha inválidos");
         }
 

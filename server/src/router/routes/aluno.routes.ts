@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { 
-    CreateAlunoController, 
+import {
+    CreateAlunoController,
     CreatePreAlunoController,
-    LoginAlunoController, 
-    RecoveryAlunoController, 
+    LoginAlunoController,
+    RecoveryAlunoController,
     ValidateRecoveryController
 } from "../../modules/controllers/alunoControllers";
 

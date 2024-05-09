@@ -4,9 +4,9 @@ import { InitProfessorDTO } from "../../interfaces/professorDTOs";
 import { AppError } from "../../../errors/error";
 
 export class InitProfessorUseCase {
-    async execute({ email } : InitProfessorDTO): Promise<{ professor: Pick<Professor, 'email' | 'validated'> }>{
-        
-        if(email == undefined){
+    async execute({ email }: InitProfessorDTO): Promise<{ professor: Pick<Professor, 'name' | 'email' | 'validated'> }> {
+
+        if (email == undefined) {
             throw new AppError("Professor não encontrado");
         }
 
@@ -16,12 +16,13 @@ export class InitProfessorUseCase {
             }
         });
 
-        if (!professor){
+        if (!professor) {
             throw new AppError("Prrofessor não encontrado");
         }
 
-        return{ 
+        return {
             professor: {
+                name: professor.name,
                 email: professor.email,
                 validated: professor.validated
             }
