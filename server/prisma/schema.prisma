@@ -11,19 +11,19 @@ datasource db {
 }
 
 model Aluno {
-    id                   String    @id @default(uuid())
-    name                 String
-    email                String    @unique
-    password             String
-    recoveryPass         String?
-    alunoImagem          String?
-    turmas               String? // Formato "id1,id2,id3"
-    dataNascimento       DateTime?
-    disciplina           String?
-    rm                   String?
-    tentativasRestantes  Int @default(5)
-    createdAt            DateTime  @default(now())
-    updatedAt            DateTime  @updatedAt
+    id                  String    @id @default(uuid())
+    name                String
+    email               String    @unique
+    password            String
+    recoveryPass        String?
+    alunoImagem         String?
+    turmas              String? // Formato "id1,id2,id3"
+    dataNascimento      DateTime?
+    disciplina          String?
+    rm                  String?
+    tentativasRestantes Int       @default(5)
+    createdAt           DateTime  @default(now())
+    updatedAt           DateTime  @updatedAt
 
     @@map("alunos")
 }
@@ -94,9 +94,10 @@ model Empresa {
     password      String
     empresaImagem String?
     cnpj          String
-    endereco      String
-    telefone      String
-    patrocinador  Boolean
+    endereco      String?
+    telefone      String?
+    token         String?
+    patrocinador  Boolean  @default(false)
     vaga          Vaga[]
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
@@ -126,19 +127,19 @@ model Vaga {
 }
 
 model Professor {
-    id                   String        @id @default(uuid())
-    name                 String
-    email                String        @unique
-    password             String
-    recoveryPass         String?
-    tituloPrincipal      String
-    professorImagem      String?
-    validated            Boolean       @default(false)
-    coordenador          Coordenador[]
-    atide                Atividade[]
-    tentativasRestantes  Int @default(5)
-    createdAt            DateTime      @default(now())
-    updatedAt            DateTime      @updatedAt
+    id                  String        @id @default(uuid())
+    name                String
+    email               String        @unique
+    password            String
+    recoveryPass        String?
+    tituloPrincipal     String
+    professorImagem     String?
+    validated           Boolean       @default(false)
+    coordenador         Coordenador[]
+    atide               Atividade[]
+    tentativasRestantes Int           @default(5)
+    createdAt           DateTime      @default(now())
+    updatedAt           DateTime      @updatedAt
 
     @@map("professores")
 }
@@ -156,18 +157,18 @@ model Coordenador {
 }
 
 model Funcionario {
-    id                   String   @id @default(uuid())
-    name                 String
-    email                String   @unique
-    password             String
-    recoveryPass         String?
-    funcionarioImagem    String?
-    cargo                Cargo
-    vaga                 Vaga[]
-    validated            Boolean  @default(false)
-    tentativasRestantes  Int @default(5)
-    createdAt            DateTime @default(now())
-    updatedAt            DateTime @updatedAt
+    id                  String   @id @default(uuid())
+    name                String
+    email               String   @unique
+    password            String
+    recoveryPass        String?
+    funcionarioImagem   String?
+    cargo               Cargo
+    vaga                Vaga[]
+    validated           Boolean  @default(false)
+    tentativasRestantes Int      @default(5)
+    createdAt           DateTime @default(now())
+    updatedAt           DateTime @updatedAt
 
     @@map("funcionarios")
 }

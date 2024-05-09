@@ -5,12 +5,12 @@
         <main>
             <div class="content">
                 <div class="box" id="box1">
-
                     <div class="info">
                         <h1>Venha mostrar para o mundo o profissional que você é.</h1>
                         <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
                             que
-                            facilite a introdução do aluno ao mercado de trabalho.Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
+                            facilite a introdução do aluno ao mercado de trabalho.Nossa missão é intermediar o processo
+                            de comunicação entre aluno, escola e empresa, de forma
                             que
                             facilite a introdução do aluno ao mercado de trabalho.</p>
                         <router-link to="/">Saiba Mais</router-link>
@@ -50,11 +50,11 @@ export default {
 main {
     min-height: auto;
     background-color: $secondary-color-dark;
-    
-    >h1{
+
+    >h1 {
         text-align: center;
         padding-top: 20px;
-        @include font-inter(600);
+        @include font-inter(700);
         letter-spacing: .3cm;
         color: $primary-color-orange;
     }
@@ -77,29 +77,33 @@ main {
 
             .info {
                 @include flex(column, center, flex-start);
-                // width: 40%;
 
+                h1 {
+                    color: $secondary-color-orange;
+                    font-size: 2rem;
+                    @include font-inter(700);
+                }
+
+                p {
+                    width: 70%;
+                }
+
+                a {
+                    background-color: $primary-color-orange;
+                    padding: 10px 20px;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    transition: .7s;
+                    @include color($secondary-color-dark, $primary-color-orange);
+
+                    >&:hover {
+                        background-color: transparent;
+                        border: solid 1px $primary-color-orange;
+                        color: $primary-color-orange;
+                    }
+                }
             }
 
-            h1 {
-                color: $secondary-color-orange;
-                font-size: 2rem;
-                @include font-inter(500);
-            }
-
-
-
-            p {
-                width: 70%;
-            }
-
-            a {
-                background-color: $primary-color-orange;
-                padding: 10px 20px;
-                border-radius: 20px;
-                text-decoration: none;
-                @include color($secondary-color-dark, $primary-color-orange);
-            }
         }
 
         #box2 {
