@@ -9,6 +9,10 @@ const bcrypt = require('bcrypt');
 
 export class RegisterEmpresaUseCase {
     async execute({ name, email, cnpj, password }: RegisterEmpresaDTO): Promise<Pick<Empresa, 'name' | 'email' | 'cnpj'>> {
+        
+        if( !name || !email || !cnpj || !password ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
 
         if (cnpj.length !== 14) {
             throw new AppError("O CNPJ deve conter exatamente 14 dígitos.");

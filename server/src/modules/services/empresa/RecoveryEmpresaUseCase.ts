@@ -1,51 +1,52 @@
 import { prisma } from "../../../prisma/client";
-import { RecoveryProfessorDTO } from "../../interfaces/professorDTOs"
+import { RecoveryEmpresaDTO } from "../../interfaces/empresaDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRecoveryEmailProfessor } from "../../../mail/templates/recoveryProfessor";
+import { generateRecoveryEmpresaEmail } from "../../../mail/templates/recoveryEmpresa";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');
 
-export class RecoveryProfessorUseCase {
-    async execute({ name, email }: RecoveryProfessorDTO) {
-
-        if( !name || !email ){
+export class RecoveryEmpresaUseCase {
+    async execute({ cnpj, email }: RecoveryEmpresaDTO) {
+        
+        if( !cnpj || !email ){
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        const professorExists = await prisma.professor.findUnique({
+        const empresaExists = await prisma.empresa.findUnique({
             where: {
-                name,
-                email
+                cnpj,
+                email,
+                validated: true
             }
         });
 
-        if (!professorExists) {
-            throw new AppError("Nome ou email inválidos");
+        if (!empresaExists) {
+            throw new AppError("CNPJ ou email inválidos");
         }
 
         else {
             const salt = bcrypt.genSaltSync(10);
-            const token: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
+            const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
             const hash = bcrypt.hashSync(token, salt);
 
-            await prisma.professor.update({
+            await prisma.empresa.update({
                 where: {
-                    name,
+                    cnpj,
                     email
                 },
                 data: {
-                    recoveryPass: hash
+                    token: hash,
                 }
             });
 
-            const nome = professorExists.name.split(' ').shift()?.toString() ?? 'professor';
+            const nome = empresaExists.name.split(' ').shift()?.toString() ?? 'empresa';
 
             const mailOptions = {
                 from: process.env.EMAIL,
                 to: email,
                 subject: 'Boot - Código de recuperação',
-                html: generateRecoveryEmailProfessor(nome, token)
+                html: generateRecoveryEmpresaEmail(nome, token)
             };
 
             transporter.sendMail(mailOptions, function (error, info) {

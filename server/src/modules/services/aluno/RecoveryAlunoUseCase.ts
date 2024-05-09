@@ -10,62 +10,63 @@ const bcrypt = require('bcrypt');
 
 export class RecoveryAluno {
     async execute({ name, email }: RecoveryAlunoDTO) {
-        if (name && email && name.trim() !== "" && email.trim() !== "") {
-            const alunoExists = await prisma.aluno.findUnique({
-                where: {
-                    name,
-                    email
-                }
-            });
+        
+        if( !name || !email ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
 
-            if (!alunoExists) {
-                throw new AppError("Nome ou email inválidos");
+        const alunoExists = await prisma.aluno.findUnique({
+            where: {
+                name,
+                email
+            }
+        });
+
+        if (!alunoExists) {
+            throw new AppError("Nome ou email inválidos");
+        }
+
+        else {
+            const dominio_cps = "@etec.sp.gov.br";
+
+            if (!email.includes(dominio_cps)) {
+                throw new AppError("Email inválido");
             }
 
             else {
-                const dominio_cps = "@etec.sp.gov.br";
+                const salt = bcrypt.genSaltSync(10);
+                const token: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
+                const hash = bcrypt.hashSync(token, salt);
 
-                if (!email.includes(dominio_cps)) {
-                    throw new AppError("Email inválido");
-                }
+                await prisma.aluno.update({
+                    where: {
+                        name,
+                        email
+                    },
+                    data: {
+                        recoveryPass: hash
+                    }
+                });
 
-                else {
-                    const salt = bcrypt.genSaltSync(10);
-                    const token: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
-                    const hash = bcrypt.hashSync(token, salt);
+                const nome = alunoExists.name.split(' ').shift()?.toString() ?? 'aluno';
 
-                    await prisma.aluno.update({
-                        where: {
-                            name,
-                            email
-                        },
-                        data: {
-                            recoveryPass: hash
-                        }
-                    });
+                const mailOptions = {
+                    from: process.env.EMAIL,
+                    to: email,
+                    subject: 'Boot - Código de recuperação',
+                    html: generateRecoveryEmail(nome, token)
+                };
 
-                    const nome = alunoExists.name.split(' ').shift()?.toString() ?? 'aluno';
-
-                    const mailOptions = {
-                        from: process.env.EMAIL,
-                        to: email,
-                        subject: 'Boot - Código de recuperação',
-                        html: generateRecoveryEmail(nome, token)
-                    };
-
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            throw new AppError("Erro ao enviar email: " + error);
-                        } else {
-                            console.log('E-mail enviado:', info.response, token);
-                        }
-                    });
-                }
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        throw new AppError("Erro ao enviar email: " + error);
+                    } else {
+                        console.log('E-mail enviado:', info.response, token);
+                    }
+                });
             }
-
-            return;
-        } else {
-            throw new AppError("Parâmetros inválidos!");
         }
+
+        return;
     }
 }

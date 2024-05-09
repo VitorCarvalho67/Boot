@@ -8,6 +8,10 @@ const bcrypt = require('bcrypt');
 export class CreateAlunoUseCase {
     async execute({ email, token }: CreateAlunoDTO): Promise<Pick<Aluno, "name" | "email" >>{
 
+        if( !email || !token ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const preAluno = await prisma.preAluno.findUnique({
             where: {
                 email

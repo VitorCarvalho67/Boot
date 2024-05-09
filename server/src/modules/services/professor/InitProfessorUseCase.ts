@@ -6,8 +6,8 @@ import { AppError } from "../../../errors/error";
 export class InitProfessorUseCase {
     async execute({ email }: InitProfessorDTO): Promise<{ professor: Pick<Professor, 'name' | 'email' | 'validated'> }> {
 
-        if (email == undefined) {
-            throw new AppError("Professor não encontrado");
+        if( !email ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
         const professor = await prisma.professor.findFirst({

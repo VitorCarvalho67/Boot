@@ -18,10 +18,9 @@ export interface RecoveryEmpresaDTO {
     email: string
 }
 
-export interface ValidateRecoveryDTO {
-    email: string,
+export interface ValidateRecoveryEmpresaDTO {
     cnpj: string,
-    recoveryPass: string,
+    token: string,
     newPass: string
 }
 

@@ -5,6 +5,11 @@ import { AppError } from "../../../errors/error";
 
 export class RegisterCoordenadorUseCase {
     async execute({ name }: RegisterCoordenadorDTO): Promise<Pick<Coordenador, "name">> {
+
+        if( !name ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const isProfessor = await prisma.professor.findFirst({
             where: {
                 name

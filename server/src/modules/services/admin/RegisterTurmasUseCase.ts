@@ -6,6 +6,10 @@ import { AppError } from "../../../errors/error";
 export class RegisterTurmasUseCase {
     async execute({ inicio, fim, cursoName }: RegisterTurmaDTO): Promise<{ cursoName: string, turma: Pick<Turma, 'inicio' | 'fim'> }> {
 
+        if( !inicio || !fim || !cursoName ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const Curso = await prisma.curso.findFirst({
             where: {
                 name: cursoName

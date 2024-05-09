@@ -9,6 +9,10 @@ const bcrypt = require('bcrypt');
 export class LoginAdminUseCase {
     async execute({ email, password }: LoginAdminDTO): Promise<{ token: string, admin: Pick<Admin, 'name' | 'email'> }> {
 
+        if( !email || !password ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const admin = await prisma.admin.findUnique({
             where: {
                 email

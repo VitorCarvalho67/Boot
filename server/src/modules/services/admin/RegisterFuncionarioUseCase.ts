@@ -10,6 +10,14 @@ const bcrypt = require('bcrypt');
 export class RegisterFuncionarioUseCase {
     async execute({ name, email, cargo }: RegisterFuncionarioDTO): Promise<Pick<Funcionario, "name" | "email" | "cargo">> {
 
+        if( !name || !email || !cargo ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
+        if( cargo != "GESTAO" && cargo != "ADMINISTRACAO" && cargo != "DIRECAO" && cargo != "ORIENTACAO" ){
+            throw new AppError("Cargo inválido.");
+        }
+
         const emailAlreadyExists = await prisma.funcionario.findFirst({
             where: {
                 email
@@ -24,6 +32,12 @@ export class RegisterFuncionarioUseCase {
             const hash = bcrypt.hashSync(password, salt);
 
             const nome = name.split(' ').shift()?.toString() ?? 'profissional de ' + cargo.toLowerCase();
+            const cargoString = '';
+
+            if (cargo == "GESTAO") cargoString = "gestão";
+            else if (cargo == "ADMINISTRACAO") cargoString = "administração" 
+            else if (cargo == "DIRECAO") cargoString = "direção"
+            else if (cargo == "ORIENTACAO") cargoString = "orientação"
 
             const mailOptions = {
                 from: process.env.EMAIL,

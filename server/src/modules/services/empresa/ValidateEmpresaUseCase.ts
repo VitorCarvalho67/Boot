@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 
 export class ValidateEmpresaUseCase {
     async execute({ cnpj, token }: ValidateEmpresaDTO): Promise<Pick<Empresa, 'name' | 'email' | 'validated'>> {
+        
+        if( !cnpj || !token ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
 
         const preEmpresa = await prisma.empresa.findUnique({
             where: {

@@ -10,6 +10,11 @@ const bcrypt = require('bcrypt');
 
 export class RecoveryFuncionarioUseCase {
     async execute({ name, email }: RecoveryFuncionarioDTO) {
+
+        if( !name || !email ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         if (name && email && name.trim() !== "" && email.trim() !== "") {
             const funcionarioExists = await prisma.funcionario.findUnique({
                 where: {

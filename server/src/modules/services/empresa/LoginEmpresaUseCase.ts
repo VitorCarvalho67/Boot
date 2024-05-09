@@ -9,8 +9,8 @@ const bcrypt = require('bcrypt');
 export class LoginEmpresaUseCase {
     async execute({ cnpj, password }: LoginEmpresaDTO): Promise<{ token: string, empresa: Pick<Empresa, 'name' | 'email'> }> {
 
-        if (!cnpj || !password) {
-            throw new AppError("Parâmetros inválidos.");
+        if( !cnpj || !password ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
         if (cnpj.length !== 14) {

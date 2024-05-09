@@ -8,6 +8,10 @@ const bcrypt = require('bcrypt');
 export class ValidateProfessorUseCase {
     async execute({ email, temporaryPassword, newPassword }: ValidateProfessorDTO): Promise<Pick<Professor, "name" | "email" | "tituloPrincipal">> {
 
+        if( !email || !temporaryPassword || !newPassword ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const professorEmail = await prisma.professor.findFirst({
             where: {
                 email,

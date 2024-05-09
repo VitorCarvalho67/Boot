@@ -6,6 +6,10 @@ import { AppError } from "../../../errors/error";
 export class RegisterCursosUseCase {
     async execute({ cursoName, turno, duracao, coordenador }: RegisterCursosDTO): Promise<Pick<Curso, "name" | "turno" | "duracao">> {
 
+        if( !cursoName || !turno || !duracao || !coordenador ){
+            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        }
+
         const coordenadorExists = await prisma.coordenador.findFirst({
             where: {
                 name: coordenador
