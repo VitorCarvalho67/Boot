@@ -49,7 +49,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import logo from '../../assets/imageMain.png';
+import img from '../../assets/imageAdmin.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
@@ -69,7 +69,7 @@ export default {
             },
             emailFocused: false,
             passwordFocused: false,
-            imagem: logo,
+            imagem: img,
             showPassword: false,
         }
     },
@@ -311,7 +311,6 @@ main {
 
     img {
         height: 80%;
-        transform: rotatey(180deg);
     }
 }
 </style>
