@@ -9,9 +9,24 @@ const bcrypt = require('bcrypt');
 export class ValidateRecoveryUseCase {
     async execute({ email, recoveryPass, newPass }: ValidateRecoveryDTO): Promise<{ token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'cargo'> }> {
         
-        if( !email || !recoveryPass || !newPass ){
-            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        const errors = [];
+
+        if (!email) {
+            errors.push("O email é obrigatório.");
         }
+
+        if (!recoveryPass) {
+            errors.push("A senha temporária é obrigatória.");
+        }
+
+        if (!newPass) {
+            errors.push("A nova senha é obrigatória.");
+        }
+
+        if (errors.length > 0) {
+            throw new AppError(errors.join(" "));
+        }
+
 
         const funcionario = await prisma.funcionario.findFirst({
             where: {
