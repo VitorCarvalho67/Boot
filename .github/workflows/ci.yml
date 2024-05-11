@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+    pull_request:
+      branches:
+      - main
+    schedule:
+      -cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v3
+
+      - name: Docker-compose configurations
+        run: docker-compose up -d
+
+      - name: Check if docker-compose is working
+        run: docker-compose ps
+
+      - name: Stop and remove docker-compose containers
+        run: docker-compose down
