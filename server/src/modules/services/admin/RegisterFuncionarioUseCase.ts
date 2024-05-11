@@ -32,7 +32,7 @@ export class RegisterFuncionarioUseCase {
             const hash = bcrypt.hashSync(password, salt);
 
             const nome = name.split(' ').shift()?.toString() ?? 'profissional de ' + cargo.toLowerCase();
-            const cargoString = '';
+            var cargoString = '';
 
             if (cargo == "GESTAO") cargoString = "gestão";
             else if (cargo == "ADMINISTRACAO") cargoString = "administração" 

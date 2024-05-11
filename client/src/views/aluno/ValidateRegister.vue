@@ -164,7 +164,7 @@ export default {
                 console.log(token);
 
                 const response = await registerAluno({
-                    email: emailCookies,
+                    email: this.userAluno.email,
                     token: token
                 });
 

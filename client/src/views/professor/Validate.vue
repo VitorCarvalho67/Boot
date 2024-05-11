@@ -5,15 +5,15 @@
             <nav>
                 <ul>
                     <li>
-                        <router-link to="/register">Login</router-link>
+                        <router-link to="/professor/init">Login</router-link>
                     </li>
                     <li>
-                        <p>Cadastro</p>
+                        <p>Validação</p>
                     </li>
                 </ul>
             </nav>
             <form @submit.prevent="submitForm">
-                <h1>Valide seu cadastro:</h1>
+                <h1>Valide seu cadastro</h1>
                 <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na plataforma.</p>
                 <div class="input-box email">
                     <div class="d1">

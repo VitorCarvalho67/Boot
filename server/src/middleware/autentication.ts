@@ -44,7 +44,7 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
 
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token  ' + error});
+        res.status(401).json({ message: 'Sessão de administrador inválida ou encerrada: ' + error});
     }
 }
 
@@ -74,7 +74,7 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
 
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token ' + error});
+        res.status(401).json({ message: 'Sessão de professor inválida ou encerrada: ' + error});
     }
 }
 
@@ -104,6 +104,6 @@ export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res
 
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Invalid token ' + error});
+        res.status(401).json({ message: 'Sessão de funcionário inválida ou encerrada: ' + error});
     }
 }

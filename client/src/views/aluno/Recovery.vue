@@ -91,7 +91,6 @@ export default {
 }
 </script>
 
-
 <style lang="scss" scoped>
 main {
     height: calc(100vh - 80px);

@@ -15,7 +15,8 @@ export const authAdmin = async(token) => {
 
 export const registerProfessor = async(infoProfessor, token) => {
     try {
-        const response = await api.post('admin/register/professor', infoProfessor, {
+        const response = await api.post('admin/register/professor',
+        infoProfessor, {
             headers: {
                 authorization: `${token}`
             }
@@ -97,7 +98,8 @@ export const registerCurso = async(infoCurso, token) => {
 
 export const registerFuncionario = async(infoFuncionario, token) => {
     try {
-        const response = await api.post('admin/register/funcionario', infoFuncionario, {
+        const response = await api.post('admin/register/funcionario',
+            infoFuncionario, {
             headers: {
                 authorization: `${token}`
             }
@@ -110,7 +112,8 @@ export const registerFuncionario = async(infoFuncionario, token) => {
 
 export const registerTurma = async(infoTurma, token) => {
     try {
-        const response = await api.post('admin/register/turma', infoTurma, {
+        const response = await api.post('admin/register/turma',
+        infoTurma, {
             headers: {
                 authorization: `${token}`
             }

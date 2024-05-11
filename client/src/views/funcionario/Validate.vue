@@ -1,47 +1,82 @@
 <template>
     <Header />
     <main>
-        <div class="register">
+        <div class="box">
+            <nav>
+                <ul>
+                    <li>
+                        <router-link to="/funcionario/init">Login</router-link>
+                    </li>
+                    <li>
+                        <p>Validação</p>
+                    </li>
+                </ul>
+            </nav>
             <form @submit.prevent="submitForm">
-                <h1>Complete seu cadastro:</h1>
-                <p>Email:</p><p>{{ this.funcionario.email }}</p><router-link to="/funcionario/init">Editar</router-link>
-                
-                <p>Senha temporária (enviada no email):</p>
-                <input type="text" id="temporaryPassword" v-model="funcionario.temporaryPassword" required>
-                
-                <p>Nova Senha:</p>
-                <input type="text" id="newPassword" v-model="funcionario.newPassword" @input="checkData" required>
-                
-                <p v-show="!allRequirements">A senha deve conter pelo menos:</p>
-                <p v-show="allRequirements">Sua senha contém ao menos:</p>
-                <br>
+                <h1>Valide seu cadastro</h1>
+                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na plataforma.</p>
 
-                <p v-show="!uppercase">× Uma letra maiúscula (A-Z)</p>
-                <p v-show="uppercase">✓ Uma letra maiúscula (A-Z)</p>
-
-                <p v-show="!lowercase">× Uma letra minúscula (a-z)</p>
-                <p v-show="lowercase">✓ Uma etra minúscula (a-z)</p>
-                
-                <p v-show="!number">× Um número (0-9)</p>
-                <p v-show="number">✓ Um número (0-9)</p>
-                
-                <p v-show="!specialCharacter">× Um caractere especial (*, !, @, #, $, %, &, /, -, .)</p>
-                <p v-show="specialCharacter">✓ Um caractere especial</p>
-                
-                <p v-show="!length">× 8 caracteres</p>
-                <p v-show="length">✓ 8 caracteres</p>
-                <br>
-
-                <div>
-                    <label for="confirmPassword">Confirmar Senha:</label>
-                    <input type="text" id="confirmPassword" v-model="funcionario.confirmPassword" @input="checkData" required>
+                <div class="input-box email">
+                    <div class="d1">
+                        <p>{{ this.funcionario.email }}</p>
+                    </div>
+                    <div class="d2">
+                        <router-link to="/funcionario/init" class="editMail"></router-link>
+                    </div>
                 </div>
 
-                <p v-show="!confirmPass">× As senhas devem ser iguais</p>
-                <p v-show="confirmPass">✓ As senhas devem ser iguais</p>
+                <div class="input-box" :class="{ 'focused': focused.temporaryPasswordFocused }">
+                    <label>Senha Temporária enviada em seu e-mail</label>
+                    <input id="temporaryPassword" v-model="funcionario.temporaryPassword"
+                        @focus="focused.temporaryPasswordFocused = true"
+                        @blur="focused.temporaryPasswordFocused = false" required>
+                </div>
+                
+                <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
+                    <div class="d1">
+                        <label for="newPassword">Nova Senha</label>
+                        <input :type="inputType" id="newPassword" v-model="funcionario.newPassword" @input="checkPassword"
+                            @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
+                        <span class="alert" v-show="alerts.alertUppercase">
+                            A senha deve conter ao menos uma letra maiúscula(A-Z)
+                        </span>
+                        <span class="alert" v-show="alerts.alertLowercase">
+                            A senha deve conter ao menos uma letra minúscula(a-z)
+                        </span>
+                        <span class="alert" v-show="alerts.alertNumber">
+                            A senha deve conter ao menos um número (0-9)
+                        </span>
+                        <span class="alert" v-show="alerts.alertSpecial">
+                            A senha deve conter ao menos um caractere especial (*, !, @, #, $, %, &, /, -, .)
+                        </span>
+                        <span class="alert" v-show="alerts.alertLenght">
+                            A senha deve conter ao menos 8 caracteres
+                        </span>
+                    </div>
+                    <div class="d2">
+                        <button type="button" @click="togglePasswordVisibility" :class="buttonClass"
+                            @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"></button>
+                    </div>
+                </div>
 
-                <button type="submit" v-show="allRequirements">Concluir</button>
-                <button type="button" v-show="!allRequirements">Concluir</button>
+                <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
+                    <div class="d1">
+                        <label for="confirmPassword">Confirmar Senha</label>
+                        <input :type="inputTypeConfirm" id="confirmPassword" v-model="funcionario.confirmPassword"
+                            @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                            @input="checkConfirmPassword" required>
+                        <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
+                    </div>
+                    <div class="d2">
+                        <button type="button" @click="togglePasswordConfirmVisibility"
+                            @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
+                            :class="buttonClassConfirm"></button>
+                    </div>
+                </div>
+                <div class="button-box">
+                    <button v-show="allRequirements" type="submit">Validar</button>
+                    <button v-show="!allRequirements" type="button">Validar</button>
+                </div>
             </form>
         </div>
     </main>
@@ -69,31 +104,82 @@ export default {
                 temporaryPassword: '',
                 newPassword: ''
             },
-            uppercase: false,
-            lowercase: false,
-            number: false,
-            specialCharacter: false,
-            length: false,
-            confirmPass: false,
+            alerts: {
+                alertUppercase: false,
+                alertLowercase: false,
+                alertNumber: false,
+                alertSpecial: false,
+                alertLenght: false,
+                alertDominio: false,
+                alertPass: false
+            },
+            focused: {
+                passwordFocused: false,
+                confirmFocused: false,
+                temporaryPasswordFocused: false
+            },
+            showPassword: false,
+            showPasswordConfirm: false,
         }
     },
     computed: {
-        allRequirements(){
-            return (this.confirmPass && this.uppercase && this.lowercase && this.number && this.specialCharacter && this.length)
-        }
+        allRequirements() {
+            return (
+                !this.alerts.alertUppercase &&
+                !this.alerts.alertLowercase &&
+                !this.alerts.alertNumber &&
+                !this.alerts.alertSpecial &&
+                !this.alerts.alertLenght &&
+                !this.alerts.alertPass
+            );
+        },
+        inputType() {
+            return this.showPassword ? 'text' : 'password';
+        },
+        buttonClass() {
+            return this.showPassword ? 'hide' : 'show';
+        },
+        inputTypeConfirm() {
+            return this.showPasswordConfirm ? 'text' : 'password';
+        },
+        buttonClassConfirm() {
+            return this.showPasswordConfirm ? 'hide' : 'show';
+        },
     },
     methods: {
-        checkData() {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
+        togglePasswordConfirmVisibility() {
+            this.showPasswordConfirm = !this.showPasswordConfirm;
+        },
+        checkPassword() {
+            const password = this.funcionario.newPassword;
+
+            this.alerts.alertUppercase = false;
+            this.alerts.alertLowercase = false;
+            this.alerts.alertNumber = false;
+            this.alerts.alertSpecial = false;
+            this.alerts.alertLenght = false;
+
+            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
+            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
+            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
+            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
+
+            this.checkConfirmPassword();
+        },
+        checkConfirmPassword() {
             const password = this.funcionario.newPassword;
             const passwordConfirm = this.funcionario.confirmPassword;
-            this.confirmPass = (password == passwordConfirm);
-            this.uppercase = /[A-Z]/.test(password);
-            this.lowercase = /[a-z]/.test(password);
-            this.number = /[0-9]/.test(password);
-            this.specialCharacter = /[*!@#$%&\./\\-]/.test(password);
-            this.length = password.length >= 8;
-        },
 
+            this.alerts.alertPass = false;
+
+            if (!(password == passwordConfirm)) {
+                this.alerts.alertPass = true;
+            }
+        },
         async submitForm() {
             try {
                 const response = await validateFuncionario({
@@ -131,3 +217,311 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+main {
+    height: calc(100vh - 80px);
+    background-color: $primary-color-dark;
+    @include flex-center;
+}
+
+.box {
+    background-color: $secondary-color-dark;
+    height: 65%;
+    width: 30%;
+    border-radius: 20px;
+    padding: 20px;
+    color: $font-color-dark;
+
+    nav {
+        width: 100%;
+
+        ul {
+            @include flex(row, flex-start, center);
+
+            li {
+                font-size: .9rem;
+                @include font-inter(300);
+                margin-inline: 20px;
+
+                p {
+                    @include flex(column, center, center);
+                    @include font-inter(400);
+                    width: 80px;
+                    @include line;
+
+                    &:after {
+                        width: 100%;
+                        height: 3px;
+                        margin-top: 3px;
+                        background-color: $secondary-color-orange;
+                    }
+
+                    &:hover::after {
+                        animation: none;
+                    }
+                }
+
+                a {
+                    text-decoration: none;
+                    color: $font-color-dark-2;
+                    @include flex(column, center, center);
+                    @include font-inter(400);
+                    width: 60px;
+                    @include line;
+
+                    &:after {
+                        margin-top: 3px;
+                        height: 3px;
+                        background-color: $secondary-color-orange;
+                    }
+                }
+            }
+        }
+    }
+
+    form {
+        padding: 20px;
+
+        h1 {
+            @include font-inter(300);
+            font-size: 2rem;
+            margin-top: 10px;
+        }
+
+        >p {
+            width: 100%;
+            font-size: .8rem;
+            @include flex(row, flex-start, center);
+            color: $font-color-dark-2;
+            @include font-inter(200);
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            height: 65px;
+            @include flex(column, flex-start, center);
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: $terciary-color-dark;
+            margin: 20px 0px;
+            border-radius: 0px 5px 5px 0px;
+
+            input {
+                background-color: transparent;
+                width: 100%;
+                margin-top: 5px;
+                outline: none;
+                color: $font-color-dark;
+                border: none;
+                @include font-inter(400);
+                font-size: 1rem;
+            }
+
+            &.focused {
+                border-left: solid 3px $secondary-color-orange;
+            }
+
+            label {
+                letter-spacing: 1.5px;
+                width: 100%;
+                @include font-inter(200);
+                font-size: .8rem;
+                color: $font-color-dark-2;
+            }
+
+            p {
+                background-color: transparent;
+                width: 100%;
+                margin-top: 5px;
+                outline: none;
+                color: $font-color-dark;
+                border: none;
+                @include font-inter(400);
+                font-size: 1rem;
+            }
+
+            a {
+                height: 18px;
+                width: 18px;
+                border: none;
+                background-color: transparent;
+                background-position: center;
+                background-image: url('../../assets/icons/lapis.png');
+                background-size: cover;
+                background-repeat: no-repeat;
+                filter: invert(100%);
+                cursor: pointer;
+                display: inline-block;
+            }
+
+            .d1 {
+                width: 95%;
+
+                .alert {
+                    font-size: .8rem;
+                    color: rgb(158, 20, 20);
+
+                    & .input-box input {
+                        margin-top: 2px;
+                    }
+                }
+            }
+
+            .d2 {
+                width: 5%;
+
+                button {
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    background-color: transparent;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: invert(100%);
+                    cursor: pointer;
+                }
+            }
+
+            .alerts {
+                @include flex(column, center, flex-start);
+                font-size: .8rem;
+                color: rgb(158, 20, 20);
+            }
+        }
+
+        .email {
+            background-color: transparent;
+            @include flex(row, flex-start, center);
+            height: 40px;
+
+            div {
+                @include flex(column, center, flex-start)
+            }
+
+            .d1 {
+                width: 95%;
+            }
+
+            .d2 {
+                width: 5%;
+
+                button {
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    background-color: transparent;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: invert(100%);
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+        .password{
+            @include flex(row, flex-start, center);
+
+            div {
+                @include flex(column, center, flex-start)
+            }
+
+            .d1 {
+                width: 95%;
+            }
+
+            .d2 {
+                width: 5%;
+
+                button {
+                    height: 20px;
+                    width: 20px;
+                    border: none;
+                    background-color: transparent;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    filter: invert(100%);
+                    cursor: pointer;
+                }
+
+                .show {
+                    background-image: url('../../assets/icons/olho-1.png');
+                }
+
+                .hide {
+                    background-image: url('../../assets/icons/olho-2.png');
+                }
+            }
+        }
+
+        .token {
+            width: 100%;
+            @include flex(column, center, flex-start);
+
+            label {
+                padding-inline: 10px;
+                letter-spacing: 1.5px;
+                margin-top: 10px;
+                @include font-inter(200);
+                font-size: .8rem;
+                color: $font-color-dark-2;
+            }
+
+            .box-token {
+                @include flex(row, space-around, center);
+                margin: 5px 0px 10px 0px;
+
+                input {
+                    border: none;
+                    outline: none;
+                    border-radius: 7px;
+                    height: 65px;
+                    width: 12%;
+                    font-size: 1.8rem;
+                    text-align: center;
+                    @include flex-center;
+                    color: $font-color-dark;
+                    caret-color: $font-color-dark;
+                    @include font-inter(500);
+                    background-color: $terciary-color-dark;
+
+                    &:focus {
+                        border: solid 2px $primary-color-orange;
+                    }
+
+                    text-transform: uppercase
+                }
+            }
+        }
+
+        .button-box {
+            width: 100%;
+            margin-top: 10px;
+            @include flex(row, flex-start, center);
+
+            button {
+                padding: 12px 75px;
+                background-color: $primary-color-orange;
+                border: none;
+                border-radius: 3px;
+                @include font-inter(400);
+                font-size: .9rem;
+                color: $secondary-color-dark;
+                border: solid 1px $primary-color-orange;
+                cursor: pointer;
+                transition: .1s linear;
+
+                &:hover {
+                    background-color: $secondary-color-dark;
+                    color: $primary-color-orange;
+                }
+            }
+        }
+    }
+}
+</style>
