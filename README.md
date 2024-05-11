@@ -8,6 +8,7 @@
 ![GitHub stars](https://img.shields.io/github/stars/vitorcarvalho67/Boot)
 ![GitHub languages top](https://img.shields.io/github/languages/top/vitorcarvalho67/Boot)
 [![GitHub contributors](https://img.shields.io/github/contributors/VitorCarvalho67/Boot)](https://github.com/VitorCarvalho67/Boot/graphs/contributors)
+![CI](https://github.com/vitorcarvalho67/Boot/workflows/CI/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/a2356bd7-e1c8-4caf-b0c7-61a5f81b421a/deploy-status)](https://app.netlify.com/sites/boot-website/deploys)
 
 Digital platform tailored for the educational environment, designed to facilitate the dissemination of internship opportunities and promote student engagement. The platform will enable students to develop and update their portfolios and resumes, highlighting their academic and professional experiences to stand out in the job market. Additionally, it will incorporate a scoring system that values user activity on the platform, such as publications and interactions, generating a ranking of students with the top academic and professional profiles.
