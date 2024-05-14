@@ -20,7 +20,6 @@ export class GetAllProfessorController {
     }
 }
 
-
 export class GetCoordenadorController {
     async handle(req: Request, res: Response) {
 
@@ -32,7 +31,6 @@ export class GetCoordenadorController {
     }
 }
 
-
 export class GetCursosController {
     async handle(req: Request, res: Response) {
 
@@ -43,7 +41,6 @@ export class GetCursosController {
         return res.status(201).json(result);
     }
 }
-
 
 export class LoginAdminController {
     async handle(req: Request, res: Response) {
@@ -57,7 +54,6 @@ export class LoginAdminController {
     }
 }
 
-
 export class RegisterCoordenadorController {
     async handle(req: Request, res: Response) {
         const { name } = req.body;
@@ -69,7 +65,6 @@ export class RegisterCoordenadorController {
         return res.status(201).json(result);
     }
 }
-
 
 export class RegisterCursosController {
     async handle(req: Request, res: Response) {
@@ -83,7 +78,6 @@ export class RegisterCursosController {
     }
 }
 
-
 export class RegisterFuncionarioController {
     async handle(req: Request, res: Response) {
         const { name, email, password, cargo } = req.body;
@@ -96,7 +90,6 @@ export class RegisterFuncionarioController {
     }
 }
 
-
 export class RegisterProfessorController {
     async handle(req: Request, res: Response) {
         const { name, email, password, tituloPrincipal } = req.body;
@@ -108,7 +101,6 @@ export class RegisterProfessorController {
         return res.status(201).json(result);
     }
 }
-
 
 export class RegisterTurmaController {
     async handle(req: Request, res: Response) {

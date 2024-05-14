@@ -2,7 +2,7 @@ import api from '../api';
 
 export const authAdmin = async(token) => {
     try {
-        const response = await api.post('admin/auth', {}, {
+        const response = await api.get('admin/auth', {
             headers: {
                 authorization: `${token}`
             }

@@ -35,7 +35,7 @@
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="infoProfessor.newPass" @input="checkPassword"
+                        <input :type="inputType" id="newPassword" v-model="infoProfessor.newPass" @input="checkPasswords(infoProfessor.newPass, infoProfessor.confirmNewPass)"
                             @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
                         <span class="alert" v-show="alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
@@ -64,7 +64,7 @@
                         <label for="confirmPassword">Confirmar Senha</label>
                         <input :type="inputTypeConfirm" id="confirmPassword" v-model="infoProfessor.confirmNewPass"
                             @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                            @input="checkConfirmPassword" required>
+                            @input="checkPasswords(infoProfessor.newPass, infoProfessor.confirmNewPass)" required>
                         <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
                     </div>
                     <div class="d2">
@@ -89,6 +89,7 @@ import Footer from '../../components/Footer.vue';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
+import { validateRecoveryMixin } from '../../util/mixins.js';
 import { validateRecovery } from '../../services/api/professor';
 
 export default {
@@ -105,82 +106,9 @@ export default {
                 newPass: '',
                 confirmNewPass: ''
             },
-            alerts: {
-                alertUppercase: false,
-                alertLowercase: false,
-                alertNumber: false,
-                alertSpecial: false,
-                alertLenght: false,
-                alertDominio: false,
-                alertPass: false
-            },
-            focused: {
-                passwordFocused: false,
-                confirmFocused: false,
-                temporaryPasswordFocused: false
-            },
-            showPassword: false,
-            showPasswordConfirm: false,
         }
     },
-    computed: {
-        allRequirements() {
-            return (
-                !this.alerts.alertUppercase &&
-                !this.alerts.alertLowercase &&
-                !this.alerts.alertNumber &&
-                !this.alerts.alertSpecial &&
-                !this.alerts.alertLenght &&
-                !this.alerts.alertPass
-            );
-        },
-        inputType() {
-            return this.showPassword ? 'text' : 'password';
-        },
-        buttonClass() {
-            return this.showPassword ? 'hide' : 'show';
-        },
-        inputTypeConfirm() {
-            return this.showPasswordConfirm ? 'text' : 'password';
-        },
-        buttonClassConfirm() {
-            return this.showPasswordConfirm ? 'hide' : 'show';
-        },
-    },
     methods: {
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-        },
-        togglePasswordConfirmVisibility() {
-            this.showPasswordConfirm = !this.showPasswordConfirm;
-        },
-        checkPassword() {
-            const password = this.infoProfessor.newPass;
-
-            this.alerts.alertUppercase = false;
-            this.alerts.alertLowercase = false;
-            this.alerts.alertNumber = false;
-            this.alerts.alertSpecial = false;
-            this.alerts.alertLenght = false;
-
-            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
-            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
-            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
-            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
-
-            this.checkConfirmPassword();
-        },
-        checkConfirmPassword() {
-            const password = this.infoProfessor.newPass;
-            const passwordConfirm = this.infoProfessor.confirmNewPass;
-
-            this.alerts.alertPass = false;
-
-            if (!(password == passwordConfirm)) {
-                this.alerts.alertPass = true;
-            }
-        },
         async submitForm() {
             try {
                 const response = await validateRecovery({
@@ -201,6 +129,7 @@ export default {
             }
         }
     },
+    mixins: [validateRecoveryMixin],
     created(){
         this.infoProfessor.email = Cookies.get('email-recovery-professor');
     }

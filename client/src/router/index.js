@@ -26,11 +26,15 @@ import RecoveryFuncionario from '../views/funcionario/Recovery.vue';
 import ValidateRecoveryFuncionario from '../views/funcionario/ValidateRecovery.vue';
 import Professor from '../views/professor/Dashboard.vue';
 import Funcionario from '../views/funcionario/Dashboard.vue';
+import Empresa from '../views/empresa/Dashboard.vue';
+import LoginEmpresa from '../views/empresa/Login.vue';
+import RecoveryEmpresa from '../views/empresa/Recovery.vue';
 
 import { 
     isAuthAdmin,
     isAuthProfessor,
     isAuthFuncionario,
+    isAuthEmpresa,
     isRegistering,
     isRecoverigAluno,
     isInitingProfessor,
@@ -221,6 +225,24 @@ const routes = [{
             (await isAuthFuncionario()) ? next(): next("/funcionario/init");
         }
     },
+    {
+        path: "/empresa",
+        name: "Empresa",
+        component: Empresa,
+        beforeEnter: async(to, from, next) => {
+            (await isAuthEmpresa()) ? next(): next("/empresa/login");
+        }
+    },
+    {
+        path: "/empresa/login",
+        name: "LoginEmpresa",
+        component: LoginEmpresa
+    },
+    {
+        path: "/empresa/recovery",
+        name: "RecoveryEmpresa",
+        component: RecoveryEmpresa
+    }
 ];
 
 const router = createRouter({

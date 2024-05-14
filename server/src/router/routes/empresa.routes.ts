@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import { empresaAuthMiddleware } from '../../middleware/autentication';
+import { empresaAuthMiddleware } from '../../middleware/autentication';
 import {
     RegisterEmpresaController,
     ValidateEmpresaController,
@@ -26,9 +26,9 @@ empresaRoutes.post("/login", loginEmpresaController.handle);
 empresaRoutes.post("/recovery", recoveryEmpresaController.handle);
 empresaRoutes.post("/recovery/validate", validateRecoveryEmpresaController.handle);
 
-// empresaRoutes.post("/auth", empresaAuthMiddleware, (req, res) => {
-//     res.status(200).send("Empresa autenticada com sucesso.");
-// });
+empresaRoutes.get("/auth", empresaAuthMiddleware, (req, res) => {
+    res.status(200).send("Empresa autenticada com sucesso.");
+});
 
 // empresaRoutes.get("/init", initEmpresaController.handle);
 

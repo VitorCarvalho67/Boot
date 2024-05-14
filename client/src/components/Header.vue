@@ -12,7 +12,7 @@
                         <ul>
                             <li><router-link to="/professor">Professor</router-link></li>
                             <li><router-link to="/funcionario">Funcionário</router-link></li>
-                            <li><router-link to="/empresa/init">Empresa</router-link></li>
+                            <li><router-link to="/empresa">Empresa</router-link></li>
                         </ul>
                     </div>
                 </li>

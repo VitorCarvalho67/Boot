@@ -1,7 +1,7 @@
 <template>
     <Header />
     <main>
-        <h1>Bem-vindo profissional!</h1>
+        <h1>Bem-vinda empresa!</h1>
         <nav>
             <button @click="logout">Logout</button>
         </nav>
@@ -14,10 +14,10 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
-import { mixinFuncionario } from '../../util/authMixins.js';
+import { mixinEmpresa } from '../../util/authMixins.js';
 
 export default {
-    name: 'Funcionario',
+    name: 'Empresa',
     components: {
         Header,
         Footer
@@ -30,7 +30,7 @@ export default {
     methods: {
 
     },
-    mixins: [mixinFuncionario],
+    mixins: [mixinEmpresa],
     async created() {
         this.getToken();
     }

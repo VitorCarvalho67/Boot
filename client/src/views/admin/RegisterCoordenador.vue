@@ -24,7 +24,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
-import { mixinAdmin } from '../../util/mixins.js';
+import { mixinAdmin } from '../../util/authMixins.js';
 import { getProfessores, registerCoordenador } from '../../services/api/admin';
 
 export default {

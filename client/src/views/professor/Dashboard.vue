@@ -14,7 +14,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
-import { mixinProfessor } from '../../util/mixins.js';
+import { mixinProfessor } from '../../util/authMixins.js';
 
 export default {
     name: 'Professor',

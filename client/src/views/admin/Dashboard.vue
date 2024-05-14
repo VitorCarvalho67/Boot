@@ -19,7 +19,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js'
-import { mixinAdmin } from '../../util/mixins.js';
+import { mixinAdmin } from '../../util/authMixins.js';
 
 export default {
     name: 'Admin',

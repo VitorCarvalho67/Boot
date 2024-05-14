@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../errors/error'; 
-import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor,verfifyAccessTokenFuncinario } from '../jwt/jwtServices';
+import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor,verfifyAccessTokenFuncinario, verfifyAccessTokenEmpresa} from '../jwt/jwtServices';
 import { prisma }  from '../prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
 
@@ -14,6 +14,10 @@ interface RequestWithProfessor extends Request {
 
 interface RequestWithFuncionario extends Request {
     funcionario?: { id: String};
+}
+
+interface RequestWithEmpresa extends Request {
+    empresa?: { id: String};
 }
 
 export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, next: NextFunction) {
@@ -105,5 +109,35 @@ export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res
         next();
     } catch (error) {
         res.status(401).json({ message: 'Sessão de funcionário inválida ou encerrada: ' + error});
+    }
+}
+
+export async function empresaAuthMiddleware(req: RequestWithEmpresa, res: Response, next: NextFunction) {
+    try{
+        const token = req.headers.authorization;
+
+        if (!token) {
+            throw new AppError('Token not found');
+        }
+
+        const decoded = verfifyAccessTokenEmpresa(token);
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new AppError('Invalid token');
+        }
+
+        const empresa = await prisma.empresa.findUnique({
+            where: { id: (decoded as JwtPayload).empresaId }
+        });
+
+        if (!empresa) {
+            throw new AppError('Empresa not found');
+        }
+
+        req.empresa = { id: empresa.id};
+
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'Sessão de empresa inválida ou encerrada: ' + error});
     }
 }

@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <Header />
     <main>
         <div class="box">
@@ -88,8 +88,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
 import Cookies from 'js-cookie';
-import router from '../../router/index.js';
-import { validateRecoveryMixin } from '../../util/mixins.js'
+import router from '../../router/index.js'
 import { validateRecovery } from '../../services/api/funcionario';
 
 export default {
@@ -105,10 +104,83 @@ export default {
                 recoveryPass: '',
                 newPass: '',
                 confirmNewPass: ''
-            }
+            },
+            alerts: {
+                alertUppercase: false,
+                alertLowercase: false,
+                alertNumber: false,
+                alertSpecial: false,
+                alertLenght: false,
+                alertDominio: false,
+                alertPass: false
+            },
+            focused: {
+                passwordFocused: false,
+                confirmFocused: false,
+                temporaryPasswordFocused: false
+            },
+            showPassword: false,
+            showPasswordConfirm: false,
         }
     },
+    computed: {
+        allRequirements() {
+            return (
+                !this.alerts.alertUppercase &&
+                !this.alerts.alertLowercase &&
+                !this.alerts.alertNumber &&
+                !this.alerts.alertSpecial &&
+                !this.alerts.alertLenght &&
+                !this.alerts.alertPass
+            );
+        },
+        inputType() {
+            return this.showPassword ? 'text' : 'password';
+        },
+        buttonClass() {
+            return this.showPassword ? 'hide' : 'show';
+        },
+        inputTypeConfirm() {
+            return this.showPasswordConfirm ? 'text' : 'password';
+        },
+        buttonClassConfirm() {
+            return this.showPasswordConfirm ? 'hide' : 'show';
+        },
+    },
     methods: {
+        togglePasswordVisibility() {
+            this.showPassword = !this.showPassword;
+        },
+        togglePasswordConfirmVisibility() {
+            this.showPasswordConfirm = !this.showPasswordConfirm;
+        },
+        checkPassword() {
+            const password = this.infoFuncionario.newPass;
+
+            this.alerts.alertUppercase = false;
+            this.alerts.alertLowercase = false;
+            this.alerts.alertNumber = false;
+            this.alerts.alertSpecial = false;
+            this.alerts.alertLenght = false;
+
+            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
+            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
+            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
+            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
+
+            this.checkConfirmPassword();
+        },
+        checkConfirmPassword() {
+            const password = this.infoFuncionario.newPass;
+            const passwordConfirm = this.infoFuncionario.confirmNewPass;
+
+            this.alerts.alertPass = false;
+
+            if (!(password == passwordConfirm)) {
+                this.alerts.alertPass = true;
+            }
+        },
         async submitForm() {
             try {
                 const response = await validateRecovery({
@@ -129,7 +201,6 @@ export default {
             }
         }
     },
-    mixins: [validateRecoveryMixin],
     created(){
         this.infoFuncionario.email = Cookies.get('email-recovery-funcionario');
     }
@@ -447,4 +518,4 @@ main {
         }
     }
 }
-</style>
+</style> -->
