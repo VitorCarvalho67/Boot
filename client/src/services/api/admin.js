@@ -13,25 +13,19 @@ export const authAdmin = async(token) => {
     }
 }
 
-export const registerProfessor = async(infoProfessor, token) => {
+export const loginAdmin = async(userAdmin) => {
     try {
-        const response = await api.post('admin/register/professor',
-        infoProfessor, {
-            headers: {
-                authorization: `${token}`
-            }
-        });
+        const response = await api.post('admin/login', userAdmin);
         return response;
     } catch (error) {
         return error.response.data;
     }
 }
 
-export const registerCoordenador = async(name, token) => {
+export const registerProfessor = async(infoProfessor, token) => {
     try {
-        const response = await api.post('admin/register/coordenador', {
-            name: name
-        }, {
+        const response = await api.post('admin/register/professor',
+        infoProfessor, {
             headers: {
                 authorization: `${token}`
             }
@@ -58,6 +52,21 @@ export const getProfessores = async(token) => {
 export const getCoordenadores = async(token) => {
     try {
         const response = await api.get('admin/coordenadores', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const registerCoordenador = async(name, token) => {
+    try {
+        const response = await api.post('admin/register/coordenador', {
+            name: name
+        }, {
             headers: {
                 authorization: `${token}`
             }
@@ -96,20 +105,6 @@ export const registerCurso = async(infoCurso, token) => {
     }
 }
 
-export const registerFuncionario = async(infoFuncionario, token) => {
-    try {
-        const response = await api.post('admin/register/funcionario',
-            infoFuncionario, {
-            headers: {
-                authorization: `${token}`
-            }
-        });
-        return response;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
 export const registerTurma = async(infoTurma, token) => {
     try {
         const response = await api.post('admin/register/turma',
@@ -123,10 +118,15 @@ export const registerTurma = async(infoTurma, token) => {
         return error.response.data;
     }
 }
-
-export const loginAdmin = async(userAdmin) => {
+    
+export const registerFuncionario = async(infoFuncionario, token) => {
     try {
-        const response = await api.post('admin/login', userAdmin);
+        const response = await api.post('admin/register/funcionario',
+            infoFuncionario, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
         return response;
     } catch (error) {
         return error.response.data;

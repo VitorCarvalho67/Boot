@@ -2,15 +2,15 @@ import { Empresa } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { RegisterEmpresaDTO } from "../../interfaces/empresaDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRegisterEmpresaEmail } from "../../../mail/templates/registerEmpresa";
+import { generateRegisterEmpresaEmail } from "../../../mail/templates/empresa/registerEmpresa";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');
 
 export class RegisterEmpresaUseCase {
     async execute({ name, email, cnpj, password }: RegisterEmpresaDTO): Promise<Pick<Empresa, 'name' | 'email' | 'cnpj'>> {
-        
-        if( !name || !email || !cnpj || !password ){
+
+        if (!name || !email || !cnpj || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

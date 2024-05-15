@@ -1,6 +1,26 @@
 import Cookies from 'js-cookie';
 import router from '../router/index.js';
 
+export const mixinAluno = {
+    data() {
+        return {
+            token: '',
+        }
+    },
+    methods: {
+        async getToken() {
+            this.token = Cookies.get('token');
+            if (!this.token) {
+                router.push({ path: '/aluno/login' });
+            }
+        },
+        logout() {
+            Cookies.remove('token');
+            router.push({ path: '/aluno/login' });
+        }
+    }
+};
+
 export const mixinAdmin = {
     data() {
         return {
@@ -15,7 +35,7 @@ export const mixinAdmin = {
             }
         },
         logout() {
-            Cookies.remove('token');
+            Cookies.remove('token-admin');
             router.push({ path: '/admin/login' });
         }
     }

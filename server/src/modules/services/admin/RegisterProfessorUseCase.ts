@@ -2,7 +2,7 @@ import { Professor } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { RegisterProfessorDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRegisterProfessorEmail } from "../../../mail/templates/registerProfessor";
+import { generateRegisterProfessorEmail } from "../../../mail/templates/professor/registerProfessor";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');

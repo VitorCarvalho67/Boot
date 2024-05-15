@@ -55,6 +55,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import logo from '../../assets/imageMain.png';
 
+import router from '../../router/index.js'
 import Cookies from 'js-cookie';
 import { loginAluno } from '../../services/api/aluno';
 
@@ -101,6 +102,7 @@ export default {
                     }
                     document.cookie = `token=${response.data.token}`;
 
+                    router.push({ path: '/aluno'});
                     alert("Tudo certo! 😉");
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
