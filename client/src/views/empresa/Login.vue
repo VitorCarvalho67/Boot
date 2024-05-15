@@ -9,40 +9,37 @@
                             <p>Login</p>
                         </li>
                         <li>
-                            <router-link to="/register">Cadastro</router-link>
+                            <router-link to="/empresa/register">Cadastro</router-link>
                         </li>
                     </ul>
                 </nav>
                 <form @submit.prevent="submitForm">
                     <div class="content">
                         <h1>Bem vindo!</h1>
-                        <p>Entre com suas credencias de acesso do aluno</p>
-                        <div class="input-box" :class="{ 'focused': emailFocused }">
-                            <label for="email">E-Mail</label>
-                            <input type="email" id="email" v-model="userAluno.email" required
-                                @focus="emailFocused = true" @blur="emailFocused = false">
+                        <p>Entre com suas credencias de acesso empresarial</p>
+                        <div class="input-box" :class="{ 'focused': cnpjFocused }">
+                            <label for="cnpj">CNPJ</label>
+                            <input type="text" id="cnpj" v-model="empresa.cnpjExibido" required
+                                @focus="cnpjFocused = true" @blur="cnpjFocused = false" @input="cnpj">
                         </div>
                         <div class="input-box" :class="{ 'focused': passwordFocused }">
                             <div class="d1">
                                 <label for="password">Senha</label>
-                                <input :type="inputType" id="password" v-model="userAluno.password" required
+                                <input :type="inputType" id="password" v-model="empresa.password" required
                                     @focus="passwordFocused = true" @blur="passwordFocused = false">
                             </div>
                             <div class="d2">
-                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false" 
-                                @click="togglePasswordVisibility" :class="buttonClass"></button>
+                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false"
+                                    @click="togglePasswordVisibility" :class="buttonClass"></button>
                             </div>
                         </div>
                     </div>
-                    <p><router-link to="/recovery">Esqueceu a senha?</router-link></p>
-                    <p><router-link to="/register">Ainda não possui conta?</router-link></p>
+                    <p><router-link to="/empresa/recovery">Esqueceu a senha?</router-link></p>
+                    <p><router-link to="/eregister">Ainda não possui conta empresarial?</router-link></p>
                     <div class="button-box">
                         <button type="submit">Entrar</button>
                     </div>
                 </form>
-            </div>
-            <div class="box" id="box2">
-                <img :src="imagem" alt="Img">
             </div>
         </main>
     </div>
@@ -53,27 +50,29 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import logo from '../../assets/imageMain.png';
+import img from '../../assets/imageMain.png';
 
-import router from '../../router/index.js'
 import Cookies from 'js-cookie';
-import { loginAluno } from '../../services/api/aluno';
+import router from '../../router/index.js'
+import { EmpresaMixin } from '../../util/mixins'
+import { loginEmpresa } from '../../services/api/empresa';
 
 export default {
-    name: 'Login',
+    name: 'LoginEmpresa',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            userAluno: {
-                email: '',
-                password: ''
+            empresa: {
+                cnpj: '',
+                password: '',
+                cnpjExibido: ''
             },
-            emailFocused: false,
+            cnpjFocused: false,
             passwordFocused: false,
-            imagem: logo,
+            imagem: img,
             showPassword: false,
         }
     },
@@ -91,19 +90,18 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await loginAluno({
-                    email: this.userAluno.email,
-                    password: this.userAluno.password
+                const response = await loginEmpresa({
+                    cnpj: this.empresa.cnpj,
+                    password: this.empresa.password
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    if (Cookies.get('token')) {
-                        Cookies.remove('token');
+                    if (Cookies.get('token-empresa')) {
+                        Cookies.remove('token-empresa');
                     }
-                    document.cookie = `token=${response.data.token}`;
-
-                    router.push({ path: '/aluno'});
+                    document.cookie = `token-empresa=${response.data.token}`;
                     alert("Tudo certo! 😉");
+                    router.push({ path: "/empresa" });
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
@@ -111,7 +109,8 @@ export default {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
-    }
+    },
+    mixins: [EmpresaMixin]
 }
 </script>
 
@@ -128,6 +127,7 @@ main {
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
+    background-color: $secondary-color-dark;
 
     nav {
         width: 100%;
@@ -185,7 +185,7 @@ main {
             margin-top: 50px;
         }
 
-        p{
+        p {
             width: 100%;
             font-size: .8rem;
             @include flex(row, flex-start, center);
@@ -299,25 +299,12 @@ main {
                 cursor: pointer;
                 transition: .1s linear;
 
-                &:hover{
+                &:hover {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
             }
         }
-    }
-}
-
-#box1 {
-    background-color: $secondary-color-dark;
-}
-
-#box2 {
-    @include flex-center;
-
-    img {
-        height: 80%;
-        transform: rotatey(180deg);
     }
 }
 </style>

@@ -6,114 +6,93 @@
                 <nav>
                     <ul>
                         <li>
-                            <p>Login</p>
+                            <router-link to="/empresa/login">Login</router-link>
                         </li>
                         <li>
-                            <router-link to="/register">Cadastro</router-link>
+                            <p>Recuperação de senha</p>
                         </li>
                     </ul>
                 </nav>
                 <form @submit.prevent="submitForm">
                     <div class="content">
-                        <h1>Bem vindo!</h1>
-                        <p>Entre com suas credencias de acesso do aluno</p>
-                        <div class="input-box" :class="{ 'focused': emailFocused }">
-                            <label for="email">E-Mail</label>
-                            <input type="email" id="email" v-model="userAluno.email" required
-                                @focus="emailFocused = true" @blur="emailFocused = false">
+                        <h1>Recupere sua senha</h1>
+                        <p>Enviaremos uma senha temporária no email cadastrado para garantir que você é o(a)
+                            proprietário(a) da conta empresarial</p>
+                        <div class="input-box" :class="{ 'focused': focus.cnpjFocused }">
+                            <label for="cnpj">CNPJ:</label>
+                            <input type="text" id="cnpj" v-model="empresa.cnpjExibido" required
+                                @focus="focus.cnpjFocused = true" @blur="focus.cnpjFocused = false" @input="cnpj">
                         </div>
-                        <div class="input-box" :class="{ 'focused': passwordFocused }">
-                            <div class="d1">
-                                <label for="password">Senha</label>
-                                <input :type="inputType" id="password" v-model="userAluno.password" required
-                                    @focus="passwordFocused = true" @blur="passwordFocused = false">
-                            </div>
-                            <div class="d2">
-                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false" 
-                                @click="togglePasswordVisibility" :class="buttonClass"></button>
-                            </div>
+                        <div class="input-box" :class="{ 'focused': focus.emailFocused }">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="empresa.email" required
+                                @focus="focus.emailFocused = true" @blur="focus.emailFocused = false">
                         </div>
-                    </div>
-                    <p><router-link to="/recovery">Esqueceu a senha?</router-link></p>
-                    <p><router-link to="/register">Ainda não possui conta?</router-link></p>
-                    <div class="button-box">
-                        <button type="submit">Entrar</button>
+                        <p><router-link to="/">Outras opções</router-link></p>
+                        <div class="button-box">
+                            <button type="submit">Continuar</button>
+                        </div>
                     </div>
                 </form>
-            </div>
-            <div class="box" id="box2">
-                <img :src="imagem" alt="Img">
             </div>
         </main>
     </div>
     <Footer />
-
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import logo from '../../assets/imageMain.png';
 
-import router from '../../router/index.js'
 import Cookies from 'js-cookie';
-import { loginAluno } from '../../services/api/aluno';
+import router from '../../router/index.js'
+import { EmpresaMixin } from '../../util/mixins'
+import { recoveryEmpresa } from '../../services/api/empresa';
 
 export default {
-    name: 'Login',
+    name: 'RecoveryEmpresa',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            userAluno: {
+            empresa: {
+                cnpj: '',
                 email: '',
-                password: ''
+                cnpjExibido: ''
             },
-            emailFocused: false,
-            passwordFocused: false,
-            imagem: logo,
-            showPassword: false,
-        }
-    },
-    computed: {
-        inputType() {
-            return this.showPassword ? 'text' : 'password';
-        },
-        buttonClass() {
-            return this.showPassword ? 'hide' : 'show';
+            focus: {
+                cnpjFocused: false,
+                emailFocused: false
+            },
         }
     },
     methods: {
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-        },
         async submitForm() {
             try {
-                const response = await loginAluno({
-                    email: this.userAluno.email,
-                    password: this.userAluno.password
+                const response = await recoveryEmpresa({
+                    cnpj: this.empresa.cnpj,
+                    email: this.empresa.email
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    if (Cookies.get('token')) {
-                        Cookies.remove('token');
-                    }
-                    document.cookie = `token=${response.data.token}`;
-
-                    router.push({ path: '/aluno'});
+                    Cookies.set('email-recovery-empresa', `${this.empresa.email}`, { expires: 10 });
+                    router.push({name: 'ValidateRecoveryEmpresa'});
+                
                     alert("Tudo certo! 😉");
-                } else {
+                } else{
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch (error) {
+            } catch(error){
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
-    }
+    },
+    mixins: [EmpresaMixin]
 }
 </script>
+
 
 <style lang="scss" scoped>
 main {
@@ -123,6 +102,7 @@ main {
 }
 
 .box {
+    background-color: $secondary-color-dark;
     height: 65%;
     width: 30%;
     border-radius: 20px;
@@ -138,7 +118,7 @@ main {
             li {
                 font-size: .9rem;
                 @include font-inter(300);
-                margin-inline: 20px;
+                margin-left: 20px;
 
                 p {
                     @include flex(column, center, center);
@@ -156,6 +136,10 @@ main {
                     &:hover::after {
                         animation: none;
                     }
+                }
+
+                >p:last-child {
+                    width: 200px;
                 }
 
                 a {
@@ -182,10 +166,10 @@ main {
         h1 {
             @include font-inter(300);
             font-size: 2.5rem;
-            margin-top: 50px;
+            margin-top: 30px;
         }
 
-        p{
+        p {
             width: 100%;
             font-size: .8rem;
             @include flex(row, flex-start, center);
@@ -231,46 +215,21 @@ main {
             }
         }
 
-        .input-box:last-child {
-            @include flex(row, flex-start, center);
-
-            div {
-                @include flex(column, center, flex-start)
-            }
-
-            .d1 {
-                width: 95%;
-            }
-
-            .d2 {
-                width: 5%;
-
-                button {
-                    height: 20px;
-                    width: 20px;
-                    border: none;
-                    background-color: transparent;
-                    background-position: center;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    filter: invert(100%);
-                    cursor: pointer;
-                }
-
-                .show {
-                    background-image: url('../../assets/icons/olho-1.png');
-                }
-
-                .hide {
-                    background-image: url('../../assets/icons/olho-2.png');
-                }
-            }
-
-        }
-
         >p {
             width: 100%;
             margin-bottom: 10px;
+            @include flex(row, flex-end, center);
+
+            a {
+                text-decoration: none;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                font-size: .8rem;
+            }
+        }
+
+        p {
+            width: 100%;
             @include flex(row, flex-end, center);
 
             a {
@@ -299,25 +258,12 @@ main {
                 cursor: pointer;
                 transition: .1s linear;
 
-                &:hover{
+                &:hover {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
             }
         }
-    }
-}
-
-#box1 {
-    background-color: $secondary-color-dark;
-}
-
-#box2 {
-    @include flex-center;
-
-    img {
-        height: 80%;
-        transform: rotatey(180deg);
     }
 }
 </style>

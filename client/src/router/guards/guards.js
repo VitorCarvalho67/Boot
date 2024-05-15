@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
+import { authAluno }  from '../../services/api/aluno';
 import { authAdmin }  from '../../services/api/admin';
 import { authProfessor }  from '../../services/api/professor';
 import { authFuncionario }  from '../../services/api/funcionario';
+import { authEmpresa }  from '../../services/api/empresa';
 
 export async function isAuthAdmin() {
     var token = Cookies.get('token-admin');
@@ -72,6 +74,44 @@ export async function isAuthFuncionario(){
         try {
             const response = await authFuncionario(token);
             if (response.data !== "Funcionário autenticado com sucesso.") {
+                console.log(response.data);
+                return false;
+            } else {
+                return true;
+            }
+        } catch (error) {
+            return false;
+        }
+    }
+}
+
+export async function isAuthEmpresa(){
+    var token = Cookies.get('token-empresa');
+    if (!token) {
+        return false;
+    } else {
+        try {
+            const response = await authEmpresa(token);
+            if (response.data !== "Empresa autenticada com sucesso.") {
+                console.log(response.data);
+                return false;
+            } else {
+                return true;
+            }
+        } catch (error) {
+            return false;
+        }
+    }
+}
+
+export async function isAuthAluno(){
+    var token = Cookies.get('token');
+    if (!token) {
+        return false;
+    } else {
+        try {
+            const response = await authAluno(token);
+            if (response.data !== "Aluno autenticado com sucesso.") {
                 console.log(response.data);
                 return false;
             } else {

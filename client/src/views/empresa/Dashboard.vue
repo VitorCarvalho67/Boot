@@ -1,9 +1,10 @@
 <template>
     <Header />
     <main>
-        <h1>Bem-vindo!</h1>
-        <!-- <router-link to="/aluno/register/continuation">Terminar o registro</router-link> -->
-        <router-link to="/aluno/portifolio">Meu Portfólio</router-link>
+        <h1>Bem-vinda empresa!</h1>
+        <nav>
+            <button @click="logout">Logout</button>
+        </nav>
     </main>
     <Footer />
 
@@ -12,11 +13,11 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import router from '../../router/index.js'
-import { mixinAluno } from '../../util/authMixins.js';
+import router from '../../router/index.js';
+import { mixinEmpresa } from '../../util/authMixins.js';
 
 export default {
-    name: 'HomeAluno',
+    name: 'Empresa',
     components: {
         Header,
         Footer
@@ -29,7 +30,7 @@ export default {
     methods: {
 
     },
-    mixins: [mixinAluno],
+    mixins: [mixinEmpresa],
     async created() {
         this.getToken();
     }

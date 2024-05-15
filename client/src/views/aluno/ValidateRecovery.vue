@@ -35,21 +35,21 @@
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="infoAluno.newPass" @input="checkPassword"
+                        <input :type="inputType" id="newPassword" v-model="infoAluno.newPass" @input="checkPasswords(infoAluno.newPass, infoAluno.confirmNewPass)"
                             @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
-                        <span class="alert" v-show="alerts.alertUppercase">
+                        <span class="alert" v-show="this.alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
                         </span>
-                        <span class="alert" v-show="alerts.alertLowercase">
+                        <span class="alert" v-show="this.alerts.alertLowercase">
                             A senha deve conter ao menos uma letra minúscula(a-z)
                         </span>
-                        <span class="alert" v-show="alerts.alertNumber">
+                        <span class="alert" v-show="this.alerts.alertNumber">
                             A senha deve conter ao menos um número (0-9)
                         </span>
-                        <span class="alert" v-show="alerts.alertSpecial">
+                        <span class="alert" v-show="this.alerts.alertSpecial">
                             A senha deve conter ao menos um caractere especial (*, !, @, #, $, %, &, /, -, .)
                         </span>
-                        <span class="alert" v-show="alerts.alertLenght">
+                        <span class="alert" v-show="this.alerts.alertLenght">
                             A senha deve conter ao menos 8 caracteres
                         </span>
                     </div>
@@ -64,8 +64,8 @@
                         <label for="confirmPassword">Confirmar Senha</label>
                         <input :type="inputTypeConfirm" id="confirmPassword" v-model="infoAluno.confirmNewPass"
                             @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                            @input="checkConfirmPassword" required>
-                        <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
+                            @input="checkPasswords(infoAluno.newPass, infoAluno.confirmNewPass)" required>
+                        <span class="alert" v-show="this.alerts.alertPass"> As senhas devem ser iguais</span>
                     </div>
                     <div class="d2">
                         <button type="button" @click="togglePasswordConfirmVisibility"
@@ -90,6 +90,7 @@ import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
 import { validateRecovery } from '../../services/api/aluno';
+import { validateRecoveryMixin } from '../../util/mixins.js';
 
 export default {
     name: 'ValidateRecovery',
@@ -104,83 +105,10 @@ export default {
                 recoveryPass: '',
                 newPass: '',
                 confirmNewPass: ''
-            },
-            alerts: {
-                alertUppercase: false,
-                alertLowercase: false,
-                alertNumber: false,
-                alertSpecial: false,
-                alertLenght: false,
-                alertDominio: false,
-                alertPass: false
-            },
-            focused: {
-                passwordFocused: false,
-                confirmFocused: false,
-                temporaryPasswordFocused: false
-            },
-            showPassword: false,
-            showPasswordConfirm: false,
+            }
         }
     },
-    computed: {
-        allRequirements() {
-            return (
-                !this.alerts.alertUppercase &&
-                !this.alerts.alertLowercase &&
-                !this.alerts.alertNumber &&
-                !this.alerts.alertSpecial &&
-                !this.alerts.alertLenght &&
-                !this.alerts.alertPass
-            );
-        },
-        inputType() {
-            return this.showPassword ? 'text' : 'password';
-        },
-        buttonClass() {
-            return this.showPassword ? 'hide' : 'show';
-        },
-        inputTypeConfirm() {
-            return this.showPasswordConfirm ? 'text' : 'password';
-        },
-        buttonClassConfirm() {
-            return this.showPasswordConfirm ? 'hide' : 'show';
-        },
-    },
-    methods: {
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-        },
-        togglePasswordConfirmVisibility() {
-            this.showPasswordConfirm = !this.showPasswordConfirm;
-        },
-        checkPassword() {
-            const password = this.infoAluno.newPass;
-
-            this.alerts.alertUppercase = false;
-            this.alerts.alertLowercase = false;
-            this.alerts.alertNumber = false;
-            this.alerts.alertSpecial = false;
-            this.alerts.alertLenght = false;
-
-            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
-            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
-            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
-            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
-
-            this.checkConfirmPassword();
-        },
-        checkConfirmPassword() {
-            const password = this.infoAluno.newPass;
-            const passwordConfirm = this.infoAluno.confirmNewPass;
-
-            this.alerts.alertPass = false;
-
-            if (!(password == passwordConfirm)) {
-                this.alerts.alertPass = true;
-            }
-        },
+    methods:{
         async submitForm() {
             if (this.infoAluno.newPass === this.infoAluno.confirmNewPass){    
                 try {
@@ -205,6 +133,7 @@ export default {
             }
         }
     },
+    mixins: [validateRecoveryMixin],
     created(){
         this.infoAluno.email = Cookies.get('email-recovery-aluno');
     }

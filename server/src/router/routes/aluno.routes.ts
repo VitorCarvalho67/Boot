@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { alunoAuthMiddleware } from '../../middleware/autentication';
 import {
     CreateAlunoController,
     CreatePreAlunoController,
@@ -20,5 +21,9 @@ alunoRoutes.post("/create", createAlunoUseController.handle);
 alunoRoutes.post("/login", loginAlunoController.handle);
 alunoRoutes.post("/recovery", recoveryAlunoController.handle);
 alunoRoutes.post("/recovery/validate", validateRecoveryController.handle);
+
+alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
+    res.status(200).send("Aluno autenticado com sucesso.");
+});
 
 export { alunoRoutes };

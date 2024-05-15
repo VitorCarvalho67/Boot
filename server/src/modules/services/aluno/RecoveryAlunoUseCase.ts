@@ -2,7 +2,7 @@ import { Aluno } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { RecoveryAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRecoveryEmail } from "../../../mail/templates/recovery";
+import { generateRecoveryEmail } from "../../../mail/templates/aluno/recovery";
 import transporter from "../../../mail/config/email";
 import nodemailer from 'nodemailer';
 
@@ -10,8 +10,8 @@ const bcrypt = require('bcrypt');
 
 export class RecoveryAluno {
     async execute({ name, email }: RecoveryAlunoDTO) {
-        
-        if( !name || !email ){
+
+        if (!name || !email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

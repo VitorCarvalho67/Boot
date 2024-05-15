@@ -1,15 +1,15 @@
 import { prisma } from "../../../prisma/client";
 import { RecoveryEmpresaDTO } from "../../interfaces/empresaDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRecoveryEmpresaEmail } from "../../../mail/templates/recoveryEmpresa";
+import { generateRecoveryEmpresaEmail } from "../../../mail/templates/empresa/recoveryEmpresa";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');
 
 export class RecoveryEmpresaUseCase {
     async execute({ cnpj, email }: RecoveryEmpresaDTO) {
-        
-        if( !cnpj || !email ){
+
+        if (!cnpj || !email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

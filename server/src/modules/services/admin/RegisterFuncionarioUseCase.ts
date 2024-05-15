@@ -2,7 +2,7 @@ import { Cargo, Funcionario } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { RegisterFuncionarioDTO } from "../../interfaces/adminDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRegisterFuncionarioEmail } from "../../../mail/templates/registerFuncionario";
+import { generateRegisterFuncionarioEmail } from "../../../mail/templates/funcionario/registerFuncionario";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');

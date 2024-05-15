@@ -1,5 +1,18 @@
 import api from '../api';
 
+export const authFuncionario = async(token) => {
+    try {
+        const response = await api.post('funcionario/auth', {}, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
 export const initFuncionario = async(email, cargo) => {
     try {
         const response = await api.get('funcionario/init', {
@@ -32,8 +45,6 @@ export const loginFuncionario = async(infoFuncionario) => {
     }
 }
 
-
-
 export const recoveryFuncionario = async(infoFuncionario) => {
     try {
         const response = await api.post('funcionario/recovery', infoFuncionario);
@@ -46,19 +57,6 @@ export const recoveryFuncionario = async(infoFuncionario) => {
 export const validateRecovery = async(infoFuncionario) => {
     try {
         const response = await api.post('funcionario/recovery/validate', infoFuncionario);
-        return response;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-export const authFuncionario = async(token) => {
-    try {
-        const response = await api.post('funcionario/auth', {}, {
-            headers: {
-                authorization: `${token}`
-            }
-        });
         return response;
     } catch (error) {
         return error.response.data;

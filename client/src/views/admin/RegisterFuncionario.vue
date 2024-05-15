@@ -39,7 +39,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
-import { mixinAdmin } from '../../util/mixins.js';
+import { mixinAdmin } from '../../util/authMixins.js';
 import { registerFuncionario } from '../../services/api/admin';
 
 export default {
@@ -85,7 +85,7 @@ export default {
 
                 console.log(response)
                 
-                if (response.status >= 200 && responsea.status < 300) {
+                if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
                 } else{
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);

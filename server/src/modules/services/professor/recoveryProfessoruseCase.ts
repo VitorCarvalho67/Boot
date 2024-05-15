@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma/client";
 import { RecoveryProfessorDTO } from "../../interfaces/professorDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRecoveryEmailProfessor } from "../../../mail/templates/recoveryProfessor";
+import { generateRecoveryEmailProfessor } from "../../../mail/templates/professor/recoveryProfessor";
 import transporter from "../../../mail/config/email";
 
 const bcrypt = require('bcrypt');

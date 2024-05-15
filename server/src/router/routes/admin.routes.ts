@@ -31,7 +31,7 @@ adminRoutes.post("/register/funcionario", adminAuthMiddleware, registerFuncionar
 adminRoutes.post("/register/coordenador", adminAuthMiddleware, registerCoordenadorController.handle);
 adminRoutes.post("/register/turma", adminAuthMiddleware, registerTurmaController.handle);
 
-adminRoutes.post("/auth", adminAuthMiddleware, (req, res) => {
+adminRoutes.get("/auth", adminAuthMiddleware, (req, res) => {
     res.status(200).send("Admin autenticado com sucesso.");
 });
 

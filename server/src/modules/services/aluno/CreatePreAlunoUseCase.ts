@@ -2,7 +2,7 @@ import { PreAluno } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { CreatePreAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
-import { generateRegisterEmail } from "../../../mail/templates/register";
+import { generateRegisterEmail } from "../../../mail/templates/aluno/register";
 import transporter from "../../../mail/config/email";
 import nodemailer from 'nodemailer';
 
@@ -10,8 +10,8 @@ const bcrypt = require('bcrypt');
 
 export class CreatePreAlunoUseCase {
     async execute({ name, email, password }: CreatePreAlunoDTO): Promise<Pick<PreAluno, "name" | "email" | "tentativasRestantes">> {
-        
-        if( !name || !email || !password ){
+
+        if (!name || !email || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
@@ -80,7 +80,7 @@ export class CreatePreAlunoUseCase {
                     }
                 });
 
-                return{
+                return {
                     name: PreAluno.name,
                     email: PreAluno.email,
                     tentativasRestantes: PreAluno.tentativasRestantes,

@@ -1,5 +1,27 @@
 import api from '../api';
 
+export const authAluno = async (token) => {
+    try {
+        const response = await api.get('aluno/auth', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const loginAluno = async(userAluno) => {
+    try {
+        const response = await api.post('aluno/login/', userAluno);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
 export const registerPreAluno = async(userPreAluno) => {
 try {
     const response = await api.post('aluno/create/prealuno', userPreAluno);
@@ -12,15 +34,6 @@ try {
 export const registerAluno = async(userAluno) => {
     try {
         const response = await api.post('aluno/create/', userAluno);
-        return response;
-    } catch (error) {
-        return error.response.data;
-    }
-}
-
-export const loginAluno = async(userAluno) => {
-    try {
-        const response = await api.post('aluno/login/', userAluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -44,4 +57,3 @@ export const validateRecovery = async(infoAluno) => {
         return error.response.data;
     }
 }
-
