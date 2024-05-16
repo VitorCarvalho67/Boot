@@ -7,7 +7,8 @@ import HomeAluno from '../../views/aluno/Home.vue';
 
 import {
     isRecoverigAluno,
-    isAuthAluno
+    isAuthAluno,
+    isRegistering
 } from '../guards/guards.js';
 
 export const alunoRoutes = [

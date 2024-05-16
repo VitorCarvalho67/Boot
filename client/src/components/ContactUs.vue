@@ -1,7 +1,7 @@
 <template>
     <section class="contact-us">
         <div class="box" id="box1">
-            <h1>Contact Us</h1>
+            <h1>Fale conosco</h1>
             <p>
                 Estamos comprometidos em oferecer soluções inovadoras e de qualidade que superem suas expectativas,
                 tornando sua experiência conosco memorável.

@@ -5,7 +5,7 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="/">About Us</router-link>
+                    <router-link to="/">Sobre nós</router-link>
                 </li>
                 <li>
                     <a href="https://github.com/VitorCarvalho67/Boot" target="_blank">GitHub</a>
