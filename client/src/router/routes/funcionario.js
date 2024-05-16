@@ -8,7 +8,7 @@ import ValidateRecoveryFuncionario from '../../views/funcionario/ValidateRecover
 import {
     isAuthFuncionario,
     isInitingFuncionario,
-    isRecoverigFuncionario
+    isRecoveringFuncionario
 } from '../guards/guards.js';
 
 export const funcionarioRoutes = [
@@ -43,7 +43,7 @@ export const funcionarioRoutes = [
         name: 'ValidateRecoveryFuncionario',
         component: ValidateRecoveryFuncionario,
         beforeEnter: async (to, from, next) => {
-            (await isRecoverigFuncionario()) ? next() : next("/funcionario/recovery");
+            (await isRecoveringFuncionario()) ? next() : next("/funcionario/recovery");
         }
     },
     {

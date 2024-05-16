@@ -83,7 +83,6 @@ export default {
                     this.token
                 );
 
-                console.log(response)
                 
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");

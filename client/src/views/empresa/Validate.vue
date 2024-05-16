@@ -1,81 +1,57 @@
-<!-- <template>
+<template>
     <Header />
     <main>
         <div class="box">
             <nav>
                 <ul>
                     <li>
-                        <router-link to="/funcionario/init">Login</router-link>
+                        <router-link to="/empresa/login">Login</router-link>
                     </li>
                     <li>
-                        <p>Validação</p>
+                        <p>Cadastro</p>
                     </li>
                 </ul>
             </nav>
             <form @submit.prevent="submitForm">
-                <h1>Valide seu cadastro</h1>
-                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na plataforma.</p>
+                <div class="content">
+                    <h1>Finalize seu registro</h1>
+                    <p>Para sua segurança te enviamos um código de verificação no email inserido anteriormente, termine seu registro inserindo-o abaixo
+                    </p>
 
-                <div class="input-box email">
-                    <div class="d1">
-                        <p>{{ this.funcionario.email }}</p>
+                    <div class="input-box focused">
+                        <div class="d1">
+                            <label for="">CNPJ</label>
+                            <p>{{ empresa.cnpjExibido }}</p>
+                        </div>
+                        <div class="d2">
+                            <router-link to="/empresa/register" class="editMail"></router-link>
+                        </div>
                     </div>
-                    <div class="d2">
-                        <router-link to="/funcionario/init" class="editMail"></router-link>
+                    <div class="token">
+                        <label>Token de acesso</label>
+                        <div class="box-token">
+                            <div class="box-token">
+                                <input ref="token1" type="text" pattern="[0-9]" v-model="empresa.token.token1"
+                                    maxlength="1" @keydown="handleKeyDown($event, 1)" @paste="handlePaste($event, 1)">
+                                <input ref="token2" type="text" pattern="[0-9]" v-model="empresa.token.token2"
+                                    maxlength="1" @keydown="handleKeyDown($event, 2)" @paste="handlePaste($event, 2)">
+                                <input ref="token3" type="text" pattern="[0-9]" v-model="empresa.token.token3"
+                                    maxlength="1" @keydown="handleKeyDown($event, 3)" @paste="handlePaste($event, 3)">
+                                <input ref="token4" type="text" pattern="[0-9]" v-model="empresa.token.token4"
+                                    maxlength="1" @keydown="handleKeyDown($event, 4)" @paste="handlePaste($event, 4)">
+                                <input ref="token5" type="text" pattern="[0-9]" v-model="empresa.token.token5"
+                                    maxlength="1" @keydown="handleKeyDown($event, 5)" @paste="handlePaste($event, 5)">
+                                <input ref="token6" type="text" pattern="[0-9]" v-model="empresa.token.token6"
+                                    maxlength="1" @keydown="handleKeyDown($event, 6)" @paste="handlePaste($event, 6)">
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="input-box" :class="{ 'focused': focused.temporaryPasswordFocused }">
-                    <label>Senha Temporária enviada em seu e-mail</label>
-                    <input id="temporaryPassword" v-model="funcionario.temporaryPassword"
-                        @focus="focused.temporaryPasswordFocused = true"
-                        @blur="focused.temporaryPasswordFocused = false" required>
-                </div>
-                
-                <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
-                    <div class="d1">
-                        <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="funcionario.newPassword" @input="checkPassword"
-                            @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
-                        <span class="alert" v-show="alerts.alertUppercase">
-                            A senha deve conter ao menos uma letra maiúscula(A-Z)
-                        </span>
-                        <span class="alert" v-show="alerts.alertLowercase">
-                            A senha deve conter ao menos uma letra minúscula(a-z)
-                        </span>
-                        <span class="alert" v-show="alerts.alertNumber">
-                            A senha deve conter ao menos um número (0-9)
-                        </span>
-                        <span class="alert" v-show="alerts.alertSpecial">
-                            A senha deve conter ao menos um caractere especial (*, !, @, #, $, %, &, /, -, .)
-                        </span>
-                        <span class="alert" v-show="alerts.alertLenght">
-                            A senha deve conter ao menos 8 caracteres
-                        </span>
+                    <section class="voltar">
+                        <router-link to="/empresa/register">Esse não é seu CNPJ?</router-link>
+                    </section>
+                    <div class="button-box">
+                        <button type="submit">Finalizar</button>
                     </div>
-                    <div class="d2">
-                        <button type="button" @click="togglePasswordVisibility" :class="buttonClass"
-                            @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"></button>
-                    </div>
-                </div>
-
-                <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
-                    <div class="d1">
-                        <label for="confirmPassword">Confirmar Senha</label>
-                        <input :type="inputTypeConfirm" id="confirmPassword" v-model="funcionario.confirmPassword"
-                            @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                            @input="checkConfirmPassword" required>
-                        <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
-                    </div>
-                    <div class="d2">
-                        <button type="button" @click="togglePasswordConfirmVisibility"
-                            @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                            :class="buttonClassConfirm"></button>
-                    </div>
-                </div>
-                <div class="button-box">
-                    <button v-show="allRequirements" type="submit">Validar</button>
-                    <button v-show="!allRequirements" type="button">Validar</button>
                 </div>
             </form>
         </div>
@@ -89,131 +65,125 @@ import Footer from '../../components/Footer.vue';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { validateFuncionario } from '../../services/api/funcionario';
+import { validateEmpresa } from '../../services/api/empresa';
 
 export default {
-    name: 'ValidateFuncionario',
+    name: 'ValidateRegisterEmpresa',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            funcionario: {
-                email: '',
-                temporaryPassword: '',
-                newPassword: ''
-            },
-            alerts: {
-                alertUppercase: false,
-                alertLowercase: false,
-                alertNumber: false,
-                alertSpecial: false,
-                alertLenght: false,
-                alertDominio: false,
-                alertPass: false
-            },
-            focused: {
-                passwordFocused: false,
-                confirmFocused: false,
-                temporaryPasswordFocused: false
-            },
-            showPassword: false,
-            showPasswordConfirm: false,
+            empresa: {
+                cnpj: '',
+                cnpjExibido: '',
+                token: {
+                    token1: '',
+                    token2: '',
+                    token3: '',
+                    token4: '',
+                    token5: '',
+                    token5: '',
+                    token6: ''
+                }
+            }
         }
     },
-    computed: {
-        allRequirements() {
-            return (
-                !this.alerts.alertUppercase &&
-                !this.alerts.alertLowercase &&
-                !this.alerts.alertNumber &&
-                !this.alerts.alertSpecial &&
-                !this.alerts.alertLenght &&
-                !this.alerts.alertPass
-            );
-        },
-        inputType() {
-            return this.showPassword ? 'text' : 'password';
-        },
-        buttonClass() {
-            return this.showPassword ? 'hide' : 'show';
-        },
-        inputTypeConfirm() {
-            return this.showPasswordConfirm ? 'text' : 'password';
-        },
-        buttonClassConfirm() {
-            return this.showPasswordConfirm ? 'hide' : 'show';
-        },
-    },
     methods: {
-        togglePasswordVisibility() {
-            this.showPassword = !this.showPassword;
-        },
-        togglePasswordConfirmVisibility() {
-            this.showPasswordConfirm = !this.showPasswordConfirm;
-        },
-        checkPassword() {
-            const password = this.funcionario.newPassword;
+        handleKeyDown(event, index) {
+            const maxLength = 1;
+            const input = event.target;
 
-            this.alerts.alertUppercase = false;
-            this.alerts.alertLowercase = false;
-            this.alerts.alertNumber = false;
-            this.alerts.alertSpecial = false;
-            this.alerts.alertLenght = false;
-
-            if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
-            else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
-            else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
-            else if (!(password.length >= 8)) this.alerts.alertLenght = true;
-
-            this.checkConfirmPassword();
-        },
-        checkConfirmPassword() {
-            const password = this.funcionario.newPassword;
-            const passwordConfirm = this.funcionario.confirmPassword;
-
-            this.alerts.alertPass = false;
-
-            if (!(password == passwordConfirm)) {
-                this.alerts.alertPass = true;
+            if (event.key >= '0' && event.key <= '9') {
+                if (input.value.length === 0) {
+                    input.value = event.key;
+                    this.empresa.token[`token${index}`] = event.key;
+                } else if (index < 6) {
+                    const nextInput = this.$refs[`token${index + 1}`];
+                    event.preventDefault();
+                    nextInput.focus();
+                    nextInput.setSelectionRange(0, 0);
+                    nextInput.value = event.key;
+                    this.empresa.token[`token${index + 1}`] = event.key;
+                }
+            } else if (event.key === 'Backspace') {
+                if (input.value.length === 0) {
+                    const previousInput = this.$refs[`token${index - 1}`];
+                    if (previousInput) {
+                        previousInput.focus();
+                    }
+                } else {
+                    input.value = '';
+                    this.empresa.token[`token${index}`] = '';
+                }
+            } else if (event.key === 'ArrowLeft') {
+                const previousInput = this.$refs[`token${index - 1}`];
+                if (previousInput) {
+                    event.preventDefault();
+                    previousInput.focus();
+                    previousInput.setSelectionRange(maxLength, maxLength);
+                }
+            } else if (event.key === 'ArrowRight') {
+                const nextInput = this.$refs[`token${index + 1}`];
+                if (nextInput) {
+                    event.preventDefault();
+                    nextInput.focus();
+                    nextInput.setSelectionRange(0, 0);
+                }
             }
+        },
+        handlePaste(event, index) {
+            event.preventDefault();
+
+            const pastedText = event.clipboardData.getData('text/plain').trim();
+
+            if (pastedText.length > 6) {
+                return;
+            }
+
+            if (!/^\d+$/.test(pastedText)) {
+                return;
+            }
+
+            const characters = pastedText.split('');
+
+            characters.forEach((char, i) => {
+                const nextIndex = index + i;
+                if (nextIndex <= 6) {
+                    const input = this.$refs[`token${nextIndex}`];
+                    input.focus();
+                    input.setSelectionRange(0, 0);
+                    input.value = char;
+                    this.empresa.token[`token${nextIndex}`] = char;
+                }
+            });
         },
         async submitForm() {
             try {
-                const response = await validateFuncionario({
-                    email: this.funcionario.email,
-                    temporaryPassword: this.funcionario.temporaryPassword,
-                    newPassword: this.funcionario.newPassword
+                const token = Object.values(this.empresa.token).join('');
+
+                const response = await validateEmpresa({
+                    cnpj: this.empresa.cnpj,
+                    token: token
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    Cookies.remove('email-funcionario');
-                    
-                    router.push({ path: '/funcionario/login' });
-                    
+                    Cookies.remove('cnpj-registro-empresa');
+                    router.push({ name: 'LoginEmpresa' });
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
-            }
-
-        },
-
-        async getEmail(){
-            if(Cookies.get('email-init-funcionario')){
-                this.funcionario.email = Cookies.get('email-init-funcionario');
-            }
-            else{
-                router.push({path: "/funcionario/init"});
             }
         }
     },
-    async created(){
-        await this.getEmail();
+    created() {
+        this.empresa.cnpj = Cookies.get('cnpj-registro-empresa');
+        this.empresa.cnpjExibido = this.empresa.cnpj.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
     }
 }
 </script>
@@ -226,12 +196,12 @@ main {
 }
 
 .box {
-    background-color: $secondary-color-dark;
     height: 65%;
     width: 30%;
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
+    background-color: $secondary-color-dark;
 
     nav {
         width: 100%;
@@ -285,47 +255,31 @@ main {
 
         h1 {
             @include font-inter(300);
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-top: 10px;
         }
 
-        >p {
-            width: 100%;
-            font-size: .8rem;
-            @include flex(row, flex-start, center);
-            color: $font-color-dark-2;
+        p {
             @include font-inter(200);
-            margin-bottom: 20px;
+            font-size: .8rem;
+            margin-top: 10px;
+            color: $font-color-dark-2;
         }
 
         .input-box {
             height: 65px;
-            @include flex(column, flex-start, center);
+            @include flex(column, center, flex-start);
             width: 100%;
             padding: 10px;
             border-radius: 5px;
             background-color: $terciary-color-dark;
-            margin: 20px 0px;
+            border-left: solid 3px $terciary-color-dark;
+            margin: 25px 0px;
+            border-left: solid 3px $secondary-color-orange;
             border-radius: 0px 5px 5px 0px;
-
-            input {
-                background-color: transparent;
-                width: 100%;
-                margin-top: 5px;
-                outline: none;
-                color: $font-color-dark;
-                border: none;
-                @include font-inter(400);
-                font-size: 1rem;
-            }
-
-            &.focused {
-                border-left: solid 3px $secondary-color-orange;
-            }
 
             label {
                 letter-spacing: 1.5px;
-                width: 100%;
                 @include font-inter(200);
                 font-size: .8rem;
                 color: $font-color-dark-2;
@@ -353,77 +307,12 @@ main {
                 background-repeat: no-repeat;
                 filter: invert(100%);
                 cursor: pointer;
-                display: inline-block;
             }
 
-            .d1 {
-                width: 95%;
-
-                .alert {
-                    font-size: .8rem;
-                    color: rgb(158, 20, 20);
-
-                    & .input-box input {
-                        margin-top: 2px;
-                    }
-                }
+            div input:last-child {
+                font-size: 1rem;
             }
 
-            .d2 {
-                width: 5%;
-
-                button {
-                    height: 20px;
-                    width: 20px;
-                    border: none;
-                    background-color: transparent;
-                    background-position: center;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    filter: invert(100%);
-                    cursor: pointer;
-                }
-            }
-
-            .alerts {
-                @include flex(column, center, flex-start);
-                font-size: .8rem;
-                color: rgb(158, 20, 20);
-            }
-        }
-
-        .email {
-            background-color: transparent;
-            @include flex(row, flex-start, center);
-            height: 40px;
-
-            div {
-                @include flex(column, center, flex-start)
-            }
-
-            .d1 {
-                width: 95%;
-            }
-
-            .d2 {
-                width: 5%;
-
-                button {
-                    height: 20px;
-                    width: 20px;
-                    border: none;
-                    background-color: transparent;
-                    background-position: center;
-                    background-size: cover;
-                    background-repeat: no-repeat;
-                    filter: invert(100%);
-                    cursor: pointer;
-                }
-            }
-
-        }
-
-        .password{
             @include flex(row, flex-start, center);
 
             div {
@@ -447,14 +336,6 @@ main {
                     background-repeat: no-repeat;
                     filter: invert(100%);
                     cursor: pointer;
-                }
-
-                .show {
-                    background-image: url('../../assets/icons/olho-1.png');
-                }
-
-                .hide {
-                    background-image: url('../../assets/icons/olho-2.png');
                 }
             }
         }
@@ -466,7 +347,7 @@ main {
             label {
                 padding-inline: 10px;
                 letter-spacing: 1.5px;
-                margin-top: 10px;
+                margin-top: 10px; 
                 @include font-inter(200);
                 font-size: .8rem;
                 color: $font-color-dark-2;
@@ -480,8 +361,8 @@ main {
                     border: none;
                     outline: none;
                     border-radius: 7px;
-                    height: 65px;
-                    width: 12%;
+                    height: 95px;
+                    width: 15%;
                     font-size: 1.8rem;
                     text-align: center;
                     @include flex-center;
@@ -493,9 +374,19 @@ main {
                     &:focus {
                         border: solid 2px $primary-color-orange;
                     }
-
-                    text-transform: uppercase
                 }
+            }
+        }
+
+        .voltar {
+            width: 100%;
+            @include flex(row, flex-end, center);
+
+            a {
+                text-decoration: none;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                font-size: .8rem;
             }
         }
 
@@ -524,4 +415,4 @@ main {
         }
     }
 }
-</style> -->
+</style>

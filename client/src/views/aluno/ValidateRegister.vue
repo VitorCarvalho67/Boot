@@ -161,7 +161,6 @@ export default {
         async submitForm() {
             try {
                 const token = Object.values(this.userAluno.token).join('');
-                console.log(token);
 
                 const response = await registerAluno({
                     email: this.userAluno.email,

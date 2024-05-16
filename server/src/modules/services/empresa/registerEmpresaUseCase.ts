@@ -43,14 +43,14 @@ export class RegisterEmpresaUseCase {
 
                 const nome = name.split(' ').shift()?.toString() ?? 'empresa';
 
-                const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
-                const tokenHash = bcrypt.hashSync(token, salt);
+                const tokenGen = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
+                const tokenHash = bcrypt.hashSync(tokenGen, salt);
 
                 const mailOptions = {
                     from: process.env.EMAIL,
                     to: email,
                     subject: 'Boot - Código de verificação',
-                    html: generateRegisterEmpresaEmail(nome, cnpjFormated, token)
+                    html: generateRegisterEmpresaEmail(nome, cnpjFormated, tokenGen)
                 };
 
                 var emailEnviado = false;
@@ -63,8 +63,6 @@ export class RegisterEmpresaUseCase {
                         emailEnviado = true
                     }
                 });
-
-                console.log(name, email, cnpj, hash, tokenHash);
 
                 const empresaRegister = await prisma.empresa.create({
                     data: {

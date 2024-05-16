@@ -20,7 +20,7 @@ export interface RecoveryEmpresaDTO {
 
 export interface ValidateRecoveryEmpresaDTO {
     cnpj: string,
-    token: string,
+    tempPass: string,
     newPass: string
 }
 
