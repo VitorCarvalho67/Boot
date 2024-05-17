@@ -8,7 +8,7 @@
             <nav>
                 <ul>
                     <li>
-                        <router-link to="/login">Login</router-link>
+                        <router-link to="/empresa/login">Login</router-link>
                     </li>
                     <li>
                         <p>Cadastro</p>
@@ -21,25 +21,32 @@
                     <div class="input-box" :class="{ 'focused': focused.nameFocused }">
                         <label for="name">Nome</label>
 
-                        <input type="text" id="name" v-model="userAluno.name" @focus="focused.nameFocused = true"
+                        <input type="text" id="name" v-model="empresa.name" @focus="focused.nameFocused = true"
                             @blur="focused.nameFocused = false" required>
-
                     </div>
                     
                     <div class="input-box" :class="{ 'focused': focused.emailFocused }">
                         <label for="email">E-Mail</label>
 
-                        <input type="email" id="email" v-model="userAluno.email" @input="checkEmail"
+                        <input type="email" id="email" v-model="empresa.email"
                             @focus="focused.emailFocused = true" @blur="focused.emailFocused = false" required>
-                        <span class="alert" v-show="alerts.alertDominio">Seu email deve possuir domínio
-                            etec.sp.gov.br</span>
+                    </div>
 
+                    <div class="input-box" :class="{ 'focused': focused.cnpjFocused }">
+                        <label for="email">CNPJ</label>
+
+                        <input type="text" id="email" v-model="empresa.cnpjExibido" @input="cnpj"
+                            @focus="focused.cnpjFocused = true" @blur="focused.cnpjFocused = false" required>
+                    
+                            <span class="alert" v-show="alerts.alertCNPJ">
+                                Insira um CNPJ válido
+                            </span>
                     </div>
 
                     <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                         <div class="d1">
                             <label for="password">Senha</label>
-                            <input :type="inputType" id="password" v-model="userAluno.password" @input="checkPassword"
+                            <input :type="inputType" id="password" v-model="empresa.password" @input="checkPassword"
                                 @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"
                                 required>
                             <span class="alert" v-show="alerts.alertUppercase">
@@ -67,7 +74,7 @@
                     <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
                         <div class="d1">
                             <label for="confirmPassword">Confirmar senha</label>
-                            <input :type="inputTypeConfirm" id="confirmPass" v-model="userAluno.confirmPassword"
+                            <input :type="inputTypeConfirm" id="confirmPass" v-model="empresa.confirmPassword"
                                 @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
                                 @input="checkConfirmPassword" required>
                             <span v-show="alerts.alertPass" class="alert">
@@ -81,7 +88,7 @@
                     </div>
                     <div class="button-box">
                         <button v-show="allRequirementsMet" type="submit">Registrar</button>
-                        <button v-show="!allRequirementsMet" type="button">Registrar</button>
+                        <button v-show="!allRequirementsMet" type="button" @click="cnpjValidate">Registrar</button>
                     </div>
                 </div>
             </form>
@@ -98,7 +105,8 @@ import logo from '../../assets/imageMain.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { registerPreAluno } from '../../services/api/aluno';
+import { registerEmpresa } from '../../services/api/empresa';
+import { EmpresaMixin } from '../../util/mixins';
 
 export default {
     name: 'Register',
@@ -108,9 +116,11 @@ export default {
     },
     data() {
         return {
-            userAluno: {
+            empresa: {
                 name: '',
                 email: '',
+                cnpj: '',
+                cnpjExibido: '',
                 password: '',
                 confirmPassword: ''
             },
@@ -121,11 +131,13 @@ export default {
                 alertSpecial: false,
                 alertLenght: false,
                 alertDominio: false,
-                alertPass: false
+                alertPass: false,
+                alertCNPJ: false
             },
             focused: {
                 nameFocused: false,
                 emailFocused: false,
+                cnpjFocused: false,
                 passwordFocused: false,
                 confirmFocused: false
             },
@@ -148,9 +160,9 @@ export default {
             return this.showPasswordConfirm ? 'hide' : 'show';
         },
         allRequirementsMet() {
-            const email = this.userAluno.email;
-            const password = this.userAluno.password;
-            const passwordConfirm = this.userAluno.confirmPassword;
+            const email = this.empresa.email;
+            const password = this.empresa.password;
+            const passwordConfirm = this.empresa.confirmPassword;
 
             return (
                 (/[A-Z]/.test(password)) &&
@@ -158,7 +170,7 @@ export default {
                 (/[0-9]/.test(password)) &&
                 (/[*!@#$%&\./\\-_]/.test(password)) &&
                 (password.length >= 8) &&
-                (/@etec\.sp\.gov\.br$/.test(email)) &&
+                (this.empresa.cnpj.length == 14) &&
                 (password == passwordConfirm)
             );
         }
@@ -170,17 +182,8 @@ export default {
         togglePasswordConfirmVisibility() {
             this.showPasswordConfirm = !this.showPasswordConfirm;
         },
-        checkEmail() {
-            const email = this.userAluno.email;
-
-            this.alerts.alertDominio = false;
-
-            if (!(/@etec\.sp\.gov\.br$/.test(email))) {
-                this.alerts.alertDominio = true;
-            }
-        },
         checkPassword() {
-            const password = this.userAluno.password;
+            const password = this.empresa.password;
 
             this.alerts.alertUppercase = false;
             this.alerts.alertLowercase = false;
@@ -197,8 +200,8 @@ export default {
             this.checkConfirmPassword();
         },
         checkConfirmPassword() {
-            const password = this.userAluno.password;
-            const passwordConfirm = this.userAluno.confirmPassword;
+            const password = this.empresa.password;
+            const passwordConfirm = this.empresa.confirmPassword;
 
             this.alerts.alertPass = false;
 
@@ -206,17 +209,25 @@ export default {
                 this.alerts.alertPass = true;
             }
         },
+        cnpjValidate(){
+            this.alerts.alertCNPJ = false;
+
+            if (this.empresa.cnpj.length != 14 && this.empresa.cnpjExibido.length > 0){
+                this.alerts.alertCNPJ = true;
+            }
+        },
         async submitForm() {
             try {
-                const response = await registerPreAluno({
-                    name: this.userAluno.name,
-                    email: this.userAluno.email,
-                    password: this.userAluno.password
+                const response = await registerEmpresa({
+                    name: this.empresa.name,
+                    email: this.empresa.email,
+                    cnpj: this.empresa.cnpj,
+                    password: this.empresa.password
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('email-registro-aluno', `${response.data.email}`, { expires: 10 });
-                    router.push({ name: 'ValidateRegister' })
+                    Cookies.set('cnpj-registro-empresa', `${response.data.cnpj}`, { expires: 10 });
+                    router.push({ name: 'ValidateEmpresa' })
 
                     alert("Tudo certo! 😉");
                 } else {
@@ -226,7 +237,8 @@ export default {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
-    }
+    },
+    mixins: [EmpresaMixin]
 }
 </script>
 

@@ -7,9 +7,9 @@ import { generateAccessTokenEmpresa } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryEmpresaUseCase {
-    async execute({ cnpj, token, newPass }: ValidateRecoveryEmpresaDTO): Promise<{ token: string, empresa: Pick<Empresa, 'cnpj' | 'email'> }> {
+    async execute({ cnpj, tempPass, newPass }: ValidateRecoveryEmpresaDTO): Promise<{ token: string, empresa: Pick<Empresa, 'cnpj' | 'email'> }> {
         
-        if( !cnpj || !token || !newPass ){
+        if( !cnpj || !tempPass || !newPass ){
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
         
@@ -22,7 +22,7 @@ export class ValidateRecoveryEmpresaUseCase {
         if (!empresa) {
             throw new AppError("CNPJ ou senha de recuperação inválidos.");
         } else {
-            const isTokenValid = bcrypt.compareSync(token, empresa.token);
+            const isTokenValid = bcrypt.compareSync(tempPass, empresa.token);
 
             if (!isTokenValid) {
                 throw new AppError("Token de recuperação inválido.");

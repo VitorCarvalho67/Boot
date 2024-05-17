@@ -1,11 +1,11 @@
-<!-- <template>
+<template>
     <Header />
     <main>
         <div class="box">
             <nav>
                 <ul>
                     <li>
-                        <router-link to="/funcionario/init">Login</router-link>
+                        <router-link to="/empresa/init">Login</router-link>
                     </li>
                     <li>
                         <p>Recuperação de senha</p>
@@ -18,16 +18,16 @@
 
                 <div class="input-box email">
                     <div class="d1">
-                        <p>{{ this.infoFuncionario.email }}</p>
+                        <p>{{ this.infoEmpresa.email }}</p>
                     </div>
                     <div class="d2">
-                        <router-link to="/funcionario/init" class="editMail"></router-link>
+                        <router-link to="/empresa/init" class="editMail"></router-link>
                     </div>
                 </div>
 
                 <div class="input-box" :class="{ 'focused': focused.temporaryPasswordFocused }">
                     <label>Senha Temporária enviada em seu e-mail</label>
-                    <input id="temporaryPassword" v-model="infoFuncionario.recoveryPass"
+                    <input id="temporaryPassword" v-model="infoEmpresa.recoveryPass"
                         @focus="focused.temporaryPasswordFocused = true"
                         @blur="focused.temporaryPasswordFocused = false" required>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="infoFuncionario.newPass" @input="checkPassword"
+                        <input :type="inputType" id="newPassword" v-model="infoEmpresa.newPass" @input="checkPassword"
                             @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
                         <span class="alert" v-show="alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
@@ -62,7 +62,7 @@
                 <div class="input-box password" :class="{ 'focused': focused.confirmFocused }">
                     <div class="d1">
                         <label for="confirmPassword">Confirmar Senha</label>
-                        <input :type="inputTypeConfirm" id="confirmPassword" v-model="infoFuncionario.confirmNewPass"
+                        <input :type="inputTypeConfirm" id="confirmPassword" v-model="infoEmpresa.confirmNewPass"
                             @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
                             @input="checkConfirmPassword" required>
                         <span class="alert" v-show="alerts.alertPass"> As senhas devem ser iguais</span>
@@ -89,17 +89,17 @@ import Footer from '../../components/Footer.vue';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { validateRecovery } from '../../services/api/funcionario';
+import { validateRecoveryEmpresa } from '../../services/api/empresa';
 
 export default {
-    name: 'ValidateRecoveryFuncionario',
+    name: 'ValidateRecoveryEmpresa',
     components: {
         Header,
         Footer
     },
     data() {
         return {
-            infoFuncionario: {
+            infoEmpresa: {
                 email: '',
                 recoveryPass: '',
                 newPass: '',
@@ -155,7 +155,7 @@ export default {
             this.showPasswordConfirm = !this.showPasswordConfirm;
         },
         checkPassword() {
-            const password = this.infoFuncionario.newPass;
+            const password = this.infoEmpresa.newPass;
 
             this.alerts.alertUppercase = false;
             this.alerts.alertLowercase = false;
@@ -166,14 +166,14 @@ export default {
             if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
             else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
             else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(/[*!@#$%&\./\\-_]/.test(password))) this.alerts.alertSpecial = true;
             else if (!(password.length >= 8)) this.alerts.alertLenght = true;
 
             this.checkConfirmPassword();
         },
         checkConfirmPassword() {
-            const password = this.infoFuncionario.newPass;
-            const passwordConfirm = this.infoFuncionario.confirmNewPass;
+            const password = this.infoEmpresa.newPass;
+            const passwordConfirm = this.infoEmpresa.confirmNewPass;
 
             this.alerts.alertPass = false;
 
@@ -183,14 +183,14 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await validateRecovery({
-                    email: this.infoFuncionario.email,
-                    recoveryPass: this.infoFuncionario.recoveryPass,
-                    newPass: this.infoFuncionario.newPass
+                const response = await validateRecoveryEmpresa({
+                    cnpj: this.infoEmpresa.cnpj,
+                    tempPass: this.infoEmpresa.recoveryPass,
+                    newPass: this.infoEmpresa.newPass
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    router.push({ name: 'LoginFuncionario' });
+                    router.push({ name: 'LoginEmpresa' });
 
                     alert("Tudo certo! 😉");
                 } else{
@@ -202,7 +202,8 @@ export default {
         }
     },
     created(){
-        this.infoFuncionario.email = Cookies.get('email-recovery-funcionario');
+        this.infoEmpresa.email = Cookies.get('email-recovery-empresa');
+        this.infoEmpresa.cnpj = Cookies.get('cnpj-recovery-empresa');
     }
 }
 </script>
@@ -518,4 +519,4 @@ main {
         }
     }
 }
-</style> -->
+</style>

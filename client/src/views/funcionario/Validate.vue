@@ -165,7 +165,7 @@ export default {
             if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
             else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
             else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(/[*!@#$%&\./\\-_]/.test(password))) this.alerts.alertSpecial = true;
             else if (!(password.length >= 8)) this.alerts.alertLenght = true;
 
             this.checkConfirmPassword();

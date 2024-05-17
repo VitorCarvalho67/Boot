@@ -8,7 +8,7 @@ import ValidateRecoveryProfessor from '../../views/professor/ValidateRecovery.vu
 import {
     isAuthProfessor,
     isInitingProfessor,
-    isRecoverigProfessor,
+    isRecoveringProfessor,
 } from '../guards/guards.js';
 
 export const professorRoutes = [
@@ -43,7 +43,7 @@ export const professorRoutes = [
         name: 'ValidateRecoveryProfessor',
         component: ValidateRecoveryProfessor,
         beforeEnter: async (to, from, next) => {
-            (await isRecoverigProfessor()) ? next() : next("/professor/recovery");
+            (await isRecoveringProfessor()) ? next() : next("/professor/recovery");
         }
     },
     {

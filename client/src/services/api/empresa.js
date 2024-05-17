@@ -33,7 +33,7 @@ export const registerEmpresa = async (infoEmpresa) => {
 
 export const validateEmpresa = async (infoEmpresa) => {
     try {
-        const response = await api.post('empresa/validate/', infoEmpresa);
+        const response = await api.post('empresa/register/validate/', infoEmpresa);
         return response;
     } catch (error) {
         return error.response.data;
