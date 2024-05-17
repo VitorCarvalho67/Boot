@@ -77,7 +77,8 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('email-recovery-empresa', `${this.empresa.email}`, { expires: 10 });
+                    Cookies.set('email-recovery-empresa', `${this.empresa.email}`, { expires: 50 });
+                    Cookies.set('cnpj-recovery-empresa', `${this.empresa.cnpj}`, { expires: 50 });
                     router.push({name: 'ValidateRecoveryEmpresa'});
                 
                     alert("Tudo certo! 😉");

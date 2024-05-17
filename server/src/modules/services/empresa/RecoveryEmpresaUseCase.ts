@@ -27,7 +27,7 @@ export class RecoveryEmpresaUseCase {
 
         else {
             const salt = bcrypt.genSaltSync(10);
-            const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
+            const token: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
             const hash = bcrypt.hashSync(token, salt);
 
             await prisma.empresa.update({

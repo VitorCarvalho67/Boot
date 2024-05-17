@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { RegisterEmpresaUseCase } from '../services/empresa/RegisterEmpresaUseCase';
+import { RegisterEmpresaUseCase } from '../services/empresa/RegisterEmpresaUsecase';
 import { LoginEmpresaUseCase } from '../services/empresa/LoginEmpresaUseCase'
 import { ValidateEmpresaUseCase } from '../services/empresa/ValidateEmpresaUseCase'
 import { RecoveryEmpresaUseCase } from '../services/empresa/RecoveryEmpresaUseCase'
@@ -55,11 +55,11 @@ export class RecoveryEmpresaController {
 
 export class ValidateRecoveryEmpresaController {
     async handle(req: Request, res: Response) {
-        const { cnpj, token, newPass } = req.body;
+        const { cnpj, tempPass, newPass } = req.body;
 
         const validateRecoveryEmpresaController = new ValidateRecoveryEmpresaUseCase();
 
-        const result = await validateRecoveryEmpresaController.execute({ cnpj, token, newPass });
+        const result = await validateRecoveryEmpresaController.execute({ cnpj, tempPass, newPass });
 
         return res.status(201).json(result);
     }

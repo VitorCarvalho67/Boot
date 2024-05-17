@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <p><router-link to="/empresa/recovery">Esqueceu a senha?</router-link></p>
-                    <p><router-link to="/eregister">Ainda não possui conta empresarial?</router-link></p>
+                    <p><router-link to="/empresa/register">Ainda não possui conta empresarial?</router-link></p>
                     <div class="button-box">
                         <button type="submit">Entrar</button>
                     </div>

@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                 </li>
-                <li><router-link to="/">About Us</router-link></li>
+                <li><router-link to="/">Sobre Nós</router-link></li>
                 <!-- <li><router-link to="/register">Cadastre-se Agora</router-link></li> -->
                 <li><router-link to="/login">Entrar</router-link></li>
             </ul>

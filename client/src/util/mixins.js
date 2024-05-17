@@ -59,7 +59,7 @@ export const validateRecoveryMixin = {
             if (!(/[A-Z]/.test(password))) this.alerts.alertUppercase = true;
             else if (!(/[a-z]/.test(password))) this.alerts.alertLowercase = true;
             else if (!(/[0-9]/.test(password))) this.alerts.alertNumber = true;
-            else if (!(/[*!@#$%&\./\\-]/.test(password))) this.alerts.alertSpecial = true;
+            else if (!(/[*!@#$%&\./\\-_]/.test(password))) this.alerts.alertSpecial = true;
             else if (!(password.length >= 8)) this.alerts.alertLenght = true;
     
             this.alerts.alertPass = false;
@@ -81,10 +81,8 @@ export const EmpresaMixin = {
                     event.preventDefault();
                     this.empresa.cnpjExibido = this.empresa.cnpjExibido.slice(0, cursorPosition - 1) + this.empresa.cnpjExibido.slice(cursorPosition);
                     return;
-                } else{
-                    console.log(previousChar);
                 }
-                this.empresa.cnpj = this.empresa.cnpj.slice(0, cursorPosition - 1) + this.empresa.cnpj.slice(cursorPosition);
+                this.empresa.cnpj = this.empresa.cnpj.slice(0, cursorPosition - 1) + this.empresa.cnpj.slice(cursorPosition); 
             } else{
                 const cnpj = event.target.value.replace(/\D/g, '');
         
@@ -105,10 +103,11 @@ export const EmpresaMixin = {
                 event.target.value = cnpjFormatadoExibicao;
         
                 this.empresa.cnpj = cnpjFormatado;
-                console.log(cnpjFormatado);
                 this.empresa.cnpjExibido = cnpjFormatadoExibicao;
             }
-        
+            if (typeof this.cnpjValidate === 'function') {
+                this.cnpjValidate();
+            }
         }
     }
 }

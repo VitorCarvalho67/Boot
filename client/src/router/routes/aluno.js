@@ -6,7 +6,8 @@ import ValidateRecovery from '../../views/aluno/ValidateRecovery.vue';
 import HomeAluno from '../../views/aluno/Home.vue';
 
 import {
-    isRecoverigAluno,
+    isRecoveringAluno,
+    isRegistering,
     isAuthAluno
 } from '../guards/guards.js';
 
@@ -47,7 +48,7 @@ export const alunoRoutes = [
         name: 'ValidateRecovery',
         component: ValidateRecovery,
         beforeEnter: async (to, from, next) => {
-            (await isRecoverigAluno()) ? next() : next("/recovery");
+            (await isRecoveringAluno()) ? next() : next("/recovery");
         }
     }
 ];
