@@ -97,10 +97,13 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    if (Cookies.get('token')) {
-                        Cookies.remove('token');
-                    }
-                    document.cookie = `token=${response.data.token}`;
+                    (Cookies.get('token'))? Cookies.remove('token') : null;
+                    (Cookies.get('email-aluno'))? Cookies.remove('email-aluno') : null;
+                    (Cookies.get('completed'))? Cookies.remove('completed') : null;
+            
+                    Cookies.set("token",`${response.data.token}`);
+                    Cookies.set("completed", (response.data.aluno.rm? "true" : "false"));
+                    Cookies.set('email-aluno', this.userAluno.email)
 
                     router.push({ path: '/aluno'});
                     alert("Tudo certo! 😉");

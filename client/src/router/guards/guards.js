@@ -111,3 +111,8 @@ export async function isInitingFuncionario(){
 export async function isInitingProfessor(){
     return (Cookies.get('email-init-professor')) ? true : false;
 }
+
+// isCompleted
+export async function isCompletedAluno(){
+    return (Cookies.get('completed') && Cookies.get('completed') == true && await isAuthAluno() ? true : false) ? true : false;
+}

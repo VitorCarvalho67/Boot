@@ -40,6 +40,15 @@ export const registerAluno = async(userAluno) => {
     }
 }
 
+export const completeRegister = async(infoAluno) => {
+    try {
+        const response = await api.post('aluno/register/complete/', infoAluno);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
 export const recoveryAluno = async(infoAluno) => {
     try {
         const response = await api.post('aluno/recovery', infoAluno);

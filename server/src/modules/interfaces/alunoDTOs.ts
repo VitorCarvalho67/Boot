@@ -32,3 +32,8 @@ export interface CompleteAlunoDTO {
     rm: string
     endereco: string
 }
+
+export interface UpdateCurriculoDTO {
+    email: string,
+    curriculo: string
+}

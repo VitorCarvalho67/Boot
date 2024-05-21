@@ -1,15 +1,14 @@
-import { Aluno } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { CompleteAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
 
 export class CompleteAlunoUseCase {
-    async execute({ email, nascimento, endereco, turma, rm }: CompleteAlunoDTO): Promise<Pick<Aluno, "name" | "email" >>{
+    async execute({ email, nascimento, endereco, turma, rm }: CompleteAlunoDTO) {
 
-        if( !email || !nascimento || !endereco || !turma || !rm ){
+        if (!email || !nascimento || !endereco || !turma || !rm) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-
+        
         const aluno = await prisma.aluno.findUnique({
             where: {
                 email
@@ -17,16 +16,16 @@ export class CompleteAlunoUseCase {
         });
 
         if (aluno) {
-            const rmAlreadyExists = await prisma.aluno.findUnique({
-                where: { 
+            const rmAlreadyExists = await prisma.aluno.findFirst({
+                where: {
                     rm
                 }
             });
 
-            if (!rmAlreadyExists){
-                const CompleteAluno = prisma.aluno.update({
+            if (!rmAlreadyExists) {
+                prisma.aluno.update({
                     where: {
-                        email                        
+                        email
                     },
                     data: {
                         dataNascimento: nascimento,
@@ -36,8 +35,8 @@ export class CompleteAlunoUseCase {
                     }
                 });
 
-                return CompleteAluno;
-            } else{
+                return;
+            } else {
                 throw new AppError("RM já cadastrado");
             }
         } else {

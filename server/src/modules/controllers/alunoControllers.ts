@@ -5,6 +5,7 @@ import { LoginAlunoUseCase } from "../services/aluno/LoginAlunoUseCase";
 import { RecoveryAluno } from "../services/aluno/RecoveryAlunoUseCase";
 import { ValidateRecoveryUseCase } from "../services/aluno/ValidateRecoveryUseCase";
 import { CompleteAlunoUseCase } from "../services/aluno/CompleteRegisterUseCase";
+import { UpdateCurriculoUseCase } from "../services/aluno/UpdateCurriculoUseCase";
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -66,7 +67,6 @@ export class ValidateRecoveryController {
     }
 }
 
-
 export class CompleteAlunoController {
     async handle(req: Request, res: Response) {
         const { email, nascimento, endereco, turma, rm } = req.body;
@@ -74,6 +74,18 @@ export class CompleteAlunoController {
         const completeAluno = new CompleteAlunoUseCase();
 
         const result = await completeAluno.execute({ email, nascimento, endereco, turma, rm });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UpdateCurriculoController {
+    async handle(req: Request, res: Response) {
+        const { email, curriculo } = req.body;
+
+        const updateCurriculo = new UpdateCurriculoUseCase();
+
+        const result = await updateCurriculo.execute({ email, curriculo });
 
         return res.status(201).json(result);
     }

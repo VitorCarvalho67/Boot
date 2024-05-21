@@ -5,11 +5,13 @@ import RecoveryAluno from '../../views/aluno/Recovery.vue';
 import ValidateRecovery from '../../views/aluno/ValidateRecovery.vue';
 import HomeAluno from '../../views/aluno/Home.vue';
 import PerfilAluno from '../../views/aluno/Profile.vue';
+import Complete from '../../views/aluno/Complete.vue';
 
 import {
     isRecoveringAluno,
     isRegistering,
-    isAuthAluno
+    isAuthAluno,
+    isCompletedAluno
 } from '../guards/guards.js';
 
 export const alunoRoutes = [
@@ -57,7 +59,12 @@ export const alunoRoutes = [
         name: "PerfilAluno",
         component: PerfilAluno,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isCompletedAluno()) ? next() : next("/register/complete");
         }
+    },
+    {
+        path: "/register/complete",
+        name: "Complete",
+        component: Complete
     }
 ];
