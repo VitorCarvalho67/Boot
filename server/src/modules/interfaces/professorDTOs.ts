@@ -14,12 +14,12 @@ export interface ValidateProfessorDTO {
 }
 
 export interface RecoveryProfessorDTO {
-    name: string;
-    email: string;
+    name: string,
+    email: string
 }
 
 export interface ValidateRecoveryDTO {
-    email: string;
-    recoveryPass: string;
-    newPass: string;
+    email: string,
+    recoveryPass: string,
+    newPass: string
 }

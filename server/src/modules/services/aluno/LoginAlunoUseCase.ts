@@ -7,12 +7,12 @@ import { generateAccessTokenAluno } from "../../../jwt/jwtServices";
 const bcrypt = require('bcrypt');
 
 export class LoginAlunoUseCase {
-    async execute({ email, password }: LoginAlunoDTO): Promise<{ token: string, aluno: Pick<Aluno, 'name' | 'email'> }> {
+    async execute({ email, password }: LoginAlunoDTO): Promise<{ token: string, aluno: Pick<Aluno, 'name' | 'email' | 'rm'> }> {
 
         if( !email || !password ){
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-
+        
         const aluno = await prisma.aluno.findFirst({
             where: {
                 email
@@ -39,7 +39,8 @@ export class LoginAlunoUseCase {
             token: token,
             aluno: {
                 name: aluno.name,
-                email: aluno.email
+                email: aluno.email,
+                rm: aluno.rm
             }
         }
     }

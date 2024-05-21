@@ -4,6 +4,7 @@
         <h1>Bem-vindo professor!</h1>
         <nav>
             <button @click="logout">Logout</button>
+            <router-link to="/professor/me">Profile</router-link>
         </nav>
     </main>
     <Footer />
