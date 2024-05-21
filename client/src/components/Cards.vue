@@ -16,22 +16,22 @@
                     <div class="img">
 
                     </div>
-                    <h2>xxxxxxxxxxxxxxxx</h2>
-                    <span>2</span>
+                    <h2>Simplificação</h2>
+                    <span>Elaboração automática de seus perfis profissionais</span>
                 </li>
                 <li class="card">
                     <div class="img">
 
                     </div>
-                    <h2>xxxxxxxxxxxxxxxx</h2>
-                    <span>3</span>
+                    <h2>Eficiente</h2>
+                    <span>Software intuitivo com sistema de busca eficiente</span>
                 </li>
                 <li class="card">
                     <div class="img">
 
                     </div>
-                    <h2>xxxxxxxxxxxxxxxx</h2>
-                    <span>4</span>
+                    <h2>Visibilidade empresarial</h2>
+                    <span>Facilidade de acesso aos perfis em procura por empresas</span>
                 </li>
             </ul>
             <i class="fa-solid fa-angle-right" @click="scrollCarousel('right')"></i>

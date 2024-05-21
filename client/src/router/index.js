@@ -7,6 +7,8 @@ import { empresaRoutes } from './routes/empresa'
 
 import Home from '../views/Home.vue';
 import NotFound from '../views/NotFound.vue';
+import PublicPerfilAluno from '../views/PerfilAluno.vue';
+import PublicPerfilProfessor from '../views/PerfilProfessor.vue';
 
 const routes = [
     ...alunoRoutes,
@@ -28,6 +30,16 @@ const routes = [
         path: '/',
         name: 'Home2',
         component: Home
+    },
+    {
+        path: "/aluno/profile/:name",
+        name: "PublicPerfilAluno",
+        component: PublicPerfilAluno
+    },
+    {
+        path: "/professor/profile/:name",
+        name: "PublicPerfilProfessor",
+        component: PublicPerfilProfessor
     }
 ];
 

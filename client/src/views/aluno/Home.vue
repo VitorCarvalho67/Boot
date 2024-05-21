@@ -4,6 +4,7 @@
         <h1>Bem-vindo!</h1>
         <!-- <router-link to="/aluno/register/continuation">Terminar o registro</router-link> -->
         <router-link to="/aluno/portifolio">Meu Portfólio</router-link>
+        <router-link to="/aluno/me">Profile</router-link>
     </main>
     <Footer />
 

@@ -1,6 +1,6 @@
 export interface LoginAdminDTO {
-    email: string;
-    password: string;
+    email: string,
+    password: string
 }
 
 export interface RegisterCoordenadorDTO {

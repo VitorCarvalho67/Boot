@@ -22,12 +22,12 @@ export interface ValidateFuncionarioDTO {
 }
 
 export interface RecoveryFuncionarioDTO {
-    name: string;
-    email: string;
+    name: string,
+    email: string
 }
 
 export interface ValidateRecoveryDTO {
-    email: string;
-    recoveryPass: string;
-    newPass: string;
+    email: string,
+    recoveryPass: string,
+    newPass: string
 }

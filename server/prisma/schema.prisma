@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider = "prisma-client-js"
 }
@@ -15,17 +12,59 @@ model Aluno {
     name                String
     email               String    @unique
     password            String
-    recoveryPass        String?
     alunoImagem         String?
-    turmas              String? // Formato "id1,id2,id3"
+    recoveryPass        String?
+    bannerImagem        String?
     dataNascimento      DateTime?
-    disciplina          String?
-    rm                  String?
+    endereco            String?
+    curriculo           String?
+    turmas              String? // Formato "id1,id2,id3"
+    sobre               String?
+    rm                  String?   @unique
     tentativasRestantes Int       @default(5)
+    vinculosAluno       Vinculo[] @relation("AlunoVinculo")
+    vinculoComoAluno    Vinculo[] @relation("VinculoComAluno")
     createdAt           DateTime  @default(now())
     updatedAt           DateTime  @updatedAt
 
     @@map("alunos")
+}
+
+model Professor {
+    id                   String        @id @default(uuid())
+    name                 String
+    email                String        @unique
+    password             String
+    recoveryPass         String?
+    tituloPrincipal      String
+    professorImagem      String?
+    validated            Boolean       @default(false)
+    coordenador          Coordenador[]
+    atividade            Atividade[]
+    tentativasRestantes  Int           @default(5)
+    vinculosProfessor    Vinculo[]     @relation("ProfessorVinculo")
+    vinculoComoProfessor Vinculo[]     @relation("VinculoComProfessor")
+    createdAt            DateTime      @default(now())
+    updatedAt            DateTime      @updatedAt
+
+    @@map("professores")
+}
+
+model Vinculo {
+    id                    String     @id @default(uuid())
+    alunoId               String?
+    professorId           String?
+    vinculoComAlunoId     String?
+    vinculoComProfessorId String?
+    aluno                 Aluno?     @relation("AlunoVinculo", fields: [alunoId], references: [id])
+    professor             Professor? @relation("ProfessorVinculo", fields: [professorId], references: [id])
+    vinculoComAluno       Aluno?     @relation("VinculoComAluno", fields: [vinculoComAlunoId], references: [id])
+    vinculoComProfessor   Professor? @relation("VinculoComProfessor", fields: [vinculoComProfessorId], references: [id])
+    createdAt             DateTime   @default(now())
+    updatedAt             DateTime   @updatedAt
+
+    @@unique([alunoId, professorId, vinculoComAlunoId, vinculoComProfessorId])
+    @@map("vinculos")
 }
 
 model PreAluno {
@@ -109,9 +148,9 @@ model Empresa {
 
 model Vaga {
     id            String      @id @default(uuid())
-    Curso         Curso       @relation(fields: [cursoId], references: [id])
+    curso         Curso       @relation(fields: [cursoId], references: [id])
     cursoId       String
-    Empresa       Empresa     @relation(fields: [empresaId], references: [id])
+    empresa       Empresa     @relation(fields: [empresaId], references: [id])
     empresaId     String
     requisitos    String
     beneficios    String
@@ -126,24 +165,6 @@ model Vaga {
     updatedAt     DateTime    @updatedAt
 
     @@map("vagas")
-}
-
-model Professor {
-    id                  String        @id @default(uuid())
-    name                String
-    email               String        @unique
-    password            String
-    recoveryPass        String?
-    tituloPrincipal     String
-    professorImagem     String?
-    validated           Boolean       @default(false)
-    coordenador         Coordenador[]
-    ativide               Atividade[]
-    tentativasRestantes Int           @default(5)
-    createdAt           DateTime      @default(now())
-    updatedAt           DateTime      @updatedAt
-
-    @@map("professores")
 }
 
 model Coordenador {

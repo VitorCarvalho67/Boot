@@ -4,6 +4,7 @@ import InitProfessor from '../../views/professor/Init.vue';
 import LoginProfessor from '../../views/professor/Login.vue';
 import RecoveryProfessor from '../../views/professor/Recovery.vue';
 import ValidateRecoveryProfessor from '../../views/professor/ValidateRecovery.vue';
+import PerfilProfessor from '../../views/professor/Profile.vue';
 
 import {
     isAuthProfessor,
@@ -50,6 +51,14 @@ export const professorRoutes = [
         path: "/professor",
         name: "Professor",
         component: Professor,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthProfessor()) ? next() : next("/professor/init");
+        }
+    },
+    {
+        path: "/professor/me",
+        name: "PerfilProfessor",
+        component: PerfilProfessor,
         beforeEnter: async (to, from, next) => {
             (await isAuthProfessor()) ? next() : next("/professor/init");
         }

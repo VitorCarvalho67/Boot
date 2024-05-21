@@ -24,7 +24,7 @@ export const loginAluno = async(userAluno) => {
 
 export const registerPreAluno = async(userPreAluno) => {
 try {
-    const response = await api.post('aluno/create/prealuno', userPreAluno);
+    const response = await api.post('aluno/register/prealuno', userPreAluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -33,7 +33,7 @@ try {
 
 export const registerAluno = async(userAluno) => {
     try {
-        const response = await api.post('aluno/create/', userAluno);
+        const response = await api.post('aluno/register/', userAluno);
         return response;
     } catch (error) {
         return error.response.data;
