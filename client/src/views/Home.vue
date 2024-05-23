@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/_home.scss";
+    @import "../scss/pages/_home.scss";
 </style>

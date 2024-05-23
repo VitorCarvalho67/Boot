@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/_notFound.scss";
+    @import "../scss/pages/_notFound.scss";
 </style>
