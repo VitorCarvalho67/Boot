@@ -25,5 +25,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/views/aluno/Profile.scss";
+    @import "../../scss/pages/aluno/_profile.scss";
 </style>

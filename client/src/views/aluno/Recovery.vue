@@ -91,5 +91,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/views/aluno/Recovery.scss";
+    @import "../../scss/pages/aluno/_recovery.scss";
 </style>

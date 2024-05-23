@@ -52,5 +52,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-    @import "../scss/components/ContactUs.scss";
+@import "../scss/layouts/_contactUs.scss";
 </style>

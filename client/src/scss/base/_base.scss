@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+}
+
+body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    min-height: calc(100vh - 80px);
+}
+
+img, button, a{
+    -webkit-user-select: none;
+    user-select: none;
+}

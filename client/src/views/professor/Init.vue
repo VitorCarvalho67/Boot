@@ -76,5 +76,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/professor/Init.scss";
+    @import "../../scss/pages/professor/_init.scss";
 </style>

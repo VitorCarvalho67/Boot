@@ -210,5 +210,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/professor/Validate.scss";
+    @import "../../scss/pages/professor/_validate.scss";
 </style>

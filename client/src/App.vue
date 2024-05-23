@@ -10,7 +10,5 @@ export default {
 </script>
 
 <style lang="scss">
-
 body { @include theme-color('dark'); }
-
 </style>

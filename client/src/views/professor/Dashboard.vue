@@ -40,5 +40,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/professor/Dashboard.scss";
+    @import "../../scss/pages/professor/_dashboard.scss";
 </style>

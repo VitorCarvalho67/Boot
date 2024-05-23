@@ -26,7 +26,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import logo from '../assets/logoHeader.png'
+import logo from '../assets/imgs/logoHeader.png'
 
 export default defineComponent({
     name: 'Footer',
@@ -41,5 +41,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-    @import "../scss/components/Footer.scss";
+@import "../scss/layouts/_footer.scss";
 </style>

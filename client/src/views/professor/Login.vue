@@ -122,5 +122,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/professor/Login.scss";
+    @import "../../scss/pages/professor/_login.scss";
 </style>

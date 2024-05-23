@@ -120,5 +120,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/funcionario/Login.scss";
+    @import "../../scss/pages/funcionario/_login.scss";
 </style>

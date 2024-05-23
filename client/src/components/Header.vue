@@ -27,7 +27,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import logo from '../assets/logoHeader.png'
+import logo from '../assets/imgs/logoHeader.png'
 
 export default defineComponent({
     name: 'Header',
@@ -49,5 +49,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-    @import "../scss/components/Header.scss";
+@import "../scss/layouts/_header.scss";
 </style>

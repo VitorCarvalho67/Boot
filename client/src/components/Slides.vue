@@ -92,5 +92,5 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-    @import "../scss/components/Slides.scss";
+@import "../scss/layouts/_slides.scss";
 </style>

@@ -130,5 +130,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-    @import "../scss/components/Cards.scss";
+@import "../scss/layouts/_cards.scss";
 </style>

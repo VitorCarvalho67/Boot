@@ -81,5 +81,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/RegisterProfessor.scss";
+    @import "../../scss/pages/admin/_registerProfessor.scss";
 </style>

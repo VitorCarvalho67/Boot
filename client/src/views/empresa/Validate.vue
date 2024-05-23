@@ -189,5 +189,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/empresa/Validate.scss";
+    @import "../../scss/pages/empresa/_validate.scss";
 </style>

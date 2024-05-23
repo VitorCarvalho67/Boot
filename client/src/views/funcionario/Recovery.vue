@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/funcionario/Recovery.scss";
+    @import "../../scss/pages/funcionario/_recovery.scss";
 </style>
