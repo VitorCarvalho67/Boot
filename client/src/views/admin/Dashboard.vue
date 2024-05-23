@@ -40,19 +40,8 @@ export default {
         this.getToken();
     }
 }
-
 </script>
 
 <style lang="scss" scoped>
-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: 30px;
-
-    a {
-        text-decoration: none;
-    }
-}
+    @import "../../scss/views/admin/Dashboard.scss"
 </style>

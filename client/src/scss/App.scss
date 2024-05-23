@@ -81,6 +81,14 @@ $secondary-color-orange: #deb99b;
     }
 }
 
+@mixin prefixer($property, $value) {
+    #{$property}: $value;
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+}
+
 * {
     margin: 0;
     padding: 0;

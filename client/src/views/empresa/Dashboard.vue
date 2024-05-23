@@ -39,15 +39,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: 30px;
-
-    a {
-        text-decoration: none;
-    }
-}
+    @import "../../scss/views/empresa/Dashboard.scss";
 </style>

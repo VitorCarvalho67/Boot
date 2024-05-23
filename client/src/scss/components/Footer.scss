@@ -1,0 +1,36 @@
+footer {
+    background-color: $primary-color-dark;
+    height: 25vh;
+    @include flex(column, space-evenly, center);
+    @include font-inter(200);
+
+    img {
+        height: 40px;
+    }
+
+    nav ul {
+        margin: 0px;
+        @include flex(row, center, center);
+
+        li {
+            margin: 0px 10px;
+
+            a {
+                margin: 0px;
+                text-decoration: none;
+                color: $font-color-dark;
+                transition: .1s linear;
+
+                &:hover {
+                    color: $secondary-color-orange;
+                }
+            }
+        }
+    }
+
+    >li {
+        height: 1px;
+        background-color: $font-color-dark;
+        width: 90%;
+    }
+}

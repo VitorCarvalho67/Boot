@@ -24,12 +24,6 @@ export default {
     }
 }
 </script>
-
 <style lang="scss" scoped>
-main {
-    height: calc(100vh - 80px);
-    background-color: $primary-color-dark;
-    @include flex-center;
-}
-
+    @import "../../scss/views/aluno/Profile.scss";
 </style>
