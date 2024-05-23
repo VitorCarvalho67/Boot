@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/funcionario/Dashboard.scss";
+    @import "../../scss/pages/funcionario/_dashboard.scss";
 </style>

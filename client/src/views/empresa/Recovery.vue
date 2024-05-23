@@ -96,5 +96,5 @@ export default {
 
 
 <style lang="scss" scoped>
-    @import "../../scss/views/empresa/Recovery.scss";
+    @import "../../scss/pages/empresa/_recovery.scss";
 </style>

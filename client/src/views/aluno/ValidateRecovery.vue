@@ -141,5 +141,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/aluno/ValidateRecovery.scss";
+    @import "../../scss/pages/aluno/_validateRecovery.scss";
 </style>

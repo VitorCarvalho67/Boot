@@ -1,0 +1,73 @@
+@mixin font-inter($weight) {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: $weight;
+    font-style: normal;
+    font-variation-settings: "slnt" 0;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin flex($direction, $justify, $align) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin color($color, $bg-color) {
+    color: $color;
+    background-color: $bg-color;
+}
+
+@mixin theme-color($theme) {
+    @if $theme=="light" {
+        @include color($font-color-light,
+        $bg-color-light);
+    }
+    @else if $theme=="dark" {
+        @include color($font-color-dark,
+        $bg-color-dark);
+    }
+}
+
+@mixin line {
+    &:after {
+        content: '';
+        width: 0px;
+        height: 1px;
+        display: flex;
+        flex-direction: column;
+        content: '';
+        height: 2px;
+        width: 0%;
+        background-color: $primary-color-orange;
+    }
+
+    &:hover::after {
+        animation: afterLoad .8s ease-out;
+        width: 100%;
+    }
+
+    @keyframes afterLoad {
+        0% {
+            width: 0%;
+        }
+
+        100% {
+            width: 100%;
+        }
+    }
+}
+
+@mixin prefixer($property, $value) {
+    #{$property}: $value;
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+}

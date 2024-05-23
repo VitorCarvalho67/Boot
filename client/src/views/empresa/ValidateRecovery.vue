@@ -209,5 +209,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/empresa/ValidateRecovery.scss";
+    @import "../../scss/pages/empresa/_validateRecovery.scss";
 </style>

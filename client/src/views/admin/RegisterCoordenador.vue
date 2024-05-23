@@ -76,5 +76,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/RegisterCoordenador.scss"
+    @import "../../scss/pages/admin/_registerCoordenador.scss"
 </style>

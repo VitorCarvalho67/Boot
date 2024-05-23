@@ -53,7 +53,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import logo from '../../assets/imageMain.png';
+import logo from '../../assets/imgs/imageMain.png';
 
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
@@ -118,5 +118,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/views/aluno/Login.scss";
+    @import "../../scss/pages/aluno/_login.scss";
 </style>

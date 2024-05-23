@@ -137,5 +137,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/funcionario/ValidateRecovery.scss";
+    @import "../../scss/pages/funcionario/_validateRecovery.scss";
 </style>

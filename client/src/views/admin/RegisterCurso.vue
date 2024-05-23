@@ -114,5 +114,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/RegisterCurso.scss"
+    @import "../../scss/pages/admin/_registerCurso.scss"
 </style>

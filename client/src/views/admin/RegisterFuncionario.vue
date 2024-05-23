@@ -103,5 +103,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/RegisterFuncionario.scss";
+    @import "../../scss/pages/admin/_registerFuncionario.scss";
 </style>

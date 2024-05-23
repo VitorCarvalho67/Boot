@@ -50,7 +50,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import img from '../../assets/imageMain.png';
+import img from '../../assets/imgs/imageMain.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
@@ -115,5 +115,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/empresa/Login.scss";
+    @import "../../scss/pages/empresa/_login.scss";
 </style>

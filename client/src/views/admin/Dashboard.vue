@@ -43,5 +43,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/Dashboard.scss"
+    @import "../../scss/pages/admin/_dashboard.scss"
 </style>

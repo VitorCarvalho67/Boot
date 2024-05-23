@@ -1,0 +1,80 @@
+main {
+    @include prefixer(min-height, auto);
+    background-color: $secondary-color-dark;
+
+    >h1 {
+        text-align: center;
+        padding-top: 20px;
+        @include font-inter(700);
+        letter-spacing: .3cm;
+        color: $primary-color-orange;
+    }
+
+    .content {
+        @include flex(row-reverse, center, center);
+        height: 55vh;
+        width: 100%;
+
+        .box {
+            padding: 30px;
+            width: 40%;
+            height: 100%;
+            @include flex(column, center, center);
+            @include font-inter(400);
+
+            * {
+                margin: 20px 0;
+            }
+
+            .info {
+                @include flex(column, center, flex-start);
+
+                h1 {
+                    color: $secondary-color-orange;
+                    font-size: 2rem;
+                    @include font-inter(700);
+                }
+
+                p {
+                    width: 70%;
+                }
+
+                a {
+                    background-color: $primary-color-orange;
+                    padding: 10px 20px;
+                    border-radius: 20px;
+                    text-decoration: none;
+                    transition: .7s;
+                    border: solid 1px $primary-color-orange;
+                    background-color: transparent;
+                    color: $primary-color-orange;
+                    
+                    &:hover {
+                        @include color($secondary-color-dark, $primary-color-orange);
+                    }
+                }
+            }
+
+        }
+
+        #box2 {
+            background-image: url(../assets/imgs/imageMain.png);
+            background-position: center;
+            background-size: 50%;
+            background-repeat: no-repeat;
+        }
+    }
+
+}
+
+.aboutUs {
+    padding: 20px 40px;
+    background-color: $secondary-color-dark;
+
+    h1 {
+        @include font-inter(500);
+        color: $secondary-color-orange;
+        height: 10vh;
+        @include flex(column, center, flex-start);
+    }
+}

@@ -101,7 +101,7 @@
 
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import logo from '../../assets/imageMain.png';
+import logo from '../../assets/imgs/imageMain.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
@@ -243,5 +243,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/empresa/Register.scss";
+    @import "../../scss/pages/empresa/_register.scss";
 </style>

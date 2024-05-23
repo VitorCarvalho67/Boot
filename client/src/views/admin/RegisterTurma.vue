@@ -104,5 +104,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/views/admin/RegisterTurma.scss";
+    @import "../../scss/pages/admin/_registerTurma.scss";
 </style>
