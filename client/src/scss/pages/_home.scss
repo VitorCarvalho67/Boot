@@ -1,5 +1,5 @@
 main {
-    @include prefixe(min-height, auto);
+    @include prefixer(min-height, auto);
     background-color: $secondary-color-dark;
 
     >h1 {
