@@ -1,13 +1,15 @@
 footer {
     background-color: $primary-color-dark;
-    height: 25vh;
+    height: 250px;
     @include flex(column, space-evenly, center);
     @include font-inter(200);
     @include m-screen(1400px) {
         font-size: 0.8rem;
+        height: 200px;
     }
     @include m-screen(1120px) {
         font-size: 0.7rem;
+        height: 180px;
     }
     img {
         height: 40px;
@@ -29,8 +31,10 @@ footer {
             a {
                 margin: 0px;
                 text-decoration: none;
-                color: $font-color-dark;
                 transition: 0.1s linear;
+                color: $font-color-dark-2;
+                font-size: 1rem;
+                @include font-inter(700);
 
                 &:hover {
                     color: $secondary-color-orange;
@@ -41,7 +45,13 @@ footer {
 
     > li {
         height: 1px;
-        background-color: $font-color-dark;
+        background-color: $font-color-dark-2;
         width: 90%;
+    }
+
+    > p {
+        color: $font-color-dark-2;
+        font-size: 1rem;
+        @include font-inter(700);
     }
 }

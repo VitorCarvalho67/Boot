@@ -9,7 +9,7 @@ interface RequestWithAdmin extends Request {
 }
 
 interface RequestWithProfessor extends Request {
-    professor?: { id: String };
+    professor?: { id: String, email: String };
 }
 
 interface RequestWithFuncionario extends Request {
@@ -21,7 +21,7 @@ interface RequestWithEmpresa extends Request {
 }
 
 interface RequestWithAluno extends Request {
-    aluno?: { id: String };
+    aluno?: { id: String, email: String };
 }
 
 export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, next: NextFunction) {
@@ -78,7 +78,7 @@ export async function professorAuthMiddleware(req: RequestWithProfessor, res: Re
             throw new AppError('Professor not found');
         }
 
-        req.professor = { id: professor.id };
+        req.body.entidade = { id: professor.id, email: professor.email };
 
         next();
     } catch (error) {
@@ -168,8 +168,7 @@ export async function alunoAuthMiddleware(req: RequestWithAluno, res: Response, 
             throw new AppError('Aluno not found');
         }
 
-        req.aluno = { id: aluno.id };
-
+        req.body.entidade = { id: aluno.id, email: aluno.email }; 
         next();
     } catch (error) {
         res.status(401).json({ message: 'Sessão de aluno inválida ou encerrada: ' + error });

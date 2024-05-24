@@ -3,7 +3,7 @@ import { AppError } from "../../../errors/error";
 import { ReagirVinculoDTO, IdentificadorEnum } from "../../interfaces/sharedDTOs";
 import { encontrarEntidadePeloEmail } from "./helpers/helpers";
 
-export class AcceptVinculoUseCase {
+export class IgnoreVinculoUseCase {
     async execute({ email, sender, recipient, senderIdentifier, recipientIdentifier }: ReagirVinculoDTO) {
         if (!email || !sender || !recipient || !senderIdentifier || !recipientIdentifier) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
@@ -37,12 +37,10 @@ export class AcceptVinculoUseCase {
             throw new AppError("Solicitação inexistente");
         }
 
-        await prisma.vinculo.update({
+        await prisma.vinculo.delete({
             where: {
-                id: vinculoExists.id
-            },
-            data: {
-                accepted: true
+                id: vinculoExists.id,
+                accepted: false
             }
         });
 

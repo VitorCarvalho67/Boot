@@ -5,33 +5,12 @@
         <div class="wrapper">
             <i class="fa-solid fa-angle-left" @click="scrollCarousel('left')"></i>
             <ul class="carousel" ref="carousel">
-                <li class="card">
+                <li class="card" v-for="(slide, index) in slides" :key="index">
                     <div class="img">
-
+                        <img :src="slide.image" :alt="slide.title">
                     </div>
-                    <h2>Desenvolvimento</h2>
-                    <span>Código aberto e feito pela comunidade</span>
-                </li>
-                <li class="card">
-                    <div class="img">
-
-                    </div>
-                    <h2>Simplificação</h2>
-                    <span>Elaboração automática de seus perfis profissionais</span>
-                </li>
-                <li class="card">
-                    <div class="img">
-
-                    </div>
-                    <h2>Eficiente</h2>
-                    <span>Software intuitivo com sistema de busca eficiente</span>
-                </li>
-                <li class="card">
-                    <div class="img">
-
-                    </div>
-                    <h2>Visibilidade empresarial</h2>
-                    <span>Facilidade de acesso aos perfis em procura por empresas</span>
+                    <h2>{{ slide.title }}</h2>
+                    <span>{{ slide.description }}</span>
                 </li>
             </ul>
             <i class="fa-solid fa-angle-right" @click="scrollCarousel('right')"></i>
@@ -41,6 +20,10 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
+import Slide1Image from '../assets/imgs/img4.jpg';
+import Slide2Image from '../assets/imgs/img2.jpg';
+import Slide3Image from '../assets/imgs/img3.jpg';
+import Slide4Image from '../assets/imgs/img1.jpg';
 
 export default {
     name: 'Cards',
@@ -51,15 +34,20 @@ export default {
         const startScrollLeft = ref(0);
         const timeoutId = ref(null);
         const firstCardWidth = ref(0);
-
         const cardPerView = ref(0);
+
+        const slides = ref([
+            { image: Slide1Image, title: 'Desenvolvimento', description: 'Código aberto e feito pela comunidade' },
+            { image: Slide2Image, title: 'Simplificação', description: 'Elaboração automática de seus perfis profissionais' },
+            { image: Slide3Image, title: 'Eficiente', description: 'Software intuitivo com sistema de busca eficiente' },
+            { image: Slide4Image, title: 'Visibilidade', description: 'Facilidade de acesso aos perfis em procura por empresas' },
+        ]);
 
         onMounted(() => {
             firstCardWidth.value = carousel.value.querySelector('.card').offsetWidth;
             cardPerView.value = Math.round(carousel.value.offsetWidth / firstCardWidth.value);
 
             initInfiniteScroll();
-
             autoPlay();
 
             carousel.value.addEventListener('mousedown', dragStart);
@@ -72,6 +60,7 @@ export default {
 
         onUnmounted(() => {
             clearTimeout(timeoutId.value);
+            document.removeEventListener('mouseup', dragStop);
         });
 
         function dragStart(e) {
@@ -89,7 +78,7 @@ export default {
 
         function dragStop() {
             isDragging.value = false;
-            // carousel.value.classList.remove('dragging');
+            carousel.value.classList.remove('dragging');
         }
 
         function scrollCarousel(direction) {
@@ -124,6 +113,7 @@ export default {
 
         return {
             carousel,
+            slides,
             scrollCarousel
         };
     }
