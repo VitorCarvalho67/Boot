@@ -2,8 +2,10 @@
     background-color: $terciary-color-dark;
     padding: 100px;
     min-height: 400px;
-
     @include flex(column, flex-start, center);
+    @include m-screen(1400px){
+        min-height: 360px;
+    }
 
     h1,
     h2 {
@@ -12,14 +14,20 @@
 
     h1 {
         font-size: 2rem;
-        @include font-inter(700);
         color: $secondary-color-orange;
+        @include font-inter(700);
+        @include m-screen(1400px){
+            font-size: 1.8rem;
+        }
     }
 
     h2 {
         font-size: 1.3rem;
-        @include font-inter(300);
         color: $font-color-dark-2;
+        @include font-inter(300);
+        @include m-screen(1400px){
+            font-size: 1.1rem;
+        }
     }
 
     .wrapper {
@@ -27,6 +35,10 @@
         width: 100%;
         margin: 80px 0px 20px 0px;
         position: relative;
+        @include m-screen(1400px){
+            margin: 60px 0px 18px 0px;
+            max-width: 1000px;
+        }
     }
 
     .wrapper i {
@@ -42,6 +54,9 @@
         filter: invert(100%);
         opacity: 0.7;
         transition: transform 0.1s linear;
+        @include m-screen(1400px){
+            background-size: 30px;
+        }
     }
 
     .wrapper i:first-child {
@@ -95,6 +110,9 @@
             padding-bottom: 15px;
             flex-direction: column;
             border-radius: 8px;
+            @include m-screen(1400px){
+                height: 300px;
+            }
 
             .img {
                 background: $primary-color-dark;
@@ -115,6 +133,9 @@
                 font-size: 1.5rem;
                 color: $font-color-dark;
                 padding: 10px;
+                @include m-screen(1400px){
+                    font-size: 1.3rem;
+                }
             }
 
             span {
@@ -122,6 +143,9 @@
                 font-size: 0.9rem;
                 color: $font-color-dark-2;
                 padding: 10px;
+                @include m-screen(1400px){
+                    font-size: 0.7rem;
+                }
             }
         }
     }

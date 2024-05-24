@@ -29,6 +29,10 @@ header {
                 @include flex(column, center, flex-start);
                 @include font-inter(400);
                 @include line;
+                @include m-screen(1120px){
+                    font-size: 0.7rem;
+                    margin-inline: 8px;
+                }
             }
 
             li:nth-child(2) {
@@ -44,6 +48,9 @@ header {
                 transition: 0.1s linear;
                 @include line;
                 @include flex-center;
+                @include m-screen(1120px){
+                    padding: 8px 18px;
+                }
 
                 &:after {
                     height: 0;

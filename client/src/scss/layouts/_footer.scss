@@ -3,9 +3,20 @@ footer {
     height: 25vh;
     @include flex(column, space-evenly, center);
     @include font-inter(200);
-
+    @include m-screen(1400px) {
+        font-size: 0.8rem;
+    }
+    @include m-screen(1120px) {
+        font-size: 0.7rem;
+    }
     img {
         height: 40px;
+        @include m-screen(1400px) {
+            height: 34px;
+        }
+        @include m-screen(1120px) {
+            height: 30px;
+        }
     }
 
     nav ul {

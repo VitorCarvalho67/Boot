@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { alunoAuthMiddleware } from '../../middleware/autentication';
+import{ CreateVinculoController } from "../../modules/controllers/sharedControllers";
 import {
     CreateAlunoController,
     CreatePreAlunoController,
@@ -17,6 +18,7 @@ const recoveryAlunoController = new RecoveryAlunoController();
 const validateRecoveryController = new ValidateRecoveryController();
 const completeAlunoController = new CompleteAlunoController();
 const updateCurriculoController = new UpdateCurriculoController();
+const createVinculoUseCase = new CreateVinculoController();
 
 const alunoRoutes = Router();
 
@@ -27,6 +29,7 @@ alunoRoutes.post("/update/curriculo", alunoAuthMiddleware, updateCurriculoContro
 alunoRoutes.post("/login", loginAlunoController.handle);
 alunoRoutes.post("/recovery", recoveryAlunoController.handle);
 alunoRoutes.post("/recovery/validate", validateRecoveryController.handle);
+alunoRoutes.post("/link", alunoAuthMiddleware, createVinculoUseCase.handle);
 
 alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");

@@ -1,6 +1,6 @@
 <template>
     <Header />
-    <Slides />
+    <!-- <Slides /> -->
     <div id="app">
         <main>
             <div class="content">
@@ -28,11 +28,11 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue';
-import ContactUs from '../components/ContactUs.vue';
-import Footer from '../components/Footer.vue';
-import Slides from '../components/Slides.vue';
-import Cards from '../components/Cards.vue';
+import Header from '../../components/Header.vue';
+import ContactUs from '../../components/ContactUs.vue';
+import Footer from '../../components/Footer.vue';
+import Slides from '../../components/Slides.vue';
+import Cards from '../../components/Cards.vue';
 
 export default {
     name: 'Home',
@@ -47,5 +47,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../scss/pages/_home.scss";
+    @import "../../scss/pages/shared/_home.scss";
 </style>

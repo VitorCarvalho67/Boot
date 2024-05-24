@@ -8,6 +8,12 @@ main {
         @include font-inter(700);
         letter-spacing: .3cm;
         color: $primary-color-orange;
+        @include m-screen(1400px){
+            padding-top: 18px;
+        }
+        @include m-screen(1120px){
+            padding-top: 16px;
+        }
     }
 
     .content {
@@ -24,6 +30,12 @@ main {
 
             * {
                 margin: 20px 0;
+                @include m-screen(1400px){
+                    margin: 18px 0;
+                }
+                @include m-screen(1120px){
+                    margin: 16px 0;
+                }
             }
 
             .info {
@@ -33,10 +45,21 @@ main {
                     color: $secondary-color-orange;
                     font-size: 2rem;
                     @include font-inter(700);
+                    @include m-screen(1400px){
+                        font-size: 1.8rem;
+                        width: 90%;
+                    }
+                    @include m-screen(1120px){
+                        font-size: 1.6rem;
+                    }
                 }
 
                 p {
                     width: 70%;
+                    @include m-screen(1120px){
+                        font-size: 0.8rem;
+                        width: 60%;
+                    }
                 }
 
                 a {
@@ -52,16 +75,30 @@ main {
                     &:hover {
                         @include color($secondary-color-dark, $primary-color-orange);
                     }
+
+                    @include m-screen(1120px){
+                        font-size: 0.7rem;
+                        padding: 8px 18px;
+                    }
                 }
             }
 
         }
 
         #box2 {
-            background-image: url(../assets/imgs/imageMain.png);
+            background-image: url(../../assets/imgs/imageMain.png);
             background-position: center;
             background-size: 50%;
             background-repeat: no-repeat;
+            @include m-screen(1400px){
+                width: 40%;
+            }
+        }
+
+        #box1{
+            @include m-screen(1400px){
+                width: 60%;
+            }
         }
     }
 

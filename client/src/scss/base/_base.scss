@@ -20,4 +20,5 @@ main {
 img, button, a{
     -webkit-user-select: none;
     user-select: none;
+    transition: .2s;
 }

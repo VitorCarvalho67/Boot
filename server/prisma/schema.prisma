@@ -56,6 +56,7 @@ model Vinculo {
     professorId           String?
     vinculoComAlunoId     String?
     vinculoComProfessorId String?
+    accepted              Boolean    @default(false)
     aluno                 Aluno?     @relation("AlunoVinculo", fields: [alunoId], references: [id])
     professor             Professor? @relation("ProfessorVinculo", fields: [professorId], references: [id])
     vinculoComAluno       Aluno?     @relation("VinculoComAluno", fields: [vinculoComAlunoId], references: [id])
