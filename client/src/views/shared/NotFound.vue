@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import { useRouter } from 'vue-router';
 
 export default {
@@ -42,5 +42,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../scss/pages/_notFound.scss";
+    @import "../../scss/pages/shared/_notFound.scss";
 </style>

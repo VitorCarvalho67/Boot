@@ -14,6 +14,21 @@
             color: $secondary-color-orange;
             @include font-inter(500);
             font-size: 2rem;
+            @include m-screen(1420px) {
+                font-size: 1.8rem;
+            }
+            @include m-screen(1120px) {
+                font-size: 1.6rem;
+            }
+        }
+
+        p {
+            @include m-screen(1420px) {
+                font-size: 0.8rem;
+            }
+            @include m-screen(1120px) {
+                font-size: 0.7rem;
+            }
         }
 
         p:last-child {
@@ -32,6 +47,18 @@
                 padding: 8px;
                 min-width: 350px;
                 border-radius: 3px;
+                @include m-screen(1420px) {
+                    padding: 7.2px;
+                    min-width: 315px;
+                    border-radius: 3px;
+                    font-size: 0.8rem;
+                }
+                @include m-screen(1120px) {
+                    padding: 6.4px;
+                    min-width: 280px;
+                    border-radius: 3px;
+                    font-size: 0.7rem;
+                }
 
                 &:focus {
                     border: solid 1px $secondary-color-orange;
@@ -48,6 +75,20 @@
                 min-width: 350px;
                 border-radius: 3px;
                 resize: none;
+                @include m-screen(1420px) {
+                    padding: 7.2px;
+                    min-width: 315px;
+                    border-radius: 3px;
+                    font-size: 0.8rem;
+                    height: calc(1.5em * 7);
+                }
+                @include m-screen(1120px) {
+                    padding: 6.4px;
+                    min-width: 280px;
+                    border-radius: 3px;
+                    font-size: 0.7rem;
+                    height: calc(1.5em * 6);
+                }
 
                 &:focus {
                     border: solid 1px $secondary-color-orange;
@@ -62,12 +103,20 @@
                     padding: 8px 25px;
                     border-radius: 3px;
                     font-size: 1rem;
-                    color: $font-color-dark;
+                    color: $secondary-color-dark;
                     background-color: $primary-color-orange;
                     border: none;
                     border: solid 1px $primary-color-orange;
                     transition: 0.1s linear;
                     cursor: pointer;
+                    @include m-screen(1420px) {
+                        font-size: 0.8rem;
+                        padding: 7px 20px;
+                    }
+                    @include m-screen(1120px) {
+                        font-size: 0.7rem;
+                        padding: 6px 15px;
+                    }
 
                     &:hover {
                         background-color: transparent;
@@ -80,6 +129,12 @@
 
         * {
             margin-top: 10px;
+            @include m-screen(1420px) {
+                margin-top: 8px;
+            }
+            @include m-screen(1120px) {
+                margin-top: 7px;
+            }
         }
     }
 }

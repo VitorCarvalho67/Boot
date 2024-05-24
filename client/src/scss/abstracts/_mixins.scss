@@ -35,6 +35,12 @@
     }
 }
 
+@mixin m-screen($width) {
+    @media screen and (max-width: $width) {
+        @content;
+    }
+}
+
 @mixin line {
     &:after {
         content: '';
