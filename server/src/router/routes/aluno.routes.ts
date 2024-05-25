@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { alunoAuthMiddleware } from '../../middleware/autentication';
+import { alunoAuthMiddleware } from '../../middleware/auth/autentication';
 import {
     CreateVinculoController,
     AcceptVinculoController,
@@ -33,11 +33,11 @@ const alunoRoutes = Router();
 alunoRoutes.post("/register/prealuno", createPreAlunoController.handle);
 alunoRoutes.post("/register", createAlunoUseController.handle);
 alunoRoutes.post("/register/complete", alunoAuthMiddleware, completeAlunoController.handle);
-alunoRoutes.post("/update/curriculo", alunoAuthMiddleware, updateCurriculoController.handle);
+alunoRoutes.post("/curriculo/update", alunoAuthMiddleware, updateCurriculoController.handle);
 alunoRoutes.post("/login", loginAlunoController.handle);
 alunoRoutes.post("/recovery", recoveryAlunoController.handle);
 alunoRoutes.post("/recovery/validate", validateRecoveryController.handle);
-alunoRoutes.post("/link", alunoAuthMiddleware, createVinculoController.handle);
+alunoRoutes.post("/link/send", alunoAuthMiddleware, createVinculoController.handle);
 alunoRoutes.post("/link/accept", alunoAuthMiddleware, acceptVinculoController.handle);
 alunoRoutes.post("/link/reject", alunoAuthMiddleware, ignoreVinculoController.handle);
 

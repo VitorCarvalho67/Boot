@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { funcionarioAuthMiddleware } from '../../middleware/autentication';
+import { funcionarioAuthMiddleware } from '../../middleware/auth/autentication';
 import {
     ValidateFuncionarioController,
     LoginFuncionarioController,

@@ -31,7 +31,8 @@ Digital platform tailored for the educational environment, designed to facilitat
 [Mixins in Vue](https://vuejs.org/guide/reusability/mixins.html) -
 [Vue Router](https://router.vuejs.org/) -
 [Express](https://expressjs.com/) -
-[pnpm](https://pnpm.io/)
+[Pnpm](https://pnpm.io/) -
+[Socket.io](https://socket.io/)
 
 ## How To Use
 
