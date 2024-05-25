@@ -66,3 +66,48 @@ export const validateRecovery = async(infoAluno) => {
         return error.response.data;
     }
 }
+
+export const updateCurriculo =  async(infoAluno) => {
+    try {
+        const response = await api.post('aluno/curriculo/update', infoAluno);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const sendVinculoSolicitation =  async(infoVinculo) => {
+    try {
+        const response = await api.post('aluno/link/send', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const acceptVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.post('aluno/link/accept', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const rejectVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.post('aluno/link/reject', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const showVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.get('aluno/links', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

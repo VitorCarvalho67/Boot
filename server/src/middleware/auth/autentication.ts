@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppError } from '../errors/error';
-import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor, verfifyAccessTokenFuncinario, verfifyAccessTokenAluno, verfifyAccessTokenEmpresa } from '../jwt/jwtServices';
-import { prisma } from '../prisma/client';
+import { AppError } from '../../errors/error';
+import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor, verfifyAccessTokenFuncinario, verfifyAccessTokenAluno, verfifyAccessTokenEmpresa } from '../../jwt/jwtServices';
+import { prisma } from '../../prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
 
 interface RequestWithAdmin extends Request {

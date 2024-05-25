@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { empresaAuthMiddleware } from '../../middleware/autentication';
+import { empresaAuthMiddleware } from '../../middleware/auth/autentication';
 import {
     RegisterEmpresaController,
     ValidateEmpresaController,

@@ -61,3 +61,39 @@ export const validateRecovery = async(infoProfessor) => {
         return error.response.data;
     }
 }
+
+export const sendVinculoSolicitation =  async(infoVinculo) => {
+    try {
+        const response = await api.post('professor/link/send', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const acceptVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.post('professor/link/accept', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const rejectVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.post('professor/link/reject', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const showVinculo =  async(infoVinculo) => {
+    try {
+        const response = await api.get('professor/links', infoVinculo);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

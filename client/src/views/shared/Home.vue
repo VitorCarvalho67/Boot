@@ -21,6 +21,7 @@
             </div>
         </main>
     </div>
+    <!-- <ChatComponent /> -->
     <Cards />
     <ContactUs />
     <Footer />
@@ -33,6 +34,7 @@ import ContactUs from '../../components/ContactUs.vue';
 import Footer from '../../components/Footer.vue';
 import Slides from '../../components/Slides.vue';
 import Cards from '../../components/Cards.vue';
+import ChatComponent from '../../components/ChatComponent.vue';
 
 export default {
     name: 'Home',
@@ -42,6 +44,7 @@ export default {
         Cards,
         ContactUs,
         Footer,
+        ChatComponent
     }
 }
 </script>
