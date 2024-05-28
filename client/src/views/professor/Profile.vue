@@ -26,5 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/professor/_profile.scss";
+@import "../../scss/pages/professor/_profile.scss";
 </style>

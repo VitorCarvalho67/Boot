@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { GetAllProfessorUseCase } from "../services/admin/GetAllProfessorUseCase";
 import { GetCoordenadorUseCase } from "../services/admin/GetCoordenadoresUseCase";
-import { GetCursosUseCase } from "../services/admin/GetCursosUseCase";
 import { LoginAdminUseCase } from "../services/admin/LoginAdminUseCase";
 import { RegisterCoordenadorUseCase } from '../services/admin/RegisterCoordenadorUseCase';
 import { RegisterCursosUseCase } from '../services/admin/RegisterCursosUseCase';
@@ -26,17 +25,6 @@ export class GetCoordenadorController {
         const getCoordenadorUseCase = new GetCoordenadorUseCase();
 
         const result = await getCoordenadorUseCase.execute();
-
-        return res.status(201).json(result);
-    }
-}
-
-export class GetCursosController {
-    async handle(req: Request, res: Response) {
-
-        const getCursoUseCase = new GetCursosUseCase();
-
-        const result = await getCursoUseCase.execute();
 
         return res.status(201).json(result);
     }

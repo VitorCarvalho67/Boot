@@ -3,14 +3,14 @@ import { AppError } from "../../../errors/error";
 import { VinculoDTO } from "../../interfaces/sharedDTOs";
 import { encontrarEntidadePeloEmail } from "./helpers/helpers";
 
-export class CreateVinculoUseCase {
+export class DeleteVinculoUseCase {
     async execute({ email, sender, recipient, senderIdentifier, recipientIdentifier }: VinculoDTO) {
         if (!sender || !recipient || !senderIdentifier || !recipientIdentifier) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        if (email != sender) {
-            throw new AppError("Remetente inválido.");
+        if (email != sender && email != recipient) {
+            throw new AppError("Usuário não pertence a nenhum dos elos da conexão.");
         }
 
         const senderData = await encontrarEntidadePeloEmail(sender, senderIdentifier);
@@ -33,8 +33,8 @@ export class CreateVinculoUseCase {
             },
         });
 
-        if (vinculoExists) {
-            throw new AppError("Solicitação já existente");
+        if (!vinculoExists) {
+            throw new AppError("Vínculo ou solicitação de vínculo inexistente");
         }
 
         const vinculoAlternativeExists = await prisma.vinculo.findFirst({
@@ -46,19 +46,16 @@ export class CreateVinculoUseCase {
             },
         });
 
-        if (vinculoAlternativeExists) {
-            throw new AppError("Solicitação já existente com solicitante diferente");
+        if (!vinculoAlternativeExists) {
+            throw new AppError("Vínculo ou solicitação de vínculo inexistente");
         }
 
-        const vinculo = await prisma.vinculo.create({
-            data: {
-                alunoId: (senderIdentifier == "ALUNO") ? senderData.id : null,
-                professorId: (senderIdentifier == "PROFESSOR") ? senderData.id : null,
-                vinculoComAlunoId: (recipientIdentifier == "ALUNO") ? recipientData.id : null,
-                vinculoComProfessorId: (recipientIdentifier == "PROFESSOR") ? recipientData.id : null
+        await prisma.vinculo.delete({
+            where: {
+                id: vinculoExists ? vinculoExists.id : vinculoAlternativeExists.id
             }
         });
 
-        return "Solicitação de vínculo efetuada com sucesso!";
+        return "Vínculo ou solicitacão desfeita!";
     }
 }

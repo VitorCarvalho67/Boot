@@ -8,9 +8,9 @@ import transporter from "../../../mail/config/email";
 const bcrypt = require('bcrypt');
 
 export class RegisterProfessorUseCase {
-    async execute({ name, email, tituloPrincipal }: RegisterProfessorDTO): Promise<Pick<Professor, "name" | "email" | "tituloPrincipal" >> {
+    async execute({ name, email, tituloPrincipal }: RegisterProfessorDTO): Promise<Pick<Professor, "name" | "email" | "tituloPrincipal">> {
 
-        if( !name || !email || !tituloPrincipal ){
+        if (!name || !email || !tituloPrincipal) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

@@ -15,7 +15,8 @@
             <form @submit.prevent="submitForm">
                 <div class="content">
                     <h1>Finalize seu registro</h1>
-                    <p>Para sua segurança te enviamos um código de verificação no email inserido anteriormente, termine seu registro inserindo-o abaixo
+                    <p>Para sua segurança te enviamos um código de verificação no email inserido anteriormente, termine
+                        seu registro inserindo-o abaixo
                     </p>
 
                     <div class="input-box focused">
@@ -189,5 +190,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/empresa/_validate.scss";
+@import "../../scss/pages/empresa/_validate.scss";
 </style>

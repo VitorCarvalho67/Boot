@@ -6,7 +6,10 @@
             <div class="content">
                 <div class="box" id="box1">
                     <div class="info">
-                        <h1>Venha mostrar para o mundo o profissional que você é.</h1>
+                        <div class="infoTitle">
+                            <img :src="imgHome" alt="Imagem Home">
+                            <h1>Venha mostrar para o mundo o profissional que você é.</h1>
+                        </div>
                         <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma
                             que
                             facilite a introdução do aluno ao mercado de trabalho.Nossa missão é intermediar o processo
@@ -35,6 +38,7 @@ import Footer from '../../components/Footer.vue';
 import Slides from '../../components/Slides.vue';
 import Cards from '../../components/Cards.vue';
 import ChatComponent from '../../components/ChatComponent.vue';
+import imgHome from '../../assets/imgs/imageMain.png';
 
 export default {
     name: 'Home',
@@ -45,10 +49,15 @@ export default {
         ContactUs,
         Footer,
         ChatComponent
+    },
+    setup() {
+        return {
+            imgHome
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/shared/_home.scss";
+@import "../../scss/pages/shared/_home.scss";
 </style>

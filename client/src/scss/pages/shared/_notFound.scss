@@ -57,10 +57,10 @@ main {
             color: $secondary-color-dark;
             border: solid 1px $primary-color-orange;
             background-color: $primary-color-orange;
-            font-size: .9rem;
+            font-size: 0.9rem;
             border-radius: 3px;
             margin-top: 12%;
-            transition: .1s linear;
+            transition: 0.1s linear;
             @include font-inter(400);
             @include flex-center;
 

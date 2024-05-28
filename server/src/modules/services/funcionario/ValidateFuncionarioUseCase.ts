@@ -6,12 +6,12 @@ import { AppError } from "../../../errors/error";
 const bcrypt = require('bcrypt');
 
 export class ValidateFuncionarioUseCase {
-    async execute({ email, temporaryPassword, newPassword }: ValidateFuncionarioDTO): Promise< Pick<Funcionario, "name" | "email" | "cargo" | "validated" >> {
-        
-        if( !email || !temporaryPassword || newPassword ){
+    async execute({ email, temporaryPassword, newPassword }: ValidateFuncionarioDTO): Promise<Pick<Funcionario, "name" | "email" | "cargo" | "validated">> {
+
+        if (!email || !temporaryPassword || newPassword) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-        
+
         const funcionario = await prisma.funcionario.findFirst({
             where: {
                 email,

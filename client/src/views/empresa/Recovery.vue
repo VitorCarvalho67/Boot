@@ -79,13 +79,13 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-recovery-empresa', `${this.empresa.email}`, { expires: 50 });
                     Cookies.set('cnpj-recovery-empresa', `${this.empresa.cnpj}`, { expires: 50 });
-                    router.push({name: 'ValidateRecoveryEmpresa'});
-                
+                    router.push({ name: 'ValidateRecoveryEmpresa' });
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -96,5 +96,5 @@ export default {
 
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/empresa/_recovery.scss";
+@import "../../scss/pages/empresa/_recovery.scss";
 </style>

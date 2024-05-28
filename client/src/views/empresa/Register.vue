@@ -24,12 +24,12 @@
                         <input type="text" id="name" v-model="empresa.name" @focus="focused.nameFocused = true"
                             @blur="focused.nameFocused = false" required>
                     </div>
-                    
+
                     <div class="input-box" :class="{ 'focused': focused.emailFocused }">
                         <label for="email">E-Mail</label>
 
-                        <input type="email" id="email" v-model="empresa.email"
-                            @focus="focused.emailFocused = true" @blur="focused.emailFocused = false" required>
+                        <input type="email" id="email" v-model="empresa.email" @focus="focused.emailFocused = true"
+                            @blur="focused.emailFocused = false" required>
                     </div>
 
                     <div class="input-box" :class="{ 'focused': focused.cnpjFocused }">
@@ -37,10 +37,10 @@
 
                         <input type="text" id="email" v-model="empresa.cnpjExibido" @input="cnpj"
                             @focus="focused.cnpjFocused = true" @blur="focused.cnpjFocused = false" required>
-                    
-                            <span class="alert" v-show="alerts.alertCNPJ">
-                                Insira um CNPJ válido
-                            </span>
+
+                        <span class="alert" v-show="alerts.alertCNPJ">
+                            Insira um CNPJ válido
+                        </span>
                     </div>
 
                     <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
@@ -66,8 +66,9 @@
                             </span>
                         </div>
                         <div class="d2">
-                            <button type="button" @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"
-                                @click="togglePasswordVisibility" :class="buttonClass"></button>
+                            <button type="button" @focus="focused.passwordFocused = true"
+                                @blur="focused.passwordFocused = false" @click="togglePasswordVisibility"
+                                :class="buttonClass"></button>
                         </div>
                     </div>
 
@@ -82,8 +83,9 @@
                             </span>
                         </div>
                         <div class="d2">
-                            <button type="button" @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                                @click="togglePasswordConfirmVisibility" :class="buttonClassConfirm"></button>
+                            <button type="button" @focus="focused.confirmFocused = true"
+                                @blur="focused.confirmFocused = false" @click="togglePasswordConfirmVisibility"
+                                :class="buttonClassConfirm"></button>
                         </div>
                     </div>
                     <div class="button-box">
@@ -209,10 +211,10 @@ export default {
                 this.alerts.alertPass = true;
             }
         },
-        cnpjValidate(){
+        cnpjValidate() {
             this.alerts.alertCNPJ = false;
 
-            if (this.empresa.cnpj.length != 14 && this.empresa.cnpjExibido.length > 0){
+            if (this.empresa.cnpj.length != 14 && this.empresa.cnpjExibido.length > 0) {
                 this.alerts.alertCNPJ = true;
             }
         },
@@ -243,5 +245,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/empresa/_register.scss";
+@import "../../scss/pages/empresa/_register.scss";
 </style>

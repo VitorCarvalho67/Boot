@@ -1,12 +1,12 @@
 import Cookies from 'js-cookie';
-import { authAluno }  from '../../services/api/aluno';
-import { authAdmin }  from '../../services/api/admin';
-import { authProfessor }  from '../../services/api/professor';
-import { authFuncionario }  from '../../services/api/funcionario';
-import { authEmpresa }  from '../../services/api/empresa';
+import { authAluno } from '../../services/api/aluno';
+import { authAdmin } from '../../services/api/admin';
+import { authProfessor } from '../../services/api/professor';
+import { authFuncionario } from '../../services/api/funcionario';
+import { authEmpresa } from '../../services/api/empresa';
 
 // isAuths
-export async function isAuthAluno(){
+export async function isAuthAluno() {
     var token = Cookies.get('token');
     if (!token) {
         return false;
@@ -16,9 +16,9 @@ export async function isAuthAluno(){
             return (response.data == "Aluno autenticado com sucesso.") ? true : false
         } catch (error) {
             return false;
-        }    
-    }    
-}    
+        }
+    }
+}
 
 export async function isAuthAdmin() {
     var token = Cookies.get('token-admin');
@@ -30,25 +30,25 @@ export async function isAuthAdmin() {
             return (response.data == "Admin autenticado com sucesso.") ? true : false
         } catch (error) {
             return false;
-        }    
-    }    
-}    
+        }
+    }
+}
 
-export async function isAuthEmpresa(){
+export async function isAuthEmpresa() {
     var token = Cookies.get('token-empresa');
     if (!token) {
         return false;
     } else {
         try {
             const response = await authEmpresa(token);
-            return(response.data == "Empresa autenticada com sucesso.") ? true : false;
+            return (response.data == "Empresa autenticada com sucesso.") ? true : false;
         } catch (error) {
             return false;
         }
     }
 }
 
-export async function isAuthFuncionario(){
+export async function isAuthFuncionario() {
     var token = Cookies.get('token-funcionario');
     if (!token) {
         return false;
@@ -62,7 +62,7 @@ export async function isAuthFuncionario(){
     }
 }
 
-export async function isAuthProfessor(){
+export async function isAuthProfessor() {
     var token = Cookies.get('token-professor');
     if (!token) {
         return false;
@@ -78,41 +78,41 @@ export async function isAuthProfessor(){
 
 
 // isRegisterings
-export async function isRegistering(){
+export async function isRegistering() {
     return (Cookies.get('email-registro-aluno')) ? true : false;
-}    
+}
 
-export async function isRegisteringEmpresa(){
+export async function isRegisteringEmpresa() {
     return (Cookies.get('cnpj-registro-empresa')) ? true : false;
 }
 
 // isRecoverings
-export async function isRecoveringAluno(){
+export async function isRecoveringAluno() {
     return (Cookies.get('email-recovery-aluno')) ? true : false;
-}    
+}
 
-export async function isRecoveringEmpresa(){
+export async function isRecoveringEmpresa() {
     return (Cookies.get('email-recovery-empresa')) ? true : false;
 }
 
-export async function isRecoveringFuncionario(){
+export async function isRecoveringFuncionario() {
     return (Cookies.get('email-recovery-funcionario')) ? true : false;
 }
 
-export async function isRecoveringProfessor(){
+export async function isRecoveringProfessor() {
     return (Cookies.get('email-recovery-professor')) ? true : false;
 }
 
 // isInitings
-export async function isInitingFuncionario(){
+export async function isInitingFuncionario() {
     return (Cookies.get('email-init-funcionario')) ? true : false;
 }
 
-export async function isInitingProfessor(){
+export async function isInitingProfessor() {
     return (Cookies.get('email-init-professor')) ? true : false;
 }
 
 // isCompleted
-export async function isCompletedAluno(){
+export async function isCompletedAluno() {
     return (Cookies.get('completed') && Cookies.get('completed') == true && await isAuthAluno() ? true : false) ? true : false;
 }

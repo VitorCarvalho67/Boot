@@ -25,13 +25,10 @@
 }
 
 @mixin theme-color($theme) {
-    @if $theme=="light" {
-        @include color($font-color-light,
-        $bg-color-light);
-    }
-    @else if $theme=="dark" {
-        @include color($font-color-dark,
-        $bg-color-dark);
+    @if $theme== "light" {
+        @include color($font-color-light, $bg-color-light);
+    } @else if $theme== "dark" {
+        @include color($font-color-dark, $bg-color-dark);
     }
 }
 
@@ -41,21 +38,48 @@
     }
 }
 
+@mixin m-screen-box {
+    @include m-screen(1250px) {
+        height: 80%;
+        width: 50%;
+    }
+    @include m-screen(900px) {
+        height: 80%;
+        width: 80%;
+        border-radius: 0px;
+    }
+    @include m-screen(1150px) {
+        height: 90%;
+        width: 60%;
+    }
+    @include m-screen(850px) {
+        height: 95%;
+        width: 80%;
+    }
+    @include m-screen(600px) {
+        height: 95%;
+        width: 98%;
+    }
+    @include m-screen(400px) {
+        padding: 0px;
+    }
+}
+
 @mixin line {
     &:after {
-        content: '';
+        content: "";
         width: 0px;
         height: 1px;
         display: flex;
         flex-direction: column;
-        content: '';
+        content: "";
         height: 2px;
         width: 0%;
         background-color: $primary-color-orange;
     }
 
     &:hover::after {
-        animation: afterLoad .8s ease-out;
+        animation: afterLoad 0.8s ease-out;
         width: 100%;
     }
 

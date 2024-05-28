@@ -8,7 +8,7 @@
                 <div>
                     <input type="date" name="" id="" v-model="turma.inicio" @input="checkDateValidity">
                 </div>
-                
+
                 <label>Fim:</label>
                 <div>
                     <input type="date" name="" id="" v-model="turma.fim" @input="checkDateValidity">
@@ -18,7 +18,7 @@
                     <option value="" disabled>Selecione um curso</option>
                     <option v-for="curso in cursos" :key="curso.name" :value="curso.name">{{ curso.name }}</option>
                 </select>
-                
+
                 <button type="submit" v-show="!invalidDate">Registrar val</button>
                 <button type="button" v-show="invalidDate">Registrar inv</button>
 
@@ -34,7 +34,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-import { registerTurma,  getCursos} from '../../services/api/admin';
+import { registerTurma, getCursos } from '../../services/api/admin';
 
 export default {
     name: 'RegisterTurma',
@@ -71,16 +71,16 @@ export default {
                         inicio: this.turma.inicio,
                         fim: this.turma.fim,
                         cursoName: this.turma.curso
-                    }, 
+                    },
                     this.token
                 );
 
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
@@ -104,5 +104,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/admin/_registerTurma.scss";
+@import "../../scss/pages/admin/_registerTurma.scss";
 </style>

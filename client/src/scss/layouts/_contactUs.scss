@@ -3,12 +3,28 @@
     @include flex(row, space-around, center);
     height: 50vh;
     width: 100%;
+    @include m-screen(1000px) {
+        @include flex(row, center, center);
+    }
+    @include m-screen(680px) {
+        @include flex(column, center, center);
+        height: 60vh;
+    }
 
     .box {
         height: 100%;
         width: 25%;
         @include flex(column, center, flex-start);
         @include font-inter(300);
+        @include m-screen(1000px) {
+            width: 40%;
+            margin-inline: 10px;
+        }
+        @include m-screen(680px) {
+            width: 80%;
+            margin: 10px;
+            height: auto;
+        }
 
         h1 {
             color: $secondary-color-orange;
@@ -139,6 +155,12 @@
             @include m-screen(1120px) {
                 margin-top: 7px;
             }
+        }
+    }
+
+    #box2 {
+        @include m-screen(680px) {
+            @include flex-center;
         }
     }
 }

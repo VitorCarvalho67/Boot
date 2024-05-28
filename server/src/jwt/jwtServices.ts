@@ -2,7 +2,7 @@ import { sign, verify, JwtPayload } from "jsonwebtoken";
 import { Aluno, Admin, Professor, Funcionario, Empresa } from "@prisma/client";
 
 export function generateAccessTokenAluno(aluno: Aluno): string {
-    return sign({ alunoId: aluno.id}, process.env.JWT_ACCESS_SECRET as string, {
+    return sign({ alunoId: aluno.id }, process.env.JWT_ACCESS_SECRET as string, {
         expiresIn: '50m',
     });
 }

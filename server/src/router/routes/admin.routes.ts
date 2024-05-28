@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { adminAuthMiddleware } from '../../middleware/auth/autentication';
 import {
+    GetCursosController
+} from "../../modules/controllers/sharedControllers"
+import {
     LoginAdminController,
     RegisterCursosController,
     RegisterProfessorController,
@@ -8,7 +11,6 @@ import {
     RegisterCoordenadorController,
     GetAllProfessorController,
     GetCoordenadorController,
-    GetCursosController,
     RegisterTurmaController
 } from "../../modules/controllers/adminControllers";
 
@@ -37,6 +39,6 @@ adminRoutes.get("/auth", adminAuthMiddleware, (req, res) => {
 
 adminRoutes.get("/professores", adminAuthMiddleware, getAllProfessorController.handle);
 adminRoutes.get("/coordenadores", adminAuthMiddleware, getCoordenadoresController.handle);
-adminRoutes.get("/cursos", adminAuthMiddleware, getCursosController.handle)
+adminRoutes.get("/cursos", adminAuthMiddleware, getCursosController.handle);
 
 export { adminRoutes };

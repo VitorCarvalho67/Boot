@@ -14,7 +14,8 @@
             </nav>
             <form @submit.prevent="submitForm">
                 <h1>Termine sua recuperação</h1>
-                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para logar na plataforma.</p>
+                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para
+                    logar na plataforma.</p>
 
                 <div class="input-box email">
                     <div class="d1">
@@ -193,15 +194,15 @@ export default {
                     router.push({ name: 'LoginEmpresa' });
 
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },
-    created(){
+    created() {
         this.infoEmpresa.email = Cookies.get('email-recovery-empresa');
         this.infoEmpresa.cnpj = Cookies.get('cnpj-recovery-empresa');
     }
@@ -209,5 +210,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/empresa/_validateRecovery.scss";
+@import "../../scss/pages/empresa/_validateRecovery.scss";
 </style>

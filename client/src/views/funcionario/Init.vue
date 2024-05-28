@@ -89,5 +89,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/funcionario/_init.scss";
+@import "../../scss/pages/funcionario/_init.scss";
 </style>

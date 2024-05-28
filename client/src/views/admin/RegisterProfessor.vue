@@ -57,16 +57,16 @@ export default {
                         name: this.professor.name,
                         tituloPrincipal: this.professor.tituloPrincipal,
                         email: this.professor.email
-                    }, 
+                    },
                     this.token
                 );
 
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -81,5 +81,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/admin/_registerProfessor.scss";
+@import "../../scss/pages/admin/_registerProfessor.scss";
 </style>

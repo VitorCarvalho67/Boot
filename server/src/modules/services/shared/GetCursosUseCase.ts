@@ -1,5 +1,4 @@
 import { prisma } from "../../../prisma/client";
-import { AppError } from "../../../errors/error";
 import { Curso } from "@prisma/client";
 
 export class GetCursosUseCase {

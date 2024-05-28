@@ -22,7 +22,7 @@
                     <input type="email" id="email" v-model="funcionario.email" @input="checkData" required>
                 </div>
                 <br>
-        
+
 
                 <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
                 <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
@@ -79,17 +79,17 @@ export default {
                         name: this.funcionario.name,
                         email: this.funcionario.email,
                         cargo: this.funcionario.cargo
-                    }, 
+                    },
                     this.token
                 );
 
-                
+
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -103,5 +103,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/admin/_registerFuncionario.scss";
+@import "../../scss/pages/admin/_registerFuncionario.scss";
 </style>

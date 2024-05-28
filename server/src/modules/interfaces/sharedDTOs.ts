@@ -1,4 +1,5 @@
 export interface VinculoDTO {
+    email: string,
     sender: string,
     recipient: string,
     senderIdentifier: IdentificadorEnum,
@@ -10,7 +11,7 @@ export enum IdentificadorEnum {
     PROFESSOR = "PROFESSOR"
 }
 
-export interface ReagirVinculoDTO{
+export interface ReagirVinculoDTO {
     email: string,
     sender: string,
     recipient: string,

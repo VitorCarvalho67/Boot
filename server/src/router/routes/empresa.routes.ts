@@ -13,7 +13,7 @@ const registerEmpresaController = new RegisterEmpresaController();
 const validateEmpresaController = new ValidateEmpresaController();
 const loginEmpresaController = new LoginEmpresaController();
 const recoveryEmpresaController = new RecoveryEmpresaController();
-const validateRecoveryEmpresaController= new ValidateRecoveryEmpresaController();
+const validateRecoveryEmpresaController = new ValidateRecoveryEmpresaController();
 
 const empresaRoutes = Router();
 

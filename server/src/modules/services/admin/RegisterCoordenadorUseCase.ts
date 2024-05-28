@@ -6,7 +6,7 @@ import { AppError } from "../../../errors/error";
 export class RegisterCoordenadorUseCase {
     async execute({ name }: RegisterCoordenadorDTO): Promise<Pick<Coordenador, "name">> {
 
-        if( !name ){
+        if (!name) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
@@ -36,7 +36,7 @@ export class RegisterCoordenadorUseCase {
                 if (!coordenadorRegister) {
                     throw new AppError("Erro ao cadastrar professor!");
                 } else {
-                    return  {
+                    return {
                         name: coordenadorRegister.name
                     };
                 }

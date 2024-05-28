@@ -6,6 +6,15 @@
     @include m-screen(1400px) {
         min-height: 360px;
     }
+    @include m-screen(1120px) {
+        padding: 80px;
+    }
+    @include m-screen(820px) {
+        padding: 40px 60px;
+    }
+    @include m-screen(600px) {
+        padding: 40px;
+    }
 
     h1,
     h2 {
@@ -19,6 +28,12 @@
         @include m-screen(1400px) {
             font-size: 1.8rem;
         }
+        @include m-screen(1120px) {
+            font-size: 1.6rem;
+        }
+        @include m-screen(860px) {
+            font-size: 1.3rem;
+        }
     }
 
     h2 {
@@ -27,6 +42,12 @@
         @include font-inter(300);
         @include m-screen(1400px) {
             font-size: 1.1rem;
+        }
+        @include m-screen(1120px) {
+            font-size: 1rem;
+        }
+        @include m-screen(860px) {
+            font-size: 0.9rem;
         }
     }
 

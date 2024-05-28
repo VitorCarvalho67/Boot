@@ -76,13 +76,13 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-recovery-professor', `${this.userProfessor.email}`, { expires: 10 });
-                    router.push({name: 'ValidateRecoveryProfessor'});
-                
+                    router.push({ name: 'ValidateRecoveryProfessor' });
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/professor/_recovery.scss";
+@import "../../scss/pages/professor/_recovery.scss";
 </style>

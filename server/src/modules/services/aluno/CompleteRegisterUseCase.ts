@@ -3,11 +3,16 @@ import { CompleteAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
 
 export class CompleteAlunoUseCase {
-    async execute({ email, nascimento, endereco, turma, rm }: CompleteAlunoDTO) {
+    async execute({ email, nascimento, endereco, curso, inicio, rm }: CompleteAlunoDTO) {
 
-        if (!email || !nascimento || !endereco || !turma || !rm) {
+        if (!email || !nascimento || !endereco || !curso || !inicio || !rm) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
+
+        const [dia, mes, ano] = nascimento.split('/');
+
+        const stringNascimento = new Date(`${ano}-${mes}-${dia}T00:00:00Z`);
+        const nascimentoISO = stringNascimento.toISOString();
         
         const aluno = await prisma.aluno.findUnique({
             where: {
@@ -16,26 +21,50 @@ export class CompleteAlunoUseCase {
         });
 
         if (aluno) {
-            const rmAlreadyExists = await prisma.aluno.findFirst({
+            const rmNull = await prisma.aluno.findFirst({
                 where: {
-                    rm
+                    rm: null,
+                    email: email
                 }
             });
 
-            if (!rmAlreadyExists) {
-                prisma.aluno.update({
+            console.log(rmNull);
+
+            if (rmNull) {
+                const cursoExists = await prisma.curso.findFirst({
+                    where: {
+                        name: curso,
+                    }
+                });
+
+                if (!cursoExists) {
+                    throw new AppError("Curso não encontrado.");
+                }
+
+                const turma = await prisma.turma.findFirst({
+                    where: {
+                        cursoId: cursoExists.id,
+                        inicio
+                    }
+                });
+
+                if (!turma) {
+                    throw new AppError("Turma não encontrada para combinação de curso e ano: \n" + curso + " - " + inicio)
+                }
+
+                await prisma.aluno.update({
                     where: {
                         email
                     },
                     data: {
-                        dataNascimento: nascimento,
+                        dataNascimento: nascimentoISO,
                         endereco,
-                        turmas: turma,
-                        rm
+                        turmas: turma.id,
+                        rm: rm
                     }
                 });
-
-                return;
+                
+                return "Dados cadastrais atualizados com sucesso!";
             } else {
                 throw new AppError("RM já cadastrado");
             }

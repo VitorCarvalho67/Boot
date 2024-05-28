@@ -76,13 +76,13 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-recovery-funcionario', `${this.userFuncionario.email}`, { expires: 10 });
-                    router.push({name: 'ValidateRecoveryFuncionario'});
-                
+                    router.push({ name: 'ValidateRecoveryFuncionario' });
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
@@ -91,5 +91,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/funcionario/_recovery.scss";
+@import "../../scss/pages/funcionario/_recovery.scss";
 </style>

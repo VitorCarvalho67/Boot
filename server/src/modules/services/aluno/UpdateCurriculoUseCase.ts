@@ -24,7 +24,7 @@ export class UpdateCurriculoUseCase {
                     curriculo: curriculo
                 }
             });
-            
+
             return;
         } else {
             throw new AppError("Email não encontrado");

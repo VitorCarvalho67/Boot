@@ -2,16 +2,16 @@ main {
     @include prefixer(min-height, auto);
     background-color: $secondary-color-dark;
 
-    >h1 {
+    > h1 {
         text-align: center;
         padding-top: 20px;
         @include font-inter(700);
-        letter-spacing: .3cm;
+        letter-spacing: 0.3cm;
         color: $primary-color-orange;
-        @include m-screen(1400px){
+        @include m-screen(1400px) {
             padding-top: 18px;
         }
-        @include m-screen(1120px){
+        @include m-screen(1120px) {
             padding-top: 16px;
         }
     }
@@ -20,6 +20,13 @@ main {
         @include flex(row-reverse, center, center);
         height: 55vh;
         width: 100%;
+        @include m-screen(600px){
+            height: 45vh;
+        }
+
+        @include m-screen(400px){
+            height: 40vh;
+        }
 
         .box {
             padding: 30px;
@@ -27,33 +34,55 @@ main {
             height: 100%;
             @include flex(column, center, center);
             @include font-inter(400);
+            @include m-screen(600px){
+                padding: 15px;
+            }
 
             * {
                 margin: 20px 0;
-                @include m-screen(1400px){
+                @include m-screen(1400px) {
                     margin: 18px 0;
                 }
-                @include m-screen(1120px){
+                @include m-screen(1120px) {
                     margin: 16px 0;
+                }
+                @include m-screen(600px) {
+                    margin: 6px 0;
                 }
             }
 
             .info {
                 @include flex(column, center, flex-start);
+                .infoTitle {
+                    @include flex(row, flex-start, center);
+                    img{
+                        display: none;
+                        height: 200px;
+                        @include m-screen(750px){
+                            display: block;
+                        }
+                        @include m-screen(600px){
+                            height: 150px;
+                        }
+                    }
+                }
 
                 h1 {
                     color: $secondary-color-orange;
                     font-size: 2rem;
                     @include font-inter(700);
-                    @include m-screen(1400px){
+                    @include m-screen(1400px) {
                         font-size: 1.8rem;
                         width: 90%;
                     }
-                    @include m-screen(1120px){
+                    @include m-screen(1120px) {
                         font-size: 1.6rem;
                     }
-                    @include m-screen(860px){
+                    @include m-screen(860px) {
                         font-size: 1.3rem;
+                    }
+                    @include m-screen(400px) {
+                        font-size: 1rem;
                     }
                 }
 
@@ -62,13 +91,19 @@ main {
                     font-size: 1rem;
                     color: $font-color-dark-2;
                     @include font-inter(300);
-                    @include m-screen(1120px){
+                    @include m-screen(1120px) {
                         font-size: 0.8rem;
                         width: 60%;
                     }
-                    @include m-screen(860px){
+                    @include m-screen(860px) {
                         font-size: 0.7rem;
                         width: 80%;
+                    }
+                    @include m-screen(750px){
+                        width: 90%;
+                    }
+                    @include m-screen(600px){
+                        width: 100%;
                     }
                 }
 
@@ -77,22 +112,24 @@ main {
                     padding: 10px 20px;
                     border-radius: 20px;
                     text-decoration: none;
-                    transition: .7s;
+                    transition: 0.7s;
                     border: solid 1px $primary-color-orange;
                     background-color: transparent;
                     color: $primary-color-orange;
-                    
+                    @include m-screen(600px){
+                        display: none;
+                    }
+
                     &:hover {
                         @include color($secondary-color-dark, $primary-color-orange);
                     }
 
-                    @include m-screen(1120px){
+                    @include m-screen(1120px) {
                         font-size: 0.7rem;
                         padding: 8px 18px;
                     }
                 }
             }
-
         }
 
         #box2 {
@@ -100,18 +137,23 @@ main {
             background-position: center;
             background-size: 50%;
             background-repeat: no-repeat;
-            @include m-screen(1400px){
+            @include m-screen(1400px) {
                 width: 40%;
+            }
+            @include m-screen(750px){
+                display: none;
             }
         }
 
-        #box1{
-            @include m-screen(1400px){
+        #box1 {
+            @include m-screen(1400px) {
                 width: 60%;
+            }
+            @include m-screen(750px){
+                width: 90%;
             }
         }
     }
-
 }
 
 .aboutUs {
