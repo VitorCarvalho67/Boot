@@ -22,7 +22,7 @@ funcionarioRoutes.post("/recovery", recoveryFuncionarioController.handle);
 funcionarioRoutes.post("/recovery/validate", validateRecoveryController.handle);
 
 
-funcionarioRoutes.post("/auth", funcionarioAuthMiddleware, (req, res) => {
+funcionarioRoutes.get("/auth", funcionarioAuthMiddleware, (req, res) => {
     res.status(200).send("Funcionário autenticado com sucesso.");
 });
 

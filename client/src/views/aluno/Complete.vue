@@ -7,11 +7,12 @@
                     <h1>Termine seu registro</h1>
                     <div class="input-box" :class="{ 'focused': focused.nascimentoFocused }">
                         <label for="nascimento">Nascimento</label>
-                        <input type="nascimento" id="nascimento" v-model="aluno.nascimento" @focus="focused.nascimentoFocused = true"
-                            @blur="focused.nascimentoFocused = false" required>
+                        <input type="nascimento" id="nascimento" v-model="aluno.nascimento"
+                            @focus="focused.nascimentoFocused = true" @blur="focused.nascimentoFocused = false"
+                            required>
 
                     </div>
-                    
+
                     <div class="input-box" :class="{ 'focused': focused.enderecoFocused }">
                         <label for="endereco">Endereco</label>
                         <input type="adress" id="endereco" v-model="aluno.endereco"
@@ -21,15 +22,15 @@
                     <div class="input-box" :class="{ 'focused': focused.turmaFocused }">
                         <label for="turma">Turma</label>
 
-                        <input type="adress" id="turma" v-model="aluno.turma"
-                            @focus="focused.turmaFocused = true" @blur="focused.turmaFocused = false" required>
+                        <input type="adress" id="turma" v-model="aluno.turma" @focus="focused.turmaFocused = true"
+                            @blur="focused.turmaFocused = false" required>
                     </div>
 
                     <div class="input-box" :class="{ 'focused': focused.rmFocused }">
                         <label for="rm">RM</label>
 
-                        <input type="adress" id="rm" v-model="aluno.rm"
-                            @focus="focused.rmFocused = true" @blur="focused.rmFocused = false" required>
+                        <input type="adress" id="rm" v-model="aluno.rm" @focus="focused.rmFocused = true"
+                            @blur="focused.rmFocused = false" required>
                     </div>
 
                     <div class="button-box">
@@ -69,7 +70,7 @@ export default {
                 rm: ''
             },
             alerts: {
-                
+
             },
             focused: {
                 nascimentoFocused: false,
@@ -106,11 +107,11 @@ export default {
             }
         }
     },
-    created(){
+    created() {
         this.aluno.email = Cookies.get('email-aluno');
     }
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_complete.scss";
+@import "../../scss/pages/aluno/_complete.scss";
 </style>

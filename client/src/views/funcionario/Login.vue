@@ -28,7 +28,7 @@
                             <div class="d1">
                                 <label for="password">Senha</label>
                                 <input :type="inputType" id="password" v-model="funcionario.password" required
-                                       @focus="passwordFocused = true" @blur="passwordFocused = false">
+                                    @focus="passwordFocused = true" @blur="passwordFocused = false">
                             </div>
                             <div class="d2">
                                 <button type="button" @click="togglePasswordVisibility" :class="buttonClass"></button>
@@ -89,14 +89,14 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    if(Cookies.get('token-funcionario')){
+                    if (Cookies.get('token-funcionario')) {
                         Cookies.remove('token-funcionario');
                     }
-                    
+
                     document.cookie = `token-funcionario=${response.data.token}`;
-                    
+
                     alert("Tudo certo! 😉");
-                    router.push({name: "Funcionario"})
+                    router.push({ name: "Funcionario" })
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
@@ -105,11 +105,11 @@ export default {
             }
         },
         async getEmail() {
-            if(Cookies.get('email-init-funcionario')){
+            if (Cookies.get('email-init-funcionario')) {
                 this.funcionario.email = Cookies.get('email-init-funcionario');
             }
             else {
-                router.push({path: "/funcionario/init"});
+                router.push({ path: "/funcionario/init" });
             }
         }
     },
@@ -120,5 +120,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/funcionario/_login.scss";
+@import "../../scss/pages/funcionario/_login.scss";
 </style>

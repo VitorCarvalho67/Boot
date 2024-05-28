@@ -14,7 +14,8 @@
             </nav>
             <form @submit.prevent="submitForm">
                 <h1>Valide seu cadastro</h1>
-                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na plataforma.</p>
+                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na
+                    plataforma.</p>
                 <div class="input-box email">
                     <div class="d1">
                         <p>{{ this.professor.email }}</p>
@@ -210,5 +211,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/professor/_validate.scss";
+@import "../../scss/pages/professor/_validate.scss";
 </style>

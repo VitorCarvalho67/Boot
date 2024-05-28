@@ -6,9 +6,9 @@ import { AppError } from "../../../errors/error";
 const bcrypt = require('bcrypt');
 
 export class CreateAlunoUseCase {
-    async execute({ email, token }: CreateAlunoDTO): Promise<Pick<Aluno, "name" | "email" >>{
+    async execute({ email, token }: CreateAlunoDTO): Promise<Pick<Aluno, "name" | "email">> {
 
-        if( !email || !token ){
+        if (!email || !token) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

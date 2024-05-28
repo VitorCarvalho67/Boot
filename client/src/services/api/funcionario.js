@@ -2,7 +2,7 @@ import api from '../api';
 
 export const authFuncionario = async(token) => {
     try {
-        const response = await api.post('funcionario/auth', {}, {
+        const response = await api.get('funcionario/auth', {
             headers: {
                 authorization: `${token}`
             }

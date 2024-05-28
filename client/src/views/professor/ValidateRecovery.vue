@@ -14,8 +14,9 @@
             </nav>
             <form @submit.prevent="submitForm">
                 <h1>Termine sua recuperação</h1>
-                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para logar na plataforma.</p>
-                
+                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para
+                    logar na plataforma.</p>
+
                 <div class="input-box email">
                     <div class="d1">
                         <p>{{ this.infoProfessor.email }}</p>
@@ -35,7 +36,8 @@
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="infoProfessor.newPass" @input="checkPasswords(infoProfessor.newPass, infoProfessor.confirmNewPass)"
+                        <input :type="inputType" id="newPassword" v-model="infoProfessor.newPass"
+                            @input="checkPasswords(infoProfessor.newPass, infoProfessor.confirmNewPass)"
                             @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
                         <span class="alert" v-show="alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
@@ -121,21 +123,21 @@ export default {
                     router.push({ name: 'LoginProfessor' });
 
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
     },
     mixins: [validateRecoveryMixin],
-    created(){
+    created() {
         this.infoProfessor.email = Cookies.get('email-recovery-professor');
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/professor/_validateRecovery.scss";
+@import "../../scss/pages/professor/_validateRecovery.scss";
 </style>

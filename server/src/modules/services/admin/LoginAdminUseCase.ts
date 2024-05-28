@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 export class LoginAdminUseCase {
     async execute({ email, password }: LoginAdminDTO): Promise<{ token: string, admin: Pick<Admin, 'name' | 'email'> }> {
 
-        if( !email || !password ){
+        if (!email || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

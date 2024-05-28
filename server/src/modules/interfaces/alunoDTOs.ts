@@ -27,13 +27,26 @@ export interface validateRecoveryDTO {
 
 export interface CompleteAlunoDTO {
     email: string,
-    nascimento: Date,
-    turma: string,
-    rm: string
+    nascimento: string,
+    curso: string,
+    inicio: string,
+    rm: string,
     endereco: string
 }
 
 export interface UpdateCurriculoDTO {
     email: string,
     curriculo: string
+}
+
+export interface GetTurmasByCursoDTO {
+    curso: string,
+    turno: Turno
+}
+
+enum Turno {
+    MANHA = "MANHA",
+    TARDE = "TARDE",
+    NOITE = "NOITE",
+    INTEGRAL = "INTEGRAL"
 }

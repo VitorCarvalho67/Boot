@@ -10,11 +10,11 @@ const bcrypt = require('bcrypt');
 export class RegisterFuncionarioUseCase {
     async execute({ name, email, cargo }: RegisterFuncionarioDTO): Promise<Pick<Funcionario, "name" | "email" | "cargo">> {
 
-        if( !name || !email || !cargo ){
+        if (!name || !email || !cargo) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        if( cargo != "GESTAO" && cargo != "ADMINISTRACAO" && cargo != "DIRECAO" && cargo != "ORIENTACAO" ){
+        if (cargo != "GESTAO" && cargo != "ADMINISTRACAO" && cargo != "DIRECAO" && cargo != "ORIENTACAO") {
             throw new AppError("Cargo inválido.");
         }
 
@@ -35,7 +35,7 @@ export class RegisterFuncionarioUseCase {
             var cargoString = '';
 
             if (cargo == "GESTAO") cargoString = "gestão";
-            else if (cargo == "ADMINISTRACAO") cargoString = "administração" 
+            else if (cargo == "ADMINISTRACAO") cargoString = "administração"
             else if (cargo == "DIRECAO") cargoString = "direção"
             else if (cargo == "ORIENTACAO") cargoString = "orientação"
 

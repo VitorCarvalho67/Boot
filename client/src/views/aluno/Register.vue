@@ -25,7 +25,7 @@
                             @blur="focused.nameFocused = false" required>
 
                     </div>
-                    
+
                     <div class="input-box" :class="{ 'focused': focused.emailFocused }">
                         <label for="email">E-Mail</label>
 
@@ -59,8 +59,9 @@
                             </span>
                         </div>
                         <div class="d2">
-                            <button type="button" @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false"
-                                @click="togglePasswordVisibility" :class="buttonClass"></button>
+                            <button type="button" @focus="focused.passwordFocused = true"
+                                @blur="focused.passwordFocused = false" @click="togglePasswordVisibility"
+                                :class="buttonClass"></button>
                         </div>
                     </div>
 
@@ -75,8 +76,9 @@
                             </span>
                         </div>
                         <div class="d2">
-                            <button type="button" @focus="focused.confirmFocused = true" @blur="focused.confirmFocused = false"
-                                @click="togglePasswordConfirmVisibility" :class="buttonClassConfirm"></button>
+                            <button type="button" @focus="focused.confirmFocused = true"
+                                @blur="focused.confirmFocused = false" @click="togglePasswordConfirmVisibility"
+                                :class="buttonClassConfirm"></button>
                         </div>
                     </div>
                     <div class="button-box">
@@ -220,7 +222,7 @@ export default {
 
                     alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    alert("Ops.. Algo deu errado. 1😕\n" + response);
                 }
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
@@ -230,5 +232,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_register.scss";
+@import "../../scss/pages/aluno/_register.scss";
 </style>

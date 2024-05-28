@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            
+
         }
     },
     methods: {
@@ -38,5 +38,5 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_home.scss";
+@import "../../scss/pages/aluno/_home.scss";
 </style>

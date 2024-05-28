@@ -187,5 +187,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_validateRegister.scss";
+@import "../../scss/pages/aluno/_validateRegister.scss";
 </style>

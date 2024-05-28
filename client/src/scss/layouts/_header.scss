@@ -4,9 +4,18 @@ header {
     height: 80px;
     @include flex(row, space-between, center);
     background-color: $secondary-color-dark;
+    @include m-screen(600px) {
+        padding: 10px 40px;
+    }
+    @include m-screen(500px) {
+        padding: 5px 30px;
+    }
 
     div {
         width: 100px;
+        @include m-screen(500px) {
+            width: 80px;
+        }
 
         img {
             height: 100%;
@@ -19,6 +28,42 @@ header {
         > ul {
             @include flex(row, center, center);
             list-style-type: none;
+            @include m-screen(800px) {
+                @include flex(row-reverse, center, center);
+            }
+
+            > li {
+                @include m-screen(800px) {
+                    display: none;
+                }
+            }
+
+            > li:last-child {
+                @include m-screen(800px) {
+                    display: block;
+                }
+            }
+
+            .hamburger {
+                display: none;
+                height: 25px;
+                width: 25px;
+                button {
+                    height: 100%;
+                    width: 100%;
+                    background-color: transparent;
+                    border: none;
+                    filter: invert(100%);
+                    img {
+                        height: 100%;
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+                @include m-screen(800px) {
+                    display: block;
+                }
+            }
 
             li a {
                 margin-inline: 10px;
@@ -26,10 +71,11 @@ header {
                 text-transform: uppercase;
                 color: $font-color-dark;
                 font-size: 0.8rem;
+                margin-top: 2px;
                 @include flex(column, center, flex-start);
                 @include font-inter(400);
                 @include line;
-                @include m-screen(1120px){
+                @include m-screen(1120px) {
                     font-size: 0.7rem;
                     margin-inline: 8px;
                 }
@@ -48,7 +94,7 @@ header {
                 transition: 0.1s linear;
                 @include line;
                 @include flex-center;
-                @include m-screen(1120px){
+                @include m-screen(1120px) {
                     padding: 8px 18px;
                 }
 

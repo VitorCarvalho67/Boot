@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { RegisterEmpresaUseCase } from '../services/empresa/RegisterEmpresaUsecase';
+import { RegisterEmpresaUseCase } from '../services/empresa/RegisterEmpresaUseCase';
 import { LoginEmpresaUseCase } from '../services/empresa/LoginEmpresaUseCase'
 import { ValidateEmpresaUseCase } from '../services/empresa/ValidateEmpresaUseCase'
 import { RecoveryEmpresaUseCase } from '../services/empresa/RecoveryEmpresaUseCase'

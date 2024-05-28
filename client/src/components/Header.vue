@@ -18,6 +18,11 @@
                 </li>
                 <li><router-link to="/">Sobre Nós</router-link></li>
                 <li><router-link to="/register">Cadastre-se Agora</router-link></li>
+                <li class="hamburger">
+                    <button>
+                        <img :src="imgHamburger" alt="">
+                    </button>
+                </li>
                 <li><router-link to="/login">Entrar</router-link></li>
             </ul>
         </nav>
@@ -28,6 +33,7 @@
 import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import logo from '../assets/imgs/logoHeader.png'
+import hamburger from '../assets/icons/hamburger.png'
 
 export default defineComponent({
     name: 'Header',
@@ -42,6 +48,7 @@ export default defineComponent({
         return {
             router,
             imagem: logo,
+            imgHamburger: hamburger,
             spanView,
             toggleSpanView,
         }

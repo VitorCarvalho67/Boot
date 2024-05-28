@@ -14,8 +14,9 @@
             </nav>
             <form @submit.prevent="submitForm">
                 <h1>Termine sua recuperação</h1>
-                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para logar na plataforma.</p>
-                
+                <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para
+                    logar na plataforma.</p>
+
                 <div class="input-box email">
                     <div class="d1">
                         <p>{{ this.infoAluno.email }}</p>
@@ -35,7 +36,8 @@
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="infoAluno.newPass" @input="checkPasswords(infoAluno.newPass, infoAluno.confirmNewPass)"
+                        <input :type="inputType" id="newPassword" v-model="infoAluno.newPass"
+                            @input="checkPasswords(infoAluno.newPass, infoAluno.confirmNewPass)"
                             @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
                         <span class="alert" v-show="this.alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
@@ -108,9 +110,9 @@ export default {
             }
         }
     },
-    methods:{
+    methods: {
         async submitForm() {
-            if (this.infoAluno.newPass === this.infoAluno.confirmNewPass){    
+            if (this.infoAluno.newPass === this.infoAluno.confirmNewPass) {
                 try {
                     const response = await validateRecovery({
                         email: this.infoAluno.email,
@@ -122,24 +124,24 @@ export default {
                         router.push({ name: 'Login' });
 
                         alert("Tudo certo! 😉");
-                    } else{
+                    } else {
                         alert("Ops.. Algo deu errado. 😕\n" + response.message);
                     }
-                } catch(error){
+                } catch (error) {
                     alert("Ops.. Algo deu errado. 😕\n" + error.message);
                 }
-            } else{
+            } else {
                 alert("As senhas devem ser iguais!");
             }
         }
     },
     mixins: [validateRecoveryMixin],
-    created(){
+    created() {
         this.infoAluno.email = Cookies.get('email-recovery-aluno');
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_validateRecovery.scss";
+@import "../../scss/pages/aluno/_validateRecovery.scss";
 </style>

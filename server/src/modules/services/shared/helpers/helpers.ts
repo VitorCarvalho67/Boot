@@ -1,6 +1,5 @@
 import { IdentificadorEnum } from "../../../interfaces/sharedDTOs";
 import { prisma } from "../../../../prisma/client";
-import { AppError } from "../../../../errors/error";
 
 export const encontrarEntidadePeloEmail = async (email: string, identifier: IdentificadorEnum) => {
     switch (identifier) {

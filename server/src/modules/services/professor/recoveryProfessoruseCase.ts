@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt');
 export class RecoveryProfessorUseCase {
     async execute({ name, email }: RecoveryProfessorDTO) {
 
-        if( !name || !email ){
+        if (!name || !email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 

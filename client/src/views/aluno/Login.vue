@@ -29,8 +29,8 @@
                                     @focus="passwordFocused = true" @blur="passwordFocused = false">
                             </div>
                             <div class="d2">
-                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false" 
-                                @click="togglePasswordVisibility" :class="buttonClass"></button>
+                                <button type="button" @focus="passwordFocused = true" @blur="passwordFocused = false"
+                                    @click="togglePasswordVisibility" :class="buttonClass"></button>
                             </div>
                         </div>
                     </div>
@@ -97,15 +97,15 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    (Cookies.get('token'))? Cookies.remove('token') : null;
-                    (Cookies.get('email-aluno'))? Cookies.remove('email-aluno') : null;
-                    (Cookies.get('completed'))? Cookies.remove('completed') : null;
-            
-                    Cookies.set("token",`${response.data.token}`);
-                    Cookies.set("completed", (response.data.aluno.rm? "true" : "false"));
+                    (Cookies.get('token')) ? Cookies.remove('token') : null;
+                    (Cookies.get('email-aluno')) ? Cookies.remove('email-aluno') : null;
+                    (Cookies.get('completed')) ? Cookies.remove('completed') : null;
+
+                    Cookies.set("token", `${response.data.token}`);
+                    Cookies.set("completed", (response.data.aluno.rm ? "true" : "false"));
                     Cookies.set('email-aluno', this.userAluno.email)
 
-                    router.push({ path: '/aluno'});
+                    router.push({ path: '/aluno' });
                     alert("Tudo certo! 😉");
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
@@ -118,5 +118,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_login.scss";
+@import "../../scss/pages/aluno/_login.scss";
 </style>

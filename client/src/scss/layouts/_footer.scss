@@ -4,13 +4,15 @@ footer {
     @include flex(column, space-evenly, center);
     @include font-inter(200);
     @include m-screen(1400px) {
-        font-size: 0.8rem;
         height: 200px;
     }
     @include m-screen(1120px) {
-        font-size: 0.7rem;
         height: 180px;
     }
+    @include m-screen(680px) {
+        height: 200px;
+    }
+
     img {
         height: 40px;
         @include m-screen(1400px) {
@@ -35,7 +37,9 @@ footer {
                 color: $font-color-dark-2;
                 font-size: 1rem;
                 @include font-inter(700);
-
+                @include m-screen(1400px) {
+                    font-size: 0.8rem;
+                }
                 &:hover {
                     color: $secondary-color-orange;
                 }
@@ -52,6 +56,9 @@ footer {
     > p {
         color: $font-color-dark-2;
         font-size: 1rem;
+        @include m-screen(1400px) {
+            font-size: 0.8rem;
+        }
         @include font-inter(700);
     }
 }

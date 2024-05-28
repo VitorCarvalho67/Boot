@@ -8,11 +8,11 @@ const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryEmpresaUseCase {
     async execute({ cnpj, tempPass, newPass }: ValidateRecoveryEmpresaDTO): Promise<{ token: string, empresa: Pick<Empresa, 'cnpj' | 'email'> }> {
-        
-        if( !cnpj || !tempPass || !newPass ){
+
+        if (!cnpj || !tempPass || !newPass) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-        
+
         const empresa = await prisma.empresa.findFirst({
             where: {
                 cnpj

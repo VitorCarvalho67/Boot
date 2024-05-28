@@ -4,7 +4,9 @@ import {
     CreateVinculoController,
     AcceptVinculoController,
     GetVinculosController,
-    IgnoreVinculoController
+    IgnoreVinculoController,
+    GetUnlinkedsController,
+    GetCursosController
 } from "../../modules/controllers/sharedControllers";
 import {
     CreateAlunoController,
@@ -13,7 +15,8 @@ import {
     RecoveryAlunoController,
     ValidateRecoveryController,
     CompleteAlunoController,
-    UpdateCurriculoController
+    UpdateCurriculoController,
+    GetCourseYearController
 } from "../../modules/controllers/alunoControllers";
 
 const createPreAlunoController = new CreatePreAlunoController();
@@ -27,6 +30,9 @@ const createVinculoController = new CreateVinculoController();
 const acceptVinculoController = new AcceptVinculoController();
 const ignoreVinculoController = new IgnoreVinculoController();
 const getVinculosController = new GetVinculosController();
+const getUnlinkedsController = new GetUnlinkedsController();
+const getCursosController = new GetCursosController();
+const getCourseYearController = new GetCourseYearController();
 
 const alunoRoutes = Router();
 
@@ -41,8 +47,13 @@ alunoRoutes.post("/link/send", alunoAuthMiddleware, createVinculoController.hand
 alunoRoutes.post("/link/accept", alunoAuthMiddleware, acceptVinculoController.handle);
 alunoRoutes.post("/link/reject", alunoAuthMiddleware, ignoreVinculoController.handle);
 
-alunoRoutes.get("/links", alunoAuthMiddleware, getVinculosController.handle);
 alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");
 });
+
+alunoRoutes.get("/links", alunoAuthMiddleware, getVinculosController.handle);
+alunoRoutes.get("/unlinkeds", alunoAuthMiddleware, getUnlinkedsController.handle);
+alunoRoutes.get("/cursos", alunoAuthMiddleware, getCursosController.handle);
+alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, getCourseYearController.handle);
+
 export { alunoRoutes };

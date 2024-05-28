@@ -8,8 +8,8 @@ const bcrypt = require('bcrypt');
 
 export class LoginProfessorUseCase {
     async execute({ email, password }: LoginProfessorDTO): Promise<{ token: string, professor: Pick<Professor, 'name' | 'email' | 'tituloPrincipal'> }> {
-        
-        if( !email || !password ){
+
+        if (!email || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
@@ -21,7 +21,7 @@ export class LoginProfessorUseCase {
         });
 
         if (!professor) {
-            throw new AppError("Prrofessor não encontrado ou não validado");
+            throw new AppError("Professor não encontrado ou não validado");
         }
 
         const isPasswordValid = bcrypt.compareSync(password, professor.password);

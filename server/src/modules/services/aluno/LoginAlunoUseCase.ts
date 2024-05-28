@@ -9,10 +9,10 @@ const bcrypt = require('bcrypt');
 export class LoginAlunoUseCase {
     async execute({ email, password }: LoginAlunoDTO): Promise<{ token: string, aluno: Pick<Aluno, 'name' | 'email' | 'rm'> }> {
 
-        if( !email || !password ){
+        if (!email || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-        
+
         const aluno = await prisma.aluno.findFirst({
             where: {
                 email

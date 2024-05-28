@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { IdentificadorEnum, GetVinculosDTO } from "../../interfaces/sharedDTOs";
+import { GetVinculosDTO } from "../../interfaces/sharedDTOs";
 import { encontrarEntidadePeloEmail } from "./helpers/helpers";
 
 export class GetVinculosUseCase {
@@ -20,65 +20,44 @@ export class GetVinculosUseCase {
         }
 
         let aceitosData, enviadosData, recebidosData;
-        if (identifier === IdentificadorEnum.ALUNO) {
-            aceitosData = await prisma.vinculo.findMany({
-                where: {
-                    alunoId: entidade.id,
-                    accepted: true
-                },
-                include: {
-                    professor: true
-                }
-            });
-            enviadosData = await prisma.vinculo.findMany({
-                where: {
-                    alunoId: entidade.id,
-                    accepted: false
-                },
-                include: {
-                    professor: true
-                }
-            });
-            recebidosData = await prisma.vinculo.findMany({
-                where: {
-                    vinculoComAlunoId: entidade.id,
-                    accepted: false
-                },
-                include: {
-                    professor: true
-                }
-            });
-        } else if (identifier === IdentificadorEnum.PROFESSOR) {
-            aceitosData = await prisma.vinculo.findMany({
-                where: {
-                    professorId: entidade.id,
-                    accepted: true
-                },
-                include: {
-                    aluno: true
-                }
-            });
-            enviadosData = await prisma.vinculo.findMany({
-                where: {
-                    professorId: entidade.id,
-                    accepted: false
-                },
-                include: {
-                    aluno: true
-                }
-            });
-            recebidosData = await prisma.vinculo.findMany({
-                where: {
-                    vinculoComProfessorId: entidade.id,
-                    accepted: false
-                },
-                include: {
-                    aluno: true
-                }
-            });
-        } else {
-            throw new AppError("Identificador inválido.");
-        }
+        aceitosData = await prisma.vinculo.findMany({
+            where: {
+                OR: [
+                    { alunoId: entidade.id },
+                    { professorId: entidade.id },
+                    { vinculoComAlunoId: entidade.id },
+                    { vinculoComProfessorId: entidade.id },
+                ],
+                accepted: true
+            },
+            include: {
+                professor: true
+            }
+        });
+        enviadosData = await prisma.vinculo.findMany({
+            where: {
+                OR: [
+                    { alunoId: entidade.id },
+                    { professorId: entidade.id },
+                ],
+                accepted: false
+            },
+            include: {
+                professor: true
+            }
+        });
+        recebidosData = await prisma.vinculo.findMany({
+            where: {
+                OR: [
+                    { vinculoComAlunoId: entidade.id },
+                    { vinculoComProfessorId: entidade.id },
+                ],
+                accepted: false
+            },
+            include: {
+                professor: true
+            }
+        });
 
         const aceitos = await Promise.all(aceitosData.map(async (aceito: any) => {
             const sender = async () => {

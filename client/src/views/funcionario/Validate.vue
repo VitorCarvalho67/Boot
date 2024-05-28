@@ -14,7 +14,8 @@
             </nav>
             <form @submit.prevent="submitForm">
                 <h1>Valide seu cadastro</h1>
-                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na plataforma.</p>
+                <p>É necessário informar a senha temporária enviada no email e criar um senha nova para logar na
+                    plataforma.</p>
 
                 <div class="input-box email">
                     <div class="d1">
@@ -31,12 +32,13 @@
                         @focus="focused.temporaryPasswordFocused = true"
                         @blur="focused.temporaryPasswordFocused = false" required>
                 </div>
-                
+
                 <div class="input-box password" :class="{ 'focused': focused.passwordFocused }">
                     <div class="d1">
                         <label for="newPassword">Nova Senha</label>
-                        <input :type="inputType" id="newPassword" v-model="funcionario.newPassword" @input="checkPassword"
-                            @focus="focused.passwordFocused = true" @blur="focused.passwordFocused = false" required>
+                        <input :type="inputType" id="newPassword" v-model="funcionario.newPassword"
+                            @input="checkPassword" @focus="focused.passwordFocused = true"
+                            @blur="focused.passwordFocused = false" required>
                         <span class="alert" v-show="alerts.alertUppercase">
                             A senha deve conter ao menos uma letra maiúscula(A-Z)
                         </span>
@@ -190,34 +192,34 @@ export default {
 
                 if (200 <= response.status && response.status < 300) {
                     Cookies.remove('email-funcionario');
-                    
+
                     router.push({ path: '/funcionario/login' });
-                    
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
 
         },
 
-        async getEmail(){
-            if(Cookies.get('email-init-funcionario')){
+        async getEmail() {
+            if (Cookies.get('email-init-funcionario')) {
                 this.funcionario.email = Cookies.get('email-init-funcionario');
             }
-            else{
-                router.push({path: "/funcionario/init"});
+            else {
+                router.push({ path: "/funcionario/init" });
             }
         }
     },
-    async created(){
+    async created() {
         await this.getEmail();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/funcionario/_validate.scss";
+@import "../../scss/pages/funcionario/_validate.scss";
 </style>

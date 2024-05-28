@@ -19,6 +19,11 @@ main {
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
+    @include m-screen(1720px) {
+        height: 75%;
+        width: 40%;
+    }
+    @include m-screen-box;
 
     nav {
         width: 100%;
@@ -74,6 +79,14 @@ main {
             @include font-inter(300);
             font-size: 2.5rem;
             margin-top: 10px;
+            @include m-screen(1600px) {
+                margin-top: 30px;
+                font-size: 2rem;
+            }
+            @include m-screen(1250px) {
+                margin-top: 20px;
+                font-size: 1.8rem;
+            }
         }
 
         .input-box {
@@ -85,6 +98,9 @@ main {
             background-color: $terciary-color-dark;
             border-left: solid 3px $terciary-color-dark;
             margin: 15px 0px;
+            @include m-screen(1500px) {
+                height: 55px;
+            }
 
             &.focused {
                 border-left: solid 3px $secondary-color-orange;
@@ -123,6 +139,9 @@ main {
 
             .d1 {
                 width: 95%;
+                @include m-screen(1200px) {
+                    width: 90%;
+                }
             }
 
             .d2 {
@@ -146,6 +165,10 @@ main {
 
                 .hide {
                     background-image: url("../../assets/icons/olho-2.png");
+                }
+
+                @include m-screen(1200px) {
+                    width: 10%;
                 }
             }
         }
@@ -187,6 +210,13 @@ p {
             color: $primary-color-orange;
         }
     }
+
+    @include m-screen(1820px) {
+        margin-top: 20px;
+    }
+    @include m-screen(600px) {
+        @include flex(row, flex-end, center);
+    }
 }
 
 #box1 {
@@ -196,8 +226,22 @@ p {
         height: 80%;
         transform: rotatey(180deg);
     }
+    @include m-screen(1250px) {
+        height: 75%;
+        width: 30%;
+    }
+    @include m-screen(1250px) {
+        height: 75%;
+        width: 30%;
+    }
+    @include m-screen(1150px) {
+        display: none;
+    }
 }
 
 #box2 {
     background-color: $secondary-color-dark;
+    @include m-screen(1150px) {
+        background-color: $primary-color-dark;
+    }
 }

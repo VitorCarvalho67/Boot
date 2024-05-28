@@ -6,7 +6,7 @@ import { AppError } from "../../../errors/error";
 export class InitProfessorUseCase {
     async execute({ email }: InitProfessorDTO): Promise<{ professor: Pick<Professor, 'name' | 'email' | 'validated'> }> {
 
-        if( !email ){
+        if (!email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
@@ -17,7 +17,7 @@ export class InitProfessorUseCase {
         });
 
         if (!professor) {
-            throw new AppError("Prrofessor não encontrado");
+            throw new AppError("Professor não encontrado");
         }
 
         return {

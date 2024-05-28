@@ -8,7 +8,7 @@ const bcrypt = require('bcrypt');
 
 export class ValidateRecoveryUseCase {
     async execute({ email, recoveryPass, newPass }: ValidateRecoveryDTO): Promise<{ token: string, funcionario: Pick<Funcionario, 'name' | 'email' | 'cargo'> }> {
-        
+
         const errors = [];
 
         if (!email) {

@@ -97,7 +97,7 @@ export default {
                     Cookies.set('token-admin', `${response.data.token}`, { expires: 10 });
 
                     alert("Tudo certo! 😉");
-                    router.push({path: "/admin"});
+                    router.push({ path: "/admin" });
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
@@ -110,5 +110,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/admin/_login.scss"
+@import "../../scss/pages/admin/_login.scss"
 </style>

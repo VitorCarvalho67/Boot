@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { ReagirVinculoDTO, IdentificadorEnum } from "../../interfaces/sharedDTOs";
+import { ReagirVinculoDTO } from "../../interfaces/sharedDTOs";
 import { encontrarEntidadePeloEmail } from "./helpers/helpers";
 
 export class AcceptVinculoUseCase {
@@ -8,8 +8,8 @@ export class AcceptVinculoUseCase {
         if (!email || !sender || !recipient || !senderIdentifier || !recipientIdentifier) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
-        
-        if(recipient != email){
+
+        if (recipient != email) {
             throw new AppError("Rementente inválido");
         }
 
@@ -35,6 +35,10 @@ export class AcceptVinculoUseCase {
 
         if (!vinculoExists) {
             throw new AppError("Solicitação inexistente");
+        }
+
+        if (vinculoExists.accepted) {
+            throw new AppError("Solicitação já aceita");
         }
 
         await prisma.vinculo.update({

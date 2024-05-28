@@ -26,5 +26,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/shared/_perfilAluno.scss";
+@import "../../scss/pages/shared/_perfilAluno.scss";
 </style>

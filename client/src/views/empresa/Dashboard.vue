@@ -24,7 +24,7 @@ export default {
     },
     data() {
         return {
-            
+
         }
     },
     methods: {
@@ -39,5 +39,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/empresa/_dashboard.scss";
+@import "../../scss/pages/empresa/_dashboard.scss";
 </style>

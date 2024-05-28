@@ -28,7 +28,7 @@
                             <div class="d1">
                                 <label for="password">Senha</label>
                                 <input :type="inputType" id="password" v-model="professor.password" required
-                                       @focus="passwordFocused = true" @blur="passwordFocused = false">
+                                    @focus="passwordFocused = true" @blur="passwordFocused = false">
                             </div>
                             <div class="d2">
                                 <button type="button" @click="togglePasswordVisibility" :class="buttonClass"></button>
@@ -91,36 +91,36 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    if(Cookies.get('token-professor')){
+                    if (Cookies.get('token-professor')) {
                         Cookies.remove('token-professor');
                     }
-                    
+
                     document.cookie = `token-professor=${response.data.token}`;
-                    router.push({path: "/professor"});
-                    
+                    router.push({ path: "/professor" });
+
                     alert("Tudo certo! 😉");
-                } else{
+                } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
-            } catch(error){
+            } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         },
-        async getEmail(){
-            if(Cookies.get('email-init-professor')){
+        async getEmail() {
+            if (Cookies.get('email-init-professor')) {
                 this.professor.email = Cookies.get('email-init-professor');
             }
-            else{
-                router.push({path: "/professor/init"});
+            else {
+                router.push({ path: "/professor/init" });
             }
         }
     },
-    async created(){
+    async created() {
         await this.getEmail();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/professor/_login.scss";
+@import "../../scss/pages/professor/_login.scss";
 </style>
