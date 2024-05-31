@@ -38,32 +38,6 @@
     }
 }
 
-@mixin m-screen-box {
-    @include m-screen(1250px) {
-        height: 80%;
-        width: 50%;
-    }
-    @include m-screen(900px) {
-        height: 80%;
-        width: 80%;
-        border-radius: 0px;
-    }
-    @include m-screen(1150px) {
-        height: 90%;
-        width: 60%;
-    }
-    @include m-screen(850px) {
-        height: 95%;
-        width: 80%;
-    }
-    @include m-screen(600px) {
-        height: 95%;
-        width: 98%;
-    }
-    @include m-screen(400px) {
-        padding: 0px;
-    }
-}
 
 @mixin line {
     &:after {
@@ -100,4 +74,69 @@
     -moz-#{$property}: $value;
     -ms-#{$property}: $value;
     -o-#{$property}: $value;
+}
+
+@mixin m-screen-box {
+    @include m-screen(1250px) {
+        height: 80%;
+        width: 50%;
+    }
+    @include m-screen(1150px) {
+        height: 90%;
+        width: 60%;
+    }
+    @include m-screen(900px) {
+        height: 80%;
+        width: 80%;
+        border-radius: 0px;
+    }
+    @include m-screen(850px) {
+        height: 95%;
+        width: 80%;
+    }
+    @include m-screen(600px) {
+        height: 95%;
+        width: 98%;
+    }
+    @include m-screen(400px) {
+        padding: 0px;
+    }
+}
+
+@mixin m-screen-init {
+    @include m-screen(1650px) {
+        height: 80%;
+        width: 40%;
+    }
+    @include m-screen(1150px) {
+        height: 90%;
+        width: 60%;
+    }
+    @include m-screen(900px) {
+        height: 80%;
+        width: 80%;
+        border-radius: 0px;
+    }
+    @include m-screen(850px) {
+        height: 95%;
+        width: 80%;
+    }
+    @include m-screen(600px) {
+        height: 95%;
+        width: 98%;
+    }
+    @include m-screen(400px) {
+        padding: 0px;
+    }
+}
+
+@mixin m-screen-h1 {
+    @include m-screen(1800px) {
+        margin-top: 30px;
+        font-size: 2rem;
+    }
+    @include m-screen(1250px) {
+        margin-top: 20px;
+        font-size: 1.8rem;
+    }
 }

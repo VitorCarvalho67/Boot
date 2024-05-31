@@ -70,14 +70,7 @@ main {
             @include font-inter(300);
             font-size: 2.5rem;
             margin-top: 50px;
-            @include m-screen(1800px) {
-                margin-top: 30px;
-                font-size: 2rem;
-            }
-            @include m-screen(1250px) {
-                margin-top: 20px;
-                font-size: 1.8rem;
-            }
+            @include m-screen-h1;
         }
 
         p {
