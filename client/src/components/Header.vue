@@ -63,7 +63,6 @@ export default defineComponent({
 });
 </script>
 
-
 <style lang="scss" scoped>
 @import "../scss/layouts/_header.scss";
 </style>
