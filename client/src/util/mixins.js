@@ -1,3 +1,5 @@
+import Cookies from 'js-cookie';
+
 export const validateRecoveryMixin = {
     data(){
         return{
@@ -108,6 +110,24 @@ export const EmpresaMixin = {
             if (typeof this.cnpjValidate === 'function') {
                 this.cnpjValidate();
             }
+        }
+    }
+}
+
+export const LoginMixins = {
+    methods: {
+        login(token, valor) {
+            const tokens = ['token', 'token-professor', 'token-admin', 'token-funcionario', 'token-empresa'];
+            const  entidades = ['aluno', 'professor', 'admin', 'funcionario', 'empresa'];
+            
+            Cookies.set(`${token}`, `${valor}`);
+            Cookies.set("entidade", entidades[tokens.indexOf(token)]);
+        
+            tokens.forEach(tokenCookie => {
+                if (tokenCookie !== token) {
+                Cookies.remove(tokenCookie);
+                }
+            });
         }
     }
 }

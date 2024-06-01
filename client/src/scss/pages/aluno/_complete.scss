@@ -13,6 +13,20 @@ main {
     }
 }
 
+.editValue{
+    height: 18px;
+    width: 18px;
+    border: none;
+    background-color: transparent;
+    background-position: center;
+    background-image: url("../../assets/icons/lapis.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: invert(100%);
+    cursor: pointer;
+    display: inline-block;
+}
+
 .box {
     height: 65%;
     width: 30%;

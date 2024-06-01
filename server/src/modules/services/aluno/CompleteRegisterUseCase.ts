@@ -9,7 +9,7 @@ export class CompleteAlunoUseCase {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        const [dia, mes, ano] = nascimento.split('/');
+        const [ano, mes, dia] = nascimento.split('-');
 
         const stringNascimento = new Date(`${ano}-${mes}-${dia}T00:00:00Z`);
         const nascimentoISO = stringNascimento.toISOString();
@@ -36,6 +36,16 @@ export class CompleteAlunoUseCase {
                         name: curso,
                     }
                 });
+
+                const rmExists = await prisma.aluno.findUnique({
+                    where: {
+                        rm,
+                    }
+                });
+    
+                if(rmExists){
+                    throw new AppError("Outro aluno já usa esse RM");
+                }
 
                 if (!cursoExists) {
                     throw new AppError("Curso não encontrado.");

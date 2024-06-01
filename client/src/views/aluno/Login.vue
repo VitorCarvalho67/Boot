@@ -58,6 +58,7 @@ import logo from '../../assets/imgs/imageMain.png';
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
 import { loginAluno } from '../../services/api/aluno';
+import { LoginMixins } from '../../util/mixins.js';
 
 export default {
     name: 'Login',
@@ -101,7 +102,8 @@ export default {
                     (Cookies.get('email-aluno')) ? Cookies.remove('email-aluno') : null;
                     (Cookies.get('completed')) ? Cookies.remove('completed') : null;
 
-                    Cookies.set("token", `${response.data.token}`);
+                    this.login("token", `${response.data.token}`);
+                    
                     Cookies.set("completed", (response.data.aluno.rm ? "true" : "false"));
                     Cookies.set('email-aluno', this.userAluno.email)
 
@@ -114,7 +116,8 @@ export default {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
-    }
+    },
+    mixins: [LoginMixins]
 }
 </script>
 <style lang="scss" scoped>

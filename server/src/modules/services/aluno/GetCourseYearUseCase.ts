@@ -3,16 +3,16 @@ import { AppError } from "../../../errors/error";
 import { GetTurmasByCursoDTO } from "../../interfaces/alunoDTOs"
 
 export class GetTurmasByCursoUseCase {
-    async execute({curso, turno}: GetTurmasByCursoDTO){
+    async execute({ curso, turno }: GetTurmasByCursoDTO) {
         if (!curso || !turno) {
-            throw new AppError("Parâmentros insufientes ou inválidos.");
+            throw new AppError("Parâmentros insufientes ou inválidos. " + curso + " " + turno);
         }
 
         const cursoExists = await prisma.curso.findFirst({
             where: {
                 name: curso,
                 turno: turno
-             },
+            },
         });
 
         if (!cursoExists) {
@@ -22,13 +22,13 @@ export class GetTurmasByCursoUseCase {
         const turmas = await prisma.turma.findMany({
             where: {
                 cursoId: cursoExists.id
-             },
+            },
         });
 
         if (!turmas) {
             throw new AppError("Turmas não encontradas para esse curso.");
         }
-        
+
         return turmas.map(turma => ({
             inicio: turma.inicio
         }));

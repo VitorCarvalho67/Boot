@@ -44,7 +44,7 @@ export interface GetTurmasByCursoDTO {
     turno: Turno
 }
 
-enum Turno {
+export enum Turno {
     MANHA = "MANHA",
     TARDE = "TARDE",
     NOITE = "NOITE",

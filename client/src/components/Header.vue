@@ -1,7 +1,7 @@
 <template>
     <header>
         <div>
-            <router-link to="/"><img :src="imagem" alt="Img"></router-link>
+            <router-link :to="this.path"><img :src="imagem" alt="Img"></router-link>
         </div>
         <nav>
             <ul>
@@ -35,12 +35,18 @@ import { defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import logo from '../assets/imgs/logoHeader.png';
 import hamburger from '../assets/icons/hamburger.png';
+import Cookies from 'js-cookie';
 import Anside from './Anside.vue';
 
 export default defineComponent({
     name: 'Header',
     components: {
         Anside
+    },
+    data() {
+        return {
+            path: '/'
+        }
     },
     setup() {
         const router = useRouter();
@@ -59,6 +65,36 @@ export default defineComponent({
             showAnside,
             toggleSpanView,
         };
+    },
+    created() {
+        let entidade = Cookies.get("entidade");
+
+        switch (entidade) {
+            case "aluno":
+                this.path = "/aluno";
+                break;
+
+            case "admin":
+                this.path = "/admin";
+                break;
+
+            case "professor":
+                this.path = "/professor";
+                break;
+
+            case "funcionario":
+                this.path = "/funcionario";
+                break;
+
+            case "empresa":
+                this.path = "/empresa";
+                break;
+
+            default:
+                break;
+        }
+
+        console.log(this.path);
     }
 });
 </script>

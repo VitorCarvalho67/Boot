@@ -65,6 +65,10 @@ export const alunoRoutes = [
     {
         path: "/register/complete",
         name: "Complete",
-        component: Complete
+        component: Complete,
+        component: Complete,
+        beforeEnter: async (to, from, next) => {
+            !(await isCompletedAluno()) ? next() : next("/aluno/me");
+        }
     }
 ];

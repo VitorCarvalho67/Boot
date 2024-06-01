@@ -52,6 +52,7 @@ import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
 import { loginFuncionario } from '../../services/api/funcionario';
+import { LoginMixins } from '../../util/mixins.js';
 
 export default {
     name: 'LoginFuncionario',
@@ -89,11 +90,7 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    if (Cookies.get('token-funcionario')) {
-                        Cookies.remove('token-funcionario');
-                    }
-
-                    document.cookie = `token-funcionario=${response.data.token}`;
+                    this.login("token-funcionario", `${response.data.token}`);
 
                     alert("Tudo certo! 😉");
                     router.push({ name: "Funcionario" })
@@ -115,7 +112,8 @@ export default {
     },
     async created() {
         await this.getEmail();
-    }
+    },
+    mixins: [LoginMixins]
 }
 </script>
 

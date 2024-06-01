@@ -7,6 +7,7 @@ import { ValidateRecoveryUseCase } from "../services/aluno/ValidateRecoveryUseCa
 import { CompleteAlunoUseCase } from "../services/aluno/CompleteRegisterUseCase";
 import { UpdateCurriculoUseCase } from "../services/aluno/UpdateCurriculoUseCase";
 import { GetTurmasByCursoUseCase } from "../services/aluno/GetCourseYearUseCase";
+import { Turno } from "../interfaces/alunoDTOs"
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -72,7 +73,7 @@ export class CompleteAlunoController {
     async handle(req: Request, res: Response) {
         const { nascimento, endereco, curso, inicio, rm } = req.body;
         const email = req.body.entidade.email;
-        
+
         const completeAluno = new CompleteAlunoUseCase();
 
         const result = await completeAluno.execute({ email, nascimento, endereco, curso, inicio, rm });
@@ -95,7 +96,7 @@ export class UpdateCurriculoController {
 
 export class GetCourseYearController {
     async handle(req: Request, res: Response) {
-        const { curso, turno } = req.body;
+        const { curso, turno } = req.query as { curso: string; turno: Turno };
 
         const getTurmasByCursoUseCase = new GetTurmasByCursoUseCase();
 
