@@ -17,7 +17,7 @@ model Aluno {
     bannerImagem        String?
     dataNascimento      DateTime?
     endereco            String?
-    curriculo           String?
+    curriculo           String?   @default("") @db.VarChar(5000)
     turmas              String? // Formato "id1,id2,id3"
     sobre               String?
     rm                  String?   @unique
@@ -117,8 +117,8 @@ enum Turno {
 
 model Turma {
     id        String   @id @default(uuid())
-    inicio    String // Formato "AAAA-MM-DD"
-    fim       String // Formato "AAAA-MM-DD"
+    inicio    String
+    fim       String
     curso     Curso    @relation(fields: [cursoId], references: [id])
     cursoId   String
     createdAt DateTime @default(now())

@@ -54,6 +54,7 @@ import img from '../../assets/imgs/imageAdmin.png';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
 import { loginAdmin } from '../../services/api/admin';
+import { LoginMixins } from '../../util/mixins.js';
 
 export default {
     name: 'LoginAdmin',
@@ -93,8 +94,7 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.remove('token-admin');
-                    Cookies.set('token-admin', `${response.data.token}`, { expires: 10 });
+                    this.login('token-admin', `${response.data.token}`);
 
                     alert("Tudo certo! 😉");
                     router.push({ path: "/admin" });
@@ -105,7 +105,8 @@ export default {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
         }
-    }
+    },
+    mixins: [LoginMixins]
 }
 </script>
 

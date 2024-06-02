@@ -54,7 +54,7 @@ import img from '../../assets/imgs/imageMain.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { EmpresaMixin } from '../../util/mixins'
+import { EmpresaMixin, LoginMixins } from '../../util/mixins'
 import { loginEmpresa } from '../../services/api/empresa';
 
 export default {
@@ -96,10 +96,8 @@ export default {
                 });
 
                 if (response.status >= 200 && response.status < 300) {
-                    if (Cookies.get('token-empresa')) {
-                        Cookies.remove('token-empresa');
-                    }
-                    document.cookie = `token-empresa=${response.data.token}`;
+                    this.login("token-empresa", `${response.data.token}`);
+                    
                     alert("Tudo certo! 😉");
                     router.push({ path: "/empresa" });
                 } else {
@@ -110,7 +108,7 @@ export default {
             }
         }
     },
-    mixins: [EmpresaMixin]
+    mixins: [EmpresaMixin, LoginMixins]
 }
 </script>
 

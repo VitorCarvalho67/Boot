@@ -114,5 +114,10 @@ export async function isInitingProfessor() {
 
 // isCompleted
 export async function isCompletedAluno() {
-    return (Cookies.get('completed') && Cookies.get('completed') == true && await isAuthAluno() ? true : false) ? true : false;
+    const completed = Cookies.get('completed') === 'true';
+    const authAluno = await isAuthAluno();
+    console.log("Perfil completo: " + completed);
+    console.log("Autenticado: " + authAluno);
+    console.log("Perfil completo e autenticado: " + (completed && authAluno));
+    return (completed && authAluno);
 }

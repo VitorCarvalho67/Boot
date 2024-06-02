@@ -16,7 +16,9 @@ import {
     ValidateRecoveryController,
     CompleteAlunoController,
     UpdateCurriculoController,
-    GetCourseYearController
+    GetCourseYearController,
+    GetCurriculoController,
+    GetEmailController
 } from "../../modules/controllers/alunoControllers";
 
 const createPreAlunoController = new CreatePreAlunoController();
@@ -33,6 +35,8 @@ const getVinculosController = new GetVinculosController();
 const getUnlinkedsController = new GetUnlinkedsController();
 const getCursosController = new GetCursosController();
 const getCourseYearController = new GetCourseYearController();
+const getCurriculoController = new GetCurriculoController();
+const getEmailController = new GetEmailController();
 
 const alunoRoutes = Router();
 
@@ -55,5 +59,7 @@ alunoRoutes.get("/links", alunoAuthMiddleware, getVinculosController.handle);
 alunoRoutes.get("/unlinkeds", alunoAuthMiddleware, getUnlinkedsController.handle);
 alunoRoutes.get("/cursos", alunoAuthMiddleware, getCursosController.handle);
 alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, getCourseYearController.handle);
+alunoRoutes.get("/curriculo", alunoAuthMiddleware, getCurriculoController.handle);
+alunoRoutes.get("/email", alunoAuthMiddleware,getEmailController.handle);
 
 export { alunoRoutes };

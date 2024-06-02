@@ -53,6 +53,7 @@ import Footer from '../../components/Footer.vue';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
 import { loginProfessor } from '../../services/api/professor';
+import { LoginMixins } from '../../util/mixins.js';
 
 export default {
     name: 'LoginProfessor',
@@ -91,11 +92,7 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    if (Cookies.get('token-professor')) {
-                        Cookies.remove('token-professor');
-                    }
-
-                    document.cookie = `token-professor=${response.data.token}`;
+                    this.login("token-professor", `${response.data.token}`);
                     router.push({ path: "/professor" });
 
                     alert("Tudo certo! 😉");
@@ -117,7 +114,8 @@ export default {
     },
     async created() {
         await this.getEmail();
-    }
+    },
+    mixins: [LoginMixins]
 }
 </script>
 

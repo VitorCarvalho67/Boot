@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const server_url = 'http://localhost:3333/'
-// const url = 'https://8f8cb937a1319a14d2b5c31410da01fd.serveo.net/'
+// const server_url = 'https://775238df4fdf41270a2b5ee9721545f9.serveo.net';
+const server_url = 'http://localhost:3333/';
 
 const api = axios.create({
     baseURL: server_url

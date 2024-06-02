@@ -5,7 +5,7 @@ import { AppError } from "../../../errors/error";
 export class UpdateCurriculoUseCase {
     async execute({ email, curriculo }: UpdateCurriculoDTO) {
 
-        if (!email || !curriculo) {
+        if (!email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
