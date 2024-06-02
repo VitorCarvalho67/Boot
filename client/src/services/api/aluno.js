@@ -125,18 +125,39 @@ export const getInicios = async (infoTurma, token) => {
     }
 }
 
-export const acceptVinculo = async (infoVinculo, token) => {
+export const acceptVinculoAluno = async (infoVinculo, token) => {
     try {
-        const response = await api.post('aluno/link/accept', infoVinculo);
+        const response = await api.post('aluno/link/accept', infoVinculo,{
+            headers:{
+                authorization: `${token}`
+            }
+        });
         return response;
     } catch (error) {
         return error.response.data;
     }
 }
 
-export const rejectVinculo = async (infoVinculo, token) => {
+export const rejectVinculoAluno = async (infoVinculo, token) => {
     try {
-        const response = await api.post('aluno/link/reject', infoVinculo);
+        const response = await api.post('aluno/link/reject', infoVinculo,{
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const removeVinculoAluno = async (infoVinculo, token) => {
+    try {
+        const response = await api.post('aluno/link/delete', infoVinculo,{
+            headers: {
+                authorization: `${token}`
+            }
+        });
         return response;
     } catch (error) {
         return error.response.data;
