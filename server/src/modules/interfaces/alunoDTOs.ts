@@ -44,6 +44,10 @@ export interface GetTurmasByCursoDTO {
     turno: Turno
 }
 
+export interface GetCurriculoDTO {
+    email: string
+}
+
 export enum Turno {
     MANHA = "MANHA",
     TARDE = "TARDE",

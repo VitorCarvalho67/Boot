@@ -6,11 +6,15 @@ import { GetVinculosUseCase } from "../services/shared/GetVinculosUseCase";
 import { IgnoreVinculoUseCase } from "../services/shared/IgnoreVinculoUseCase";
 import { GetUnlinkedsUseCase } from "../services/shared/GetUnlinkedsUseCase";
 import { GetCursosUseCase } from "../services/shared/GetCursosUseCase";
+import { GetCurriculoUseCase } from "../services/shared/GetCurriculoUseCase";
+import { IdentificadorEnum } from "../interfaces/sharedDTOs";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
         const { sender, recipient, senderIdentifier, recipientIdentifier } = req.body;
         const email = req.body.entidade.email;
+
+        console.log(email, { sender, recipient, senderIdentifier, recipientIdentifier });
 
         const createVinculoUseCase = new CreateVinculoUseCase();
 
@@ -68,10 +72,10 @@ export class IgnoreVinculoController {
 export class GetVinculosController {
     async handle(req: Request, res: Response) {
         const email = req.body.entidade.email;
-        const identifier = req.body.identifier;
+        const identifier = req.query.identifier as IdentificadorEnum;
 
         const getVinculosUseCase = new GetVinculosUseCase();
-        
+
         const result = await getVinculosUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
@@ -84,13 +88,12 @@ export class GetUnlinkedsController {
         const identifier = req.body.identifier;
 
         const getUnlinkedsUseCase = new GetUnlinkedsUseCase();
-        
+
         const result = await getUnlinkedsUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
     }
 }
-
 
 export class GetCursosController {
     async handle(req: Request, res: Response) {
@@ -98,6 +101,18 @@ export class GetCursosController {
         const getCursoUseCase = new GetCursosUseCase();
 
         const result = await getCursoUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetCurriculoController {
+    async handle(req: Request, res: Response) {
+        const { rm } = req.query as { rm: string };
+
+        const getCurriculoUseCase = new GetCurriculoUseCase();
+
+        const result = await getCurriculoUseCase.execute(rm);
 
         return res.status(201).json(result);
     }

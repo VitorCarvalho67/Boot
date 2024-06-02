@@ -89,9 +89,14 @@ export const rejectVinculo =  async(infoVinculo) => {
     }
 }
 
-export const showVinculo =  async(infoVinculo) => {
+export const getVinculosProfessor = async (info, token) => {
     try {
-        const response = await api.get('professor/links', infoVinculo);
+        const response = await api.get('professor/links', {
+            params: info,
+            headers: {
+                authorization: `${token}`
+            }
+        });
         return response;
     } catch (error) {
         return error.response.data;

@@ -15,7 +15,7 @@ export const sharedRoutes = [
         component: Home
     },
     {
-        path: "/aluno/profile/:name",
+        path: "/aluno/profile/:rm",
         name: "PublicPerfilAluno",
         component: PublicPerfilAluno
     },

@@ -7,6 +7,7 @@ import { ValidateRecoveryUseCase } from "../services/aluno/ValidateRecoveryUseCa
 import { CompleteAlunoUseCase } from "../services/aluno/CompleteRegisterUseCase";
 import { UpdateCurriculoUseCase } from "../services/aluno/UpdateCurriculoUseCase";
 import { GetTurmasByCursoUseCase } from "../services/aluno/GetCourseYearUseCase";
+import { GetCurriculoUseCase } from "../services/aluno/GetCurriculoUseCase";
 import { Turno } from "../interfaces/alunoDTOs"
 
 export class CreateAlunoController {
@@ -84,7 +85,8 @@ export class CompleteAlunoController {
 
 export class UpdateCurriculoController {
     async handle(req: Request, res: Response) {
-        const { email, curriculo } = req.body;
+        const { curriculo } = req.body;
+        const email = req.body.entidade.email;
 
         const updateCurriculo = new UpdateCurriculoUseCase();
 
@@ -101,6 +103,28 @@ export class GetCourseYearController {
         const getTurmasByCursoUseCase = new GetTurmasByCursoUseCase();
 
         const result = await getTurmasByCursoUseCase.execute({ curso, turno });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetCurriculoController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const getCurriculoUseCase = new GetCurriculoUseCase();
+
+        const result = await getCurriculoUseCase.execute({ email });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetEmailController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const result = { email: email };
 
         return res.status(201).json(result);
     }
