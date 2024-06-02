@@ -6,7 +6,8 @@ import {
     GetVinculosController,
     IgnoreVinculoController,
     GetUnlinkedsController,
-    GetCursosController
+    GetCursosController,
+    DeleteVinculoController
 } from "../../modules/controllers/sharedControllers";
 import {
     CreateAlunoController,
@@ -37,6 +38,7 @@ const getCursosController = new GetCursosController();
 const getCourseYearController = new GetCourseYearController();
 const getCurriculoController = new GetCurriculoController();
 const getEmailController = new GetEmailController();
+const deleteVinculoController = new DeleteVinculoController();
 
 const alunoRoutes = Router();
 
@@ -50,6 +52,7 @@ alunoRoutes.post("/recovery/validate", validateRecoveryController.handle);
 alunoRoutes.post("/link/send", alunoAuthMiddleware, createVinculoController.handle);
 alunoRoutes.post("/link/accept", alunoAuthMiddleware, acceptVinculoController.handle);
 alunoRoutes.post("/link/reject", alunoAuthMiddleware, ignoreVinculoController.handle);
+alunoRoutes.post("/link/delete", alunoAuthMiddleware, deleteVinculoController.handle);
 
 alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");

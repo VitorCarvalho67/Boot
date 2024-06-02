@@ -33,10 +33,6 @@ export class DeleteVinculoUseCase {
             },
         });
 
-        if (!vinculoExists) {
-            throw new AppError("Vínculo ou solicitação de vínculo inexistente");
-        }
-
         const vinculoAlternativeExists = await prisma.vinculo.findFirst({
             where: {
                 alunoId: (senderIdentifier == "ALUNO") ? recipientData.id : null,
@@ -46,13 +42,13 @@ export class DeleteVinculoUseCase {
             },
         });
 
-        if (!vinculoAlternativeExists) {
+        if (!vinculoAlternativeExists && !vinculoExists) {
             throw new AppError("Vínculo ou solicitação de vínculo inexistente");
         }
 
         await prisma.vinculo.delete({
             where: {
-                id: vinculoExists ? vinculoExists.id : vinculoAlternativeExists.id
+                id: vinculoExists ? vinculoExists.id : (vinculoAlternativeExists ? vinculoAlternativeExists.id : "")
             }
         });
 

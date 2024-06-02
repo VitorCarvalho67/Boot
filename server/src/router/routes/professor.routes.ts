@@ -5,7 +5,8 @@ import {
     AcceptVinculoController,
     GetVinculosController,
     IgnoreVinculoController,
-    GetUnlinkedsController
+    GetUnlinkedsController,
+    DeleteVinculoController
 } from "../../modules/controllers/sharedControllers";
 import {
     ValidateProfessorController,
@@ -23,6 +24,7 @@ const validateRecoveryController = new ValidateRecoveryController();
 const createVinculoController = new CreateVinculoController();
 const acceptVinculoController = new AcceptVinculoController();
 const ignoreVinculoController = new IgnoreVinculoController();
+const deleteVinculoController = new DeleteVinculoController();
 const getVinculosController = new GetVinculosController();
 const getUnlinkedsController = new GetUnlinkedsController();
 
@@ -35,6 +37,7 @@ professorRoutes.post("/recovery/validate", validateRecoveryController.handle);
 professorRoutes.post("/link/send", professorAuthMiddleware, createVinculoController.handle);
 professorRoutes.post("/link/accept", professorAuthMiddleware, acceptVinculoController.handle);
 professorRoutes.post("/link/reject", professorAuthMiddleware, ignoreVinculoController.handle);
+professorRoutes.post("/link/delete", professorAuthMiddleware, deleteVinculoController.handle);
 
 professorRoutes.get("/auth", professorAuthMiddleware, (req, res) => {
     res.status(200).send("Professor autenticado com sucesso.");

@@ -7,9 +7,10 @@
                 <p v-text="aluno.idade"></p>
                 <p v-text="aluno.endereco"></p>
                 <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado" @click="sendSolicitation">Vincular-se</button>
-                <button v-show="visualizador.conected && !visualizador.isOwner">Mensagem</button>
-                <button v-show="visualizador.situacao == 'recebido'">Aceitar pedido</button>
-                <button v-show="visualizador.situacao == 'pendente'">Remover Pedido</button>
+                <button v-show="visualizador.conected && !visualizador.isOwner" @click="mensagem">Mensagem</button>
+                <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar pedido</button>
+                <button v-show="visualizador.situacao == 'recebido'" @click="removeSolicitation('recipient')">Dispensar pedido</button>
+                <button v-show="visualizador.situacao == 'pendente'" @click="removeSolicitation('sender')">Remover Pedido</button>
                 <div>
                     <p v-html="aluno.curriculo"></p>
                 </div>
@@ -29,7 +30,10 @@ import { getCurriculo } from '../../services/api/shared';
 import {
     getVinculosAluno,
     getEmailAluno,
-    sendVinculoSolicitationAluno
+    sendVinculoSolicitationAluno,
+    acceptVinculoAluno,
+    removeVinculoAluno,
+    rejectVinculoAluno
 } from '../../services/api/aluno';
 
 import { getVinculosProfessor } from '../../services/api/professor';
@@ -181,6 +185,93 @@ export default {
                         }
                     } catch (error) {
                         alert("Ops.. Algo deu errado ao enviar a solicitação para este usuário. 😕\n" + error);            
+                    }
+                }                    
+            }
+        },
+        async acceptSolicitation(){
+            this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
+
+            if (this.visualizador.token) {
+                if (Cookies.get("token")) {
+                    try {
+                        const responseMail = await getEmailAluno(this.visualizador.token);
+                        if (responseMail.status >= 200 && responseMail.status < 300) {
+                            if (responseMail.data.email == this.aluno.email) {
+                                this.visualizador.isOwner = true;
+                                this.visualizador.email = responseMail.data.email;
+                                router.push({ path: '/aluno/me' });
+                            }
+                        }
+
+                        console.log(responseMail.data.email);
+
+                        let infoVinculo;
+
+                        infoVinculo = {
+                            sender: this.aluno.email,
+                            recipient: responseMail.data.email,
+                            senderIdentifier: "ALUNO",  
+                            recipientIdentifier: "ALUNO"
+                        }
+                        const response = await acceptVinculoAluno(infoVinculo, this.visualizador.token);
+
+                        if (response.status >= 200 && response.status < 300) {
+                            await this.possuiVinculo();
+                        } else{
+                            alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + response.message);            
+                        }
+                    } catch (error) {
+                        alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + error);            
+                    }
+                }                    
+            }
+        },
+        async removeSolicitation(agent){
+            this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
+
+            if (this.visualizador.token) {
+                if (Cookies.get("token")) {
+                    try {
+                        const responseMail = await getEmailAluno(this.visualizador.token);
+                        if (responseMail.status >= 200 && responseMail.status < 300) {
+                            if (responseMail.data.email == this.aluno.email) {
+                                this.visualizador.isOwner = true;
+                                this.visualizador.email = responseMail.data.email;
+                                router.push({ path: '/aluno/me' });
+                            }
+                        }
+
+                        console.log(responseMail.data.email);
+
+                        let infoVinculo;
+                        let response;
+
+                        if (agent == "sender"){
+                            infoVinculo = {
+                                sender: responseMail.data.email,
+                                recipient: this.aluno.email,
+                                senderIdentifier: "ALUNO",  
+                                recipientIdentifier: "ALUNO"
+                            }
+                            response = await removeVinculoAluno(infoVinculo, this.visualizador.token);
+                        } else if (agent == "recipient"){
+                            infoVinculo = {
+                                sender: this.aluno.email,
+                                recipient: responseMail.data.email,
+                                senderIdentifier: "ALUNO",  
+                                recipientIdentifier: "ALUNO"
+                            }
+                            response = await rejectVinculoAluno(infoVinculo, this.visualizador.token);
+                        }
+
+                        if (response.status >= 200 && response.status < 300) {
+                            await this.possuiVinculo();
+                        } else{
+                            alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);            
+                        }
+                    } catch (error) {
+                        alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);            
                     }
                 }                    
             }
