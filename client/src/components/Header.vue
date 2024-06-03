@@ -5,7 +5,7 @@
         </div>
         <nav>
             <ul>
-                <li><router-link to="/">Rankings</router-link></li>
+                <li><router-link to="/home">Rankings</router-link></li>
                 <li @click="toggleSpanView" @mouseenter="toggleSpanView" @mouseleave="toggleSpanView">
                     <a>Entre como</a>
                     <div v-if="spanView" @mouseenter="toggleSpanView" @mouseleave="toggleSpanView">
@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                 </li>
-                <li><router-link to="/">Sobre Nós</router-link></li>
+                <li><router-link to="/home">Sobre Nós</router-link></li>
                 <li><router-link to="/register">Cadastre-se Agora</router-link></li>
                 <li class="hamburger">
                     <button @click="showAnside = true">
@@ -93,8 +93,6 @@ export default defineComponent({
             default:
                 break;
         }
-
-        console.log(this.path);
     }
 });
 </script>

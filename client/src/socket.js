@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { reactive } from 'vue';
 
-const server_url = "http://localhost:3333";
+export const server_url = "http://localhost:3333";
 export const socket = io(server_url);
 
 export const state = reactive({

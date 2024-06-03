@@ -1,20 +1,20 @@
 <!-- Componente Cubo3D.vue -->
 <template>
     <footer>
-        <router-link to="/"><img :src="imagem" alt="Img"></router-link>
+        <router-link to="/home"><img :src="imagem" alt="Img"></router-link>
         <nav>
             <ul>
                 <li>
-                    <router-link to="/">Sobre Nós</router-link>
+                    <router-link to="/home">Sobre Nós</router-link>
                 </li>
                 <li>
                     <a href="https://github.com/VitorCarvalho67/Boot" target="_blank">GitHub</a>
                 </li>
                 <li>
-                    <router-link to="/">Ranking</router-link>
+                    <router-link to="/home">Ranking</router-link>
                 </li>
                 <li>
-                    <router-link to="/">Estágios</router-link>
+                    <router-link to="/home">Estágios</router-link>
                 </li>
             </ul>
         </nav>

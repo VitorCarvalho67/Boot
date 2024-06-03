@@ -5,7 +5,8 @@ import {
     ValidateEmpresaController,
     LoginEmpresaController,
     RecoveryEmpresaController,
-    ValidateRecoveryEmpresaController
+    ValidateRecoveryEmpresaController,
+    RefreshTokenController
 } from "../../modules/controllers/empresaControllers";
 
 
@@ -14,7 +15,7 @@ const validateEmpresaController = new ValidateEmpresaController();
 const loginEmpresaController = new LoginEmpresaController();
 const recoveryEmpresaController = new RecoveryEmpresaController();
 const validateRecoveryEmpresaController = new ValidateRecoveryEmpresaController();
-
+const refreshTokenController = new RefreshTokenController();
 const empresaRoutes = Router();
 
 empresaRoutes.post("/register", registerEmpresaController.handle);
@@ -26,5 +27,7 @@ empresaRoutes.post("/recovery/validate", validateRecoveryEmpresaController.handl
 empresaRoutes.get("/auth", empresaAuthMiddleware, (req, res) => {
     res.status(200).send("Empresa autenticada com sucesso.");
 });
+
+empresaRoutes.get("/token/refresh", empresaAuthMiddleware, refreshTokenController.handle);
 
 export { empresaRoutes };

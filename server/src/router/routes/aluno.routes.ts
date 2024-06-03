@@ -11,7 +11,7 @@ import {
 } from "../../modules/controllers/sharedControllers";
 import {
     CreateAlunoController,
-    CreatePreAlunoController,
+    ValidateAlunoController,
     LoginAlunoController,
     RecoveryAlunoController,
     ValidateRecoveryController,
@@ -23,8 +23,8 @@ import {
     RefreshTokenController,
 } from "../../modules/controllers/alunoControllers";
 
-const createPreAlunoController = new CreatePreAlunoController();
-const createAlunoUseController = new CreateAlunoController();
+const createAlunoController = new CreateAlunoController();
+const validateAlunoController = new ValidateAlunoController();
 const loginAlunoController = new LoginAlunoController();
 const recoveryAlunoController = new RecoveryAlunoController();
 const validateRecoveryController = new ValidateRecoveryController();
@@ -44,8 +44,8 @@ const refreshTokenController = new RefreshTokenController();
 
 const alunoRoutes = Router();
 
-alunoRoutes.post("/register/prealuno", createPreAlunoController.handle);
-alunoRoutes.post("/register", createAlunoUseController.handle);
+alunoRoutes.post("/register", createAlunoController.handle);
+alunoRoutes.post("/validate", validateAlunoController.handle);
 alunoRoutes.post("/register/complete", alunoAuthMiddleware, completeAlunoController.handle);
 alunoRoutes.post("/curriculo/update", alunoAuthMiddleware, updateCurriculoController.handle);
 alunoRoutes.post("/login", loginAlunoController.handle);
@@ -66,6 +66,6 @@ alunoRoutes.get("/cursos", alunoAuthMiddleware, getCursosController.handle);
 alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, getCourseYearController.handle);
 alunoRoutes.get("/curriculo", alunoAuthMiddleware, getCurriculoController.handle);
 alunoRoutes.get("/me", alunoAuthMiddleware, getMeController.handle);
-alunoRoutes.get("/token/refresh", alunoAuthMiddleware,refreshTokenController.handle);
+alunoRoutes.get("/token/refresh", alunoAuthMiddleware, refreshTokenController.handle);
 
 export { alunoRoutes };

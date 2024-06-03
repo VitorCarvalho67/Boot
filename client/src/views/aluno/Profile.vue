@@ -37,7 +37,6 @@ export default {
     data() {
         return {
             aluno: {
-                token: '',
                 nome: '',
                 endereco: '',
                 nascimento: '',
@@ -102,8 +101,6 @@ export default {
     mixins: [mixinAluno],
     async created() {
         this.getToken();
-        this.RefreshToken();
-        this.aluno.token = Cookies.get('token');
         await this.getCurriculoAluno();
     }
 };

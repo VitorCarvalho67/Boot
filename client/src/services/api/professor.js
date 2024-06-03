@@ -102,3 +102,16 @@ export const getVinculosProfessor = async (info, token) => {
         return error.response.data;
     }
 }
+
+export const refreshTokenProfessor = async (token) => {
+    try {
+        const response = await api.get('professor/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

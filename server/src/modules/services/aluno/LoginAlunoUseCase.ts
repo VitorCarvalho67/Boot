@@ -15,7 +15,8 @@ export class LoginAlunoUseCase {
 
         const aluno = await prisma.aluno.findFirst({
             where: {
-                email
+                email,
+                validated: true
             }
         });
 

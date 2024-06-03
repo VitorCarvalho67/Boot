@@ -1,25 +1,25 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { generateAccessTokenAluno } from "../../../jwt/jwtServices";
+import { generateAccessTokenEmpresa } from "../../../jwt/jwtServices";
 
 export class RefreshTokenUseCase {
-    async execute(email: string): Promise<{ token: string, message: string }> {
+    async execute(email: string ): Promise<{ token: string, message: string }> {
 
         if (!email) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        const aluno = await prisma.aluno.findFirst({
+        const empresa = await prisma.empresa.findFirst({
             where: {
                 email
             }
         });
 
-        if (!aluno) {
+        if (!empresa) {
             throw new AppError("Email inválido");
         }
 
-        const token = generateAccessTokenAluno(aluno);
+        const token = generateAccessTokenEmpresa(empresa);
 
         if (!token) {
             throw new AppError("Email inválido");

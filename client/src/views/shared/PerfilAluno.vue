@@ -134,8 +134,6 @@ export default {
                         response = await getVinculosProfessor({
                             identifier: "PROFESSOR"
                         }, this.visualizador.token);
-                    } else {
-                        console.log("!aluno e !professor")
                     }
 
                     if (response.status >= 200 && response.status < 300) {
@@ -178,8 +176,6 @@ export default {
                             }
                         }
 
-                        console.log(responseMail.data.email);
-
                         const response = await sendVinculoSolicitationAluno({
                                 sender: responseMail.data.email,
                                 recipient: this.aluno.email,
@@ -215,8 +211,6 @@ export default {
                                 router.push({ path: '/aluno/me' });
                             }
                         }
-
-                        console.log(responseMail.data.email);
 
                         let infoVinculo;
 
@@ -257,8 +251,6 @@ export default {
                                 router.push({ path: '/aluno/me' });
                             }
                         }
-
-                        console.log(responseMail.data.email);
 
                         let infoVinculo;
                         let response;
@@ -308,7 +300,6 @@ export default {
         await this.getCurriculoAluno();
 
         socket.on('vinculo-update', async (data) => {
-            console.log("Alteração", data);
             await this.possuiVinculo();
         });
     }

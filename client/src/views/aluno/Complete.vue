@@ -114,6 +114,7 @@ import logo from '../../assets/imgs/imageMain.png';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
 import { completeRegister, getCursos, getInicios } from '../../services/api/aluno';
+import { mixinAluno } from '../../util/authMixins';
 
 export default {
     name: 'Complete',
@@ -227,16 +228,15 @@ export default {
                         this.alerts.cursoAlert = false;
                         this.etapa = 4;
                     } else {
-                        console.log(this.inicios.length);
                         this.alerts.cursoAlert = true;
                     }
                 } else {
                     this.alerts.cursoAlert = true;
-                    console.log("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + response.message);
+                    alert("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + response.message);
                 }
             } catch (error) {
                 this.alerts.cursoAlert = true;
-                console.log("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + error);
+                alert("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + error);
             }
         },
         validateInicio() {
@@ -266,9 +266,10 @@ export default {
             }
         }
     },
+    mixins: [mixinAluno],
     async created() {
+        await this.getToken();
         this.aluno.email = Cookies.get('email-aluno');
-        this.aluno.token = Cookies.get('token');
         this.fetchCursos();
     }
 };

@@ -22,7 +22,7 @@
                 <h1>Venha mostrar para o mundo o profissional que você é.</h1>
                 <p>Nossa missão é intermediar o processo de comunicação entre aluno, escola e empresa, de forma que
                     facilite a introdução do aluno ao mercado de trabalho.</p>
-                <router-link to="/">Saiba Mais</router-link>
+                <router-link to="/home">Saiba Mais</router-link>
             </div>
         </div>
     </section>

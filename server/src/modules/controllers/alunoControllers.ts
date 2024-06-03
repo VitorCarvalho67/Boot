@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
+import { ValidateAlunoUseCase } from '../services/aluno/ValidateAlunoUseCase';
 import { CreateAlunoUseCase } from '../services/aluno/CreateAlunoUseCase';
-import { CreatePreAlunoUseCase } from '../services/aluno/CreatePreAlunoUseCase';
 import { LoginAlunoUseCase } from "../services/aluno/LoginAlunoUseCase";
 import { RecoveryAluno } from "../services/aluno/RecoveryAlunoUseCase";
 import { ValidateRecoveryUseCase } from "../services/aluno/ValidateRecoveryUseCase";
@@ -14,23 +14,23 @@ import { RefreshTokenUseCase } from '../services/aluno/RefreshTokenUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
-        const { email, token } = req.body;
-
+        const { name, email, password } = req.body;
+        
         const createAlunoUseCase = new CreateAlunoUseCase();
-
-        const result = await createAlunoUseCase.execute({ email, token });
-
+        
+        const result = await createAlunoUseCase.execute({ name, email, password });
+        
         return res.status(201).json(result);
     }
 }
 
-export class CreatePreAlunoController {
+export class ValidateAlunoController {
     async handle(req: Request, res: Response) {
-        const { name, email, password } = req.body;
+        const { email, token } = req.body;
 
-        const createAlunoUseCase = new CreatePreAlunoUseCase();
+        const validateAlunoUseCase = new ValidateAlunoUseCase();
 
-        const result = await createAlunoUseCase.execute({ name, email, password });
+        const result = await validateAlunoUseCase.execute({ email, token });
 
         return res.status(201).json(result);
     }
@@ -116,7 +116,7 @@ export class GetCurriculoController {
 
         const getCurriculoUseCase = new GetCurriculoUseCase();
 
-        const result = await getCurriculoUseCase.execute({ email });
+        const result = await getCurriculoUseCase.execute(email);
 
         return res.status(201).json(result);
     }
@@ -140,8 +140,8 @@ export class RefreshTokenController {
         const email = req.body.entidade.email;
 
         const refreshTokenUseCase = new RefreshTokenUseCase();
-        
-        const result = await refreshTokenUseCase.execute({ email });
+
+        const result = await refreshTokenUseCase.execute(email);
 
         return res.status(201).json(result);
     }

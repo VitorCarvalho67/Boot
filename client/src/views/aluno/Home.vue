@@ -24,7 +24,9 @@ export default {
     },
     data() {
         return {
-
+            aluno:{
+                token: ''
+            }
         }
     },
     mixins: [mixinAluno],

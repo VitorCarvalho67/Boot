@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
 import router from '../router/index.js';
-import { RefreshTokenAluno } from '../services/api/aluno';
+import { refreshTokenAluno } from '../services/api/aluno';
 
 function logout(path) {
     var allCookies = Cookies.get();
@@ -18,19 +18,22 @@ function logout(path) {
 export const mixinAluno = {
     data() {
         return {
-            token: '',
+            aluno: {
+                token: '',
+            }
         }
     },
     methods: {
         async getToken() {
-            this.token = Cookies.get('token');
-            if (!this.token) {
+            this.aluno.token = Cookies.get('token');
+            if (!this.aluno.token) {
                 router.push({ path: '/login' });
             }
+            await this.RefreshToken();
         },
         async RefreshToken() {
             try {
-                const response = await RefreshTokenAluno(this.token);
+                const response = await refreshTokenAluno(this.aluno.token);
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('token', `${ response.data.token }`);
                 }
@@ -56,6 +59,17 @@ export const mixinAdmin = {
             if (!this.token) {
                 router.push({ path: '/admin/login' });
             }
+            await this.RefreshToken();
+        },
+        async RefreshToken() {
+            try {
+                const response = await refreshTokenAdmin(this.token);
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('token', `${ response.data.token }`);
+                }
+            } catch (error) {
+                router.push({ path: 'admin/login' });
+            }
         },
         logout() {
             logout('/admin/login');
@@ -74,6 +88,17 @@ export const mixinProfessor = {
             this.token = Cookies.get('token-professor');
             if (!this.token) {
                 router.push({ path: '/professor/init' });
+            }
+            await this.RefreshToken();
+        },
+        async RefreshToken() {
+            try {
+                const response = await refreshTokenProfessor(this.token);
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('token', `${ response.data.token }`);
+                }
+            } catch (error) {
+                router.push({ path: 'professor/init' });
             }
         },
         logout() {
@@ -94,6 +119,17 @@ export const mixinFuncionario = {
             if (!this.token) {
                 router.push({ path: '/funcionario/init' });
             }
+            await this.RefreshToken();
+        },
+        async RefreshToken() {
+            try {
+                const response = await refreshTokenFuncionario(this.token);
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('token', `${ response.data.token }`);
+                }
+            } catch (error) {
+                router.push({ path: 'funcionario/init' });
+            }
         },
         logout() {
             logout('/funcionario/init');
@@ -111,6 +147,17 @@ export const mixinEmpresa = {
         async getToken() {
             this.token = Cookies.get('token-empresa');
             if (!this.token) {
+                router.push({ path: '/empresa/login' });
+            }
+            await this.RefreshToken();
+        },
+        async RefreshToken() {
+            try {
+                const response = await refreshTokenEmpresa(this.token);
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('token', `${ response.data.token }`);
+                }
+            } catch (error) {
                 router.push({ path: '/empresa/login' });
             }
         },

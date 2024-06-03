@@ -100,7 +100,7 @@ import logo from '../../assets/imgs/imageMain.png';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { registerPreAluno } from '../../services/api/aluno';
+import { registerAluno } from '../../services/api/aluno';
 
 export default {
     name: 'Register',
@@ -210,7 +210,7 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await registerPreAluno({
+                const response = await registerAluno({
                     name: this.userAluno.name,
                     email: this.userAluno.email,
                     password: this.userAluno.password

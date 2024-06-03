@@ -13,7 +13,8 @@ import {
     LoginProfessorController,
     InitProfessorController,
     RecoveryProfessorController,
-    ValidateRecoveryController
+    ValidateRecoveryController,
+    RefreshTokenController
 } from "../../modules/controllers/professorControllers";
 
 const validateProfessorController = new ValidateProfessorController();
@@ -27,6 +28,7 @@ const ignoreVinculoController = new IgnoreVinculoController();
 const deleteVinculoController = new DeleteVinculoController();
 const getVinculosController = new GetVinculosController();
 const getUnlinkedsController = new GetUnlinkedsController();
+const refreshTokenController = new RefreshTokenController();
 
 const professorRoutes = Router();
 
@@ -46,5 +48,6 @@ professorRoutes.get("/auth", professorAuthMiddleware, (req, res) => {
 professorRoutes.get("/init", initProfessorController.handle);
 professorRoutes.get("/links", professorAuthMiddleware, getVinculosController.handle);
 professorRoutes.get("/unlinkeds", professorAuthMiddleware, getUnlinkedsController.handle);
+professorRoutes.get("/token/refresh", professorAuthMiddleware, refreshTokenController.handle);
 
 export { professorRoutes };

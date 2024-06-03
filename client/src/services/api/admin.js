@@ -132,3 +132,16 @@ export const registerFuncionario = async(infoFuncionario, token) => {
         return error.response.data;
     }
 }
+
+export const refreshTokenAdmin = async (token) => {
+    try {
+        const response = await api.get('admin/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

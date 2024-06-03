@@ -4,6 +4,7 @@ import { LoginEmpresaUseCase } from '../services/empresa/LoginEmpresaUseCase'
 import { ValidateEmpresaUseCase } from '../services/empresa/ValidateEmpresaUseCase'
 import { RecoveryEmpresaUseCase } from '../services/empresa/RecoveryEmpresaUseCase'
 import { ValidateRecoveryEmpresaUseCase } from '../services/empresa/ValidateRecoveryEmpresa'
+import { RefreshTokenUseCase } from "../services/empresa/RefreshTokenUseCase";
 
 export class RegisterEmpresaController {
     async handle(req: Request, res: Response) {
@@ -60,6 +61,18 @@ export class ValidateRecoveryEmpresaController {
         const validateRecoveryEmpresaController = new ValidateRecoveryEmpresaUseCase();
 
         const result = await validateRecoveryEmpresaController.execute({ cnpj, tempPass, newPass });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RefreshTokenController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const refreshTokenUseCase = new RefreshTokenUseCase();
+
+        const result = await refreshTokenUseCase.execute(email);
 
         return res.status(201).json(result);
     }

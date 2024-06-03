@@ -1,9 +1,8 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { GetCurriculoDTO } from "../../interfaces/alunoDTOs"
 
 export class GetCurriculoUseCase {
-    async execute({ email }: GetCurriculoDTO) {
+    async execute(email: string) {
         if (!email) {
             throw new AppError("Parâmentros insufientes ou inválidos. " + email);
         }

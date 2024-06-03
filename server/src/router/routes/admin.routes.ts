@@ -11,7 +11,8 @@ import {
     RegisterCoordenadorController,
     GetAllProfessorController,
     GetCoordenadorController,
-    RegisterTurmaController
+    RegisterTurmaController,
+    RefreshTokenController
 } from "../../modules/controllers/adminControllers";
 
 const loginAdminController = new LoginAdminController();
@@ -23,6 +24,7 @@ const registerTurmaController = new RegisterTurmaController();
 const getAllProfessorController = new GetAllProfessorController();
 const getCoordenadoresController = new GetCoordenadorController();
 const getCursosController = new GetCursosController();
+const refreshTokenController = new RefreshTokenController();
 
 const adminRoutes = Router();
 
@@ -40,5 +42,6 @@ adminRoutes.get("/auth", adminAuthMiddleware, (req, res) => {
 adminRoutes.get("/professores", adminAuthMiddleware, getAllProfessorController.handle);
 adminRoutes.get("/coordenadores", adminAuthMiddleware, getCoordenadoresController.handle);
 adminRoutes.get("/cursos", adminAuthMiddleware, getCursosController.handle);
+adminRoutes.get("/token/refresh", adminAuthMiddleware, refreshTokenController.handle);
 
 export { adminRoutes };

@@ -28,7 +28,7 @@
                             <input type="email" id="email" v-model="userFuncionario.email" required
                                 @focus="focus.emailFocused = true" @blur="focus.emailFocused = false">
                         </div>
-                        <p><router-link to="/">Outras opções</router-link></p>
+                        <p><router-link to="/home">Outras opções</router-link></p>
                         <div class="button-box">
                             <button type="submit">Continuar</button>
                         </div>

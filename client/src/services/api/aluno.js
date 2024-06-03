@@ -23,18 +23,18 @@ export const loginAluno = async (userAluno) => {
     }
 }
 
-export const registerPreAluno = async (userPreAluno) => {
+export const registerAluno = async (aluno) => {
     try {
-        const response = await api.post('aluno/register/prealuno', userPreAluno);
+        const response = await api.post('aluno/register/', aluno);
         return response;
     } catch (error) {
         return error.response.data;
     }
 }
 
-export const registerAluno = async (userAluno) => {
+export const validateAluno = async (aluno) => {
     try {
-        const response = await api.post('aluno/register/', userAluno);
+        const response = await api.post('aluno/validate/', aluno);
         return response;
     } catch (error) {
         return error.response.data;
@@ -228,7 +228,12 @@ export const getMeAluno = async (token) => {
             }
         });
 
-        socket.emit('register', this.response.email);
+        socket.emit(
+            'vinculo-enter-aluno',
+            {
+                authorization: `${token}`
+            }
+        );
 
         return response;
     } catch (error) {
@@ -236,7 +241,7 @@ export const getMeAluno = async (token) => {
     }
 }
 
-export const RefreshTokenAluno = async (token) => {
+export const refreshTokenAluno = async (token) => {
     try {
         const response = await api.get('aluno/token/refresh', {
             headers: {

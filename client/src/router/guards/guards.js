@@ -116,8 +116,18 @@ export async function isInitingProfessor() {
 export async function isCompletedAluno() {
     const completed = Cookies.get('completed') === 'true';
     const authAluno = await isAuthAluno();
-    console.log("Perfil completo: " + completed);
-    console.log("Autenticado: " + authAluno);
-    console.log("Perfil completo e autenticado: " + (completed && authAluno));
     return (completed && authAluno);
+}
+
+export async function isAuthSomebody() {
+    var path = "/home"
+
+    await isAuthAluno() ? path = "/aluno" : 
+    await isAuthAdmin() ? path = "/admin" : 
+    await isAuthEmpresa() ? path = "/empresa" :
+    await isAuthFuncionario() ? path =  "/funcionario" :
+    await isAuthProfessor() ? path = "/professor" :
+    path = "/home";
+
+    return path;
 }
