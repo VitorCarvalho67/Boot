@@ -26,6 +26,7 @@ import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
 import Cookies from 'js-cookie';
 import { getCurriculo, updateCurriculo } from '../../services/api/aluno';
+import { mixinAluno } from '../../util/authMixins';
 
 export default {
     name: 'PerfilAluno',
@@ -98,7 +99,10 @@ export default {
             }
         }
     },
+    mixins: [mixinAluno],
     async created() {
+        this.getToken();
+        this.RefreshToken();
         this.aluno.token = Cookies.get('token');
         await this.getCurriculoAluno();
     }

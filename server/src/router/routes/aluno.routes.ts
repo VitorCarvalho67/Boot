@@ -19,7 +19,8 @@ import {
     UpdateCurriculoController,
     GetCourseYearController,
     GetCurriculoController,
-    GetMeController
+    GetMeController,
+    RefreshTokenController,
 } from "../../modules/controllers/alunoControllers";
 
 const createPreAlunoController = new CreatePreAlunoController();
@@ -39,6 +40,7 @@ const getCourseYearController = new GetCourseYearController();
 const getCurriculoController = new GetCurriculoController();
 const getMeController = new GetMeController();
 const deleteVinculoController = new DeleteVinculoController();
+const refreshTokenController = new RefreshTokenController();
 
 const alunoRoutes = Router();
 
@@ -64,5 +66,6 @@ alunoRoutes.get("/cursos", alunoAuthMiddleware, getCursosController.handle);
 alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, getCourseYearController.handle);
 alunoRoutes.get("/curriculo", alunoAuthMiddleware, getCurriculoController.handle);
 alunoRoutes.get("/me", alunoAuthMiddleware, getMeController.handle);
+alunoRoutes.get("/token/refresh", alunoAuthMiddleware,refreshTokenController.handle);
 
 export { alunoRoutes };

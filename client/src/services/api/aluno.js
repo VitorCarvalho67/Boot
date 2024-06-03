@@ -235,3 +235,16 @@ export const getMeAluno = async (token) => {
         return error.response.data;
     }
 }
+
+export const RefreshTokenAluno = async (token) => {
+    try {
+        const response = await api.get('aluno/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

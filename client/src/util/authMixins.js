@@ -1,5 +1,19 @@
 import Cookies from 'js-cookie';
 import router from '../router/index.js';
+import { RefreshTokenAluno } from '../services/api/aluno';
+
+function logout(path) {
+    var allCookies = Cookies.get();
+
+    for (var cookie in allCookies) {
+        if (allCookies.hasOwnProperty(cookie)) {
+            Cookies.remove(cookie);
+            Cookies.remove(cookie, { path: '/' });
+        }
+    }
+
+    router.push({ path: path });
+}
 
 export const mixinAluno = {
     data() {
@@ -11,14 +25,23 @@ export const mixinAluno = {
         async getToken() {
             this.token = Cookies.get('token');
             if (!this.token) {
-                router.push({ path: '/aluno/login' });
+                router.push({ path: '/login' });
+            }
+        },
+        async RefreshToken() {
+            try {
+                const response = await RefreshTokenAluno(this.token);
+                if (response.status >= 200 && response.status < 300) {
+                    Cookies.set('token', `${ response.data.token }`);
+                }
+            } catch (error) {
+                router.push({ path: '/login' });
             }
         },
         logout() {
-            Cookies.remove('token');
-            router.push({ path: '/aluno/login' });
+            logout('/login');
         }
-    }
+    },
 };
 
 export const mixinAdmin = {
@@ -35,8 +58,7 @@ export const mixinAdmin = {
             }
         },
         logout() {
-            Cookies.remove('token-admin');
-            router.push({ path: '/admin/login' });
+            logout('/admin/login');
         }
     }
 };
@@ -55,8 +77,7 @@ export const mixinProfessor = {
             }
         },
         logout() {
-            Cookies.remove('token-professor');
-            router.push({ path: '/professor/init' });
+            logout('/professor/init');
         }
     }
 };
@@ -75,8 +96,7 @@ export const mixinFuncionario = {
             }
         },
         logout() {
-            Cookies.remove('token-funcionario');
-            router.push({ path: '/funcionario/init' });
+            logout('/funcionario/init');
         }
     }
 };
@@ -95,8 +115,7 @@ export const mixinEmpresa = {
             }
         },
         logout() {
-            Cookies.remove('token-empresa');
-            router.push({ path: '/empresa/login' });
+            logout('/empresa/login');
         }
     }
 };

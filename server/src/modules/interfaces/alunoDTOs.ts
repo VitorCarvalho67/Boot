@@ -14,6 +14,10 @@ export interface LoginAlunoDTO {
     password: string
 }
 
+export interface RefreshTokenDTO {
+    email: string
+}
+
 export interface RecoveryAlunoDTO {
     name: string,
     email: string

@@ -10,6 +10,7 @@ import { GetTurmasByCursoUseCase } from "../services/aluno/GetCourseYearUseCase"
 import { GetCurriculoUseCase } from "../services/aluno/GetCurriculoUseCase";
 import { GetMeUseCase } from '../services/aluno/GetMeUseCase';
 import { Turno } from "../interfaces/alunoDTOs"
+import { RefreshTokenUseCase } from '../services/aluno/RefreshTokenUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -129,6 +130,18 @@ export class GetMeController {
 
         const result = await getMeUseCase.execute(email);
 
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RefreshTokenController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const refreshTokenUseCase = new RefreshTokenUseCase();
+        
+        const result = await refreshTokenUseCase.execute({ email });
 
         return res.status(201).json(result);
     }
