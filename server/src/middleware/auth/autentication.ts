@@ -1,8 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { AppError } from '../../errors/error';
-import { verfifyAccessTokenAdmin, verfifyAccessTokenProfessor, verfifyAccessTokenFuncinario, verfifyAccessTokenAluno, verfifyAccessTokenEmpresa } from '../../jwt/jwtServices';
 import { prisma } from '../../prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
+import { 
+    verfifyAccessTokenAdmin,
+    verfifyAccessTokenProfessor,
+    verfifyAccessTokenFuncinario,
+    verfifyAccessTokenAluno,
+    verfifyAccessTokenEmpresa
+} from '../../jwt/jwtServices';
 
 interface RequestWithAdmin extends Request {
     admin?: { id: String };

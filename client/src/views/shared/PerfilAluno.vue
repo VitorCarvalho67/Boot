@@ -29,12 +29,13 @@ import Cookies from 'js-cookie';
 import { getCurriculo } from '../../services/api/shared';
 import {
     getVinculosAluno,
-    getEmailAluno,
+    getMeAluno,
     sendVinculoSolicitationAluno,
     acceptVinculoAluno,
     removeVinculoAluno,
     rejectVinculoAluno
 } from '../../services/api/aluno';
+import { socket } from '../../socket.js';
 
 import { getVinculosProfessor } from '../../services/api/professor';
 
@@ -102,6 +103,13 @@ export default {
             }
         },
         async possuiVinculo() {
+            this.visualizador.conected = false,
+            this.visualizador.semiconectado = false,
+            this.visualizador.situacao = '',
+            this.visualizador.token = '',
+            this.visualizador.isOwner = false,
+            this.visualizador.email = ''
+
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
 
             if (this.visualizador.token) {
@@ -109,11 +117,12 @@ export default {
                 let responseMail;
                 try {
                     if (Cookies.get("token")) {
-                        responseMail = await getEmailAluno(this.visualizador.token);
+                        responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
+                            this.visualizador.email = responseMail.data.email;
+                            
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
-                                this.visualizador.email = responseMail.data.email;
                                 router.push({ path: '/aluno/me' });
                             }
                         }
@@ -160,11 +169,11 @@ export default {
             if (this.visualizador.token) {
                 if (Cookies.get("token")) {
                     try {
-                        const responseMail = await getEmailAluno(this.visualizador.token);
+                        const responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
+                            this.visualizador.email = responseMail.data.email;
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
-                                this.visualizador.email = responseMail.data.email;
                                 router.push({ path: '/aluno/me' });
                             }
                         }
@@ -172,11 +181,14 @@ export default {
                         console.log(responseMail.data.email);
 
                         const response = await sendVinculoSolicitationAluno({
-                            sender: responseMail.data.email,
-                            recipient: this.aluno.email,
-                            senderIdentifier: "ALUNO",  
-                            recipientIdentifier: "ALUNO"
-                        }, this.visualizador.token);
+                                sender: responseMail.data.email,
+                                recipient: this.aluno.email,
+                                senderIdentifier: "ALUNO",  
+                                recipientIdentifier: "ALUNO"
+                            }, 
+                            this.aluno.email,
+                            this.visualizador.token
+                        );
 
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
@@ -195,7 +207,7 @@ export default {
             if (this.visualizador.token) {
                 if (Cookies.get("token")) {
                     try {
-                        const responseMail = await getEmailAluno(this.visualizador.token);
+                        const responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
@@ -214,7 +226,11 @@ export default {
                             senderIdentifier: "ALUNO",  
                             recipientIdentifier: "ALUNO"
                         }
-                        const response = await acceptVinculoAluno(infoVinculo, this.visualizador.token);
+                        const response = await acceptVinculoAluno(
+                            infoVinculo,
+                            this.aluno.email,
+                            this.visualizador.token
+                        );
 
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
@@ -233,11 +249,11 @@ export default {
             if (this.visualizador.token) {
                 if (Cookies.get("token")) {
                     try {
-                        const responseMail = await getEmailAluno(this.visualizador.token);
+                        const responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
+                            this.visualizador.email = responseMail.data.email;
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
-                                this.visualizador.email = responseMail.data.email;
                                 router.push({ path: '/aluno/me' });
                             }
                         }
@@ -254,7 +270,11 @@ export default {
                                 senderIdentifier: "ALUNO",  
                                 recipientIdentifier: "ALUNO"
                             }
-                            response = await removeVinculoAluno(infoVinculo, this.visualizador.token);
+                            response = await removeVinculoAluno(
+                                infoVinculo,
+                                this.aluno.email,
+                                this.visualizador.token
+                            );
                         } else if (agent == "recipient"){
                             infoVinculo = {
                                 sender: this.aluno.email,
@@ -262,7 +282,11 @@ export default {
                                 senderIdentifier: "ALUNO",  
                                 recipientIdentifier: "ALUNO"
                             }
-                            response = await rejectVinculoAluno(infoVinculo, this.visualizador.token);
+                            response = await rejectVinculoAluno(
+                                infoVinculo,
+                                this.aluno.email,
+                                this.visualizador.token
+                            );
                         }
 
                         if (response.status >= 200 && response.status < 300) {
@@ -279,9 +303,14 @@ export default {
     },
     async created() {
         this.aluno.rm = this.$route.params.rm;
-        this.visualizador.conected = await this.getCurriculoAluno();
+        await this.getCurriculoAluno();
         await this.possuiVinculo();
         await this.getCurriculoAluno();
+
+        socket.on('vinculo-update', async (data) => {
+            console.log("Alteração", data);
+            await this.possuiVinculo();
+        });
     }
 };
 
