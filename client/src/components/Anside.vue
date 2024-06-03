@@ -3,7 +3,7 @@
         <div class="overlay" @click="handleOutsideClick" v-if="visible">
             <aside @click.stop>
                 <ul>
-                    <li><router-link to="/">Rankings</router-link></li>
+                    <li><router-link to="/home">Rankings</router-link></li>
                     <li @click="toggleSpanView">
                         <a>Entre como</a>
                         <div v-if="spanView">
@@ -14,7 +14,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li><router-link to="/">Sobre Nós</router-link></li>
+                    <li><router-link to="/home">Sobre Nós</router-link></li>
                     <li><router-link to="/register">Cadastre-se Agora</router-link></li>
                     <li><router-link to="/login">Entrar</router-link></li>
                 </ul>

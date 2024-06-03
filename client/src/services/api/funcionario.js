@@ -62,3 +62,16 @@ export const validateRecovery = async(infoFuncionario) => {
         return error.response.data;
     }
 }
+
+export const refreshTokenFuncionario = async (token) => {
+    try {
+        const response = await api.get('funcionario/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

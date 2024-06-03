@@ -57,3 +57,16 @@ export const validateRecoveryEmpresa = async (infoEmpresa) => {
         return error.response.data;
     }
 }
+
+export const refreshTokenEmpresa = async (token) => {
+    try {
+        const response = await api.get('empresa/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

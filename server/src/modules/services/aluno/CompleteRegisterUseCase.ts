@@ -69,11 +69,18 @@ export class CompleteAlunoUseCase {
                     data: {
                         dataNascimento: nascimentoISO,
                         endereco,
-                        turmas: turma.id,
                         rm: rm
                     }
                 });
                 
+                await prisma.alunoTurma.create({
+                    data: {
+                        alunoId: aluno.id,
+                        turmaId: turma.id,
+                        
+                    }
+                });
+
                 return "Dados cadastrais atualizados com sucesso!";
             } else {
                 throw new AppError("RM já cadastrado");

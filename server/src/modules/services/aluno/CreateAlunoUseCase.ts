@@ -2,80 +2,77 @@ import { Aluno } from "@prisma/client";
 import { prisma } from "../../../prisma/client";
 import { CreateAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
+import { generateRegisterEmail } from "../../../mail/templates/aluno/register";
+import transporter from "../../../mail/config/email";
+import nodemailer from 'nodemailer';
 
 const bcrypt = require('bcrypt');
 
 export class CreateAlunoUseCase {
-    async execute({ email, token }: CreateAlunoDTO): Promise<Pick<Aluno, "name" | "email">> {
+    async execute({ name, email, password }: CreateAlunoDTO): Promise<Pick<Aluno, "name" | "email" | "tentativasRestantes">> {
 
-        if (!email || !token) {
+        if (!name || !email || !password) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        const preAluno = await prisma.preAluno.findUnique({
+        const alunoAlreadyExists = await prisma.aluno.findUnique({
             where: {
                 email
             }
         });
 
-        if (preAluno) {
-            const istokenValid = bcrypt.compareSync(token, preAluno.token);
-
-            if (istokenValid) {
-                const expirationTime = new Date(preAluno.createdAt.getTime());
-                expirationTime.setMinutes(expirationTime.getMinutes() + 10);
-                if (preAluno.tentativasRestantes <= 0 || expirationTime.getTime() < Date.now()) {
-                    await prisma.preAluno.delete({
-                        where: {
-                            email
-                        }
-                    });
-                    throw new AppError("Token expirado");
-                } else {
-                    const aluno = await prisma.aluno.create({
-                        data: {
-                            name: preAluno.name,
-                            email,
-                            password: preAluno.password
-                        }
-                    });
-
-                    await prisma.preAluno.delete({
-                        where: {
-                            email
-                        }
-                    });
-                    return {
-                        name: aluno.name,
-                        email: aluno.email
-                    };
-                }
-            } else {
-                const expirationTime = new Date(preAluno.createdAt.getTime());
-                expirationTime.setMinutes(expirationTime.getMinutes() + 10);
-                if (preAluno.tentativasRestantes <= 0 || expirationTime.getTime() < Date.now()) {
-                    await prisma.preAluno.delete({
-                        where: {
-                            email
-                        }
-                    });
-                    throw new AppError("Tentativas insuficientes ou tempo esgotado");
-                } else {
-                    await prisma.preAluno.update({
-                        where: {
-                            email
-                        },
-                        data: {
-                            tentativasRestantes: {
-                                decrement: 1
-                            }
-                        }
-                    });
-                    throw new AppError("Token inválido, tentativas restantes: " + preAluno.tentativasRestantes);
-                }
-            }
+        if (alunoAlreadyExists) {
+            throw new AppError("Aluno already exists");
         } else {
-            throw new AppError("Email não encontrado");
+            const dominio_cps = "@etec.sp.gov.br";
+
+            if (!email.includes(dominio_cps)) {
+                throw new AppError("Email inválido");
+            }
+
+            else {
+
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(password, salt);
+
+                const token = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join('');
+                const tokenHash = bcrypt.hashSync(token, salt);
+
+                const nome = name.split(' ').shift()?.toString() ?? 'aluno';
+
+                const mailOptions = {
+                    from: process.env.EMAIL,
+                    to: email,
+                    subject: 'Boot - Código de verificação',
+                    html: generateRegisterEmail(nome, token)
+                };
+
+                var emailEnviado = false;
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        throw new AppError("Erro ao enviar email: " + error);
+                    } else {
+                        console.log('E-mail enviado:', info.response);
+                        emailEnviado = true
+                    }
+                });
+
+                const Aluno = await prisma.aluno.create({
+                    data: {
+                        name: name.trim(),
+                        email,
+                        password: hash,
+                        token: tokenHash
+                    }
+                });
+
+                return {
+                    name: Aluno.name,
+                    email: Aluno.email,
+                    tentativasRestantes: Aluno.tentativasRestantes,
+                };
+            }
         }
     }
 }

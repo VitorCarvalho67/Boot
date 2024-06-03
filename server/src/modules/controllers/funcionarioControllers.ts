@@ -4,6 +4,7 @@ import { LoginFuncionarioUseCase } from "../services/funcionario/LoginFuncionari
 import { ValidateFuncionarioUseCase } from "../services/funcionario/ValidateFuncionarioUseCase";
 import { RecoveryFuncionarioUseCase } from "../services/funcionario/RecoveryUseCase";
 import { ValidateRecoveryUseCase } from "../services/funcionario/ValidateRecoveryUseCase";
+import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase";
 
 export class InitFuncionarioController {
     async handle(req: Request, res: Response) {
@@ -61,6 +62,18 @@ export class ValidateRecoveryController {
         const validateRecoveryUseCase = new ValidateRecoveryUseCase();
 
         const result = await validateRecoveryUseCase.execute({ email, recoveryPass, newPass });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RefreshTokenController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const refreshTokenUseCase = new RefreshTokenUseCase();
+
+        const result = await refreshTokenUseCase.execute(email);
 
         return res.status(201).json(result);
     }

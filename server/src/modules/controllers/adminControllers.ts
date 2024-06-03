@@ -7,6 +7,7 @@ import { RegisterCursosUseCase } from '../services/admin/RegisterCursosUseCase';
 import { RegisterFuncionarioUseCase } from '../services/admin/RegisterFuncionarioUseCase';
 import { RegisterProfessorUseCase } from '../services/admin/RegisterProfessorUseCase';
 import { RegisterTurmasUseCase } from '../services/admin/RegisterTurmasUseCase';
+import { RefreshTokenUseCase } from "../services/admin/RefreshTokenUseCase";
 
 export class GetAllProfessorController {
     async handle(req: Request, res: Response) {
@@ -97,6 +98,18 @@ export class RegisterTurmaController {
         const registerTurmaUseCase = new RegisterTurmasUseCase();
 
         const result = await registerTurmaUseCase.execute({ inicio, fim, cursoName });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RefreshTokenController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const refreshTokenUseCase = new RefreshTokenUseCase();
+
+        const result = await refreshTokenUseCase.execute(email);
 
         return res.status(201).json(result);
     }

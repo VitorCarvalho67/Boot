@@ -1,9 +1,9 @@
-export interface CreateAlunoDTO {
+export interface ValidateAlunoDTO {
     email: string,
     token: string
 }
 
-export interface CreatePreAlunoDTO {
+export interface CreateAlunoDTO {
     name: string,
     email: string,
     password: string
@@ -42,10 +42,6 @@ export interface UpdateCurriculoDTO {
 export interface GetTurmasByCursoDTO {
     curso: string,
     turno: Turno
-}
-
-export interface GetCurriculoDTO {
-    email: string
 }
 
 export enum Turno {

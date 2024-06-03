@@ -2,6 +2,7 @@
     <Header />
     <main>
         <h1>Bem-vindo!</h1>
+        <button @click="this.logout" type="button">Logout</button>
         <router-link to="/aluno/me">Profile</router-link>
     </main>
     <Footer />
@@ -12,6 +13,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js'
+import Cookies from 'js-cookie';
 import { mixinAluno } from '../../util/authMixins.js';
 
 export default {
@@ -22,15 +24,15 @@ export default {
     },
     data() {
         return {
-
+            aluno:{
+                token: ''
+            }
         }
-    },
-    methods: {
-
     },
     mixins: [mixinAluno],
     async created() {
         this.getToken();
+        this.RefreshToken();
     }
 }
 

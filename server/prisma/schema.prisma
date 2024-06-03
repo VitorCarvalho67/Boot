@@ -14,16 +14,19 @@ model Aluno {
     password            String
     alunoImagem         String?
     recoveryPass        String?
+    token               String?
     bannerImagem        String?
     dataNascimento      DateTime?
     endereco            String?
     curriculo           String?   @default("") @db.VarChar(5000)
-    turmas              String? // Formato "id1,id2,id3"
     sobre               String?
     rm                  String?   @unique
     tentativasRestantes Int       @default(5)
+    turmas              AlunoTurma[]
+    cursosExtracurriculares      Extracurricular[]
     vinculosAluno       Vinculo[] @relation("AlunoVinculo")
     vinculoComoAluno    Vinculo[] @relation("VinculoComAluno")
+    validated           Boolean    @default(false)
     createdAt           DateTime  @default(now())
     updatedAt           DateTime  @updatedAt
 
@@ -68,19 +71,6 @@ model Vinculo {
     @@map("vinculos")
 }
 
-model PreAluno {
-    id                  String   @id @default(uuid())
-    name                String
-    email               String   @unique
-    password            String
-    token               String
-    tentativasRestantes Int      @default(5)
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
-
-    @@map("pre_alunos")
-}
-
 model Admin {
     id          String   @id @default(uuid())
     name        String
@@ -121,10 +111,35 @@ model Turma {
     fim       String
     curso     Curso    @relation(fields: [cursoId], references: [id])
     cursoId   String
+    alunos    AlunoTurma[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@map("turmas")
+}
+
+model AlunoTurma {
+    alunoId  String  @default(uuid())
+    turmaId  String  @default(uuid())
+    aluno    Aluno   @relation(fields: [alunoId], references: [id])
+    turma    Turma   @relation(fields: [turmaId], references: [id])
+
+    @@id([alunoId, turmaId])
+    @@map("alunos_turmas")
+}
+
+model Extracurricular {
+    extracurricularId String @id @default(uuid())
+    alunoId String
+    aluno    Aluno   @relation(fields: [alunoId], references: [id])
+    instituicao String
+    descricao String
+    inicio DateTime
+    fim DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    
+    @@map("extracurriculares")
 }
 
 model Empresa {

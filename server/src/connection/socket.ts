@@ -1,13 +1,14 @@
 import { Server, Socket } from 'socket.io';
 import { vinculoUpdateHandler } from './controllers/vinculoController';
+import { enterVinculoAlunoHandler } from './controllers/enterVinculoController';
 
 export default async function appSocket (io: Server) {
     io.on('connection', (socket: Socket) => {
-        console.log(`User connected: ${socket.id}`);
+        // console.log(`User connected: ${socket.id}`);
 
-        socket.on('register', (email: string) => {
-            console.log(`User with Email ${email} registered`);
-            socket.join(email);
+        socket.on('vinculo-enter-aluno', (data) => {
+            enterVinculoAlunoHandler(io, socket, data);
+            console.log(data);
         });
 
         socket.on('vinculo-update', (data) => {
@@ -15,7 +16,7 @@ export default async function appSocket (io: Server) {
         });
 
         socket.on('disconnect', () => {
-            console.log(`User disconnected: ${socket.id}`);
+            // console.log(`User disconnected: ${socket.id}`);
         });
     });
 }

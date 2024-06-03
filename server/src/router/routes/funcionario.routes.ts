@@ -5,7 +5,8 @@ import {
     LoginFuncionarioController,
     InitFuncionarioController,
     RecoveryFuncionarioController,
-    ValidateRecoveryController
+    ValidateRecoveryController,
+    RefreshTokenController
 } from "../../modules/controllers/funcionarioControllers";
 
 const validateFuncionarioController = new ValidateFuncionarioController();
@@ -13,6 +14,7 @@ const loginFuncionarioController = new LoginFuncionarioController();
 const initFuncionarioController = new InitFuncionarioController();
 const recoveryFuncionarioController = new RecoveryFuncionarioController();
 const validateRecoveryController = new ValidateRecoveryController();
+const refreshTokenController = new RefreshTokenController();
 
 const funcionarioRoutes = Router();
 
@@ -27,5 +29,6 @@ funcionarioRoutes.get("/auth", funcionarioAuthMiddleware, (req, res) => {
 });
 
 funcionarioRoutes.get("/init", initFuncionarioController.handle);
+funcionarioRoutes.get("/token/refresh", funcionarioAuthMiddleware, refreshTokenController.handle);
 
 export { funcionarioRoutes };

@@ -1,4 +1,5 @@
 ## Client
-- [ ] Arrumar as variaveis do scss
+- [ ] aaaaaaa
 
-## Server
+
+## Server

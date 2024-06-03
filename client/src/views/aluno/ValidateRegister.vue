@@ -65,7 +65,7 @@ import Footer from '../../components/Footer.vue';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js'
-import { registerAluno } from '../../services/api/aluno';
+import { validateAluno } from '../../services/api/aluno';
 
 export default {
     name: 'ValidateRegister',
@@ -162,7 +162,7 @@ export default {
             try {
                 const token = Object.values(this.userAluno.token).join('');
 
-                const response = await registerAluno({
+                const response = await validateAluno({
                     email: this.userAluno.email,
                     token: token
                 });
