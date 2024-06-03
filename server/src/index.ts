@@ -1,8 +1,7 @@
 import "express-async-errors";
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import { routes } from "./router";
-import { Request, Response, NextFunction } from 'express';
 import { AppError } from './errors/error';
 import { Server } from 'socket.io';
 import http from 'http';

@@ -14,8 +14,6 @@ export class CreateVinculoController {
         const { sender, recipient, senderIdentifier, recipientIdentifier } = req.body;
         const email = req.body.entidade.email;
 
-        console.log(email, { sender, recipient, senderIdentifier, recipientIdentifier });
-
         const createVinculoUseCase = new CreateVinculoUseCase();
 
         const result = await createVinculoUseCase.execute({ email, sender, recipient, senderIdentifier, recipientIdentifier });

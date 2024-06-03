@@ -1,4 +1,5 @@
 import api from '../api';
+import { socket } from '../../socket.js';
 
 export const authAluno = async (token) => {
     try {
@@ -85,13 +86,20 @@ export const updateCurriculo = async (curriculo, token) => {
     }
 }
 
-export const sendVinculoSolicitationAluno = async (infoVinculo, token) => {
+export const sendVinculoSolicitationAluno = async (infoVinculo, email, token) => {
     try {
         const response = await api.post('aluno/link/send', infoVinculo, {
             headers: {
                 authorization: `${token}`
             }
         });
+        
+        socket.emit('vinculo-update', {
+            email: `${email}`,
+            type: "send",
+            authorization: `${token}`
+        });
+
         return response;
     } catch (error) {
         return error.response.data;
@@ -125,42 +133,63 @@ export const getInicios = async (infoTurma, token) => {
     }
 }
 
-export const acceptVinculoAluno = async (infoVinculo, token) => {
+export const acceptVinculoAluno = async (infoVinculo, email, token) => {
     try {
         const response = await api.post('aluno/link/accept', infoVinculo,{
             headers:{
                 authorization: `${token}`
             }
         });
+
+        socket.emit('vinculo-update', {
+            email: `${email}`,
+            type: "accept",
+            authorization: `${token}`
+        });
+
         return response;
     } catch (error) {
         return error.response.data;
     }
 }
 
-export const rejectVinculoAluno = async (infoVinculo, token) => {
+export const rejectVinculoAluno = async (infoVinculo, email, token) => {
     try {
-        const response = await api.post('aluno/link/reject', infoVinculo,{
+        const response = await api.post('aluno/link/reject', infoVinculo, {
             headers: {
                 authorization: `${token}`
             }
         });
+
+        socket.emit('vinculo-update', {
+            email: `${email}`,
+            type: "reject",
+            authorization: `${token}`
+        });
+
         return response;
     } catch (error) {
-        return error.response.data;
+        return error.data;
     }
 }
 
-export const removeVinculoAluno = async (infoVinculo, token) => {
+export const removeVinculoAluno = async (infoVinculo, email, token) => {
     try {
         const response = await api.post('aluno/link/delete', infoVinculo,{
             headers: {
                 authorization: `${token}`
             }
         });
+
+        socket.emit('vinculo-update', {
+            email: `${email}`,
+            type: "remove",
+            authorization: `${token}`
+        });
+
         return response;
     } catch (error) {
-        return error.response.data;
+        return error.data;
     }
 }
 
@@ -191,13 +220,16 @@ export const getCurriculo = async (token) => {
     }
 }
 
-export const getEmailAluno = async (token) => {
+export const getMeAluno = async (token) => {
     try {
-        const response = await api.get('aluno/email', {
+        const response = await api.get('aluno/me', {
             headers: {
                 authorization: `${token}`
             }
         });
+
+        socket.emit('register', this.response.email);
+
         return response;
     } catch (error) {
         return error.response.data;
