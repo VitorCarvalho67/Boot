@@ -13,7 +13,7 @@ main {
         .capaProfile {
             height: 66.66%;
             border-radius: 16px;
-            background-color: rgb(0, 50, 158);
+            background-color: $secondary-color-dark;
 
             img {
                 height: 100%;
@@ -33,7 +33,7 @@ main {
                 width: 250px;
                 object-fit: cover;
                 border-radius: 50%;
-                background-color: rgb(255, 68, 130);
+                background-color: $terciary-color-dark;
             }
 
             .info {
@@ -71,7 +71,7 @@ main {
             margin: 20px 0px 10px 0px;
         }
 
-        div {
+        > div {
             position: relative;
             width: 100%;
             background-color: $secondary-color-dark;
@@ -84,6 +84,7 @@ main {
                 @include font-inter(300);
                 font-size: 1rem;
                 color: $font-color-dark-2;
+                min-height: 300px;
             }
 
             textarea {
@@ -92,26 +93,42 @@ main {
                 outline: none;
                 min-width: 100%;
                 height: auto;
-                min-height: 300px;
                 resize: none;
             }
 
-            .edit {
+            > .editButtons {
                 @include flex-center;
                 position: absolute;
+                z-index: 2;
                 bottom: 10px;
                 right: 10px;
-                background-color: transparent;
-                border: none;
-                height: 30px;
-                width: 30px;
-                border-radius: 50%;
 
-                img {
-                    height: 60%;
-                    width: 60%;
-                    object-fit: cover;
-                    filter: invert(100%)
+                button {
+                    @include flex-center;
+                    margin-inline-end: 10px;
+                    background-color: transparent;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 4px 6px;
+                    color: $font-color-dark;
+                    @include font-inter(700);
+                    box-shadow: 0px 0px 2px $font-color-dark-2;
+
+                    > * {
+                        margin-inline-end: 3px;
+                    }
+
+                    img {
+                        height: 18px;
+                        width: 18px;
+                        object-fit: cover;
+                        filter: invert(100%);
+                    }
+
+                    &:hover {
+                        background-color: $primary-color-dark;
+                        box-shadow: 0px 0px 4px $font-color-dark-2;
+                    }
                 }
             }
         }

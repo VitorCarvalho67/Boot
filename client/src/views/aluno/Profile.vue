@@ -23,15 +23,19 @@
                 <h2>Sobre mim</h2>
                 <div>
                     <p v-show="mode === 'view'" v-html="aluno.curriculo"></p>
-                    <button class="edit" v-show="mode === 'view'" @click="editMode" type="button">
-                        <img :src="imgLapis" alt="">
-                    </button>
-                    <textarea v-show="mode === 'edit'" name="" id="" cols="30" rows="10"
-                        v-model="aluno.curriculoEdit"></textarea>
-                    
-                    
-                    <button v-show="mode === 'edit'" @click="updateCurriculoSubmit" type="button">Salvar</button>
-                    <button v-show="mode === 'edit'" @click="cancel" type="button">Cancelar</button>
+                    <textarea v-show="mode === 'edit'" name="" cols="30" rows="10" id="edit"
+                    v-model="aluno.curriculoEdit" ref="edit"></textarea>
+                    <div class="editButtons">
+                        <button v-show="mode === 'view'" @click="editMode" type="button">
+                            <img :src="imgLapis" alt="">Editar
+                        </button>
+                        <button v-show="mode === 'edit'" @click="updateCurriculoSubmit" type="button">
+                            <img :src="imgVerificar">Salvar
+                        </button>
+                        <button v-show="mode === 'edit'" @click="cancel" type="button">
+                            <img :src="imgCruz">Cancelar
+                        </button>
+                    </div>
                 </div>
             </section>
         </main>
@@ -42,12 +46,11 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-
-import router from '../../router/index.js';
-import Cookies from 'js-cookie';
 import { getCurriculo, updateCurriculo } from '../../services/api/aluno';
 import { mixinAluno } from '../../util/authMixins';
-import imgLapis from '../../assets/icons/lapis.png'
+import imgLapis from '../../assets/icons/lapis.png';
+import imgVerificar from '../../assets/icons/verificar.png';
+import imgCruz from '../../assets/icons/cruz.png';
 
 export default {
     name: 'PerfilAluno',
@@ -66,7 +69,9 @@ export default {
                 curriculoEdit: ''
             },
             mode: 'view',
-            imgLapis
+            imgLapis,
+            imgVerificar,
+            imgCruz
         };
     },
     methods: {
@@ -81,14 +86,19 @@ export default {
                 alert("Ops.. Algo deu errado ao alterar o campo \"sobre mim\". 😕\n" + response.message);
             }
 
-            await this.getCurriculoAluno()
+            await this.getCurriculoAluno();
             this.editMode();
         },
         editMode() {
             this.mode = this.mode === 'view' ? 'edit' : 'view';
+            this.$nextTick(() => {
+                if (this.mode === 'edit') {
+                    this.$refs.edit.focus();
+                }
+            });
         },
         async cancel() {
-            await this.getCurriculoAluno()
+            await this.getCurriculoAluno();
             this.editMode();
         },
         calcularIdade(nascimento) {
