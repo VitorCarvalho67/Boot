@@ -43,6 +43,20 @@ export const mixinAluno = {
         },
         logout() {
             logout('/login');
+        },
+        calcularIdade(nascimento) {
+            const hoje = new Date();
+            const dataNascimento = new Date(nascimento);
+
+            let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+            const mesAtual = hoje.getMonth() + 1;
+            const mesNascimento = dataNascimento.getMonth() + 1;
+
+            if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())) {
+                idade--;
+            }
+
+            this.aluno.idade = "" + idade + " anos";
         }
     },
 };

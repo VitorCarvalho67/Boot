@@ -2,15 +2,36 @@
     <Header />
     <div id="app">
         <main>
-            <section>
-                <p v-text="aluno.nome"></p>
-                <p v-text="aluno.idade"></p>
-                <p v-text="aluno.endereco"></p>
-                <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado" @click="sendSolicitation">Vincular-se</button>
-                <button v-show="visualizador.conected && !visualizador.isOwner" @click="mensagem">Mensagem</button>
-                <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar pedido</button>
-                <button v-show="visualizador.situacao == 'recebido'" @click="removeSolicitation('recipient')">Dispensar pedido</button>
-                <button v-show="visualizador.situacao == 'pendente'" @click="removeSolicitation('sender')">Remover Pedido</button>
+            <div class="capa">
+                <div class="capaProfile">
+                    <img src="" alt="imgCapa">
+                </div>
+                <div class="infoProfile">
+                    <img src="" alt="imgProfile">
+                    <div class="info">
+                        <div class="box1">
+                            <h1 v-text="aluno.nome"></h1>
+                        </div>
+                        <div class="box2">
+                            <p v-text="aluno.idade"></p>
+                            <p v-text="aluno.endereco"></p>
+                            <button
+                                v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
+                                @click="sendSolicitation">Vincular-se</button>
+                            <button v-show="visualizador.conected && !visualizador.isOwner"
+                                @click="mensagem">Mensagem</button>
+                            <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar
+                                pedido</button>
+                            <button v-show="visualizador.situacao == 'recebido'"
+                                @click="removeSolicitation('recipient')">Dispensar pedido</button>
+                            <button v-show="visualizador.situacao == 'pendente'"
+                                @click="removeSolicitation('sender')">Remover Pedido</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="sobreMim">
+                <h2>Sobre mim</h2>
                 <div>
                     <p v-html="aluno.curriculo"></p>
                 </div>
@@ -26,9 +47,12 @@ import Footer from '../../components/Footer.vue';
 
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
-import { getCurriculo } from '../../services/api/shared';
+import { 
+    getCurriculo
+} from '../../services/api/shared';
 import {
     getVinculosAluno,
+    getVinculosProfileAluno,
     getMeAluno,
     sendVinculoSolicitationAluno,
     acceptVinculoAluno,
@@ -68,20 +92,6 @@ export default {
         };
     },
     methods: {
-        calcularIdade(nascimento) {
-            const hoje = new Date();
-            const dataNascimento = new Date(nascimento);
-
-            let idade = hoje.getFullYear() - dataNascimento.getFullYear();
-            const mesAtual = hoje.getMonth() + 1;
-            const mesNascimento = dataNascimento.getMonth() + 1;
-
-            if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())) {
-                idade--;
-            }
-
-            this.aluno.idade = "" + idade + " anos";
-        },
         async getCurriculoAluno() {
             try {
                 const response = await getCurriculo({
@@ -102,6 +112,20 @@ export default {
                 alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error);
             }
         },
+        calcularIdade(nascimento) {
+            const hoje = new Date();
+            const dataNascimento = new Date(nascimento);
+
+            let idade = hoje.getFullYear() - dataNascimento.getFullYear();
+            const mesAtual = hoje.getMonth() + 1;
+            const mesNascimento = dataNascimento.getMonth() + 1;
+
+            if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())) {
+                idade--;
+            }
+
+            this.aluno.idade = "" + idade + " anos";
+        },
         async possuiVinculo() {
             this.visualizador.conected = false,
             this.visualizador.semiconectado = false,
@@ -109,9 +133,9 @@ export default {
             this.visualizador.token = '',
             this.visualizador.isOwner = false,
             this.visualizador.email = ''
-
+            
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
-
+            
             if (this.visualizador.token) {
                 let response;
                 let responseMail;
@@ -126,8 +150,8 @@ export default {
                                 router.push({ path: '/aluno/me' });
                             }
                         }
-
-                        response = await getVinculosAluno({
+                        
+                        response = await getVinculosProfileAluno({
                             identifier: "ALUNO"
                         }, this.visualizador.token);
                     } else if (Cookies.get("token-professor")) {
@@ -135,8 +159,9 @@ export default {
                             identifier: "PROFESSOR"
                         }, this.visualizador.token);
                     }
-
+                    
                     if (response.status >= 200 && response.status < 300) {
+                        console.log("Possui vínculo function");
                         const email = this.aluno.email;
                         const { aceitos, enviados, recebidos } = response.data;
 
@@ -161,7 +186,7 @@ export default {
                 }
             }
         },
-        async sendSolicitation(){
+        async sendSolicitation() {
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
 
             if (this.visualizador.token) {
@@ -177,27 +202,27 @@ export default {
                         }
 
                         const response = await sendVinculoSolicitationAluno({
-                                sender: responseMail.data.email,
-                                recipient: this.aluno.email,
-                                senderIdentifier: "ALUNO",  
-                                recipientIdentifier: "ALUNO"
-                            }, 
+                            sender: responseMail.data.email,
+                            recipient: this.aluno.email,
+                            senderIdentifier: "ALUNO",
+                            recipientIdentifier: "ALUNO"
+                        },
                             this.aluno.email,
                             this.visualizador.token
                         );
 
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
-                        } else{
-                            alert("Ops.. Algo deu errado ao enviar a solicitação para este usuário. 😕\n" + response.message);            
+                        } else {
+                            alert("Ops.. Algo deu errado ao enviar a solicitação para este usuário. 😕\n" + response.message);
                         }
                     } catch (error) {
-                        alert("Ops.. Algo deu errado ao enviar a solicitação para este usuário. 😕\n" + error);            
+                        alert("Ops.. Algo deu errado ao enviar a solicitação para este usuário. 😕\n" + error);
                     }
-                }                    
+                }
             }
         },
-        async acceptSolicitation(){
+        async acceptSolicitation() {
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
 
             if (this.visualizador.token) {
@@ -217,7 +242,7 @@ export default {
                         infoVinculo = {
                             sender: this.aluno.email,
                             recipient: responseMail.data.email,
-                            senderIdentifier: "ALUNO",  
+                            senderIdentifier: "ALUNO",
                             recipientIdentifier: "ALUNO"
                         }
                         const response = await acceptVinculoAluno(
@@ -228,16 +253,16 @@ export default {
 
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
-                        } else{
-                            alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + response.message);            
+                        } else {
+                            alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + response.message);
                         }
                     } catch (error) {
-                        alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + error);            
+                        alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + error);
                     }
-                }                    
+                }
             }
         },
-        async removeSolicitation(agent){
+        async removeSolicitation(agent) {
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
 
             if (this.visualizador.token) {
@@ -255,11 +280,11 @@ export default {
                         let infoVinculo;
                         let response;
 
-                        if (agent == "sender"){
+                        if (agent == "sender") {
                             infoVinculo = {
                                 sender: responseMail.data.email,
                                 recipient: this.aluno.email,
-                                senderIdentifier: "ALUNO",  
+                                senderIdentifier: "ALUNO",
                                 recipientIdentifier: "ALUNO"
                             }
                             response = await removeVinculoAluno(
@@ -267,11 +292,11 @@ export default {
                                 this.aluno.email,
                                 this.visualizador.token
                             );
-                        } else if (agent == "recipient"){
+                        } else if (agent == "recipient") {
                             infoVinculo = {
                                 sender: this.aluno.email,
                                 recipient: responseMail.data.email,
-                                senderIdentifier: "ALUNO",  
+                                senderIdentifier: "ALUNO",
                                 recipientIdentifier: "ALUNO"
                             }
                             response = await rejectVinculoAluno(
@@ -283,21 +308,23 @@ export default {
 
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
-                        } else{
-                            alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);            
+                        } else {
+                            alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);
                         }
                     } catch (error) {
-                        alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);            
+                        alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);
                     }
-                }                    
+                }
             }
-        }       
+        }
     },
     async created() {
         this.aluno.rm = this.$route.params.rm;
         await this.getCurriculoAluno();
         await this.possuiVinculo();
         await this.getCurriculoAluno();
+
+        console.log(this.conected);
 
         socket.on('vinculo-update', async (data) => {
             await this.possuiVinculo();
@@ -308,5 +335,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/shared/_perfilAluno.scss";
+@import "../../scss/pages/shared/_perfilAluno.scss";
 </style>

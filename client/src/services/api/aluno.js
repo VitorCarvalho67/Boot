@@ -193,9 +193,23 @@ export const removeVinculoAluno = async (infoVinculo, email, token) => {
     }
 }
 
-export const getVinculosAluno = async (info, token) => {
+export const getVinculosProfileAluno = async (info, token) => {
     try {
         const response = await api.get('aluno/links', {
+            params: info,
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.data;
+    }
+}
+
+export const getVinculosAluno = async (info, token) => {
+    try {
+        const response = await api.get('aluno/links/profile', {
             params: info,
             headers: {
                 authorization: `${token}`

@@ -2,14 +2,34 @@
     <Header />
     <div id="app">
         <main>
-            <section>
-                <p v-text="aluno.nome"></p>
-                <p v-text="aluno.idade"></p>
-                <p v-text="aluno.endereco"></p>
+            <div class="capa">
+                <div class="capaProfile">
+                    <img src="" alt="imgCapa">
+                </div>
+                <div class="infoProfile">
+                    <img src="" alt="imgProfile">
+                    <div class="info">
+                        <div class="box1">
+                            <h1 v-text="aluno.nome"></h1>
+                        </div>
+                        <div class="box2">
+                            <p v-text="aluno.idade"></p>
+                            <p v-text="aluno.endereco"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="sobreMim">
+                <h2>Sobre mim</h2>
                 <div>
                     <p v-show="mode === 'view'" v-html="aluno.curriculo"></p>
-                    <button v-show="mode === 'view'" @click="editMode" type="button">Lápis</button>
-                    <textarea v-show="mode === 'edit'" name="" id="" cols="30" rows="10" v-model="aluno.curriculoEdit"></textarea>
+                    <button class="edit" v-show="mode === 'view'" @click="editMode" type="button">
+                        <img :src="imgLapis" alt="">
+                    </button>
+                    <textarea v-show="mode === 'edit'" name="" id="" cols="30" rows="10"
+                        v-model="aluno.curriculoEdit"></textarea>
+                    
+                    
                     <button v-show="mode === 'edit'" @click="updateCurriculoSubmit" type="button">Salvar</button>
                     <button v-show="mode === 'edit'" @click="cancel" type="button">Cancelar</button>
                 </div>
@@ -27,6 +47,7 @@ import router from '../../router/index.js';
 import Cookies from 'js-cookie';
 import { getCurriculo, updateCurriculo } from '../../services/api/aluno';
 import { mixinAluno } from '../../util/authMixins';
+import imgLapis from '../../assets/icons/lapis.png'
 
 export default {
     name: 'PerfilAluno',
@@ -44,7 +65,8 @@ export default {
                 curriculo: '',
                 curriculoEdit: ''
             },
-            mode: 'view'
+            mode: 'view',
+            imgLapis
         };
     },
     methods: {
@@ -52,7 +74,7 @@ export default {
             const response = await updateCurriculo({
                 curriculo: this.aluno.curriculoEdit
             }, this.aluno.token);
-            
+
             if (response.status >= 200 && response.status < 300) {
                 alert("Informações alteradas com sucesso! 😉");
             } else {
@@ -65,14 +87,14 @@ export default {
         editMode() {
             this.mode = this.mode === 'view' ? 'edit' : 'view';
         },
-        async cancel(){
+        async cancel() {
             await this.getCurriculoAluno()
             this.editMode();
         },
         calcularIdade(nascimento) {
             const hoje = new Date();
             const dataNascimento = new Date(nascimento);
-            
+
             let idade = hoje.getFullYear() - dataNascimento.getFullYear();
             const mesAtual = hoje.getMonth() + 1;
             const mesNascimento = dataNascimento.getMonth() + 1;
@@ -80,12 +102,12 @@ export default {
             if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())) {
                 idade--;
             }
-            
+
             this.aluno.idade = "" + idade + " anos";
         },
-        async getCurriculoAluno(){
+        async getCurriculoAluno() {
             const response = await getCurriculo(this.aluno.token);
-            
+
             if (response.status >= 200 && response.status < 300) {
                 this.aluno.curriculo = response.data.curriculo.replace(/\n/g, '<br>');
                 this.aluno.curriculoEdit = response.data.curriculo;
@@ -107,5 +129,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/aluno/_profile.scss";
+@import "../../scss/pages/aluno/_profile.scss";
 </style>

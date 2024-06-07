@@ -3,6 +3,7 @@ import { CreateVinculoUseCase } from "../services/shared/CreateVinculoUseCase";
 import { DeleteVinculoUseCase } from "../services/shared/DeleteVinculoUseCase";
 import { AcceptVinculoUseCase } from "../services/shared/AcceptVinculoUseCase";
 import { GetVinculosUseCase } from "../services/shared/GetVinculosUseCase";
+import { GetVinculosProfileUseCase } from "../services/shared/GetProfileVincUseCase";
 import { IgnoreVinculoUseCase } from "../services/shared/IgnoreVinculoUseCase";
 import { GetUnlinkedsUseCase } from "../services/shared/GetUnlinkedsUseCase";
 import { GetCursosUseCase } from "../services/shared/GetCursosUseCase";
@@ -75,6 +76,19 @@ export class GetVinculosController {
         const getVinculosUseCase = new GetVinculosUseCase();
 
         const result = await getVinculosUseCase.execute({ email, identifier });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetVinculosProfileController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const identifier = req.query.identifier as IdentificadorEnum;
+
+        const getVinculosProfileUseCase = new GetVinculosProfileUseCase();
+
+        const result = await getVinculosProfileUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
     }

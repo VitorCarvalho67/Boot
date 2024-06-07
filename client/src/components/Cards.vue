@@ -83,6 +83,7 @@ export default {
 
         function scrollCarousel(direction) {
             carousel.value.scrollLeft += direction === 'left' ? -firstCardWidth.value : firstCardWidth.value;
+            autoPlay();
         }
 
         function initInfiniteScroll() {
@@ -108,7 +109,7 @@ export default {
             if (window.innerWidth < 800) return;
             timeoutId.value = setTimeout(() => {
                 scrollCarousel('right');
-            }, 2500);
+            }, 4000);
         }
 
         return {

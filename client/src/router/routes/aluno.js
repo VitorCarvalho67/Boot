@@ -6,6 +6,7 @@ import ValidateRecovery from '../../views/aluno/ValidateRecovery.vue';
 import HomeAluno from '../../views/aluno/Home.vue';
 import PerfilAluno from '../../views/aluno/Profile.vue';
 import Complete from '../../views/aluno/Complete.vue';
+import Rede from '../../views/aluno/Rede.vue';
 
 import {
     isRecoveringAluno,
@@ -70,5 +71,13 @@ export const alunoRoutes = [
         beforeEnter: async (to, from, next) => {
             !(await isCompletedAluno()) ? next() : next("/aluno/me");
         }
-    }
+    },
+    {
+        path: "/rede",
+        name: "Rede",
+        component: Rede,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
+        }
+    },
 ];

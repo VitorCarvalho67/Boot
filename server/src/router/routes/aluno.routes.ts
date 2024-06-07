@@ -4,6 +4,7 @@ import {
     CreateVinculoController,
     AcceptVinculoController,
     GetVinculosController,
+    GetVinculosProfileController,
     IgnoreVinculoController,
     GetUnlinkedsController,
     GetCursosController,
@@ -34,6 +35,7 @@ const createVinculoController = new CreateVinculoController();
 const acceptVinculoController = new AcceptVinculoController();
 const ignoreVinculoController = new IgnoreVinculoController();
 const getVinculosController = new GetVinculosController();
+const getVinculosProfileController = new GetVinculosProfileController();
 const getUnlinkedsController = new GetUnlinkedsController();
 const getCursosController = new GetCursosController();
 const getCourseYearController = new GetCourseYearController();
@@ -61,6 +63,7 @@ alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
 });
 
 alunoRoutes.get("/links", alunoAuthMiddleware, getVinculosController.handle);
+alunoRoutes.get("/links/profile", alunoAuthMiddleware, getVinculosProfileController.handle);
 alunoRoutes.get("/unlinkeds", alunoAuthMiddleware, getUnlinkedsController.handle);
 alunoRoutes.get("/cursos", alunoAuthMiddleware, getCursosController.handle);
 alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, getCourseYearController.handle);
