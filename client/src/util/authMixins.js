@@ -1,6 +1,10 @@
 import Cookies from 'js-cookie';
 import router from '../router/index.js';
 import { refreshTokenAluno } from '../services/api/aluno';
+import { refreshTokenAdmin } from '../services/api/admin';
+import { refreshTokenEmpresa } from '../services/api/empresa';
+import { refreshTokenFuncionario } from '../services/api/funcionario';
+import { refreshTokenProfessor } from '../services/api/professor';
 
 function logout(path) {
     var allCookies = Cookies.get();
@@ -35,7 +39,7 @@ export const mixinAluno = {
             try {
                 const response = await refreshTokenAluno(this.aluno.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${ response.data.token }`);
+                    Cookies.set('token', `${response.data.token}`);
                 }
             } catch (error) {
                 router.push({ path: '/login' });
@@ -64,25 +68,27 @@ export const mixinAluno = {
 export const mixinAdmin = {
     data() {
         return {
-            token: '',
+            admin: {
+                token: '',
+            }
         }
     },
     methods: {
         async getToken() {
-            this.token = Cookies.get('token-admin');
-            if (!this.token) {
+            this.admin.token = Cookies.get('token-admin');
+            if (!this.admin.token) {
                 router.push({ path: '/admin/login' });
             }
             await this.RefreshToken();
         },
         async RefreshToken() {
             try {
-                const response = await refreshTokenAdmin(this.token);
+                const response = await refreshTokenAdmin(this.admin.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${ response.data.token }`);
+                    Cookies.set('token', `${response.data.token}`);
                 }
             } catch (error) {
-                router.push({ path: 'admin/login' });
+                router.push({ path: '/admin/login' });
             }
         },
         logout() {
@@ -94,25 +100,27 @@ export const mixinAdmin = {
 export const mixinProfessor = {
     data() {
         return {
-            token: '',
+            professor: {
+                token: '',
+            }
         }
     },
     methods: {
         async getToken() {
-            this.token = Cookies.get('token-professor');
-            if (!this.token) {
+            this.professor.token = Cookies.get('token-professor');
+            if (!this.professor.token) {
                 router.push({ path: '/professor/init' });
             }
             await this.RefreshToken();
         },
         async RefreshToken() {
             try {
-                const response = await refreshTokenProfessor(this.token);
+                const response = await refreshTokenProfessor(this.professor.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${ response.data.token }`);
+                    Cookies.set('token-professor', `${response.data.token}`);
                 }
             } catch (error) {
-                router.push({ path: 'professor/init' });
+                router.push({ path: '/professor/init' });
             }
         },
         logout() {
@@ -124,25 +132,27 @@ export const mixinProfessor = {
 export const mixinFuncionario = {
     data() {
         return {
-            token: '',
+            funcionario: {
+                token: '',
+            }
         }
     },
     methods: {
         async getToken() {
-            this.token = Cookies.get('token-funcionario');
-            if (!this.token) {
+            this.funcionario.token = Cookies.get('token-funcionario');
+            if (!this.funcionario.token) {
                 router.push({ path: '/funcionario/init' });
             }
             await this.RefreshToken();
         },
         async RefreshToken() {
             try {
-                const response = await refreshTokenFuncionario(this.token);
+                const response = await refreshTokenFuncionario(this.funcionario.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${ response.data.token }`);
+                    Cookies.set('token', `${response.data.token}`);
                 }
             } catch (error) {
-                router.push({ path: 'funcionario/init' });
+                router.push({ path: '/funcionario/init' });
             }
         },
         logout() {
@@ -154,22 +164,24 @@ export const mixinFuncionario = {
 export const mixinEmpresa = {
     data() {
         return {
-            token: '',
+            empresa: {
+                token: '',
+            }
         }
     },
     methods: {
         async getToken() {
-            this.token = Cookies.get('token-empresa');
-            if (!this.token) {
+            this.empresa.token = Cookies.get('token-empresa');
+            if (!this.empresa.token) {
                 router.push({ path: '/empresa/login' });
             }
             await this.RefreshToken();
         },
         async RefreshToken() {
             try {
-                const response = await refreshTokenEmpresa(this.token);
+                const response = await refreshTokenEmpresa(this.empresa.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${ response.data.token }`);
+                    Cookies.set('token', `${response.data.token}`);
                 }
             } catch (error) {
                 router.push({ path: '/empresa/login' });

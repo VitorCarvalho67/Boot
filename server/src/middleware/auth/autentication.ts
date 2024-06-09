@@ -11,7 +11,7 @@ import {
 } from '../../jwt/jwtServices';
 
 interface RequestWithAdmin extends Request {
-    admin?: { id: String };
+    admin?: { id: String, email: String };
 }
 
 interface RequestWithProfessor extends Request {
@@ -19,11 +19,11 @@ interface RequestWithProfessor extends Request {
 }
 
 interface RequestWithFuncionario extends Request {
-    funcionario?: { id: String };
+    funcionario?: { id: String, email: String };
 }
 
 interface RequestWithEmpresa extends Request {
-    empresa?: { id: String };
+    empresa?: { id: String, email: String };
 }
 
 interface RequestWithAluno extends Request {
@@ -54,7 +54,7 @@ export async function adminAuthMiddleware(req: RequestWithAdmin, res: Response, 
             throw new AppError('Admin not found');
         }
 
-        req.admin = { id: admin.id };
+        req.body.entidade = { id: admin.id, email: admin.email }; 
 
         next();
     } catch (error) {
@@ -114,7 +114,7 @@ export async function funcionarioAuthMiddleware(req: RequestWithFuncionario, res
             throw new AppError('Funcionário not found');
         }
 
-        req.funcionario = { id: funcionario.id };
+        req.body.funcionario = { id: funcionario.id, email: funcionario.email };
 
         next();
     } catch (error) {
@@ -144,7 +144,7 @@ export async function empresaAuthMiddleware(req: RequestWithEmpresa, res: Respon
             throw new AppError('Empresa not found');
         }
 
-        req.empresa = { id: empresa.id };
+        req.body.empresa = { id: empresa.id, email: empresa.email };
 
         next();
     } catch (error) {
