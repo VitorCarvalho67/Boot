@@ -36,7 +36,6 @@ export default {
     },
     data() {
         return {
-            token: '',
             coordenador: {
                 name: '',
             },
@@ -46,7 +45,7 @@ export default {
     methods: {
         async submitForm() {
             try {
-                const response = await registerCoordenador(this.coordenador.name, this.token);
+                const response = await registerCoordenador(this.coordenador.name, this.admin.token);
 
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
@@ -60,7 +59,7 @@ export default {
         },
         async GetProfessores() {
             try {
-                const response = await getProfessores(this.token);
+                const response = await getProfessores(this.admin.token);
                 this.professores = response.data
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);

@@ -50,7 +50,6 @@ export default {
     },
     data() {
         return {
-            token: '',
             funcionario: {
                 name: '',
                 tituloPrincipal: '',
@@ -80,7 +79,7 @@ export default {
                         email: this.funcionario.email,
                         cargo: this.funcionario.cargo
                     },
-                    this.token
+                    this.admin.token
                 );
 
 

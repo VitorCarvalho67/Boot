@@ -41,7 +41,6 @@ export default {
     },
     data() {
         return {
-            token: '',
             professor: {
                 name: '',
                 tituloPrincipal: '',
@@ -58,7 +57,7 @@ export default {
                         tituloPrincipal: this.professor.tituloPrincipal,
                         email: this.professor.email
                     },
-                    this.token
+                    this.admin.token
                 );
 
                 if (response.status >= 200 && response.status < 300) {

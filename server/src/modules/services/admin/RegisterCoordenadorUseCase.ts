@@ -31,8 +31,6 @@ export class RegisterCoordenadorUseCase {
                     }
                 });
 
-                console.log("Break point ⭕");
-
                 if (!coordenadorRegister) {
                     throw new AppError("Erro ao cadastrar professor!");
                 } else {

@@ -62,7 +62,6 @@ export default {
     },
     data() {
         return {
-            token: '',
             curso: {
                 name: '',
                 turno: '',
@@ -83,7 +82,7 @@ export default {
                         duracao: (this.curso.duracao_quantidade + " " + this.curso.duracao_periodo),
                         coordenador: this.curso.coordenador
                     },
-                    this.token
+                    this.admin.token
                 );
 
                 if (response.status >= 200 && response.status < 300) {
@@ -97,7 +96,7 @@ export default {
         },
         async GetCoordenadores() {
             try {
-                const response = await getCoordenadores(this.token);
+                const response = await getCoordenadores(this.admin.token);
                 this.coordenadores = response.data;
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);

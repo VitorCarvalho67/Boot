@@ -44,7 +44,6 @@ export default {
     },
     data() {
         return {
-            token: '',
             turma: {
                 inicio: '',
                 fim: '',
@@ -72,7 +71,7 @@ export default {
                         fim: this.turma.fim,
                         cursoName: this.turma.curso
                     },
-                    this.token
+                    this.admin.token
                 );
 
                 if (response.status >= 200 && response.status < 300) {
@@ -87,7 +86,7 @@ export default {
 
         async GetCursos() {
             try {
-                const response = await getCursos(this.token);
+                const response = await getCursos(this.admin.token);
                 this.cursos = response.data
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);

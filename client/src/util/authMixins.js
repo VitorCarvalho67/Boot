@@ -85,7 +85,7 @@ export const mixinAdmin = {
             try {
                 const response = await refreshTokenAdmin(this.admin.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${response.data.token}`);
+                    Cookies.set('token-admin', `${response.data.token}`);
                 }
             } catch (error) {
                 router.push({ path: '/admin/login' });
