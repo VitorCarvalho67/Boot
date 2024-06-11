@@ -44,6 +44,11 @@ export interface GetTurmasByCursoDTO {
     turno: Turno
 }
 
+export interface UploadImageDTO{
+    email: string,
+    file: Express.Multer.File
+}
+
 export enum Turno {
     MANHA = "MANHA",
     TARDE = "TARDE",

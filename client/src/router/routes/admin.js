@@ -16,7 +16,7 @@ export const adminRoutes = [
         name: 'Admin',
         component: Admin,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAdmin()) ? next() : next("/admin/login");
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }
     },
     {
@@ -29,7 +29,7 @@ export const adminRoutes = [
         name: 'RegisterProfessor',
         component: RegisterProfessor,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAdmin()) ? next() : next("/admin/login");
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }
     },
     {
@@ -37,7 +37,7 @@ export const adminRoutes = [
         name: 'RegisterCoordenador',
         component: RegisterCoordenador,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAdmin()) ? next() : next("/admin/login");
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }
     },
     {
@@ -45,7 +45,7 @@ export const adminRoutes = [
         name: 'RegisterCurso',
         component: RegisterCurso,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAdmin()) ? next() : next("/admin/login");
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }
     },
     {
@@ -53,7 +53,7 @@ export const adminRoutes = [
         name: 'RegisterTurma',
         component: RegisterTurma,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAdmin()) ? next() : next("/admin/login");
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }
     },
     {

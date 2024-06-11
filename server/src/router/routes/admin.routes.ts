@@ -15,33 +15,36 @@ import {
     RefreshTokenController
 } from "../../modules/controllers/adminControllers";
 
-const loginAdminController = new LoginAdminController();
-const registerCursosController = new RegisterCursosController();
-const registerProfessorController = new RegisterProfessorController();
-const registerFuncionarioController = new RegisterFuncionarioController();
-const registerCoordenadorController = new RegisterCoordenadorController();
-const registerTurmaController = new RegisterTurmaController();
-const getAllProfessorController = new GetAllProfessorController();
-const getCoordenadoresController = new GetCoordenadorController();
-const getCursosController = new GetCursosController();
-const refreshTokenController = new RefreshTokenController();
+const createControllers = () => ({
+    loginAdminController: new LoginAdminController(),
+    registerCursosController: new RegisterCursosController(),
+    registerProfessorController: new RegisterProfessorController(),
+    registerFuncionarioController: new RegisterFuncionarioController(),
+    registerCoordenadorController: new RegisterCoordenadorController(),
+    registerTurmaController: new RegisterTurmaController(),
+    getAllProfessorController: new GetAllProfessorController(),
+    getCoordenadoresController: new GetCoordenadorController(),
+    getCursosController: new GetCursosController(),
+    refreshTokenController: new RefreshTokenController(),
+});
 
+const controllers = createControllers();
 const adminRoutes = Router();
 
-adminRoutes.post("/login", loginAdminController.handle);
-adminRoutes.post("/register/course", adminAuthMiddleware, registerCursosController.handle);
-adminRoutes.post("/register/professor", adminAuthMiddleware, registerProfessorController.handle);
-adminRoutes.post("/register/funcionario", adminAuthMiddleware, registerFuncionarioController.handle);
-adminRoutes.post("/register/coordenador", adminAuthMiddleware, registerCoordenadorController.handle);
-adminRoutes.post("/register/turma", adminAuthMiddleware, registerTurmaController.handle);
+adminRoutes.post("/login", controllers.loginAdminController.handle);
+adminRoutes.post("/register/course", adminAuthMiddleware, controllers.registerCursosController.handle);
+adminRoutes.post("/register/professor", adminAuthMiddleware, controllers.registerProfessorController.handle);
+adminRoutes.post("/register/funcionario", adminAuthMiddleware, controllers.registerFuncionarioController.handle);
+adminRoutes.post("/register/coordenador", adminAuthMiddleware, controllers.registerCoordenadorController.handle);
+adminRoutes.post("/register/turma", adminAuthMiddleware, controllers.registerTurmaController.handle);
 
 adminRoutes.get("/auth", adminAuthMiddleware, (req, res) => {
     res.status(200).send("Admin autenticado com sucesso.");
 });
 
-adminRoutes.get("/professores", adminAuthMiddleware, getAllProfessorController.handle);
-adminRoutes.get("/coordenadores", adminAuthMiddleware, getCoordenadoresController.handle);
-adminRoutes.get("/cursos", adminAuthMiddleware, getCursosController.handle);
-adminRoutes.get("/token/refresh", adminAuthMiddleware, refreshTokenController.handle);
+adminRoutes.get("/professores", adminAuthMiddleware, controllers.getAllProfessorController.handle);
+adminRoutes.get("/coordenadores", adminAuthMiddleware, controllers.getCoordenadoresController.handle);
+adminRoutes.get("/cursos", adminAuthMiddleware, controllers.getCursosController.handle);
+adminRoutes.get("/token/refresh", adminAuthMiddleware, controllers.refreshTokenController.handle);
 
 export { adminRoutes };

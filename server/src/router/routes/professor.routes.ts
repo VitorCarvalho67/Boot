@@ -17,37 +17,40 @@ import {
     RefreshTokenController
 } from "../../modules/controllers/professorControllers";
 
-const validateProfessorController = new ValidateProfessorController();
-const loginProfessorController = new LoginProfessorController();
-const initProfessorController = new InitProfessorController();
-const recoveryProfessorController = new RecoveryProfessorController();
-const validateRecoveryController = new ValidateRecoveryController();
-const createVinculoController = new CreateVinculoController();
-const acceptVinculoController = new AcceptVinculoController();
-const ignoreVinculoController = new IgnoreVinculoController();
-const deleteVinculoController = new DeleteVinculoController();
-const getVinculosController = new GetVinculosController();
-const getUnlinkedsController = new GetUnlinkedsController();
-const refreshTokenController = new RefreshTokenController();
+const createControllers = () => ({
+    validateProfessorController: new ValidateProfessorController(),
+    loginProfessorController: new LoginProfessorController(),
+    initProfessorController: new InitProfessorController(),
+    recoveryProfessorController: new RecoveryProfessorController(),
+    validateRecoveryController: new ValidateRecoveryController(),
+    createVinculoController: new CreateVinculoController(),
+    acceptVinculoController: new AcceptVinculoController(),
+    ignoreVinculoController: new IgnoreVinculoController(),
+    deleteVinculoController: new DeleteVinculoController(),
+    getVinculosController: new GetVinculosController(),
+    getUnlinkedsController: new GetUnlinkedsController(),
+    refreshTokenController: new RefreshTokenController()
+});
 
+const controllers = createControllers();
 const professorRoutes = Router();
 
-professorRoutes.post("/validate", validateProfessorController.handle);
-professorRoutes.post("/login", loginProfessorController.handle);
-professorRoutes.post("/recovery", recoveryProfessorController.handle);
-professorRoutes.post("/recovery/validate", validateRecoveryController.handle);
-professorRoutes.post("/link/send", professorAuthMiddleware, createVinculoController.handle);
-professorRoutes.post("/link/accept", professorAuthMiddleware, acceptVinculoController.handle);
-professorRoutes.post("/link/reject", professorAuthMiddleware, ignoreVinculoController.handle);
-professorRoutes.post("/link/delete", professorAuthMiddleware, deleteVinculoController.handle);
+professorRoutes.post("/validate", controllers.validateProfessorController.handle);
+professorRoutes.post("/login", controllers.loginProfessorController.handle);
+professorRoutes.post("/recovery", controllers.recoveryProfessorController.handle);
+professorRoutes.post("/recovery/validate", controllers.validateRecoveryController.handle);
+professorRoutes.post("/link/send", professorAuthMiddleware, controllers.createVinculoController.handle);
+professorRoutes.post("/link/accept", professorAuthMiddleware, controllers.acceptVinculoController.handle);
+professorRoutes.post("/link/reject", professorAuthMiddleware, controllers.ignoreVinculoController.handle);
+professorRoutes.post("/link/delete", professorAuthMiddleware, controllers.deleteVinculoController.handle);
 
 professorRoutes.get("/auth", professorAuthMiddleware, (req, res) => {
     res.status(200).send("Professor autenticado com sucesso.");
 });
 
-professorRoutes.get("/init", initProfessorController.handle);
-professorRoutes.get("/links", professorAuthMiddleware, getVinculosController.handle);
-professorRoutes.get("/unlinkeds", professorAuthMiddleware, getUnlinkedsController.handle);
-professorRoutes.get("/token/refresh", professorAuthMiddleware, refreshTokenController.handle);
+professorRoutes.get("/init", controllers.initProfessorController.handle);
+professorRoutes.get("/links", professorAuthMiddleware, controllers.getVinculosController.handle);
+professorRoutes.get("/unlinkeds", professorAuthMiddleware, controllers.getUnlinkedsController.handle);
+professorRoutes.get("/token/refresh", professorAuthMiddleware, controllers.refreshTokenController.handle);
 
 export { professorRoutes };

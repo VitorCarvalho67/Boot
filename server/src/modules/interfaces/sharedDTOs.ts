@@ -19,7 +19,7 @@ export interface ReagirVinculoDTO {
     recipientIdentifier: IdentificadorEnum
 }
 
-export interface GetVinculosDTO {
+export interface GetEntidadeDTO {
     email: string,
     identifier: IdentificadorEnum,
 }

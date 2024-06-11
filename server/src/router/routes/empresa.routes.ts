@@ -9,25 +9,28 @@ import {
     RefreshTokenController
 } from "../../modules/controllers/empresaControllers";
 
+const createControllers = () => ({
+    registerEmpresaController: new RegisterEmpresaController(),
+    validateEmpresaController: new ValidateEmpresaController(),
+    loginEmpresaController: new LoginEmpresaController(),
+    recoveryEmpresaController: new RecoveryEmpresaController(),
+    validateRecoveryEmpresaController: new ValidateRecoveryEmpresaController(),
+    refreshTokenController: new RefreshTokenController()
+});
 
-const registerEmpresaController = new RegisterEmpresaController();
-const validateEmpresaController = new ValidateEmpresaController();
-const loginEmpresaController = new LoginEmpresaController();
-const recoveryEmpresaController = new RecoveryEmpresaController();
-const validateRecoveryEmpresaController = new ValidateRecoveryEmpresaController();
-const refreshTokenController = new RefreshTokenController();
+const controllers = createControllers();
 const empresaRoutes = Router();
 
-empresaRoutes.post("/register", registerEmpresaController.handle);
-empresaRoutes.post("/register/validate", validateEmpresaController.handle);
-empresaRoutes.post("/login", loginEmpresaController.handle);
-empresaRoutes.post("/recovery", recoveryEmpresaController.handle);
-empresaRoutes.post("/recovery/validate", validateRecoveryEmpresaController.handle);
+empresaRoutes.post("/register", controllers.registerEmpresaController.handle);
+empresaRoutes.post("/register/validate", controllers.validateEmpresaController.handle);
+empresaRoutes.post("/login", controllers.loginEmpresaController.handle);
+empresaRoutes.post("/recovery", controllers.recoveryEmpresaController.handle);
+empresaRoutes.post("/recovery/validate", controllers.validateRecoveryEmpresaController.handle);
 
 empresaRoutes.get("/auth", empresaAuthMiddleware, (req, res) => {
     res.status(200).send("Empresa autenticada com sucesso.");
 });
 
-empresaRoutes.get("/token/refresh", empresaAuthMiddleware, refreshTokenController.handle);
+empresaRoutes.get("/token/refresh", empresaAuthMiddleware, controllers.refreshTokenController.handle);
 
 export { empresaRoutes };

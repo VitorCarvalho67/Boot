@@ -9,26 +9,29 @@ import {
     RefreshTokenController
 } from "../../modules/controllers/funcionarioControllers";
 
-const validateFuncionarioController = new ValidateFuncionarioController();
-const loginFuncionarioController = new LoginFuncionarioController();
-const initFuncionarioController = new InitFuncionarioController();
-const recoveryFuncionarioController = new RecoveryFuncionarioController();
-const validateRecoveryController = new ValidateRecoveryController();
-const refreshTokenController = new RefreshTokenController();
+const createControllers = () => ({
+    validateFuncionarioController: new ValidateFuncionarioController(),
+    loginFuncionarioController: new LoginFuncionarioController(),
+    initFuncionarioController: new InitFuncionarioController(),
+    recoveryFuncionarioController: new RecoveryFuncionarioController(),
+    validateRecoveryController: new ValidateRecoveryController(),
+    refreshTokenController: new RefreshTokenController()
+});
 
+const controllers = createControllers();
 const funcionarioRoutes = Router();
 
-funcionarioRoutes.post("/validate", validateFuncionarioController.handle);
-funcionarioRoutes.post("/login", loginFuncionarioController.handle);
-funcionarioRoutes.post("/recovery", recoveryFuncionarioController.handle);
-funcionarioRoutes.post("/recovery/validate", validateRecoveryController.handle);
+funcionarioRoutes.post("/validate", controllers.validateFuncionarioController.handle);
+funcionarioRoutes.post("/login", controllers.loginFuncionarioController.handle);
+funcionarioRoutes.post("/recovery", controllers.recoveryFuncionarioController.handle);
+funcionarioRoutes.post("/recovery/validate", controllers.validateRecoveryController.handle);
 
 
 funcionarioRoutes.get("/auth", funcionarioAuthMiddleware, (req, res) => {
     res.status(200).send("Funcionário autenticado com sucesso.");
 });
 
-funcionarioRoutes.get("/init", initFuncionarioController.handle);
-funcionarioRoutes.get("/token/refresh", funcionarioAuthMiddleware, refreshTokenController.handle);
+funcionarioRoutes.get("/init", controllers.initFuncionarioController.handle);
+funcionarioRoutes.get("/token/refresh", funcionarioAuthMiddleware, controllers.refreshTokenController.handle);
 
 export { funcionarioRoutes };

@@ -1,10 +1,10 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { IdentificadorEnum, GetVinculosDTO } from "../../interfaces/sharedDTOs";
-import { encontrarEntidadePeloEmail } from "./helpers/helpers";
+import { IdentificadorEnum, GetEntidadeDTO } from "../../interfaces/sharedDTOs";
+import { FindEntidade } from "./helpers/helpers";
 
 export class GetUnlinkedsUseCase {
-    async execute({ email, identifier }: GetVinculosDTO) {
+    async execute({ email, identifier }: GetEntidadeDTO) {
         if (!email) {
             throw new AppError("Email necessário.");
         }
@@ -13,7 +13,7 @@ export class GetUnlinkedsUseCase {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
-        const entidade = await encontrarEntidadePeloEmail(email, identifier);
+        const entidade = await FindEntidade(email, identifier);
 
         if (!entidade) {
             throw new AppError(`${identifier.charAt(0).toUpperCase()}${identifier.slice(1).toLowerCase()} não encontrado.`);

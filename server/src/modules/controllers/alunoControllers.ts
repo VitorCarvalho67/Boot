@@ -11,6 +11,8 @@ import { GetCurriculoUseCase } from "../services/aluno/GetCurriculoUseCase";
 import { GetMeUseCase } from '../services/aluno/GetMeUseCase';
 import { Turno } from "../interfaces/alunoDTOs"
 import { RefreshTokenUseCase } from '../services/aluno/RefreshTokenUseCase';
+import { UploadProfileUseCase } from '../services/aluno/UploadProfileUseCase';
+import { UploadCapaUseCase } from '../services/aluno/UploadCapaUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -142,6 +144,32 @@ export class RefreshTokenController {
         const refreshTokenUseCase = new RefreshTokenUseCase();
 
         const result = await refreshTokenUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadImgProfileController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+        
+        const uploadProfileUseCase = new UploadProfileUseCase();
+
+        const result = await uploadProfileUseCase.execute({email, file});
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadCapaController {
+    async handle(req: Request, res: Response) {
+        const email   = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+
+        const uploadCapaUseCase = new UploadCapaUseCase();
+
+        const result = await uploadCapaUseCase.execute({email, file});
 
         return res.status(201).json(result);
     }

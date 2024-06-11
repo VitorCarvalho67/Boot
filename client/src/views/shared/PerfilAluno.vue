@@ -4,10 +4,10 @@
         <main>
             <div class="capa">
                 <div class="capaProfile">
-                    <img src="" alt="imgCapa">
+                    <img :src="aluno.bannerUrl" alt="imgCapa">
                 </div>
                 <div class="infoProfile">
-                    <img src="" alt="imgProfile">
+                    <img :src="aluno.imageUrl" alt="imgProfile">
                     <div class="info">
                         <div class="box1">
                             <h1 v-text="aluno.nome"></h1>
@@ -48,7 +48,9 @@ import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
 import { 
-    getCurriculo
+    getCurriculo,
+    getImage,
+    getBanner
 } from '../../services/api/shared';
 import {
     getVinculosAluno,
@@ -86,7 +88,9 @@ export default {
                 nascimento: '',
                 idade: '',
                 curriculo: '',
-                curriculoEdit: ''
+                curriculoEdit: '',
+                imgUrl: '../../assets/img/defaultImage.png',
+                bannerUrl: '../../assets/img/defaultBanner.png',
             },
             mode: 'view'
         };
@@ -110,6 +114,32 @@ export default {
                 }
             } catch (error) {
                 alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error);
+            }
+
+            try {
+                const response = await getImage({
+                    identifier: "ALUNO",
+                    email: this.aluno.email
+                });
+
+                const responseBanner = await getBanner({
+                    identifier: "ALUNO",
+                    email: this.aluno.email
+                });
+
+                if (response.status >= 200 && response.status < 300) {
+                    this.aluno.imageUrl = response.data.url;
+                } else {
+                    alert("Ops.. Algo deu errado ao recuperar a imagem. 😕\n" + response.message);
+                }
+
+                if (responseBanner.status >= 200 && responseBanner.status < 300) {
+                    this.aluno.bannerUrl = responseBanner.data.url;
+                } else {
+                    alert("Ops.. Algo deu errado ao recuperar a imagem de capa do perfil. 😕\n" + responseBanner.message);
+                }
+            } catch (error) {
+                alert("Ops.. Algo deu errado ao recuperar a(s) imagem(s) do perfil. 😕\n" + error);
             }
         },
         calcularIdade(nascimento) {
