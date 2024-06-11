@@ -23,7 +23,15 @@
                 <h2>Vínculos Enviados</h2>
                 <ul>
                     <li v-for="(vinculo, index) in vinculos.enviados" :key="index">
-                        {{ vinculo }}
+                        <div v-if="vinculo.data.aluno">
+                            <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm">{{ vinculo.data.aluno.nome }}</router-link>
+                            <p>{{ vinculo.data.aluno.endereco }}</p>
+                            <button @click="removeSolicitation('sender', vinculo.info)">Remover pedido</button>
+                        </div>
+                        <div v-else-if="vinculo.data.professor">
+                            <p>{{ vinculo.data.professor.nome }}</p>
+                            <p>{{ vinculo.data.professor.titulo }}</p>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -31,7 +39,16 @@
                 <h2>Vínculos Recebidos</h2>
                 <ul>
                     <li v-for="(vinculo, index) in vinculos.recebidos" :key="index">
-                        {{ vinculo }}
+                        <div v-if="vinculo.data.aluno">
+                            <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm">{{ vinculo.data.aluno.nome }}</router-link>
+                            <p>{{ vinculo.data.aluno.endereco }}</p>
+                            <button @click="acceptSolicitation(vinculo.info)">Aceitar pedido</button>
+                            <button @click="removeSolicitation('recipient', vinculo.info)">Ignorar pedido</button>
+                        </div>
+                        <div v-else-if="vinculo.data.professor">
+                            <p>{{ vinculo.data.professor.nome }}</p>
+                            <p>{{ vinculo.data.professor.titulo }}</p>
+                        </div>
                     </li>
                 </ul>
             </section>
@@ -51,8 +68,11 @@ import {
     getMeAluno,
     updateCurriculo,
     getVinculosAluno,
+    removeVinculoAluno,
+    rejectVinculoAluno
 } from '../../services/api/aluno';
 import { mixinAluno } from '../../util/authMixins';
+import { socket } from '../../socket.js';
 
 export default {
     name: 'Rede',
@@ -76,49 +96,91 @@ export default {
         };
     },
     methods: {
-        async getInfo(){
-            try {
-                const response = await getCurriculo({
-                    rm: this.aluno.rm
-                });
-
-                if (response.status >= 200 && response.status < 300) {
-                    this.aluno.endereco = response.data.endereco;
-                    this.aluno.nascimento = response.data.nascimento;
-                    this.aluno.email = response.data.email;
-                    this.aluno.nome = response.data.nome;
-                    this.calcularIdade(this.aluno.nascimento);
-                } else {
-                    alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + response.message);
-                }
-            } catch (error) {
-                alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error);
-            }
-        },
         async getVinculos(){
             try {
                 const response = await getVinculosAluno({
                     identifier: "ALUNO"
-                }, this.aluno.token);
+                },
+                this.aluno.token);
                 if (response.status >= 200 && response.status < 300) {
                     this.vinculos.aceitos = response.data.aceitos;
                     this.vinculos.enviados = response.data.enviados;
                     this.vinculos.recebidos = response.data.recebidos;
 
-                    console.log(this.vinculos);
+                    console.log(this.vinculos.enviados);
                 } else{
                     alert("Ops.. Algo deu errado ao os seus vínculos. 😕\n" + response.message);
                 }
             } catch (error) {
                 alert("Ops.. Algo deu errado ao recuperar os seus vínculos. 😕\n" + error);                
             }
+        },
+        async acceptSolicitation(info) {
+            try { 
+                const response = await acceptVinculoAluno(
+                    {
+                        sender: info.sender,
+                        recipient: info.recipient,
+                        senderIdentifier: info.senderIdentifier,
+                        recipientIdentifier: info.recipientIdentifier
+                    },
+                    this.aluno.email,
+                    this.aluno.token
+                );
+
+                if (response.status >= 200 && response.status < 300) {
+                    await this.getVinculos();
+                } else {
+                    alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + response.message);
+                }
+            } catch (error) {
+                alert("Ops.. Algo deu errado ao aceitar o pedido, tente novamente mais tarde. 😕\n" + error);
+            }
+        },
+        async removeSolicitation(agent, info) {
+            try {
+                let infoVinculo;
+                let response;
+
+                infoVinculo = {
+                    sender: info.sender,
+                    recipient: info.recipient,
+                    senderIdentifier: info.senderIdentifier,
+                    recipientIdentifier: info.recipientIdentifier
+                }
+
+                if (agent == "sender") {
+                    response = await removeVinculoAluno(
+                        infoVinculo,
+                        this.aluno.email,
+                        this.aluno.token
+                    );
+                } else if (agent == "recipient") {
+                    response = await rejectVinculoAluno(
+                        infoVinculo,
+                        this.aluno.email,
+                        this.aluno.token
+                    );
+                }
+
+                if (response.status >= 200 && response.status < 300) {
+                    await this.getVinculos();
+                } else {
+                    alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);
+                }
+            } catch (error) {
+                alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);
+            }
         }
     },
     mixins: [mixinAluno],
     async created() {
         await this.getToken();
-        // await this.getInfo();
         await this.getVinculos();
+
+        socket.on('vinculo-update', async (data) => {
+            await this.getVinculos();
+        });
     }
 };
 </script>

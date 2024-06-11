@@ -10,3 +10,25 @@ export const getCurriculo = async (infoAluno) => {
         return error.response.data;
     }
 }
+
+export const getImage = async (info) => {
+    try {
+        const response = await api.get('shared/profile/image', {
+            params: info
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getBanner = async (info) => {
+    try {
+        const response = await api.get('shared/profile/banner', {
+            params: info
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

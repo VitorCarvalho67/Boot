@@ -8,7 +8,9 @@ import { IgnoreVinculoUseCase } from "../services/shared/IgnoreVinculoUseCase";
 import { GetUnlinkedsUseCase } from "../services/shared/GetUnlinkedsUseCase";
 import { GetCursosUseCase } from "../services/shared/GetCursosUseCase";
 import { GetCurriculoUseCase } from "../services/shared/GetCurriculoUseCase";
-import { IdentificadorEnum } from "../interfaces/sharedDTOs";
+import { GetEntidadeDTO, IdentificadorEnum } from "../interfaces/sharedDTOs";
+import { GetProfileImageUseCase } from '../services/shared/GetProfileImageUseCase';
+import { GetBannerUseCase } from '../services/shared/GetBannerUseCase';
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -125,6 +127,30 @@ export class GetCurriculoController {
         const getCurriculoUseCase = new GetCurriculoUseCase();
 
         const result = await getCurriculoUseCase.execute(rm);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetProfileImageController {
+    async handle(req: Request, res: Response) {
+        const { email, identifier } = req.query as unknown as GetEntidadeDTO;
+
+        const getProfileImageUseCase = new GetProfileImageUseCase();
+
+        const result = await getProfileImageUseCase.execute({ email, identifier });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetBannerController {
+    async handle(req: Request, res: Response) {
+        const { email, identifier } = req.query as unknown as GetEntidadeDTO;
+
+        const getBannerUseCase = new GetBannerUseCase();
+
+        const result = await getBannerUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
     }

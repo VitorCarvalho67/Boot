@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
 import { VinculoDTO } from "../../interfaces/sharedDTOs";
-import { encontrarEntidadePeloEmail } from "./helpers/helpers";
+import { FindEntidade } from "./helpers/helpers";
 
 export class CreateVinculoUseCase {
     async execute({ email, sender, recipient, senderIdentifier, recipientIdentifier }: VinculoDTO) {
@@ -13,8 +13,8 @@ export class CreateVinculoUseCase {
             throw new AppError("Remetente inválido.");
         }
 
-        const senderData = await encontrarEntidadePeloEmail(sender, senderIdentifier);
-        const recipientData = await encontrarEntidadePeloEmail(recipient, recipientIdentifier);
+        const senderData = await FindEntidade(sender, senderIdentifier);
+        const recipientData = await FindEntidade(recipient, recipientIdentifier);
 
         if (!senderData) {
             throw new AppError(`${senderIdentifier.charAt(0).toUpperCase()}${senderIdentifier.slice(1).toLowerCase()}(a) remetente não encontrado(a).`);

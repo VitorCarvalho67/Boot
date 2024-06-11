@@ -4,6 +4,42 @@ main {
     @include flex(column, flex-start, flex-start);
     padding: 20px 100px;
 
+    .editButtons {
+        @include flex-center;
+        z-index: 2;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+
+        button {
+            @include flex-center;
+            margin-inline-end: 10px;
+            background-color: transparent;
+            border: none;
+            border-radius: 5px;
+            padding: 4px 6px;
+            color: $font-color-dark;
+            @include font-inter(700);
+            box-shadow: 0px 0px 2px $font-color-dark-2;
+
+            > * {
+                margin-inline-end: 3px;
+            }
+
+            > img {
+                height: 18px;
+                width: 18px;
+                object-fit: cover;
+                filter: invert(100%);
+            }
+
+            &:hover {
+                background-color: $primary-color-dark;
+                box-shadow: 0px 0px 4px $font-color-dark-2;
+            }
+        }
+    }
+
     .capa {
         // background-color: red;
         width: 100%;
@@ -15,7 +51,7 @@ main {
             border-radius: 16px;
             background-color: $secondary-color-dark;
 
-            img {
+            > img {
                 height: 100%;
                 width: 100%;
                 @include flex-center;
@@ -24,8 +60,17 @@ main {
         }
 
         .infoProfile {
+            position: relative;
+
+            .editButtons {
+                @include flex-center;
+                z-index: 2;
+                position: absolute;
+                top: 100px;
+                right: auto;
+            }
             @include flex(row, flex-start, center);
-            img {
+            > img {
                 @include flex-center;
                 position: absolute;
                 bottom: 0;
@@ -95,41 +140,11 @@ main {
                 height: auto;
                 resize: none;
             }
-
             > .editButtons {
-                @include flex-center;
                 position: absolute;
-                z-index: 2;
+                top: auto;
                 bottom: 10px;
                 right: 10px;
-
-                button {
-                    @include flex-center;
-                    margin-inline-end: 10px;
-                    background-color: transparent;
-                    border: none;
-                    border-radius: 5px;
-                    padding: 4px 6px;
-                    color: $font-color-dark;
-                    @include font-inter(700);
-                    box-shadow: 0px 0px 2px $font-color-dark-2;
-
-                    > * {
-                        margin-inline-end: 3px;
-                    }
-
-                    img {
-                        height: 18px;
-                        width: 18px;
-                        object-fit: cover;
-                        filter: invert(100%);
-                    }
-
-                    &:hover {
-                        background-color: $primary-color-dark;
-                        box-shadow: 0px 0px 4px $font-color-dark-2;
-                    }
-                }
             }
         }
     }

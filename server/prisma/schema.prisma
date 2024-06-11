@@ -12,10 +12,10 @@ model Aluno {
     name                String
     email               String    @unique
     password            String
-    alunoImagem         String?
+    imagem         String?
     recoveryPass        String?
     token               String?
-    bannerImagem        String?
+    banner        String?
     dataNascimento      DateTime?
     endereco            String?
     curriculo           String?   @default("") @db.VarChar(5000)
@@ -40,7 +40,8 @@ model Professor {
     password             String
     recoveryPass         String?
     tituloPrincipal      String
-    professorImagem      String?
+    imagem               String?
+    banner               String?
     validated            Boolean       @default(false)
     coordenador          Coordenador[]
     atividade            Atividade[]
@@ -76,7 +77,7 @@ model Admin {
     name        String
     email       String   @unique
     password    String
-    adminImagem String?
+    imagem String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 
@@ -147,7 +148,7 @@ model Empresa {
     name                String
     email               String   @unique
     password            String
-    empresaImagem       String?
+    imagem       String?
     cnpj                String   @unique
     endereco            String?
     telefone            String?
@@ -201,7 +202,7 @@ model Funcionario {
     email               String   @unique
     password            String
     recoveryPass        String?
-    funcionarioImagem   String?
+    imagem   String?
     cargo               Cargo
     vaga                Vaga[]
     validated           Boolean  @default(false)
@@ -225,7 +226,7 @@ model Atividade {
     descricao       String    @db.VarChar(1000)
     professor       Professor @relation(fields: [professorId], references: [id])
     professorId     String
-    atividadeImagem String?
+    imagem String?
     createdAt       DateTime  @default(now())
     updatedAt       DateTime  @updatedAt
 

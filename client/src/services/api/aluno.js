@@ -93,7 +93,7 @@ export const sendVinculoSolicitationAluno = async (infoVinculo, email, token) =>
                 authorization: `${token}`
             }
         });
-        
+
         socket.emit('vinculo-update', {
             email: `${email}`,
             type: "send",
@@ -135,8 +135,8 @@ export const getInicios = async (infoTurma, token) => {
 
 export const acceptVinculoAluno = async (infoVinculo, email, token) => {
     try {
-        const response = await api.post('aluno/link/accept', infoVinculo,{
-            headers:{
+        const response = await api.post('aluno/link/accept', infoVinculo, {
+            headers: {
                 authorization: `${token}`
             }
         });
@@ -175,7 +175,7 @@ export const rejectVinculoAluno = async (infoVinculo, email, token) => {
 
 export const removeVinculoAluno = async (infoVinculo, email, token) => {
     try {
-        const response = await api.post('aluno/link/delete', infoVinculo,{
+        const response = await api.post('aluno/link/delete', infoVinculo, {
             headers: {
                 authorization: `${token}`
             }
@@ -215,6 +215,14 @@ export const getVinculosAluno = async (info, token) => {
                 authorization: `${token}`
             }
         });
+
+        socket.emit(
+            'vinculo-enter-aluno',
+            {
+                authorization: `${token}`
+            }
+        );
+
         return response;
     } catch (error) {
         return error.data;
@@ -241,14 +249,6 @@ export const getMeAluno = async (token) => {
                 authorization: `${token}`
             }
         });
-
-        socket.emit(
-            'vinculo-enter-aluno',
-            {
-                authorization: `${token}`
-            }
-        );
-
         return response;
     } catch (error) {
         return error.response.data;
@@ -260,6 +260,40 @@ export const refreshTokenAluno = async (token) => {
         const response = await api.get('aluno/token/refresh', {
             headers: {
                 authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const updateImage = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('aluno/upload/image/profile', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const updateBanner = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('aluno/upload/image/banner', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
             }
         });
         return response;
