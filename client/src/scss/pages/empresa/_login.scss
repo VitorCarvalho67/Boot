@@ -11,6 +11,14 @@ main {
     padding: 20px;
     color: $font-color-dark;
     background-color: $secondary-color-dark;
+    @include m-screen(1600px) {
+        height: 75%;
+        width: 40%;
+    }
+    @include m-screen-box;
+    @include m-screen(1150px) {
+        background-color: $primary-color-dark;
+    }
 
     nav {
         width: 100%;
@@ -23,7 +31,7 @@ main {
                 @include font-inter(300);
                 margin-inline: 20px;
 
-                p {
+                > p {
                     @include flex(column, center, center);
                     @include font-inter(400);
                     width: 60px;
@@ -66,6 +74,7 @@ main {
             @include font-inter(300);
             font-size: 2.5rem;
             margin-top: 50px;
+            @include m-screen-h1;
         }
 
         p {
@@ -147,6 +156,10 @@ main {
                 .hide {
                     background-image: url("../../assets/icons/olho-2.png");
                 }
+
+                @include m-screen(1200px) {
+                    width: 10%;
+                }
             }
         }
 
@@ -161,6 +174,11 @@ main {
                 @include font-inter(300);
                 font-size: 0.8rem;
             }
+
+            @include m-screen(600px) {
+                @include flex(row, flex-start, center);
+            }
+
         }
 
         .button-box {
@@ -185,6 +203,13 @@ main {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
+            }
+
+            @include m-screen(1800px) {
+                margin-top: 20px;
+            }
+            @include m-screen(600px) {
+                @include flex(row, flex-end, center);
             }
         }
     }

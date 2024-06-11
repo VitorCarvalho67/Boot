@@ -41,19 +41,19 @@ main {
     }
 
     .capa {
-        // background-color: red;
         width: 100%;
         height: 400px;
         position: relative;
 
         .capaProfile {
             height: 66.66%;
-            border-radius: 16px;
+            border-radius: 6px;
             background-color: $secondary-color-dark;
 
             > img {
                 height: 100%;
                 width: 100%;
+                border-radius: 6px;
                 @include flex-center;
                 object-fit: cover;
             }
@@ -121,7 +121,7 @@ main {
             width: 100%;
             background-color: $secondary-color-dark;
             padding: 20px;
-            border-radius: 18px;
+            border-radius: 6px;
 
             p,
             textarea {

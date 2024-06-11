@@ -5,7 +5,7 @@
             <nav>
                 <ul>
                     <li>
-                        <router-link to="/empresa/init">Login</router-link>
+                        <router-link to="/empresa/">Login</router-link>
                     </li>
                     <li>
                         <p>Recuperação de senha</p>
