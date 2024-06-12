@@ -183,9 +183,6 @@ main {
             width: 100%;
             margin-top: 40px;
             @include flex(row, flex-start, center);
-            @include m-screen(1800px) {
-                margin-top:20px;
-            }
 
             button {
                 height: 40px;
@@ -205,7 +202,9 @@ main {
                     color: $primary-color-orange;
                 }
             }
-
+            @include m-screen(1800px) {
+                margin-top: 20px;
+            }
             @include m-screen(600px) {
                 @include flex(row, flex-end, center);
             }
@@ -239,5 +238,4 @@ main {
     @include m-screen(1150px) {
         display: none;
     }
-
 }

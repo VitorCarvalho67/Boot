@@ -11,7 +11,15 @@ main {
     padding: 20px;
     color: $font-color-dark;
     background-color: $secondary-color-dark;
+    @include m-screen(1600px) {
+        height: 75%;
+        width: 40%;
+    }
     @include m-screen-box;
+    @include m-screen(1150px) {
+        background-color: $primary-color-dark;
+    }
+
 
     nav {
         width: 100%;
@@ -40,6 +48,10 @@ main {
                     &:hover::after {
                         animation: none;
                     }
+                }
+
+                > p:last-child {
+                    width: 200px;
                 }
 
                 a {
@@ -114,18 +126,6 @@ main {
                 color: $font-color-dark-2;
             }
 
-            p {
-                background-color: transparent;
-                width: 90%;
-                margin-top: 5px;
-                outline: none;
-                color: $font-color-dark;
-                border: none;
-                @include font-inter(400);
-                font-size: 1rem;
-                @include flex(row, flex-start, center);
-            }
-
             input {
                 background-color: transparent;
                 width: 100%;
@@ -163,6 +163,10 @@ main {
                 .hide {
                     background-image: url("../../assets/icons/olho-2.png");
                 }
+
+                @include m-screen(1200px) {
+                    width: 10%;
+                }
             }
 
             a.editMail {
@@ -177,6 +181,20 @@ main {
                 cursor: pointer;
                 filter: invert(100%);
             }
+        }
+
+        p {
+            width: 100%;
+            margin-bottom: 10px;
+            @include flex(row, flex-end, center);
+
+            a {
+                text-decoration: none;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                font-size: 0.8rem;
+            }
+
         }
 
         .button-box {
@@ -201,6 +219,13 @@ main {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
+            }
+
+            @include m-screen(1800px) {
+                margin-top: 20px;
+            }
+            @include m-screen(600px) {
+                @include flex(row, flex-end, center);
             }
         }
     }

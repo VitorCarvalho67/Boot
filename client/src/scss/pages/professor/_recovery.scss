@@ -11,6 +11,14 @@ main {
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
+    @include m-screen(1600px) {
+        height: 75%;
+        width: 40%;
+    }
+    @include m-screen-box;
+    @include m-screen(1150px) {
+        background-color: $primary-color-dark;
+    }
 
     nav {
         width: 100%;
@@ -70,6 +78,7 @@ main {
             @include font-inter(300);
             font-size: 2.5rem;
             margin-top: 30px;
+            @include m-screen-h1;
         }
 
         p {
@@ -79,6 +88,20 @@ main {
             color: $font-color-dark-2;
             @include font-inter(200);
             margin-bottom: 50px;
+
+            width: 100%;
+            margin-bottom: 10px;
+
+            a {
+                text-decoration: none;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                font-size: 0.8rem;
+            }
+        }
+
+        p:last-child {
+            @include flex(row, flex-end, center);
         }
 
         .input-box {
@@ -118,7 +141,7 @@ main {
             }
         }
 
-        > p {
+        p {
             width: 100%;
             margin-bottom: 10px;
             @include flex(row, flex-end, center);
@@ -129,17 +152,9 @@ main {
                 @include font-inter(300);
                 font-size: 0.8rem;
             }
-        }
 
-        p {
-            width: 100%;
-            @include flex(row, flex-end, center);
-
-            a {
-                text-decoration: none;
-                color: $font-color-dark-2;
-                @include font-inter(300);
-                font-size: 0.8rem;
+            @include m-screen(600px) {
+                @include flex(row, flex-start, center);
             }
         }
 
@@ -165,6 +180,13 @@ main {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
+            }
+
+            @include m-screen(1800px) {
+                margin-top: 20px;
+            }
+            @include m-screen(600px) {
+                @include flex(row, flex-end, center);
             }
         }
     }
