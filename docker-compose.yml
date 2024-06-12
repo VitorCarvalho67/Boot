@@ -55,6 +55,20 @@ services:
     networks:
       - BOOT
 
+  minio:
+    image: docker.io/bitnami/minio:latest
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=your_username
+      - MINIO_ROOT_PASSWORD=your_password
+      - MINIO_DEFAULT_BUCKETS=boot
+    volumes:
+      - minio_data:/minio/data
+    networks:
+      - BOOT
+
   database:
     image: mariadb
     command: --default-authentication-plugin=mysql_native_password
@@ -73,3 +87,6 @@ services:
 
 networks:
   BOOT:
+
+volumes:
+  minio_data:
