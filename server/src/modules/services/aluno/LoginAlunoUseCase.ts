@@ -16,12 +16,13 @@ export class LoginAlunoUseCase {
         const aluno = await prisma.aluno.findFirst({
             where: {
                 email,
-                validated: true
             }
         });
 
         if (!aluno) {
             throw new AppError("Email ou senha inválidos");
+        } else if(aluno.validated == false){
+            throw new AppError("Aluno não validado");
         }
 
         const isPasswordValid = bcrypt.compareSync(password, aluno.password);

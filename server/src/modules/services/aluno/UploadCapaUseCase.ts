@@ -19,7 +19,7 @@ export class UploadCapaUseCase {
 
         if (aluno) {
             const bucketName = 'boot';
-            const objectName = `aluno/${aluno.rm}/banner_${file.originalname}`;
+            const objectName = `aluno/${aluno.rm}/banner`;
 
             try {
                 const filePath = file.path;

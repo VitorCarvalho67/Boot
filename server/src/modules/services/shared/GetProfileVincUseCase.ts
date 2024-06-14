@@ -67,6 +67,7 @@ export class GetVinculosProfileUseCase {
                         if (aluno) {
                             return {
                                 aluno:{
+                                    email: aluno.email,
                                     rm: aluno.rm,
                                     endereco: aluno.endereco,
                                     nome: aluno.name
@@ -80,6 +81,7 @@ export class GetVinculosProfileUseCase {
                         if(professor){
                             return{
                                 professor:{
+                                    email: professor.email,
                                     nome: professor.name,
                                     titulo: professor.tituloPrincipal
                                 }
@@ -94,6 +96,7 @@ export class GetVinculosProfileUseCase {
                         if(aluno){
                             return {
                                 aluno:{
+                                    email: aluno.email,
                                     rm: aluno.rm,
                                     endereco: aluno.endereco,
                                     nome: aluno.name
@@ -107,6 +110,7 @@ export class GetVinculosProfileUseCase {
                         if (professor){
                             return {
                                 professor:{
+                                    email: professor.email,
                                     nome: professor.name,
                                     titulo: professor.tituloPrincipal
                                 }
@@ -116,8 +120,34 @@ export class GetVinculosProfileUseCase {
                 }
             }
 
+            const sender = async () => {
+                if (aceito.alunoId) {
+                    const aluno = await prisma.aluno.findUnique({ where: { id: aceito.alunoId } });
+                    return aluno ? aluno.email : null;
+                } else if (aceito.professorId) {
+                    const professor = await prisma.professor.findUnique({ where: { id: aceito.professorId } });
+                    return professor ? professor.email : null;
+                }
+            }
+
+            const recipient = async () => {
+                if (aceito.vinculoComAlunoId) {
+                    const aluno = await prisma.aluno.findUnique({ where: { id: aceito.vinculoComAlunoId } });
+                    return aluno ? aluno.email : null;
+                } else if (aceito.vinculoComProfessorId) {
+                    const professor = await prisma.professor.findUnique({ where: { id: aceito.vinculoComProfessorId } });
+                    return professor ? professor.email : null;
+                }
+            }
+
             return {
-                data: await vinculo()
+                data: await vinculo(),
+                info:{
+                    sender: await sender(),
+                    recipient: await recipient(),
+                    senderIdentifier: (aceito.alunoId) ? "ALUNO" : "PROFESSOR",
+                    recipientIdentifier: (aceito.vinculoComAlunoId) ? "ALUNO" : "PROFESSOR"
+                }
             }
         }));
 
@@ -127,17 +157,21 @@ export class GetVinculosProfileUseCase {
                     const aluno = await prisma.aluno.findUnique({ where: { id: enviado.alunoId } });
                     if(aluno){
                         return {
-                            rm: aluno.rm,
-                            endereco: aluno.endereco,
-                            nome: aluno.name
+                            aluno: {
+                                rm: aluno.rm,
+                                endereco: aluno.endereco,
+                                nome: aluno.name
+                            }
                         }
                     }
                 } else if (enviado.professorId && enviado.professorId != entidade.id ) {
                     const professor = await prisma.professor.findUnique({ where: { id: enviado.professorId } });
                     if(professor){
                         return {
-                            nome: professor.name,
-                            titulo: professor.tituloPrincipal
+                            professor: {
+                                nome: professor.name,
+                                titulo: professor.tituloPrincipal
+                            }
                         }
                     }
                 }
@@ -146,17 +180,21 @@ export class GetVinculosProfileUseCase {
                     const aluno = await prisma.aluno.findUnique({ where: { id: enviado.vinculoComAlunoId } });
                     if(aluno){
                         return {
-                            rm: aluno.rm,
-                            endereco: aluno.endereco,
-                            nome: aluno.name
+                            aluno: {
+                                rm: aluno.rm,
+                                endereco: aluno.endereco,
+                                nome: aluno.name
+                            }
                         }
                     }
                 } else if (enviado.vinculoComProfessorId && enviado.vinculoComProfessorId != entidade.id ) {
                     const professor = await prisma.professor.findUnique({ where: { id: enviado.vinculoComProfessorId } });
                     if(professor){
                         return {
-                            nome: professor.name,
-                            titulo: professor.tituloPrincipal
+                            professor:{
+                                nome: professor.name,
+                                titulo: professor.tituloPrincipal
+                            }
                         }
                     }
                 }
@@ -183,11 +221,13 @@ export class GetVinculosProfileUseCase {
             }
 
             return {
-                vinculo: await vinculo,
-                sender: await sender(),
-                recipient: await recipient(),
-                senderIdentifier: (enviado.alunoId) ? "ALUNO" : "PROFESSOR",
-                recipientIdentifier: (enviado.vinculoComAlunoId) ? "ALUNO" : "PROFESSOR"
+                data: await vinculo(),
+                info:{
+                    sender: await sender(),
+                    recipient: await recipient(),
+                    senderIdentifier: (enviado.alunoId) ? "ALUNO" : "PROFESSOR",
+                    recipientIdentifier: (enviado.vinculoComAlunoId) ? "ALUNO" : "PROFESSOR"
+                }
             }
         }));
 
@@ -197,17 +237,21 @@ export class GetVinculosProfileUseCase {
                     const aluno = await prisma.aluno.findUnique({ where: { id: recebido.alunoId } });
                     if(aluno){
                         return {
-                            rm: aluno.rm,
-                            endereco: aluno.endereco,
-                            nome: aluno.name
+                            aluno:{
+                                rm: aluno.rm,
+                                endereco: aluno.endereco,
+                                nome: aluno.name
+                            }
                         }
                     }
                 } else if (recebido.professorId && recebido.professorId != entidade.id) {
                     const professor = await prisma.professor.findUnique({ where: { id: recebido.professorId } });
                     if(professor){
                         return {
-                            nome: professor.name,
-                            titulo: professor.tituloPrincipal
+                            professor: {
+                                nome: professor.name,
+                                titulo: professor.tituloPrincipal
+                            }
                         }
                     }
                 }
@@ -216,17 +260,21 @@ export class GetVinculosProfileUseCase {
                     const aluno = await prisma.aluno.findUnique({ where: { id: recebido.vinculoComAlunoId } });
                     if(aluno){
                         return {
-                            rm: aluno.rm,
-                            endereco: aluno.endereco,
-                            nome: aluno.name
+                            aluno:{
+                                rm: aluno.rm,
+                                endereco: aluno.endereco,
+                                nome: aluno.name
+                            }
                         }
                     }
                 } else if (recebido.vinculoComProfessorId && recebido.vinculoComProfessorId != entidade.id) {
                     const professor = await prisma.professor.findUnique({ where: { id: recebido.vinculoComProfessorId } });
                     if(professor){
                         return {
-                            nome: professor.name,
-                            titulo: professor.tituloPrincipal
+                            professor: {
+                                nome: professor.name,
+                                titulo: professor.tituloPrincipal
+                            }
                         }
                     }
                 }
@@ -253,11 +301,13 @@ export class GetVinculosProfileUseCase {
             }
 
             return {
-                vinculo: await vinculo(),
-                sender: await sender(),
-                recipient: await recipient(),
-                senderIdentifier: (recebido.alunoId) ? "ALUNO" : "PROFESSOR",
-                recipientIdentifier: (recebido.vinculoComAlunoId) ? "ALUNO" : "PROFESSOR"
+                data: await vinculo(),
+                info: {
+                    sender: await sender(),
+                    recipient: await recipient(),
+                    senderIdentifier: (recebido.alunoId) ? "ALUNO" : "PROFESSOR",
+                    recipientIdentifier: (recebido.vinculoComAlunoId) ? "ALUNO" : "PROFESSOR"
+                }
             }
         }));
 

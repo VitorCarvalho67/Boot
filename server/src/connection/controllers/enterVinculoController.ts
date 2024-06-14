@@ -10,7 +10,7 @@ export const enterVinculoAlunoHandler = async (io: Server, socket: Socket, data:
         console.log(`AAAAA`);
 
         const token = data.authorization;
-        const decoded = await validateTokenAluno(token);
+        const decoded = await validateTokenAluno(token) as any;
 
         if (!decoded) {
             console.log('Token inválido para enter-vinculo-aluno');
