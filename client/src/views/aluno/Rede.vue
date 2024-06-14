@@ -10,10 +10,12 @@
                             <div v-if="vinculo.data.aluno">
                                 <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm">{{ vinculo.data.aluno.nome }}</router-link>
                                 <p>{{ vinculo.data.aluno.endereco }}</p>
+                                <button @click="removeVinculo(vinculo.data.aluno.email, vinculo.info)">Remover vínculo</button>
                             </div>
                             <div v-else-if="vinculo.data.professor">
                                 <p>{{ vinculo.data.professor.nome }}</p>
                                 <p>{{ vinculo.data.professor.titulo }}</p>
+                                <button @click="removeVinculo(vinculo.data.professor.email, vinculo.info)">Remover vínculo</button>
                             </div>
                         </div>
                     </li>
@@ -64,10 +66,8 @@ import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
 import Cookies from 'js-cookie';
 import {
-    getCurriculo,
-    getMeAluno,
-    updateCurriculo,
     getVinculosAluno,
+    acceptVinculoAluno,
     removeVinculoAluno,
     rejectVinculoAluno
 } from '../../services/api/aluno';
@@ -124,7 +124,7 @@ export default {
                         senderIdentifier: info.senderIdentifier,
                         recipientIdentifier: info.recipientIdentifier
                     },
-                    this.aluno.email,
+                    info.sender,
                     this.aluno.token
                 );
 
@@ -139,10 +139,9 @@ export default {
         },
         async removeSolicitation(agent, info) {
             try {
-                let infoVinculo;
                 let response;
 
-                infoVinculo = {
+                const infoVinculo = {
                     sender: info.sender,
                     recipient: info.recipient,
                     senderIdentifier: info.senderIdentifier,
@@ -152,13 +151,13 @@ export default {
                 if (agent == "sender") {
                     response = await removeVinculoAluno(
                         infoVinculo,
-                        this.aluno.email,
+                        info.recipient,
                         this.aluno.token
                     );
                 } else if (agent == "recipient") {
                     response = await rejectVinculoAluno(
                         infoVinculo,
-                        this.aluno.email,
+                        info.sender,
                         this.aluno.token
                     );
                 }
@@ -166,10 +165,40 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     await this.getVinculos();
                 } else {
-                    alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);
+                    alert(
+                        agent == "sender"?
+                        "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
+                        "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                    );
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);
+                alert(
+                    agent == "sender"?
+                    "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
+                    "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                );
+            }
+        },
+        async removeVinculo(affected, info) {
+            try {
+                const response = await removeVinculoAluno(
+                    {
+                        sender: info.sender,
+                        recipient: info.recipient,
+                        senderIdentifier: info.senderIdentifier,
+                        recipientIdentifier: info.recipientIdentifier
+                    },
+                    affected,
+                    this.aluno.token
+                );
+
+                if (response.status >= 200 && response.status < 300) {
+                    await this.getVinculos();
+                } else {
+                    alert("Ops.. Algo deu errado ao remover esse vínculo, tente novamente mais tarde. 😕\n" + response.message);
+                }
+            } catch (error) {
+                alert("Ops.. Algo deu errado ao remover esse vínculo, tente novamente mais tarde. 😕\n" + error);
             }
         }
     },

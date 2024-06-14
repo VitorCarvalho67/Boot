@@ -201,6 +201,14 @@ export const getVinculosProfileAluno = async (info, token) => {
                 authorization: `${token}`
             }
         });
+
+        socket.emit(
+            'vinculo-enter-aluno',
+            {
+                authorization: `${token}`
+            }
+        );
+        
         return response;
     } catch (error) {
         return error.data;

@@ -27,7 +27,7 @@ export async function validateTokenAluno(token: string){
             throw new Error('Aluno not found');
         }
 
-        return "validate Token Aluno";
+        return aluno;
     } catch (error) {
         throw new Error('Token inválido: ' + error);
     }

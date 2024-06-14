@@ -267,16 +267,13 @@ export default {
                             }
                         }
 
-                        let infoVinculo;
-
-                        infoVinculo = {
-                            sender: this.aluno.email,
-                            recipient: responseMail.data.email,
-                            senderIdentifier: "ALUNO",
-                            recipientIdentifier: "ALUNO"
-                        }
                         const response = await acceptVinculoAluno(
-                            infoVinculo,
+                            {
+                                sender: this.aluno.email,
+                                recipient: responseMail.data.email,
+                                senderIdentifier: "ALUNO",
+                                recipientIdentifier: "ALUNO"
+                            },
                             this.aluno.email,
                             this.visualizador.token
                         );
@@ -307,30 +304,27 @@ export default {
                             }
                         }
 
-                        let infoVinculo;
                         let response;
 
                         if (agent == "sender") {
-                            infoVinculo = {
-                                sender: responseMail.data.email,
-                                recipient: this.aluno.email,
-                                senderIdentifier: "ALUNO",
-                                recipientIdentifier: "ALUNO"
-                            }
                             response = await removeVinculoAluno(
-                                infoVinculo,
+                                {
+                                    sender: responseMail.data.email,
+                                    recipient: this.aluno.email,
+                                    senderIdentifier: "ALUNO",
+                                    recipientIdentifier: "ALUNO"
+                                },
                                 this.aluno.email,
                                 this.visualizador.token
                             );
                         } else if (agent == "recipient") {
-                            infoVinculo = {
-                                sender: this.aluno.email,
-                                recipient: responseMail.data.email,
-                                senderIdentifier: "ALUNO",
-                                recipientIdentifier: "ALUNO"
-                            }
                             response = await rejectVinculoAluno(
-                                infoVinculo,
+                                {
+                                    sender: this.aluno.email,
+                                    recipient: responseMail.data.email,
+                                    senderIdentifier: "ALUNO",
+                                    recipientIdentifier: "ALUNO"
+                                },
                                 this.aluno.email,
                                 this.visualizador.token
                             );
@@ -339,11 +333,19 @@ export default {
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
                         } else {
-                            alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message);
-                        }
-                    } catch (error) {
-                        alert("Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + error);
-                    }
+                    alert(
+                        agent == "sender"?
+                        "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
+                        "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                    );
+                }
+            } catch (error) {
+                alert(
+                    agent == "sender"?
+                    "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
+                    "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                );
+            }
                 }
             }
         }
@@ -357,6 +359,7 @@ export default {
         console.log(this.conected);
 
         socket.on('vinculo-update', async (data) => {
+            console.log("VINC UDATE");
             await this.possuiVinculo();
         });
     }
