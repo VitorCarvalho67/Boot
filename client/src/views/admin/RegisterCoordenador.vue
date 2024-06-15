@@ -6,11 +6,7 @@
                 <h1>Registro de Coordenador</h1>
 
                 <label for="professor">Professor a se tornar coordenador:</label>
-                <select id="professor" v-model="coordenador.name" required>
-                    <option value="" disabled>Selecione um professor</option>
-                    <option v-for="professor in professores" :key="professor.name" :value="professor.name">{{
-                        professor.name }}</option>
-                </select>
+                <Select :dataSelect="dataSelect" @input="coordenador.name = $event"/>
 
                 <button type="submit">Registrar</button>
 
@@ -18,12 +14,12 @@
         </div>
     </main>
     <Footer />
-
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Select from '../../components/Select.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { getProfessores, registerCoordenador } from '../../services/api/admin';
@@ -32,12 +28,18 @@ export default {
     name: 'RegisterCoordenador',
     components: {
         Header,
-        Footer
+        Footer,
+        Select
     },
     data() {
         return {
             coordenador: {
                 name: '',
+            },
+            dataSelect: {
+                title: "Selecione um professor", 
+                description: "Professor",
+                options: [],
             },
             professores: [],
         }
@@ -61,6 +63,14 @@ export default {
             try {
                 const response = await getProfessores(this.admin.token);
                 this.professores = response.data
+
+                
+                this.dataSelect.options = this.professores.map(professor => ({
+                    value: professor.name,
+                    description: professor.name
+                }));
+
+                console.log(this.dataSelect.options);
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }

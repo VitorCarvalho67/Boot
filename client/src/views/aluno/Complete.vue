@@ -23,22 +23,10 @@
 
                     <div v-if="etapa === 2" class="step" id="content2">
                         <h3>Endereço</h3>
-                        <div class="input-box" :class="{ 'focused': focused.enderecoUFFocused }">
-                            <label for="enderecoUF">UF</label>
-                            <select id="enderecoUF" v-model="aluno.endereco.estado" @change="updateCidades" required>
-                                <option value="" disabled>Selecione o estado</option>
-                                <option v-for="uf in ufs" :key="uf" :value="uf">{{ uf }}</option>
-                            </select>
-                        </div>
-                        <div class="input-box" :class="{ 'focused': focused.enderecoCidadeFocused }">
-                            <label for="enderecoCidade">Cidade</label>
-                            <select id="enderecoCidade" v-model="aluno.endereco.cidade" required>
-                                <option value="" disabled>Selecione a cidade</option>
-                                <option v-for="cidade in cidades" :key="cidade" :value="cidade">{{ cidade }}</option>
-                            </select>
-                        </div>
-                        <span class="alert" v-show="alerts.enderecoAlert">Por favor, preencha o endereço
-                            corretamente.</span>
+                        <Select :dataSelect="dataSelectEstado" @input="$event => updateCidades($event)"/>
+                        <Select :dataSelect="dataSelectCidade" @input="aluno.endereco.cidade = $event"/>
+                        
+                        <span class="alert" v-show="alerts.enderecoAlert">Por favor, preencha o endereço corretamente.</span>
                         <div class="button-box">
                             <button @click="etapa = 1" type="button">Voltar</button>
                             <button @click="validateEndereco" type="button">Continuar</button>
@@ -47,22 +35,8 @@
 
                     <div v-if="etapa === 3" class="step" id="content3">
                         <h3>Curso</h3>
-                        <div class="input-box" :class="{ 'focused': focused.cursoFocused }">
-                            <select id="curso" v-model="aluno.curso.name" required>
-                                <option value="" disabled>Selecione um curso</option>
-                                <option v-for="curso in cursos" :key="curso.name" :value="curso.name">{{ curso.name }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="input-box" :class="{ 'focused': focused.turnoFocused }">
-                            <label for="turno">Turno</label>
-                            <select id="turno" v-model="aluno.curso.turno" required>
-                                <option value="MANHA">Manhã</option>
-                                <option value="TARDE">Tarde</option>
-                                <option value="NOITE">Noite</option>
-                                <option value="INTEGRAL">Integral</option>
-                            </select>
-                        </div>
+                        <Select :dataSelect="dataSelectCurso" @input="aluno.curso.name = $event"/>
+                        <Select :dataSelect="dataSelectTurno" @input="aluno.curso.turno = $event"/>
                         <span class="alert" v-show="alerts.cursoAlert">Por favor, selecione o curso e o turno.</span>
                         <div class="button-box">
                             <button @click="etapa = 2" type="button">Voltar</button>
@@ -72,14 +46,7 @@
 
                     <div v-if="etapa === 4" class="step" id="content4">
                         <h3>Início</h3>
-                        <div class="input-box" :class="{ 'focused': focused.inicioFocused }">
-                            <label for="inicio">Início</label>
-                            <select id="inicio" v-model="aluno.curso.inicio" required>
-                                <option value="" disabled>Selecione a data de início</option>
-                                <option v-for="inicio in inicios" :key="inicio.inicio" :value="inicio.inicio">{{
-                                    inicio.inicio }}</option>
-                            </select>
-                        </div>
+                        <Select :dataSelect="dataSelectInicio" @input="aluno.curso.inicio = $event"/>
                         <span class="alert" v-show="alerts.inicioAlert">Por favor, selecione a data de início.</span>
                         <div class="button-box">
                             <button @click="etapa = 3" type="button">Voltar</button>
@@ -113,6 +80,8 @@ import Footer from '../../components/Footer.vue';
 import logo from '../../assets/imgs/imageMain.png';
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
+import Select from '../../components/Select.vue';
+
 import { completeRegister, getCursos, getInicios } from '../../services/api/aluno';
 import { mixinAluno } from '../../util/authMixins';
 
@@ -120,7 +89,8 @@ export default {
     name: 'Complete',
     components: {
         Header,
-        Footer
+        Footer,
+        Select
     },
     data() {
         return {
@@ -157,6 +127,36 @@ export default {
                 cursoAlert: false,
                 inicioAlert: false,
                 rmAlert: false
+            },
+            dataSelectEstado:{
+                title: "Selecione o estado", 
+                description: "UF",
+                options: [],
+            },
+            dataSelectCidade:{
+                title: "Selecione sua cidade", 
+                description: "Município",
+                options: [],
+            },
+            dataSelectTurno: {
+                title: "Selecione um turno", 
+                description: "Turno",
+                options: [
+                    { value: 'MANHA', description: 'Manhã' },
+                    { value: 'TARDE', description: 'Tarde' },
+                    { value: 'NOITE', description: 'Noite' },
+                    { value: 'INTEGRAL', description: 'Integral' }
+                ],
+            },
+            dataSelectCurso:{
+                title: "Selecione o nome do curso", 
+                description: "Curso",
+                options: [],
+            },
+            dataSelectInicio:{
+                title: "Selecione a data de início", 
+                description: "Início",
+                options: [],
             },
             imagem: logo
         };
@@ -224,6 +224,12 @@ export default {
                 );
                 if (response.status >= 200 && response.status < 300) {
                     this.inicios = response.data;
+
+                    this.dataSelectInicio.options = this.inicios.map(inicio => ({
+                        value: inicio.inicio,
+                        description: inicio.inicio,
+                    }))
+
                     if (this.aluno.curso.name !== '' && this.aluno.curso.turno !== '' && this.inicios.length > 0) {
                         this.alerts.cursoAlert = false;
                         this.etapa = 4;
@@ -247,10 +253,21 @@ export default {
                 this.alerts.inicioAlert = true;
             }
         },
-        async updateCidades() {
+        async updateEstados() {
+            this.dataSelectEstado.options = this.ufs.map(uf => ({
+                value: uf,
+                description: uf
+            }));
+        },
+        async updateCidades(estadoSeleted) {
+            this.aluno.endereco.estado = estadoSeleted;
             const estado = this.aluno.endereco.estado;
             if (estado === 'SP') {
                 this.cidades = ['São Paulo', 'Santo André', 'São Bernardo', 'São Caetano', 'Diadema', 'Mauá', 'Ribeirão Pires', 'Rio Grande da Serra'];
+                this.dataSelectCidade.options = this.cidades.map(cidade => ({
+                    value: cidade,
+                    description: cidade
+                }))
             }
         },
         async fetchCursos() {
@@ -258,6 +275,11 @@ export default {
                 const response = await getCursos(this.aluno.token);
                 if (response.status >= 200 && response.status < 300) {
                     this.cursos = response.data;
+
+                    this.dataSelectCurso.options = this.cursos.map(curso => ({
+                        value: curso.name,                        
+                        description: curso.name
+                    }));
                 } else {
                     alert("Ops.. Algo deu errado ao buscar os cursos. 😕\n" + response.message);
                 }
@@ -271,6 +293,7 @@ export default {
         await this.getToken();
         this.aluno.email = Cookies.get('email-aluno');
         this.fetchCursos();
+        this.updateEstados();
     }
 };
 </script>

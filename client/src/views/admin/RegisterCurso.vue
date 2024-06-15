@@ -11,32 +11,21 @@
                 </div>
 
                 <div>
-                    <label for="turno">Turno:</label>
-                    <select id="turno" name="turno" v-model="curso.turno" required>
-                        <option value="MANHA">Manhã</option>
-                        <option value="TARDE">Tarde</option>
-                        <option value="NOITE">Noite</option>
-                        <option value="INTEGRAL">Integral</option>
-                    </select>
+                    <Select :dataSelect="dataSelectTurno" @input="curso.turno = $event"/>
                 </div>
 
                 <div>
                     <label>Duração:</label>
                     <div>
                         <input type="number" v-model="curso.duracao_quantidade" required>
-                        <select id="duracao" name="duracao" v-model="curso.duracao_periodo" required>
-                            <option value="anos">Anos</option>
-                            <option value="meses">Meses</option>
-                        </select>
+                        <Select :dataSelect="dataSelectDuracao" @input="curso.duracao_periodo = $event"/>
                     </div>
                 </div>
 
-                <label for="coordenador">Coordenador:</label>
-                <select id="coordenador" v-model="curso.coordenador" required>
-                    <option value="" disabled>Selecione um coordenador</option>
-                    <option v-for="coordenador in coordenadores" :key="coordenador.name" :value="coordenador.name">{{
-                        coordenador.name }}</option>
-                </select>
+                <div>
+                    <Select :dataSelect="dataSelectCoordenador" @input="curso.coordenador = $event"/>
+                </div>
+
                 <br>
                 <button type="submit">Registrar</button>
 
@@ -50,6 +39,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Select from '../../components/Select.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { getCoordenadores, registerCurso } from '../../services/api/admin';
@@ -58,7 +48,8 @@ export default {
     name: 'RegisterCurso',
     components: {
         Header,
-        Footer
+        Footer,
+        Select
     },
     data() {
         return {
@@ -68,6 +59,29 @@ export default {
                 duracao_quantidade: '',
                 duracao_periodo: '',
                 coordenador: ''
+            },
+            dataSelectTurno: {
+                title: "Selecione um turno", 
+                description: "Turno",
+                options: [
+                    { value: 'MANHA', description: 'Manhã' },
+                    { value: 'TARDE', description: 'Tarde' },
+                    { value: 'NOITE', description: 'Noite' },
+                    { value: 'INTEGRAL', description: 'Integral' }
+                ],
+            },
+            dataSelectDuracao: {
+                title: "Selecione um período", 
+                description: "Período",
+                options: [
+                    { value: 'anos', description: 'Anos' },
+                    { value: 'meses', description: 'Meses' },
+                ],
+            },
+            dataSelectCoordenador: {
+                title: "Selecione um coordenador", 
+                description: "Coordenador",
+                options: [],
             },
             coordenadores: [],
         }
@@ -87,6 +101,8 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     alert("Tudo certo! 😉");
+                    await this.GetCoordenadores();
+
                 } else {
                     alert("Ops.. Algo deu errado. 😕\n" + response.message);
                 }
@@ -98,6 +114,11 @@ export default {
             try {
                 const response = await getCoordenadores(this.admin.token);
                 this.coordenadores = response.data;
+
+                this.dataSelectCoordenador.options = this.coordenadores.map(coordenador => ({
+                    value: coordenador.name,
+                    description: coordenador.name
+                }));
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }

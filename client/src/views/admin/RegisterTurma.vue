@@ -14,10 +14,9 @@
                     <input type="date" name="" id="" v-model="turma.fim" @input="checkDateValidity">
                 </div>
 
-                <select id="curso" v-model="turma.curso" required>
-                    <option value="" disabled>Selecione um curso</option>
-                    <option v-for="curso in cursos" :key="curso.name" :value="curso.name">{{ curso.name }}</option>
-                </select>
+                <Select :dataSelect="selectData" @input="turma.curso = $event"/>
+
+                <br>
 
                 <button type="submit" v-show="!invalidDate">Registrar val</button>
                 <button type="button" v-show="invalidDate">Registrar inv</button>
@@ -32,6 +31,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Select from '../../components/Select.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerTurma, getCursos } from '../../services/api/admin';
@@ -40,7 +40,8 @@ export default {
     name: 'RegisterTurma',
     components: {
         Header,
-        Footer
+        Footer,
+        Select
     },
     data() {
         return {
@@ -51,6 +52,11 @@ export default {
             },
             invalidDate: true,
             cursos: [],
+            selectData: {
+                title: "Selecione um curso", 
+                description: "Curso",
+                options: [],
+            },
         }
     },
     methods: {
@@ -87,7 +93,12 @@ export default {
         async GetCursos() {
             try {
                 const response = await getCursos(this.admin.token);
-                this.cursos = response.data
+                this.cursos = response.data;
+
+                this.selectData.options = this.cursos.map(curso => ({
+                    value: curso.name,
+                    description: curso.name
+                })) 
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }

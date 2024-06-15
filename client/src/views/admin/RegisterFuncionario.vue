@@ -9,13 +9,7 @@
                     <input type="text" id="name" v-model="funcionario.name" required>
                 </div>
                 <div>
-                    <label for="cargo">Cargo de:</label>
-                    <select id="cargo" name="cargo" v-model="funcionario.cargo" required>
-                        <option value="GESTAO">Gestão</option>
-                        <option value="ADMINISTRACAO">Administração</option>
-                        <option value="DIRECAO">Direção</option>
-                        <option value="ORIENTACAO">Orientação</option>
-                    </select>
+                    <Select :dataSelect="dataSelect" @input="funcionario.cargo = $event"/>
                 </div>
                 <div>
                     <label for="email">Email:</label>
@@ -38,6 +32,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Select from '../../components/Select.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerFuncionario } from '../../services/api/admin';
@@ -46,14 +41,25 @@ export default {
     name: 'RegisterFuncionario',
     components: {
         Header,
-        Footer
+        Footer,
+        Select
     },
     data() {
         return {
             funcionario: {
                 name: '',
-                tituloPrincipal: '',
+                cargo: '',
                 email: '',
+            },
+            dataSelect: {
+            title: "Selecione um cargo", 
+            description: "Cargo",
+            options: [
+                { value: 'GESTAO', description: 'Gestão' },
+                { value: 'ADMINISTRACAO', description: 'Administração' },
+                { value: 'DIRECAO', description: 'Direção' },
+                { value: 'ORIENTACAO', description: 'Orientação' }
+            ],
             },
         }
     },
