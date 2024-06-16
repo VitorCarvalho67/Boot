@@ -19,6 +19,7 @@ main {
     @include m-screen(1150px) {
         background-color: $primary-color-dark;
     }
+    
     nav {
         width: 100%;
 

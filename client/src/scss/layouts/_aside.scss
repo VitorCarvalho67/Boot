@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.5);
-    @include flex(column, flex-start, flex-start);
+    @include flex(column, flex-start, start);
 
     aside {
         background: $terciary-color-dark;
@@ -18,7 +18,7 @@
         transition: transform 0.5s ease;
 
         > ul {
-            @include flex(column, flex-start, flex-start);
+            @include flex(column, flex-start, start);
 
             > li:last-child {
                 @include m-screen(800px) {

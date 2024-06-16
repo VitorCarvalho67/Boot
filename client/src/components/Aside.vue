@@ -29,7 +29,7 @@ import { useRouter } from 'vue-router';
 import logo from '../assets/imgs/logoHeader.png';
 
 export default defineComponent({
-    name: 'Anside',
+    name: 'Aside',
     emits: ['close'],
     props: {
         visible: {
@@ -47,10 +47,10 @@ export default defineComponent({
 
         function handleOutsideClick() {
             spanView.value = false;
-            closeAnside();
+            closeAside();
         }
 
-        function closeAnside() {
+        function closeAside() {
             emit('close');
         }
 
@@ -64,7 +64,7 @@ export default defineComponent({
             spanView,
             toggleSpanView,
             handleOutsideClick,
-            closeAnside,
+            closeAside,
         };
     }
 });

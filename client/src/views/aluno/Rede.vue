@@ -2,6 +2,7 @@
     <Header />
     <div id="app">
         <main>
+            <AsideDashboard pageName="rede" />
             <section>
                 <h2>Vínculos</h2>
                 <ul>
@@ -62,6 +63,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 
 import router from '../../router/index.js';
 import Cookies from 'js-cookie';
@@ -78,7 +80,8 @@ export default {
     name: 'Rede',
     components: {
         Header,
-        Footer
+        Footer,
+        AsideDashboard
     },
     data() {
         return {

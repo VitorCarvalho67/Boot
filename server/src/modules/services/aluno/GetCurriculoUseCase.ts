@@ -22,7 +22,8 @@ export class GetCurriculoUseCase {
             nome: aluno.name,
             endereco: aluno.endereco,
             nascimento: aluno.dataNascimento,
-            email: email
+            email: email,
+            rm: aluno.rm
         };
     }
 }

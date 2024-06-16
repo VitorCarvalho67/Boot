@@ -24,7 +24,8 @@ import {
     GetMeController,
     RefreshTokenController,
     UploadImgProfileController,
-    UploadCapaController
+    UploadCapaController,
+    ChangePassController
 } from "../../modules/controllers/alunoControllers";
 
 const createControllers = () => ({
@@ -49,6 +50,7 @@ const createControllers = () => ({
     refreshTokenController: new RefreshTokenController(),
     uploadImgProfileController: new UploadImgProfileController(),
     uploadCapaController: new UploadCapaController(),
+    changePassController: new ChangePassController(),
 });
 
 const controllers = createControllers();
@@ -79,6 +81,7 @@ alunoRoutes.post("/link/send", alunoAuthMiddleware, controllers.createVinculoCon
 alunoRoutes.post("/link/accept", alunoAuthMiddleware, controllers.acceptVinculoController.handle);
 alunoRoutes.post("/link/reject", alunoAuthMiddleware, controllers.ignoreVinculoController.handle);
 alunoRoutes.post("/link/delete", alunoAuthMiddleware, controllers.deleteVinculoController.handle);
+alunoRoutes.post("/password/change", alunoAuthMiddleware, controllers.changePassController.handle);
 
 alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");

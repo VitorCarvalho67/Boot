@@ -20,7 +20,6 @@ main {
         background-color: $primary-color-dark;
     }
 
-
     nav {
         width: 100%;
 
@@ -139,6 +138,12 @@ main {
 
             .d1 {
                 width: 95%;
+
+                p {
+                    @include flex(row, flex-start, center);
+                    font-size: 1rem;
+                    color: $font-color-dark;
+                }
             }
 
             .d2 {
@@ -181,20 +186,6 @@ main {
                 cursor: pointer;
                 filter: invert(100%);
             }
-        }
-
-        p {
-            width: 100%;
-            margin-bottom: 10px;
-            @include flex(row, flex-end, center);
-
-            a {
-                text-decoration: none;
-                color: $font-color-dark-2;
-                @include font-inter(300);
-                font-size: 0.8rem;
-            }
-
         }
 
         .button-box {

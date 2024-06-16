@@ -1,11 +1,32 @@
 <template>
     <Header />
     <main>
-        <AsideDashboard pageName='home'/>
+        <AsideDashboard pageName="config" />
         <div class="content">
             <div class="box" id="box1">
-                <H1>Novidades</H1>
-                <h2>O que houve enquanto você esteve fora</h2>
+                <H1>Suas informações</H1>
+                <ul>
+                    <li>
+                        <bold>Email</bold>
+                        <p v-text="aluno.email"></p>
+                    </li>
+                    <li>
+                        <bold>Registro de Matrícula</bold>
+                        <p v-text="aluno.rm"></p>
+                    </li>
+                    <li>
+                        <bold>Endereço</bold>
+                        <p v-text="aluno.endereco"></p>
+                    </li>
+                    <li>
+                        <bold>Nascimento</bold>
+                        <p v-text="aluno.nascimento"></p>
+                    </li>
+                    <li>
+                        <bold>Vinculos</bold>
+                        <router-link to="/rede">3 vínculos</router-link>
+                    </li>
+                </ul>
             </div>
             <div class="box" id="box2">
                 <router-link to="/aluno/me" class="profile">
@@ -16,9 +37,6 @@
                         <p v-text="aluno.endereco"></p>
                     </div>
                 </router-link>
-                <div class="vinculos">
-                    <h3>Sugestões de vinculo</h3>
-                </div>
             </div>
         </div>
     </main>
@@ -43,7 +61,7 @@ import { mixinAluno } from '../../util/authMixins.js';
 
 
 export default {
-    name: 'HomeAluno',
+    name: 'ConfigAluno',
     components: {
         Header,
         AsideDashboard,
@@ -90,8 +108,10 @@ export default {
                     this.aluno.endereco = response.data.endereco;
                     this.aluno.nascimento = response.data.nascimento;
                     this.calcularIdade(this.aluno.nascimento);
+                    this.aluno.nascimento = this.aluno.nascimento.split('T')[0].split('-').reverse().join('/');
                     this.aluno.nome = response.data.nome;
                     this.aluno.email = response.data.email;
+                    this.aluno.rm = response.data.rm;
                 } else {
                     alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + response.message);
                 }
