@@ -49,6 +49,12 @@ export interface UploadImageDTO{
     file: Express.Multer.File
 }
 
+export interface UpdatePassDTO{
+    email: string,
+    oldPass: string
+    newPass: string
+}
+
 export enum Turno {
     MANHA = "MANHA",
     TARDE = "TARDE",

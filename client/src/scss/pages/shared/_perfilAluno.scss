@@ -1,7 +1,7 @@
 main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
-    @include flex(column, flex-start, flex-start);
+    @include flex(column, flex-start, start);
     padding: 20px 100px;
 
     .capa {
@@ -61,7 +61,7 @@ main {
     }
 
     .sobreMim {
-        @include flex(column, flex-start, flex-start);
+        @include flex(column, flex-start, start);
         width: 100%;
 
         h2 {

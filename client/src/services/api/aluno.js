@@ -309,3 +309,16 @@ export const updateBanner = async (file, token) => {
         return error.response.data;
     }
 }
+
+export const changePassword = async (info, token) => {
+    try {
+        const response = await api.post('aluno/password/change', info, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

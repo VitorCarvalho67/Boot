@@ -9,10 +9,11 @@ import { UpdateCurriculoUseCase } from "../services/aluno/UpdateCurriculoUseCase
 import { GetTurmasByCursoUseCase } from "../services/aluno/GetCourseYearUseCase";
 import { GetCurriculoUseCase } from "../services/aluno/GetCurriculoUseCase";
 import { GetMeUseCase } from '../services/aluno/GetMeUseCase';
-import { Turno } from "../interfaces/alunoDTOs"
 import { RefreshTokenUseCase } from '../services/aluno/RefreshTokenUseCase';
 import { UploadProfileUseCase } from '../services/aluno/UploadProfileUseCase';
 import { UploadCapaUseCase } from '../services/aluno/UploadCapaUseCase';
+import { ChangePassUseCase } from '../services/aluno/ChangePassUseCase';
+import { Turno } from "../interfaces/alunoDTOs"
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -170,6 +171,18 @@ export class UploadCapaController {
         const uploadCapaUseCase = new UploadCapaUseCase();
 
         const result = await uploadCapaUseCase.execute({email, file});
+
+        return res.status(201).json(result);
+    }
+}
+
+export class ChangePassController {
+    async handle(req: Request, res: Response) {
+        const { email, oldPass, newPass } = req.body;
+
+        const changePassUseCase = new ChangePassUseCase();
+
+        const result = await changePassUseCase.execute({ email, oldPass, newPass });
 
         return res.status(201).json(result);
     }

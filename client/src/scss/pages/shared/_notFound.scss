@@ -21,7 +21,7 @@ main {
     .info {
         width: 70%;
         height: 100%;
-        @include flex(column, flex-start, flex-start);
+        @include flex(column, flex-start, start);
         padding: 20px;
 
         h1 {

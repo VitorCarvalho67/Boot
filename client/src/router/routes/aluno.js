@@ -7,6 +7,7 @@ import HomeAluno from '../../views/aluno/Home.vue';
 import PerfilAluno from '../../views/aluno/Profile.vue';
 import Complete from '../../views/aluno/Complete.vue';
 import Rede from '../../views/aluno/Rede.vue';
+import ConfigAluno from '../../views/aluno/Config.vue';
 
 import {
     isRecoveringAluno,
@@ -80,4 +81,12 @@ export const alunoRoutes = [
             (await isAuthAluno()) ? next() : next("/login");
         }
     },
+    {
+        path: "/config",
+        name: "Config",
+        component: ConfigAluno,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
+        }
+    }
 ];

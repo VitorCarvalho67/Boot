@@ -1,0 +1,71 @@
+aside {
+    height: 100%;
+    @include flex(row, space-between, start);
+    width: 300px;
+    background-color: $secondary-color-dark;
+
+    div {
+        height: 100%;
+        width: 100%;
+        @include flex(column, space-between, space-between);
+        ul {
+            width: 100%;
+            padding: 40px 0px 0px 30px;
+            
+            .page {
+                background-color: $terciary-color-dark;
+            }
+
+            li {
+                @include flex(row, flex-start, center);
+                width: 100%;
+                margin: 20px 0px;
+                padding: 10px;
+                border-radius: 5px;
+
+                img {
+                    height: 20px;
+                    width: 20px;
+                    object-fit: cover;
+                    margin-right: 10px;
+                    filter: invert(100%);
+                }
+
+                a {
+                    height: 100%;
+                    width: calc(100% - 30px);
+                    text-decoration: none;
+                    color: $font-color-dark;
+                    font-size: 1rem;
+                    @include flex(row, flex-start, center);
+                    color: $font-color-dark-2;
+                    @include font-inter(200);
+                }
+
+                &:hover {
+                    background-color: $terciary-color-dark;
+                }
+
+                &:hover .page{
+                    background-color: $secondary-color-dark;
+                }
+            }
+
+        }
+    }
+    button {
+        height: 100%;
+        width: 30px;
+        background-color: transparent;
+        border: none;
+        color: $font-color-dark;
+
+        img {
+            height: 25px;
+            width: 25px;
+            object-fit: cover;
+            margin-right: 10px;
+            filter: invert(100%);
+        }
+    }
+}

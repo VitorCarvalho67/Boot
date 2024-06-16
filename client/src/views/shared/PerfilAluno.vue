@@ -7,7 +7,7 @@
                     <img :src="aluno.bannerUrl" alt="imgCapa">
                 </div>
                 <div class="infoProfile">
-                    <img :src="aluno.imageUrl" alt="imgProfile">
+                    <img :src="aluno.imageUrl" :alt="aluno.nome">
                     <div class="info">
                         <div class="box1">
                             <h1 v-text="aluno.nome"></h1>

@@ -19,14 +19,14 @@
                 <li><router-link to="/home">Sobre Nós</router-link></li>
                 <li><router-link to="/register">Cadastre-se Agora</router-link></li>
                 <li class="hamburger">
-                    <button @click="showAnside = true">
+                    <button @click="showAside = true">
                         <img :src="imgHamburger" alt="">
                     </button>
                 </li>
                 <li><router-link to="/login">Entrar</router-link></li>
             </ul>
         </nav>
-        <Anside :visible="showAnside" @close="showAnside = false" />
+        <Aside :visible="showAside" @close="showAside = false" />
     </header>
 </template>
 
@@ -36,12 +36,12 @@ import { useRouter } from 'vue-router';
 import logo from '../assets/imgs/logoHeader.png';
 import hamburger from '../assets/icons/hamburger.png';
 import Cookies from 'js-cookie';
-import Anside from './Anside.vue';
+import Aside from './Aside.vue';
 
 export default defineComponent({
     name: 'Header',
     components: {
-        Anside
+        Aside
     },
     data() {
         return {
@@ -51,7 +51,7 @@ export default defineComponent({
     setup() {
         const router = useRouter();
         const spanView = ref(false);
-        const showAnside = ref(false);
+        const showAside = ref(false);
 
         function toggleSpanView() {
             spanView.value = !spanView.value;
@@ -62,7 +62,7 @@ export default defineComponent({
             imagem: logo,
             imgHamburger: hamburger,
             spanView,
-            showAnside,
+            showAside,
             toggleSpanView,
         };
     },

@@ -223,7 +223,6 @@ main {
 
     img {
         height: 80%;
-        transform: rotatey(180deg);
     }
 
     @include m-screen(1250px) {

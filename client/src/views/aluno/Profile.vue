@@ -2,7 +2,9 @@
     <Header />
     <div id="app">
         <main>
-            <div class="capa">
+            <AsideDashboard pageName="profile" />
+            <div class="content">
+                <div class="capa">
                 <div class="capaProfile">
                     <img :src="aluno.bannerUrl" alt="imgCapa">
                     <div class="editButtons">
@@ -19,7 +21,7 @@
                     </div>
                 </div>
                 <div class="infoProfile">
-                    <img :src="aluno.imageUrl" alt="imgProfile">
+                    <img :src="aluno.imageUrl" :alt="aluno.nome">
                     <div class="editButtons">
                         <button v-show="modeImage === 'view'" @click="editModeImage" type="button">
                             <img :src="imgLapis" alt="">Editar
@@ -62,6 +64,7 @@
                     </div>
                 </div>
             </section>
+            </div>
         </main>
     </div>
     <Footer />
@@ -70,6 +73,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import {
     getCurriculo,
     updateCurriculo,
@@ -89,7 +93,8 @@ export default {
     name: 'PerfilAluno',
     components: {
         Header,
-        Footer
+        Footer,
+        AsideDashboard
     },
     data() {
         return {
