@@ -9,7 +9,8 @@ import {
     IgnoreVinculoController,
     GetUnlinkedsController,
     GetCursosController,
-    DeleteVinculoController
+    DeleteVinculoController,
+    CreateMessageController
 } from "../../modules/controllers/sharedControllers";
 import {
     CreateAlunoController,
@@ -51,6 +52,7 @@ const createControllers = () => ({
     uploadImgProfileController: new UploadImgProfileController(),
     uploadCapaController: new UploadCapaController(),
     changePassController: new ChangePassController(),
+    createMessageController: new CreateMessageController(),
 });
 
 const controllers = createControllers();
@@ -82,6 +84,7 @@ alunoRoutes.post("/link/accept", alunoAuthMiddleware, controllers.acceptVinculoC
 alunoRoutes.post("/link/reject", alunoAuthMiddleware, controllers.ignoreVinculoController.handle);
 alunoRoutes.post("/link/delete", alunoAuthMiddleware, controllers.deleteVinculoController.handle);
 alunoRoutes.post("/password/change", alunoAuthMiddleware, controllers.changePassController.handle);
+alunoRoutes.post("/message/send", alunoAuthMiddleware, controllers.createMessageController.handle);
 
 alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");

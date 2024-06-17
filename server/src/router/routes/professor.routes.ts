@@ -6,7 +6,8 @@ import {
     GetVinculosController,
     IgnoreVinculoController,
     GetUnlinkedsController,
-    DeleteVinculoController
+    DeleteVinculoController,
+    CreateMessageController
 } from "../../modules/controllers/sharedControllers";
 import {
     ValidateProfessorController,
@@ -29,7 +30,8 @@ const createControllers = () => ({
     deleteVinculoController: new DeleteVinculoController(),
     getVinculosController: new GetVinculosController(),
     getUnlinkedsController: new GetUnlinkedsController(),
-    refreshTokenController: new RefreshTokenController()
+    refreshTokenController: new RefreshTokenController(),
+    createMessageController: new CreateMessageController()
 });
 
 const controllers = createControllers();
@@ -43,6 +45,7 @@ professorRoutes.post("/link/send", professorAuthMiddleware, controllers.createVi
 professorRoutes.post("/link/accept", professorAuthMiddleware, controllers.acceptVinculoController.handle);
 professorRoutes.post("/link/reject", professorAuthMiddleware, controllers.ignoreVinculoController.handle);
 professorRoutes.post("/link/delete", professorAuthMiddleware, controllers.deleteVinculoController.handle);
+professorRoutes.post("/message/send", professorAuthMiddleware, controllers.createMessageController.handle);
 
 professorRoutes.get("/auth", professorAuthMiddleware, (req, res) => {
     res.status(200).send("Professor autenticado com sucesso.");

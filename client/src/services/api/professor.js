@@ -115,3 +115,22 @@ export const refreshTokenProfessor = async (token) => {
         return error.response.data;
     }
 }
+
+export const sendMessage = async (infoMesssage, token) => {
+    try {
+        const response = await api.post('professor/message/send', infoMesssage, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+
+        socket.emit('send-message', {
+            message: infoMesssage,
+            authorization: `${token}`
+        });
+
+        return response;
+    } catch (error) {
+        return error.data;
+    }
+}

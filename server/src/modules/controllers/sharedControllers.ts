@@ -8,9 +8,15 @@ import { IgnoreVinculoUseCase } from "../services/shared/IgnoreVinculoUseCase";
 import { GetUnlinkedsUseCase } from "../services/shared/GetUnlinkedsUseCase";
 import { GetCursosUseCase } from "../services/shared/GetCursosUseCase";
 import { GetCurriculoUseCase } from "../services/shared/GetCurriculoUseCase";
-import { GetEntidadeDTO, IdentificadorEnum } from "../interfaces/sharedDTOs";
 import { GetProfileImageUseCase } from '../services/shared/GetProfileImageUseCase';
 import { GetBannerUseCase } from '../services/shared/GetBannerUseCase';
+import { CreateMessageUseCase } from "../services/shared/CreateMessageUseCase";
+
+import { 
+    CreateMessageDTO,
+    GetEntidadeDTO,
+    IdentificadorEnum
+} from "../interfaces/sharedDTOs";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -151,6 +157,21 @@ export class GetBannerController {
         const getBannerUseCase = new GetBannerUseCase();
 
         const result = await getBannerUseCase.execute({ email, identifier });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class CreateMessageController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const { message, sender, recipient, senderIdentifier, recipientIdentifier } = req.body;
+
+        console.log
+
+        const createMessageUseCase = new CreateMessageUseCase();
+
+        const result = await createMessageUseCase.execute({ email, message, sender, recipient, senderIdentifier, recipientIdentifier });
 
         return res.status(201).json(result);
     }

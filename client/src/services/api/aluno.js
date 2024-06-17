@@ -322,3 +322,22 @@ export const changePassword = async (info, token) => {
         return error.response.data;
     }
 }
+
+export const sendMessage = async (infoMesssage, token) => {
+    try {
+        const response = await api.post('aluno/message/send', infoMesssage, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+
+        socket.emit('send-message', {
+            message: infoMesssage,
+            authorization: `${token}`
+        });
+
+        return response;
+    } catch (error) {
+        return error.data;
+    }
+}
