@@ -23,3 +23,19 @@ export interface GetEntidadeDTO {
     email: string,
     identifier: IdentificadorEnum,
 }
+
+export interface CreateMessageDTO {
+    email: string,
+    message: string,
+    sender: string,
+    recipient: string,
+    senderIdentifier: EntidadeEnum,
+    recipientIdentifier: EntidadeEnum
+}
+
+export enum EntidadeEnum {
+    ALUNO = 'ALUNO',
+    PROFESSOR = 'PROFESSOR',
+    FUNCIONARIO = 'FUNCIONARIO',
+    EMPRESA = 'EMPRESA',
+}

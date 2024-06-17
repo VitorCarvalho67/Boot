@@ -8,27 +8,29 @@ datasource db {
 }
 
 model Aluno {
-    id                  String    @id @default(uuid())
-    name                String
-    email               String    @unique
-    password            String
-    imagem         String?
-    recoveryPass        String?
-    token               String?
-    banner        String?
-    dataNascimento      DateTime?
-    endereco            String?
-    curriculo           String?   @default("") @db.VarChar(5000)
-    sobre               String?
-    rm                  String?   @unique
-    tentativasRestantes Int       @default(5)
-    turmas              AlunoTurma[]
-    cursosExtracurriculares      Extracurricular[]
-    vinculosAluno       Vinculo[] @relation("AlunoVinculo")
-    vinculoComoAluno    Vinculo[] @relation("VinculoComAluno")
-    validated           Boolean    @default(false)
-    createdAt           DateTime  @default(now())
-    updatedAt           DateTime  @updatedAt
+    id                      String            @id @default(uuid())
+    name                    String
+    email                   String            @unique
+    password                String
+    imagem                  String?
+    recoveryPass            String?
+    token                   String?
+    banner                  String?
+    dataNascimento          DateTime?
+    endereco                String?
+    curriculo               String?           @default("") @db.VarChar(5000)
+    sobre                   String?
+    rm                      String?           @unique
+    tentativasRestantes     Int               @default(5)
+    validated               Boolean           @default(false)
+    turmas                  AlunoTurma[]
+    cursosExtracurriculares Extracurricular[]
+    vinculosAluno           Vinculo[]         @relation("AlunoVinculo")
+    vinculoComoAluno        Vinculo[]         @relation("VinculoComAluno")
+    mensagensEnviadas       Mensagem[]        @relation("MensagensEnviadasAluno")
+    mensagensRecebidas      Mensagem[]        @relation("MensagensRecebidasAluno")
+    createdAt               DateTime          @default(now())
+    updatedAt               DateTime          @updatedAt
 
     @@map("alunos")
 }
@@ -43,11 +45,13 @@ model Professor {
     imagem               String?
     banner               String?
     validated            Boolean       @default(false)
-    coordenador          Coordenador[]
-    atividade            Atividade[]
     tentativasRestantes  Int           @default(5)
+    atividade            Atividade[]
+    coordenador          Coordenador[]
     vinculosProfessor    Vinculo[]     @relation("ProfessorVinculo")
     vinculoComoProfessor Vinculo[]     @relation("VinculoComProfessor")
+    mensagensEnviadas    Mensagem[]    @relation("MensagensEnviadasProfessor")
+    mensagensRecebidas   Mensagem[]    @relation("MensagensRecebidasProfessor")
     createdAt            DateTime      @default(now())
     updatedAt            DateTime      @updatedAt
 
@@ -73,13 +77,13 @@ model Vinculo {
 }
 
 model Admin {
-    id          String   @id @default(uuid())
-    name        String
-    email       String   @unique
-    password    String
-    imagem String?
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id        String   @id @default(uuid())
+    name      String
+    email     String   @unique
+    password  String
+    imagem    String?
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("admins")
 }
@@ -107,58 +111,60 @@ enum Turno {
 }
 
 model Turma {
-    id        String   @id @default(uuid())
+    id        String       @id @default(uuid())
     inicio    String
     fim       String
-    curso     Curso    @relation(fields: [cursoId], references: [id])
+    curso     Curso        @relation(fields: [cursoId], references: [id])
     cursoId   String
     alunos    AlunoTurma[]
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    createdAt DateTime     @default(now())
+    updatedAt DateTime     @updatedAt
 
     @@map("turmas")
 }
 
 model AlunoTurma {
-    alunoId  String  @default(uuid())
-    turmaId  String  @default(uuid())
-    aluno    Aluno   @relation(fields: [alunoId], references: [id])
-    turma    Turma   @relation(fields: [turmaId], references: [id])
+    alunoId String @default(uuid())
+    turmaId String @default(uuid())
+    aluno   Aluno  @relation(fields: [alunoId], references: [id])
+    turma   Turma  @relation(fields: [turmaId], references: [id])
 
     @@id([alunoId, turmaId])
     @@map("alunos_turmas")
 }
 
 model Extracurricular {
-    extracurricularId String @id @default(uuid())
-    alunoId String
-    aluno    Aluno   @relation(fields: [alunoId], references: [id])
-    instituicao String
-    descricao String
-    inicio DateTime
-    fim DateTime
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    
+    extracurricularId String   @id @default(uuid())
+    alunoId           String
+    aluno             Aluno    @relation(fields: [alunoId], references: [id])
+    instituicao       String
+    descricao         String
+    inicio            DateTime
+    fim               DateTime
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+
     @@map("extracurriculares")
 }
 
 model Empresa {
-    id                  String   @id @default(uuid())
+    id                  String     @id @default(uuid())
     name                String
-    email               String   @unique
+    email               String     @unique
     password            String
-    imagem       String?
-    cnpj                String   @unique
+    imagem              String?
+    cnpj                String     @unique
     endereco            String?
     telefone            String?
     token               String?
-    patrocinador        Boolean  @default(false)
-    validated           Boolean  @default(false)
+    patrocinador        Boolean    @default(false)
+    validated           Boolean    @default(false)
+    tentativasRestantes Int        @default(5)
     vaga                Vaga[]
-    tentativasRestantes Int      @default(5)
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
+    mensagensEnviadas   Mensagem[] @relation("MensagensEnviadasEmpresa")
+    mensagensRecebidas  Mensagem[] @relation("MensagensRecebidasEmpresa")
+    createdAt           DateTime   @default(now())
+    updatedAt           DateTime   @updatedAt
 
     @@map("empresas")
 }
@@ -197,18 +203,20 @@ model Coordenador {
 }
 
 model Funcionario {
-    id                  String   @id @default(uuid())
+    id                  String     @id @default(uuid())
     name                String
-    email               String   @unique
+    email               String     @unique
     password            String
     recoveryPass        String?
-    imagem   String?
+    imagem              String?
     cargo               Cargo
+    validated           Boolean    @default(false)
+    tentativasRestantes Int        @default(5)
     vaga                Vaga[]
-    validated           Boolean  @default(false)
-    tentativasRestantes Int      @default(5)
-    createdAt           DateTime @default(now())
-    updatedAt           DateTime @updatedAt
+    mensagensEnviadas   Mensagem[] @relation("MensagensEnviadasFuncionario")
+    mensagensRecebidas  Mensagem[] @relation("MensagensRecebidasFuncionario")
+    createdAt           DateTime   @default(now())
+    updatedAt           DateTime   @updatedAt
 
     @@map("funcionarios")
 }
@@ -221,14 +229,39 @@ enum Cargo {
 }
 
 model Atividade {
-    id              String    @id @default(uuid())
-    title           String
-    descricao       String    @db.VarChar(1000)
-    professor       Professor @relation(fields: [professorId], references: [id])
-    professorId     String
-    imagem String?
-    createdAt       DateTime  @default(now())
-    updatedAt       DateTime  @updatedAt
+    id          String    @id @default(uuid())
+    title       String
+    descricao   String    @db.VarChar(1000)
+    professor   Professor @relation(fields: [professorId], references: [id])
+    professorId String
+    imagem      String?
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
 
     @@map("atividades")
+}
+
+model Mensagem {
+    id                        String       @id @default(uuid())
+    conteudo                  String
+    alunoRemetenteId          String?
+    alunoDestinatarioId       String?
+    professorRemetenteId      String?
+    professorDestinatarioId   String?
+    funcionarioRemetenteId    String?
+    funcionarioDestinatarioId String?
+    empresaRemetenteId        String?
+    empresaDestinatarioId     String?
+    alunoRemetente            Aluno?       @relation("MensagensEnviadasAluno", fields: [alunoRemetenteId], references: [id], map: "alunoRemetente_FK")
+    alunoDestinatario         Aluno?       @relation("MensagensRecebidasAluno", fields: [alunoDestinatarioId], references: [id], map: "alunoDestinatario_FK")
+    professorRemetente        Professor?   @relation("MensagensEnviadasProfessor", fields: [professorRemetenteId], references: [id], map: "professorRemetente_FK")
+    professorDestinatario     Professor?   @relation("MensagensRecebidasProfessor", fields: [professorDestinatarioId], references: [id], map: "professorDestinatario_FK")
+    funcionarioRemetente      Funcionario? @relation("MensagensEnviadasFuncionario", fields: [funcionarioRemetenteId], references: [id], map: "funcionarioRemetente_FK")
+    funcionarioDestinatario   Funcionario? @relation("MensagensRecebidasFuncionario", fields: [funcionarioDestinatarioId], references: [id], map: "funcionarioDestinatario_FK")
+    empresaRemetente          Empresa?     @relation("MensagensEnviadasEmpresa", fields: [empresaRemetenteId], references: [id], map: "empresaRemetente_FK")
+    empresaDestinatario       Empresa?     @relation("MensagensRecebidasEmpresa", fields: [empresaDestinatarioId], references: [id], map: "empresaDestinatario_FK")
+    createdAt                 DateTime     @default(now())
+    updatedAt                 DateTime     @updatedAt
+
+    @@map("mensagens")
 }

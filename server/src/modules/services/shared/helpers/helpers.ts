@@ -1,16 +1,24 @@
-import { IdentificadorEnum } from "../../../interfaces/sharedDTOs";
+import { EntidadeEnum } from "../../../interfaces/sharedDTOs";
 import { prisma } from "../../../../prisma/client";
 import path from 'path';
 import fs from 'fs/promises';
 
-export const FindEntidade = async (email: string, identifier: IdentificadorEnum) => {
+export const FindEntidade = async (email: string, identifier: EntidadeEnum) => {
     switch (identifier) {
-        case IdentificadorEnum.ALUNO:
+        case EntidadeEnum.ALUNO:
             return prisma.aluno.findUnique({
                 where: { email }
             });
-        case IdentificadorEnum.PROFESSOR:
+        case EntidadeEnum.PROFESSOR:
             return prisma.professor.findUnique({
+                where: { email }
+            });
+        case EntidadeEnum.FUNCIONARIO:
+            return prisma.funcionario.findUnique({
+                where: { email }
+            });
+        case EntidadeEnum.EMPRESA:
+            return prisma.empresa.findUnique({
                 where: { email }
             });
         default:

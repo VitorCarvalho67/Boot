@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { ReagirVinculoDTO } from "../../interfaces/sharedDTOs";
+import { EntidadeEnum, ReagirVinculoDTO } from "../../interfaces/sharedDTOs";
 import { FindEntidade } from "./helpers/helpers";
 
 export class IgnoreVinculoUseCase {
@@ -13,8 +13,11 @@ export class IgnoreVinculoUseCase {
             throw new AppError("Rementente inválido");
         }
 
-        const senderData = await FindEntidade(sender, senderIdentifier);
-        const recipientData = await FindEntidade(recipient, recipientIdentifier);
+        const senderIdentifierValue = EntidadeEnum[senderIdentifier];
+        const recipientIdentifierValue = EntidadeEnum[recipientIdentifier];
+
+        const senderData = await FindEntidade(sender, senderIdentifierValue);
+        const recipientData = await FindEntidade(recipient, recipientIdentifierValue);
 
         if (!senderData) {
             throw new AppError(`${senderIdentifier.charAt(0).toUpperCase()}${senderIdentifier.slice(1).toLowerCase()} não encontrado.`);
