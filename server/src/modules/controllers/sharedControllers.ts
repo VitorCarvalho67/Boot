@@ -164,14 +164,14 @@ export class GetBannerController {
 
 export class CreateMessageController {
     async handle(req: Request, res: Response) {
-        const email = req.body.entidade.email;
-        const { message, sender, recipient, senderIdentifier, recipientIdentifier } = req.body;
+        const sender = req.body.entidade.email;
+        const { message, recipient, senderIdentifier, recipientIdentifier } = req.body;
 
         console.log
 
         const createMessageUseCase = new CreateMessageUseCase();
 
-        const result = await createMessageUseCase.execute({ email, message, sender, recipient, senderIdentifier, recipientIdentifier });
+        const result = await createMessageUseCase.execute({ message, sender, recipient, senderIdentifier, recipientIdentifier });
 
         return res.status(201).json(result);
     }

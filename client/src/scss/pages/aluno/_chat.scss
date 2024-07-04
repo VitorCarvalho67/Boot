@@ -1,0 +1,217 @@
+main {
+    height: calc(100vh - 80px);
+    background-color: $primary-color-dark;
+    @include flex(row, flex-start, start);
+
+    .chat {
+        height: calc(100vh - 80px);
+        width: 100%;
+        border-radius: 10px 10px 0px 0px;
+        background-color: $primary-color-dark;
+
+        .content {
+            height: calc(100% - 60px);
+            width: 100%;
+            overflow-y: auto;
+
+            ::-webkit-scrollbar {
+                width: 3px;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background-color: $primary-color-orange;
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: $secondary-color-dark;
+            }
+
+        
+            @include m-screen(1200px) {
+                width: 100%;
+            }
+            
+            .user {
+                @include flex(row, center, start);
+                width: 100%;
+                background-color: $primary-color-dark;
+                border-radius: 10px;
+                height: 80px;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                position: absolute;
+                z-index: 10;
+
+                .box-info{
+                    @include flex(row, space, center);
+                    width: calc(100% - 30px);
+                    background-color: $secondary-color-dark;
+                    border-radius: 10px;
+                    height: 80px;
+
+                    img {
+                        margin-left: 20px;
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        background-color: rgba(0, 0, 0, 0.411);
+                    }
+    
+                    .info {
+                        margin-left: 10px;
+    
+                        p {
+                            @include font-inter(600);
+                        }
+    
+                        p:last-child {
+                            @include font-inter(300);
+                        }
+                    }
+                }
+            }
+
+            ul {
+                z-index: 0;
+                margin-top: 95px;
+                padding: 20px;
+
+                li {
+                    width: 100%;
+                    margin-bottom: 20px;
+
+                    .pontinha{
+                        z-index: 1;
+                        height: 15px;
+                        width: 15px;
+                        transform: rotate(45deg);
+                        position: relative;
+                    }
+
+                    .content {
+                        z-index: 2;
+                        min-width: 300px;
+                        max-width: 35%;
+                        border-radius: 6px;
+                        padding: 10px;
+
+                        @include m-screen(700px) {
+                            max-width: 70%;
+                            min-width: 200px;
+                        }
+
+                        .p1 {
+                            @include font-inter(700);
+                        }
+
+                        .p2 {
+                            word-break: break-all;
+                            @include font-inter(500);
+                        }
+
+                        .p3 {
+                            @include font-inter(500);
+                            font-size: .8rem;
+                            width: 100%;
+                            text-align: end;
+                            opacity: 0.8;
+                        }
+                    }
+                }
+
+                .received {
+                    @include flex(row, flex-start, center);
+                    
+                    .pontinha{
+                        background-color: $terciary-color-dark;
+                        left: 7px;
+                    }
+
+                    .content {
+                        background-color: $terciary-color-dark;
+
+                        .p1 {
+                            color: $font-color-dark-2;
+                        }
+
+                        .p2 {
+                            color: $font-color-dark;
+                        }
+
+                        .p3 {
+                            color: $font-color-dark;
+                        }
+                    }
+                }
+
+                .sended {
+                    @include flex(row-reverse, flex-start, center);
+                    
+                    .pontinha{
+                        background-color: $terciary-color-dark;
+                        right: 7px;
+                    }
+
+                    .content {
+                        background-color: $terciary-color-dark;
+
+                        .p1 {
+                            color: $font-color-dark-2;
+                        }
+
+                        .p2 {
+                            color: $font-color-dark;
+                        }
+
+                        .p3 {
+                            color: $font-color-dark;
+                        }
+                    }
+                }
+            }
+        }
+
+        .send {
+            @include flex(row, center, start);
+            height: 45px;
+            width: 100%;
+            background-color: transparent;
+            
+            .box{
+                @include flex(row, cen, start);
+                height: 45px;
+                border-radius: 20px;
+                width: calc(100% - 40px);
+                background-color: $secondary-color-dark;
+                
+                input {
+                    color: $font-color-dark-2;
+                    width: 100%;
+                    height: 45px;
+                    padding-inline: 15px;
+                    outline: none;
+                    background: transparent;
+                    border: none;
+                    font-size: medium
+                }
+    
+                button {
+                    @include flex-center;
+                    height: 45px;
+                    width: 45px;
+                    background-color: transparent;
+                    border: none;
+    
+                    img {
+                        height: 55%;
+                        width: 60%;
+                        object-fit: cover;
+                        opacity: 0.8;
+                        filter: invert(100%)
+                    }
+                }
+            }
+        }
+    }
+}

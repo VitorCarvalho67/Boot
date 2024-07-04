@@ -4,16 +4,28 @@ import { AppError } from "../../../errors/error";
 import { FindEntidade } from "./helpers/helpers";
 
 export class CreateMessageUseCase {
-    async execute({ email, message, sender, recipient, senderIdentifier, recipientIdentifier }: CreateMessageDTO) {
+    async execute({ message, sender, recipient, senderIdentifier, recipientIdentifier }: CreateMessageDTO) {
         
-        if(!email || !message || !sender || !recipient || !senderIdentifier || !recipientIdentifier){
-            throw new AppError("Parâmetros insuficientes ou inválidos!");
+        if (!message) {
+            throw new AppError("Parâmetro 'message' está ausente ou inválido!");
         }
+        if (!sender) {
+            throw new AppError("Parâmetro 'sender' está ausente ou inválido!");
+        }
+        if (!recipient) {
+            throw new AppError("Parâmetro 'recipient' está ausente ou inválido!");
+        }
+        if (!senderIdentifier) {
+            throw new AppError("Parâmetro 'senderIdentifier' está ausente ou inválido!");
+        }
+        if (!recipientIdentifier) {
+            throw new AppError("Parâmetro 'recipientIdentifier' está ausente ou inválido!");
+        }        
 
         const senderData = await FindEntidade(sender, senderIdentifier);
         const recipientData = await FindEntidade(recipient, recipientIdentifier);
 
-        if (!senderData || senderData.email != email){
+        if (!senderData){
             throw new AppError("Remetente inválido!");
         }
 
@@ -68,6 +80,12 @@ export class CreateMessageUseCase {
             data,
         });
 
-        return ("Mensagem enviada com sucesso!");
+        return {
+            message: {
+                conteudo: message,
+                email: recipient,
+                identifier: recipientIdentifier,
+            }
+        };
     }
 }

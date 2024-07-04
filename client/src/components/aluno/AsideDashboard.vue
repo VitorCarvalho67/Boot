@@ -1,44 +1,60 @@
 <template>
-    <aside>
+    <aside :class="view">
         <div>
             <ul>
                 <li :class="getClassForPage('home')">
-                    <img :src="icons.home">
-                    <router-link to="/aluno">Página inicial</router-link>
+                    <router-link to="/aluno">
+                        <img :src="icons.home">
+                        <p v-if="showPs">Página inicial</p>
+                    </router-link>
                 </li>
                 <li :class="getClassForPage('profile')">
-                    <img :src="icons.user">
-                    <router-link to="/aluno/me">Meu perfil</router-link>
+                    <router-link to="/aluno/me">
+                        <img :src="icons.user">
+                        <p v-if="showPs">Meu perfil</p>
+                    </router-link>
                 </li>
                 <li :class="getClassForPage('pesquisa')">
-                    <img :src="icons.search">
-                    <router-link to="">Pesquisa</router-link>
+                    <router-link to="">
+                        <img :src="icons.search">
+                        <p v-if="showPs">Pesquisa</p>
+                    </router-link>
                 </li>
                 <li :class="getClassForPage('rede')">
-                    <img :src="icons.link">
-                    <router-link to="/rede">Meus vínculos</router-link>
+                    <router-link to="/rede">
+                        <img :src="icons.link">
+                        <p v-if="showPs">Meus vínculos</p>
+                    </router-link>
                 </li>
-                <li :class="getClassForPage('messsage')">
-                    <img :src="icons.send">
-                    <router-link to="">Mensagens</router-link>
+                <li :class="getClassForPage('message')">
+                    <router-link to="/mensagens">
+                        <img :src="icons.send">
+                        <p v-if="showPs">Mensagens</p>
+                    </router-link>
                 </li>
                 <li :class="getClassForPage('estagios')">
-                    <img :src="icons.job">
-                    <router-link to="">Estágios</router-link>
+                    <router-link to="">
+                        <img :src="icons.job">
+                        <p v-if="showPs">Estágios</p>
+                    </router-link>
                 </li>
                 <li :class="getClassForPage('rankings')">
-                    <img :src="icons.ranking">
-                    <router-link to="">Rankings</router-link>
+                    <router-link to="">
+                        <img :src="icons.ranking">
+                        <p v-if="showPs">Rankings</p>
+                    </router-link>
                 </li>
             </ul>
             <ul>
                 <li :class="getClassForPage('config')">
-                    <img :src="icons.config">
-                    <router-link to="/config">Configurações</router-link>
+                    <router-link to="/config">
+                        <img :src="icons.config">
+                        <p v-if="showPs">Configurações</p>
+                    </router-link>
                 </li>
             </ul>
         </div>
-        <button>
+        <button @click="changePsVisualization">
             <img :src="icons.angulo" alt="<">
         </button>
     </aside>
@@ -80,12 +96,19 @@ export default defineComponent({
                 angulo: anguloIcon,
                 user: userIcon,
                 config: configIcon
-            }
+            },
+            showPs: true,
+            view: 'yeah'
         }
     },
     methods: {
         getClassForPage(pageLoad) {
             return this.pageName === pageLoad ? "page" : "";
+        },
+        changePsVisualization(){
+            this.showPs = !this.showPs;
+            this.view =  (this.view == 'yeah')? 'none' : "yeah"
+            
         }
     }
 });

@@ -5,7 +5,7 @@ import { GetTurmasByCursoDTO } from "../../interfaces/alunoDTOs"
 export class GetTurmasByCursoUseCase {
     async execute({ curso, turno }: GetTurmasByCursoDTO) {
         if (!curso || !turno) {
-            throw new AppError("Parâmentros insufientes ou inválidos. " + curso + " " + turno);
+            throw new AppError("Parâmetros insufientes ou inválidos. " + curso + " " + turno);
         }
 
         const cursoExists = await prisma.curso.findFirst({

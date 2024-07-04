@@ -25,12 +25,18 @@ export interface GetEntidadeDTO {
 }
 
 export interface CreateMessageDTO {
-    email: string,
     message: string,
     sender: string,
     recipient: string,
     senderIdentifier: EntidadeEnum,
     recipientIdentifier: EntidadeEnum
+}
+
+export interface GetMessageBetweenDTO {
+    email1: string;
+    identifier1: EntidadeEnum;
+    email2: string;
+    identifier2: EntidadeEnum;
 }
 
 export enum EntidadeEnum {

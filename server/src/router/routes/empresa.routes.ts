@@ -1,22 +1,6 @@
 import { Router } from "express";
 import { empresaAuthMiddleware } from '../../middleware/auth/autentication';
-import {
-    RegisterEmpresaController,
-    ValidateEmpresaController,
-    LoginEmpresaController,
-    RecoveryEmpresaController,
-    ValidateRecoveryEmpresaController,
-    RefreshTokenController
-} from "../../modules/controllers/empresaControllers";
-
-const createControllers = () => ({
-    registerEmpresaController: new RegisterEmpresaController(),
-    validateEmpresaController: new ValidateEmpresaController(),
-    loginEmpresaController: new LoginEmpresaController(),
-    recoveryEmpresaController: new RecoveryEmpresaController(),
-    validateRecoveryEmpresaController: new ValidateRecoveryEmpresaController(),
-    refreshTokenController: new RefreshTokenController()
-});
+import { createControllers } from "./imports/empresa";
 
 const controllers = createControllers();
 const empresaRoutes = Router();
@@ -27,10 +11,12 @@ empresaRoutes.post("/login", controllers.loginEmpresaController.handle);
 empresaRoutes.post("/recovery", controllers.recoveryEmpresaController.handle);
 empresaRoutes.post("/recovery/validate", controllers.validateRecoveryEmpresaController.handle);
 
-empresaRoutes.get("/auth", empresaAuthMiddleware, (req, res) => {
+empresaRoutes.use(empresaAuthMiddleware);
+
+empresaRoutes.get("/auth", (req, res) => {
     res.status(200).send("Empresa autenticada com sucesso.");
 });
 
-empresaRoutes.get("/token/refresh", empresaAuthMiddleware, controllers.refreshTokenController.handle);
+empresaRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
 
 export { empresaRoutes };

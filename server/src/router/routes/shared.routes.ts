@@ -1,16 +1,5 @@
 import { Router } from "express";
-import { alunoAuthMiddleware } from '../../middleware/auth/autentication';
-import {
-    GetCurriculoController,
-    GetProfileImageController,
-    GetBannerController
-} from "../../modules/controllers/sharedControllers";
-
-const createControllers = () => ({
-    getCurriculoController: new GetCurriculoController(),
-    getProfileImageController: new GetProfileImageController(),
-    getBannerController: new GetBannerController()
-});
+import { createControllers } from "./imports/shared";
 
 const controllers = createControllers();
 const sharedRoutes = Router();
