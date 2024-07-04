@@ -15,13 +15,15 @@
                         <div class="box2">
                             <p v-text="aluno.idade"></p>
                             <p v-text="aluno.endereco"></p>
-                            <button
-                                v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
-                                @click="sendSolicitation">Vincular-se</button>
-                            <button v-show="visualizador.conected && !visualizador.isOwner"
-                                @click="mensagem">Mensagem</button>
-                            <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar
-                                pedido</button>
+                            <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
+                            @click="sendSolicitation">Vincular-se</button>
+                            
+                            <router-link v-show="visualizador.conected && !visualizador.isOwner"
+                            :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
+                            
+                            <button v-show="visualizador.situacao == 'recebido'"
+                            @click="acceptSolicitation">Aceitar pedido</button>
+                            
                             <button v-show="visualizador.situacao == 'recebido'"
                                 @click="removeSolicitation('recipient')">Dispensar pedido</button>
                             <button v-show="visualizador.situacao == 'pendente'"

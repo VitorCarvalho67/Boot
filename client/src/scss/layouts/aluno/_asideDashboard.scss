@@ -27,7 +27,6 @@ aside {
                     height: 20px;
                     width: 20px;
                     object-fit: cover;
-                    margin-right: 10px;
                     filter: invert(100%);
                 }
 
@@ -40,6 +39,10 @@ aside {
                     @include flex(row, flex-start, center);
                     color: $font-color-dark-2;
                     @include font-inter(200);
+ 
+                    p{
+                        margin-left: 10px;
+                    }
                 }
 
                 &:hover {
@@ -50,15 +53,16 @@ aside {
                     background-color: $secondary-color-dark;
                 }
             }
-
         }
     }
+
     button {
         height: 100%;
         width: 30px;
         background-color: transparent;
         border: none;
         color: $font-color-dark;
+        transition: 0s;
 
         img {
             height: 25px;
@@ -66,6 +70,16 @@ aside {
             object-fit: cover;
             margin-right: 10px;
             filter: invert(100%);
+        }
+    }
+}
+
+.none{
+    width: auto;
+
+    button {
+        img {
+            transform: rotateY(180deg);
         }
     }
 }

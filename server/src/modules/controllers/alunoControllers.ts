@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+ import { Request, Response } from 'express';
 import { ValidateAlunoUseCase } from '../services/aluno/ValidateAlunoUseCase';
 import { CreateAlunoUseCase } from '../services/aluno/CreateAlunoUseCase';
 import { LoginAlunoUseCase } from "../services/aluno/LoginAlunoUseCase";
@@ -14,6 +14,10 @@ import { UploadProfileUseCase } from '../services/aluno/UploadProfileUseCase';
 import { UploadCapaUseCase } from '../services/aluno/UploadCapaUseCase';
 import { ChangePassUseCase } from '../services/aluno/ChangePassUseCase';
 import { Turno } from "../interfaces/alunoDTOs"
+import { GetLastMessagesUseCase } from '../services/shared/GetMessagesUseCase';
+import { EntidadeEnum, IdentificadorEnum } from '../interfaces/sharedDTOs';
+import { GetMessagesBetweenUseCase } from '../services/shared/GetChatUseCase';
+import { CreateMessageUseCase } from '../services/shared/CreateMessageUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -183,6 +187,54 @@ export class ChangePassController {
         const changePassUseCase = new ChangePassUseCase();
 
         const result = await changePassUseCase.execute({ email, oldPass, newPass });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetLastMessagesController {
+    async handle(req: Request, res: Response) {
+        const email   = req.body.entidade.email;
+        const identifier = "ALUNO" as IdentificadorEnum;
+
+        const getLastMessagesUseCase = new GetLastMessagesUseCase();
+
+        const result = await getLastMessagesUseCase.execute({ email, identifier });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetMessagesBetweenController {
+    async handle(req: Request, res: Response) {
+        const email1 = req.body.entidade.email as string;
+        const identifier1 = "ALUNO" as EntidadeEnum;
+        
+        const email2 = req.query.email2 as string;
+        const identifier2 = req.query.identifier2 as EntidadeEnum;
+
+        if (!email2 || !identifier2) {
+            return res.status(400).json({ error: "Parâmetros insuficientes ou inválidos." });
+        }
+
+        const getMessagesBetween = new GetMessagesBetweenUseCase();
+
+        const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class CreateMessageController {
+    async handle(req: Request, res: Response) {
+        const sender = req.body.entidade.email;
+        const { message, recipient, senderIdentifier, recipientIdentifier } = req.body;
+
+        console.log
+
+        const createMessageUseCase = new CreateMessageUseCase();
+
+        const result = await createMessageUseCase.execute({ message, sender, recipient, senderIdentifier, recipientIdentifier });
 
         return res.status(201).json(result);
     }

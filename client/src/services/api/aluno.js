@@ -202,12 +202,7 @@ export const getVinculosProfileAluno = async (info, token) => {
             }
         });
 
-        socket.emit(
-            'vinculo-enter-aluno',
-            {
-                authorization: `${token}`
-            }
-        );
+        enterSockets(token);
         
         return response;
     } catch (error) {
@@ -224,16 +219,12 @@ export const getVinculosAluno = async (info, token) => {
             }
         });
 
-        socket.emit(
-            'vinculo-enter-aluno',
-            {
-                authorization: `${token}`
-            }
-        );
+        enterSockets(token);
 
         return response;
     } catch (error) {
-        return error.data;
+        console.log(error);
+        return error.response.data;
     }
 }
 
@@ -332,7 +323,7 @@ export const sendMessage = async (infoMesssage, token) => {
         });
 
         socket.emit('send-message', {
-            message: infoMesssage,
+            message: response.data.message,
             authorization: `${token}`
         });
 
@@ -340,4 +331,47 @@ export const sendMessage = async (infoMesssage, token) => {
     } catch (error) {
         return error.data;
     }
+}
+
+export const getLastMessages = async(token) => {
+    try {
+        const response = await api.get('aluno/messages', {
+            headers: {
+                Authorization: `${token}`
+            }
+        });
+
+        enterSockets(token);
+
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getMessages = async(info, token) => {
+    try {
+        const response = await api.get('aluno/messages/between', {
+            params: info,
+            headers:{
+                Authorization: `${token}`
+            }
+        });
+
+        enterSockets(token);
+
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error.response.data;
+    }
+}
+
+function enterSockets(token){
+    socket.emit(
+        'enter',
+        {
+            authorization: `${token}`
+        }
+    );
 }

@@ -4,7 +4,7 @@ import { AppError } from "../../../errors/error";
 export class GetMeUseCase {
     async execute( email: string ) {
         if (!email) {
-            throw new AppError("Parâmentros insufientes ou inválidos. ");
+            throw new AppError("Parâmetros insufientes ou inválidos. ");
         }
 
         const aluno = await prisma.aluno.findFirst({

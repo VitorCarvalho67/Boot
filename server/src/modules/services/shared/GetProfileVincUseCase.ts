@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
 import { EntidadeEnum, GetEntidadeDTO } from "../../interfaces/sharedDTOs";
-import { FindEntidade } from "./helpers/helpers";
+import { FindEntidade, getImgUrl } from "./helpers/helpers";
 
 export class GetVinculosProfileUseCase {
     async execute({ email, identifier }: GetEntidadeDTO) {
@@ -70,7 +70,8 @@ export class GetVinculosProfileUseCase {
                                     email: aluno.email,
                                     rm: aluno.rm,
                                     endereco: aluno.endereco,
-                                    nome: aluno.name
+                                    nome: aluno.name,
+                                    url: await getImgUrl(aluno)
                                 }
                             }
                         }
@@ -83,7 +84,8 @@ export class GetVinculosProfileUseCase {
                                 professor:{
                                     email: professor.email,
                                     nome: professor.name,
-                                    titulo: professor.tituloPrincipal
+                                    titulo: professor.tituloPrincipal,
+                                    url: await getImgUrl(professor)
                                 }
                             }
                         }
@@ -99,7 +101,8 @@ export class GetVinculosProfileUseCase {
                                     email: aluno.email,
                                     rm: aluno.rm,
                                     endereco: aluno.endereco,
-                                    nome: aluno.name
+                                    nome: aluno.name,
+                                    url: await getImgUrl(aluno)
                                 }
                             }
                         }
@@ -112,7 +115,8 @@ export class GetVinculosProfileUseCase {
                                 professor:{
                                     email: professor.email,
                                     nome: professor.name,
-                                    titulo: professor.tituloPrincipal
+                                    titulo: professor.tituloPrincipal,
+                                    url: await getImgUrl(professor)
                                 }
                             }
                         }
@@ -160,7 +164,8 @@ export class GetVinculosProfileUseCase {
                             aluno: {
                                 rm: aluno.rm,
                                 endereco: aluno.endereco,
-                                nome: aluno.name
+                                nome: aluno.name,
+                                url: await getImgUrl(aluno)
                             }
                         }
                     }
@@ -183,7 +188,8 @@ export class GetVinculosProfileUseCase {
                             aluno: {
                                 rm: aluno.rm,
                                 endereco: aluno.endereco,
-                                nome: aluno.name
+                                nome: aluno.name,
+                                url: await getImgUrl(aluno)
                             }
                         }
                     }
@@ -192,8 +198,10 @@ export class GetVinculosProfileUseCase {
                     if(professor){
                         return {
                             professor:{
+                                email: professor.email,
                                 nome: professor.name,
-                                titulo: professor.tituloPrincipal
+                                titulo: professor.tituloPrincipal,
+                                url: await getImgUrl(professor)
                             }
                         }
                     }
@@ -240,7 +248,8 @@ export class GetVinculosProfileUseCase {
                             aluno:{
                                 rm: aluno.rm,
                                 endereco: aluno.endereco,
-                                nome: aluno.name
+                                nome: aluno.name,
+                                url: await getImgUrl(aluno)
                             }
                         }
                     }
@@ -249,8 +258,10 @@ export class GetVinculosProfileUseCase {
                     if(professor){
                         return {
                             professor: {
+                                email: professor.email,
                                 nome: professor.name,
-                                titulo: professor.tituloPrincipal
+                                titulo: professor.tituloPrincipal,
+                                url: await getImgUrl(professor)
                             }
                         }
                     }
@@ -263,7 +274,8 @@ export class GetVinculosProfileUseCase {
                             aluno:{
                                 rm: aluno.rm,
                                 endereco: aluno.endereco,
-                                nome: aluno.name
+                                nome: aluno.name,
+                                url: await getImgUrl(aluno)
                             }
                         }
                     }
@@ -272,8 +284,10 @@ export class GetVinculosProfileUseCase {
                     if(professor){
                         return {
                             professor: {
+                                email: professor.email,
                                 nome: professor.name,
-                                titulo: professor.tituloPrincipal
+                                titulo: professor.tituloPrincipal,
+                                url: await getImgUrl(professor)
                             }
                         }
                     }

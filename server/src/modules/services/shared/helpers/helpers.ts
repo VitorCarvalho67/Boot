@@ -2,6 +2,8 @@ import { EntidadeEnum } from "../../../interfaces/sharedDTOs";
 import { prisma } from "../../../../prisma/client";
 import path from 'path';
 import fs from 'fs/promises';
+import { minioClient } from "../../../../minioService";
+import { Aluno, Professor } from "@prisma/client";
 
 export const FindEntidade = async (email: string, identifier: EntidadeEnum) => {
     switch (identifier) {
@@ -39,3 +41,21 @@ export const clearUploads = async () => {
         console.error(`Erro ao limpar a pasta uploads: ${error}`);
     }
 };
+
+export const getImgUrl = async (entidade: Professor | Aluno ) => {
+
+    const bucketName = 'boot';
+    const imageName = entidade.imagem as string;
+    
+    let entityUrl = "default";
+    
+    if (imageName) {
+        const objectExists = await minioClient.statObject(bucketName, imageName);
+        if(objectExists){
+            entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+        }
+    }
+
+
+    return entityUrl;
+}

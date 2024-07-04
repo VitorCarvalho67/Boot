@@ -1,102 +1,46 @@
 import { Router } from "express";
 import multer from "multer";
 import { alunoAuthMiddleware } from '../../middleware/auth/autentication';
-import {
-    CreateVinculoController,
-    AcceptVinculoController,
-    GetVinculosController,
-    GetVinculosProfileController,
-    IgnoreVinculoController,
-    GetUnlinkedsController,
-    GetCursosController,
-    DeleteVinculoController,
-    CreateMessageController
-} from "../../modules/controllers/sharedControllers";
-import {
-    CreateAlunoController,
-    ValidateAlunoController,
-    LoginAlunoController,
-    RecoveryAlunoController,
-    ValidateRecoveryController,
-    CompleteAlunoController,
-    UpdateCurriculoController,
-    GetCourseYearController,
-    GetCurriculoController,
-    GetMeController,
-    RefreshTokenController,
-    UploadImgProfileController,
-    UploadCapaController,
-    ChangePassController
-} from "../../modules/controllers/alunoControllers";
-
-const createControllers = () => ({
-    createAlunoController: new CreateAlunoController(),
-    validateAlunoController: new ValidateAlunoController(),
-    loginAlunoController: new LoginAlunoController(),
-    recoveryAlunoController: new RecoveryAlunoController(),
-    validateRecoveryController: new ValidateRecoveryController(),
-    completeAlunoController: new CompleteAlunoController(),
-    updateCurriculoController: new UpdateCurriculoController(),
-    createVinculoController: new CreateVinculoController(),
-    acceptVinculoController: new AcceptVinculoController(),
-    ignoreVinculoController: new IgnoreVinculoController(),
-    getVinculosController: new GetVinculosController(),
-    getVinculosProfileController: new GetVinculosProfileController(),
-    getUnlinkedsController: new GetUnlinkedsController(),
-    getCursosController: new GetCursosController(),
-    getCourseYearController: new GetCourseYearController(),
-    getCurriculoController: new GetCurriculoController(),
-    getMeController: new GetMeController(),
-    deleteVinculoController: new DeleteVinculoController(),
-    refreshTokenController: new RefreshTokenController(),
-    uploadImgProfileController: new UploadImgProfileController(),
-    uploadCapaController: new UploadCapaController(),
-    changePassController: new ChangePassController(),
-    createMessageController: new CreateMessageController(),
-});
+import { createControllers } from "./imports/aluno";
 
 const controllers = createControllers();
 const alunoRoutes = Router();
 const upload = multer({ dest: 'uploads/' });
 
-alunoRoutes.post(
-    '/upload/image/profile',
-    upload.single('file'),
-    alunoAuthMiddleware,
-    controllers.uploadImgProfileController.handle
-);
-alunoRoutes.post(
-    '/upload/image/banner',
-    upload.single('file'),
-    alunoAuthMiddleware,
-    controllers.uploadCapaController.handle
-);
-
 alunoRoutes.post("/register", controllers.createAlunoController.handle);
 alunoRoutes.post("/validate", controllers.validateAlunoController.handle);
-alunoRoutes.post("/register/complete", alunoAuthMiddleware, controllers.completeAlunoController.handle);
-alunoRoutes.post("/curriculo/update", alunoAuthMiddleware, controllers.updateCurriculoController.handle);
 alunoRoutes.post("/login", controllers.loginAlunoController.handle);
 alunoRoutes.post("/recovery", controllers.recoveryAlunoController.handle);
-alunoRoutes.post("/recovery/validate", controllers.validateRecoveryController.handle);
-alunoRoutes.post("/link/send", alunoAuthMiddleware, controllers.createVinculoController.handle);
-alunoRoutes.post("/link/accept", alunoAuthMiddleware, controllers.acceptVinculoController.handle);
-alunoRoutes.post("/link/reject", alunoAuthMiddleware, controllers.ignoreVinculoController.handle);
-alunoRoutes.post("/link/delete", alunoAuthMiddleware, controllers.deleteVinculoController.handle);
-alunoRoutes.post("/password/change", alunoAuthMiddleware, controllers.changePassController.handle);
-alunoRoutes.post("/message/send", alunoAuthMiddleware, controllers.createMessageController.handle);
 
-alunoRoutes.get("/auth", alunoAuthMiddleware, (req, res) => {
+alunoRoutes.post('/upload/image/banner', upload.single('file'), alunoAuthMiddleware, controllers.uploadCapaController.handle );
+alunoRoutes.post('/upload/image/profile', upload.single('file'), alunoAuthMiddleware, controllers.uploadImgProfileController.handle);
+
+alunoRoutes.use(alunoAuthMiddleware);
+
+alunoRoutes.post("/register/complete", controllers.completeAlunoController.handle);
+alunoRoutes.post("/curriculo/update", controllers.updateCurriculoController.handle);
+alunoRoutes.post("/recovery/validate", controllers.validateRecoveryController.handle);
+alunoRoutes.post("/link/send", controllers.createVinculoController.handle);
+alunoRoutes.post("/link/accept", controllers.acceptVinculoController.handle);
+alunoRoutes.post("/link/reject", controllers.ignoreVinculoController.handle);
+alunoRoutes.post("/link/delete", controllers.deleteVinculoController.handle);
+alunoRoutes.post("/password/change", controllers.changePassController.handle);
+alunoRoutes.post("/message/send", controllers.createMessageController.handle);
+
+
+alunoRoutes.get("/auth", (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");
 });
 
-alunoRoutes.get("/links", alunoAuthMiddleware, controllers.getVinculosController.handle);
-alunoRoutes.get("/links/profile", alunoAuthMiddleware, controllers.getVinculosProfileController.handle);
-alunoRoutes.get("/unlinkeds", alunoAuthMiddleware, controllers.getUnlinkedsController.handle);
-alunoRoutes.get("/cursos", alunoAuthMiddleware, controllers.getCursosController.handle);
-alunoRoutes.get("/cursos/anos", alunoAuthMiddleware, controllers.getCourseYearController.handle);
-alunoRoutes.get("/curriculo", alunoAuthMiddleware, controllers.getCurriculoController.handle);
-alunoRoutes.get("/me", alunoAuthMiddleware, controllers.getMeController.handle);
-alunoRoutes.get("/token/refresh", alunoAuthMiddleware, controllers.refreshTokenController.handle);
+alunoRoutes.get("/links", controllers.getVinculosController.handle);
+alunoRoutes.get("/links/profile", controllers.getVinculosProfileController.handle);
+alunoRoutes.get("/unlinkeds", controllers.getUnlinkedsController.handle);
+alunoRoutes.get("/cursos", controllers.getCursosController.handle);
+alunoRoutes.get("/cursos/anos", controllers.getCourseYearController.handle);
+alunoRoutes.get("/curriculo", controllers.getCurriculoController.handle);
+alunoRoutes.get("/me", controllers.getMeController.handle);
+alunoRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
+alunoRoutes.get("/messages", controllers.getLastMessagesController.handle);
+alunoRoutes.get("/messages/between", controllers.getMessagesBetweenController.handle);
 
 export { alunoRoutes };

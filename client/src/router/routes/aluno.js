@@ -8,6 +8,8 @@ import PerfilAluno from '../../views/aluno/Profile.vue';
 import Complete from '../../views/aluno/Complete.vue';
 import Rede from '../../views/aluno/Rede.vue';
 import ConfigAluno from '../../views/aluno/Config.vue';
+import Messages from '../../views/aluno/Messages.vue';  
+import ChatAluno from '../../views/aluno/Message.vue';  
 
 import {
     isRecoveringAluno,
@@ -77,6 +79,22 @@ export const alunoRoutes = [
         path: "/rede",
         name: "Rede",
         component: Rede,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
+        }
+    },
+    {
+        path: "/mensagens",
+        name: "Mensagens",
+        component: Messages,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
+        }
+    },
+    {
+        path: "/mensagens/:identifier/:email",
+        name: "Mensagem",
+        component: ChatAluno,
         beforeEnter: async (to, from, next) => {
             (await isAuthAluno()) ? next() : next("/login");
         }
