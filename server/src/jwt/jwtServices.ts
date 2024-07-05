@@ -3,7 +3,7 @@ import { Aluno, Admin, Professor, Funcionario, Empresa } from "@prisma/client";
 
 export function generateAccessTokenAluno(aluno: Aluno): string {
     return sign({ alunoId: aluno.id }, process.env.JWT_ACCESS_SECRET as string, {
-        expiresIn: '30d',
+        expiresIn: '30 days',
     });
 }
 
@@ -15,19 +15,19 @@ export function generateAccessTokenAdmin(admin: Admin): string {
 
 export function generateAccessTokenProfessor(professor: Professor): string {
     return sign({ professorId: professor.id }, process.env.JWT_ACCESS_SECRET as string, {
-        expiresIn: '30d',
+        expiresIn: '30 days',
     });
 }
 
 export function generateAccessTokenFuncionario(funcionario: Funcionario): string {
     return sign({ funcionarioId: funcionario.id }, process.env.JWT_ACCESS_SECRET as string, {
-        expiresIn: '30d',
+        expiresIn: '30 days',
     });
 }
 
 export function generateAccessTokenEmpresa(empresa: Empresa): string {
     return sign({ empresaId: empresa.id }, process.env.JWT_ACCESS_SECRET as string, {
-        expiresIn: '30d',
+        expiresIn: '30 days',
     });
 }
 
