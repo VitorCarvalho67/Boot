@@ -15,7 +15,7 @@ main {
             width: 100%;
         }
 
-        #box1 {
+        .box {
             @include flex(column, flex-start, start);
             padding: 50px 0px 0px 100px;
             width: 70%;
@@ -91,9 +91,9 @@ main {
                                     padding: 8px 18px;
                                 }
     
-                                &:after {
-                                    height: 0;
-                                }
+                                // &:after {
+                                //     height: 0;
+                                // }
     
                                 // &:hover {
                                 //     background-color: transparent;

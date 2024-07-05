@@ -2,42 +2,47 @@
     <Header />
     <div id="app">
         <main>
-            <div class="capa">
-                <div class="capaProfile">
-                    <img :src="aluno.bannerUrl" alt="imgCapa">
-                </div>
-                <div class="infoProfile">
-                    <img :src="aluno.imageUrl" :alt="aluno.nome">
-                    <div class="info">
-                        <div class="box1">
-                            <h1 v-text="aluno.nome"></h1>
-                        </div>
-                        <div class="box2">
-                            <p v-text="aluno.idade"></p>
-                            <p v-text="aluno.endereco"></p>
-                            <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
-                            @click="sendSolicitation">Vincular-se</button>
-                            
-                            <router-link v-show="visualizador.conected && !visualizador.isOwner"
-                            :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
-                            
-                            <button v-show="visualizador.situacao == 'recebido'"
-                            @click="acceptSolicitation">Aceitar pedido</button>
-                            
-                            <button v-show="visualizador.situacao == 'recebido'"
-                                @click="removeSolicitation('recipient')">Dispensar pedido</button>
-                            <button v-show="visualizador.situacao == 'pendente'"
-                                @click="removeSolicitation('sender')">Remover Pedido</button>
+            <AsideDashboard v-if="visualizador.email"/>
+            <div class="content">
+                <div class="capa">
+                    <div class="capaProfile">
+                        <img v-if="aluno.bannerUrl == 'default'" src="../../assets/imgs/defaultBanner.png" alt="Capa">
+                        <img v-else :src="aluno.bannerUrl" alt="Capa">
+                    </div>
+                    <div class="infoProfile">
+                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
+                        <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
+                        <div class="info">
+                            <div class="box1">
+                                <h1 v-text="aluno.nome"></h1>
+                            </div>
+                            <div class="box2">
+                                <p v-text="aluno.idade"></p>
+                                <p v-text="aluno.endereco"></p>
+                                <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
+                                @click="sendSolicitation">Vincular-se</button>
+                                
+                                <router-link v-show="visualizador.conected && !visualizador.isOwner"
+                                :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
+                                
+                                <button v-show="visualizador.situacao == 'recebido'"
+                                @click="acceptSolicitation">Aceitar pedido</button>
+                                
+                                <button v-show="visualizador.situacao == 'recebido'"
+                                    @click="removeSolicitation('recipient')">Dispensar pedido</button>
+                                <button v-show="visualizador.situacao == 'pendente'"
+                                    @click="removeSolicitation('sender')">Remover Pedido</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <section class="sobreMim">
+                    <h2>Sobre mim</h2>
+                    <div>
+                        <p v-html="aluno.curriculo"></p>
+                    </div>
+                </section>
             </div>
-            <section class="sobreMim">
-                <h2>Sobre mim</h2>
-                <div>
-                    <p v-html="aluno.curriculo"></p>
-                </div>
-            </section>
         </main>
     </div>
     <Footer />
@@ -66,11 +71,13 @@ import {
 import { socket } from '../../socket.js';
 
 import { getVinculosProfessor } from '../../services/api/professor';
+import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 
 export default {
     name: 'PublicPerfilAluno',
     components: {
         Header,
+        AsideDashboard,
         Footer
     },
     data() {
@@ -92,7 +99,7 @@ export default {
                 curriculo: '',
                 curriculoEdit: '',
                 imgUrl: '../../assets/img/defaultImage.png',
-                bannerUrl: '../../assets/img/defaultBanner.png',
+                bannerUrl: 'default',
             },
             mode: 'view'
         };
@@ -112,10 +119,10 @@ export default {
                     this.calcularIdade(this.aluno.nascimento);
                     this.aluno.nome = response.data.nome;
                 } else {
-                    alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + response.message);
+                    router.push({path: "/notfound"});
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error);
+                router.push({path: "/notfound"});
             }
 
             try {
@@ -132,16 +139,14 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     this.aluno.imageUrl = response.data.url;
                 } else {
-                    alert("Ops.. Algo deu errado ao recuperar a imagem. 😕\n" + response.message);
+                    router.push({path: "/notfound"});
                 }
 
                 if (responseBanner.status >= 200 && responseBanner.status < 300) {
                     this.aluno.bannerUrl = responseBanner.data.url;
-                } else {
-                    alert("Ops.. Algo deu errado ao recuperar a imagem de capa do perfil. 😕\n" + responseBanner.message);
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao recuperar a(s) imagem(s) do perfil. 😕\n" + error);
+                router.push({path: "/notfound"});
             }
         },
         calcularIdade(nascimento) {
