@@ -7,7 +7,7 @@
                 <div class="content" ref="content">
                     <div class="user">
                         <div class="box-info">
-                            <img v-if="entidade.url == 'default'"src="../../assets/icons/user2.png" :alt="entidade.nome">
+                            <img v-if="entidade.url == 'default'"src="../../assets/icons/artwork.png" :alt="entidade.nome">
                             <img v-else :src="entidade.url" :alt="entidade.nome">
                             <div class="info">
                                 <p v-text="entidade.nome"></p>
@@ -144,6 +144,7 @@ export default {
         addMessage(data) {
             this.mensagens.push({
                 ...data,
+                sender: 'other',
                 class: "received",
                 createdAt: this.formatarData(new Date())
             });

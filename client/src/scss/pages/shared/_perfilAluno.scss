@@ -1,93 +1,98 @@
 main {
     height: calc(100vh - 80px);
-    background-color: $primary-color-dark;
-    @include flex(column, flex-start, start);
-    padding: 20px 100px;
+    @include flex(row, flex-start, start);
+    border-bottom: 1px solid #0000008f;
 
-    .capa {
-        // background-color: red;
-        width: 100%;
-        height: 400px;
-        position: relative;
+    .content{
+        height: calc(100vh - 80px);
+        background-color: $primary-color-dark;
+        @include flex(column, flex-start, start);
+        padding: 20px 100px;
 
-        .capaProfile {
-            height: 66.66%;
-            border-radius: 16px;
-            background-color: rgb(0, 50, 158);
+        .capa {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            
+            .capaProfile {
+                height: 66.66%;
+                border-radius: 16px;
+                background-color: rgb(0, 50, 158);
 
-            img {
-                height: 100%;
-                width: 100%;
-                @include flex-center;
-                object-fit: cover;
-            }
-        }
-
-        .infoProfile {
-            @include flex(row, flex-start, center);
-            img {
-                @include flex-center;
-                position: absolute;
-                bottom: 0;
-                height: 250px;
-                width: 250px;
-                object-fit: cover;
-                border-radius: 50%;
-            }
-
-            .info {
-                @include flex(column, center, flex-start);
-                margin-left: 250px;
-                padding: 10px 20px;
-
-                .box1 h1 {
-                    @include font-inter(300);
-                    font-size: 2rem;
-                    color: $font-color-dark;
+                img {
+                    height: 100%;
+                    width: 100%;
+                    @include flex-center;
+                    object-fit: cover;
                 }
-                .box2 {
-                    @include flex(row, flex-start, center);
+            }
 
-                    p {
-                        margin-inline-end: 10px;
+            .infoProfile {
+                @include flex(row, flex-start, center);
+                img {
+                    @include flex-center;
+                    position: absolute;
+                    bottom: 0;
+                    height: 250px;
+                    width: 250px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+
+                .info {
+                    @include flex(column, center, flex-start);
+                    margin-left: 250px;
+                    padding: 10px 20px;
+
+                    .box1 h1 {
                         @include font-inter(300);
-                        font-size: 1rem;
-                        color: $font-color-dark-2;
+                        font-size: 2rem;
+                        color: $font-color-dark;
+                    }
+                    .box2 {
+                        @include flex(row, flex-start, center);
+
+                        p {
+                            margin-inline-end: 10px;
+                            @include font-inter(300);
+                            font-size: 1rem;
+                            color: $font-color-dark-2;
+                        }
                     }
                 }
             }
         }
-    }
 
-    .sobreMim {
-        @include flex(column, flex-start, start);
-        width: 100%;
-
-        h2 {
-            @include font-inter(700);
-            font-size: 1.5rem;
-            color: $secondary-color-orange;
-            margin: 20px 0px 10px 0px;
-        }
-
-        div {
+        .sobreMim {
+            @include flex(column, flex-start, start);
             width: 100%;
-            background-color: $secondary-color-dark;
-            padding: 20px;
-            border-radius: 18px;
 
-            p,
-            textarea {
-                margin-inline-end: 10px;
-                @include font-inter(300);
-                font-size: 1rem;
-                color: $font-color-dark-2;
-                background-color: transparent;
-                border: none;
-                outline: none;
-                min-width: 100%;
-                height: auto;
-                resize: none;
+            h2 {
+                @include font-inter(700);
+                font-size: 1.5rem;
+                color: $secondary-color-orange;
+                margin: 20px 0px 10px 0px;
+            }
+
+            div {
+                width: 100%;
+                background-color: $secondary-color-dark;
+                padding: 20px;
+                border-radius: 18px;
+                
+                p,
+                textarea {
+                    margin-inline-end: 10px;
+                    @include font-inter(300);
+                    font-size: 1rem;
+                    color: $font-color-dark-2;
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    min-width: 100%;
+                    height: auto;
+                    resize: none;
+                }
             }
         }
     }

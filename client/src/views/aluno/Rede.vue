@@ -4,15 +4,20 @@
         <main>
             <AsideDashboard pageName="rede" />
             <section class="content">
-                <ul id="box1">
-                    <li class="vinculo" v-for="(vinculo, index) in vinculos.aceitos" :key="index">
+                
+                <ul class="box">
+                    <Select :dataSelect="dataSelect" @input="exibir.tipo = $event"/>
+                    <li v-if="exibir.tipo == 'ESTABELECIDOS'" class="vinculo" v-for="(vinculo, index) in vinculos.aceitos" :key="index">
                         <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm" v-if="vinculo.data.aluno">
-                            <img v-if="vinculo.data.aluno.url == 'default'" src="../../assets/icons/user2.png" :alt="vinculo.data.aluno.name">
+                            <img v-if="vinculo.data.aluno.url == 'default'" src="../../assets/icons/artwork.png" :alt="vinculo.data.aluno.name">
                             <img v-else :src="vinculo.data.aluno.url" :alt="vinculo.data.aluno.name">
                             <div class="infoVinculo">
                                 <div class="contentVinculo name">
                                     <p class="who">{{ vinculo.data.aluno.nome }}</p>
                                     <p>{{ vinculo.data.aluno.endereco }}</p>
+                                </div>
+                                <div class="box-button">
+                                    <button>Ver perfil</button>
                                 </div>
                                 <div class="box-button">
                                     <button @click="removeVinculo(vinculo.data.aluno.email, vinculo.info)">Remover vínculo</button>
@@ -26,34 +31,52 @@
                             <button @click="removeVinculo(vinculo.data.professor.email, vinculo.info)">Remover vínculo</button>
                         </div>
                     </li>
-                </ul>
-            </section>
-            <section>
-                <h2>Vínculos Enviados</h2>
-                <ul>
-                    <li v-for="(vinculo, index) in vinculos.enviados" :key="index">
-                        <div v-if="vinculo.data.aluno">
-                            <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm">{{ vinculo.data.aluno.nome }}</router-link>
-                            <p>{{ vinculo.data.aluno.endereco }}</p>
-                            <button @click="removeSolicitation('sender', vinculo.info)">Remover pedido</button>
-                        </div>
+
+                    <li v-if="exibir.tipo == 'RECEBIDOS'" class="vinculo" v-for="(vinculo, index) in vinculos.recebidos" :key="index">
+                        <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm" v-if="vinculo.data.aluno">
+                            <img v-if="vinculo.data.aluno.url == 'default'" src="../../assets/icons/artwork.png" :alt="vinculo.data.aluno.name">
+                            <img v-else :src="vinculo.data.aluno.url" :alt="vinculo.data.aluno.name">
+                            <div class="infoVinculo">
+                                <div class="contentVinculo name">
+                                    <p class="who">{{ vinculo.data.aluno.nome }}</p>
+                                    <p>{{ vinculo.data.aluno.endereco }}</p>
+                                </div>
+                                <div class="box-button">
+                                    <button @click="acceptSolicitation(vinculo.info)">Aceitar pedido</button>
+                                </div>
+                                <div class="box-button">
+                                    <button @click="removeSolicitation('recipient', vinculo.info)">Ignorar pedido</button>
+                                </div>
+                            </div>        
+                        </router-link>
+
+
                         <div v-else-if="vinculo.data.professor">
                             <p>{{ vinculo.data.professor.nome }}</p>
                             <p>{{ vinculo.data.professor.titulo }}</p>
                         </div>
                     </li>
-                </ul>
-            </section>
-            <section>
-                <h2>Vínculos Recebidos</h2>
-                <ul>
-                    <li v-for="(vinculo, index) in vinculos.recebidos" :key="index">
-                        <div v-if="vinculo.data.aluno">
-                            <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm">{{ vinculo.data.aluno.nome }}</router-link>
-                            <p>{{ vinculo.data.aluno.endereco }}</p>
-                            <button @click="acceptSolicitation(vinculo.info)">Aceitar pedido</button>
-                            <button @click="removeSolicitation('recipient', vinculo.info)">Ignorar pedido</button>
-                        </div>
+                    
+                    <li v-if="exibir.tipo == 'ENVIADOS'" class="vinculo" v-for="(vinculo, index) in vinculos.enviados" :key="index">
+                        
+                        <router-link :to="'/aluno/profile/' +  vinculo.data.aluno.rm" v-if="vinculo.data.aluno">
+                            <img v-if="vinculo.data.aluno.url == 'default'" src="../../assets/icons/artwork.png" :alt="vinculo.data.aluno.name">
+                            <img v-else :src="vinculo.data.aluno.url" :alt="vinculo.data.aluno.name">
+                            <div class="infoVinculo">
+                                <div class="contentVinculo name">
+                                    <p class="who">{{ vinculo.data.aluno.nome }}</p>
+                                    <p>{{ vinculo.data.aluno.endereco }}</p>
+                                </div>
+                                <div class="box-button">
+                                    <button>Ver perfil</button>
+                                </div>
+                                <div class="box-button">
+                                    <button @click="removeSolicitation('sender', vinculo.info)">Remover pedido</button>
+                                </div>
+                            </div>        
+                        </router-link>
+
+
                         <div v-else-if="vinculo.data.professor">
                             <p>{{ vinculo.data.professor.nome }}</p>
                             <p>{{ vinculo.data.professor.titulo }}</p>
@@ -70,6 +93,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
+import Select from '../../components/Select.vue';
 
 import router from '../../router/index.js';
 import Cookies from 'js-cookie';
@@ -86,6 +110,7 @@ export default {
     name: 'Rede',
     components: {
         Header,
+        Select,
         Footer,
         AsideDashboard
     },
@@ -101,7 +126,19 @@ export default {
                 aceitos: [],
                 enviados: [],
                 recebidos: []
-            }
+            },
+            exibir:{
+                tipo: 'ESTABELECIDOS'
+            },
+            dataSelect: {
+                title: "Selecione o tipo de conexão", 
+                description: "Exibir vínculos",
+                options: [
+                    { value: 'ESTABELECIDOS', description: 'Estabelecidos' },
+                    { value: 'RECEBIDOS', description: 'Recebidos' },
+                    { value: 'ENVIADOS', description: 'Enviados' },
+                ],
+            },
         };
     },
     methods: {

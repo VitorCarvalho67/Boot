@@ -6,7 +6,7 @@
             <ul class="box" id="box1">
                 <li class="chat" v-for="(chat, index) in chats" :key="index">
                     <router-link :to="'/mensagens/' + (chat.entity.type).toLowerCase() + '/' + chat.entity.email">
-                        <img v-if="chat.entity.url == 'default'" src="../../assets/icons/user2.png" :alt="chat.entity.name">
+                        <img v-if="chat.entity.url == 'default'" src="../../assets/icons/artwork.png" :alt="chat.entity.name">
                         <img v-else :src="chat.entity.url" :alt="chat.entity.name">
                         <div class="infoMessage">
                             <div class="contentMessage name">
