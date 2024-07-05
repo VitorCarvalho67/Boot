@@ -107,9 +107,23 @@ export default defineComponent({
         },
         changePsVisualization(){
             this.showPs = !this.showPs;
-            this.view =  (this.view == 'yeah')? 'none' : "yeah"
-            
+            this.view = (this.view == 'yeah') ? 'none' : 'yeah';
+            localStorage.setItem('asideDashboardState', JSON.stringify({
+                showPs: this.showPs,
+                view: this.view
+            }));
+        },
+        loadStateFromStorage() {
+            const state = localStorage.getItem('asideDashboardState');
+            if (state) {
+                const parsedState = JSON.parse(state);
+                this.showPs = parsedState.showPs;
+                this.view = parsedState.view;
+            }
         }
+    },
+    mounted() {
+        this.loadStateFromStorage();
     }
 });
 </script>

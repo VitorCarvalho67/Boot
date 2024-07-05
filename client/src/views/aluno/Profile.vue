@@ -2,11 +2,14 @@
     <Header />
     <div id="app">
         <main>
+            
+            
             <AsideDashboard pageName="profile" />
             <div class="content">
                 <div class="capa">
                 <div class="capaProfile">
-                    <img :src="aluno.bannerUrl" alt="imgCapa">
+                    <img v-if="aluno.bannerUrl == 'default'" src="../../assets/imgs/defaultBanner.png" alt="Capa">
+                    <img v-else :src="aluno.bannerUrl" alt="Capa">
                     <div class="editButtons">
                         <button v-show="modeBanner === 'view'" @click="editModeBanner" type="button">
                             <img :src="imgLapis" alt="">Editar
@@ -21,7 +24,8 @@
                     </div>
                 </div>
                 <div class="infoProfile">
-                    <img :src="aluno.imageUrl" :alt="aluno.nome">
+                    <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
+                    <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
                     <div class="editButtons">
                         <button v-show="modeImage === 'view'" @click="editModeImage" type="button">
                             <img :src="imgLapis" alt="">Editar
@@ -106,8 +110,8 @@ export default {
                 email: '',
                 curriculo: '',
                 curriculoEdit: '',
-                imgUrl: '../../assets/img/defaultImage.png',
-                bannerUrl: '../../assets/img/defaultBanner.png',
+                imgUrl: 'default',
+                bannerUrl: 'default',
             },
             mode: 'view',
             modeImage: 'view',

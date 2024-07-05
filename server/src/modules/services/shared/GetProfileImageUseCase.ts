@@ -1,7 +1,7 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
 import { EntidadeEnum, GetEntidadeDTO } from "../../interfaces/sharedDTOs";
-import { FindEntidade } from "./helpers/helpers";
+import { FindEntidade, getImgUrl } from "./helpers/helpers";
 import { minioClient } from '../../../minioService';
 
 export class GetProfileImageUseCase {
@@ -22,19 +22,19 @@ export class GetProfileImageUseCase {
         }
 
         const bucketName = 'boot';
-
         const imageName = entidade.imagem as string;
-
-        const objectExists = await minioClient.statObject(bucketName, imageName);
-
-        if (!objectExists) {
-            throw new Error('Imagem não encontrada');
+    
+        let entityUrl = "default";
+        
+        if (imageName) {
+            const objectExists = await minioClient.statObject(bucketName, imageName);
+            if(objectExists){
+                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+            }
         }
 
-        const url = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
-
         return {
-            url: url
+            url: entityUrl
         };
     }
 }
