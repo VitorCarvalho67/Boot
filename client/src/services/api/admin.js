@@ -18,7 +18,7 @@ export const loginAdmin = async(userAdmin) => {
         const response = await api.post('admin/login', userAdmin);
         return response;
     } catch (error) {
-        return error.data;
+        return error.response.data;
     }
 }
 
