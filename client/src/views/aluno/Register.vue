@@ -221,8 +221,6 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-registro-aluno', `${response.data.email}`, { expires: 10 });
                     router.push({ name: 'ValidateRegister' })
-
-                    alert("Tudo certo! 😉");
                 } else {
                     this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }

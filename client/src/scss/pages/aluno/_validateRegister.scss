@@ -5,12 +5,23 @@ main {
 }
 
 .box {
-    height: 65%;
+    min-height: 65%;
     width: 30%;
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
     background-color: $secondary-color-dark;
+    @include m-screen(1720px) {
+        width: 40%;
+    }
+    @include m-screen(1150px) {
+        background-color: $primary-color-dark;
+    }
+    @include m-screen-box;
+
+    li{
+        margin-top: 20px;
+    }
 
     nav {
         width: 100%;
@@ -66,6 +77,14 @@ main {
             @include font-inter(300);
             font-size: 2.5rem;
             margin-top: 10px;
+            @include m-screen(1600px) {
+                margin-top: 30px;
+                font-size: 2rem;
+            }
+            @include m-screen(1250px) {
+                margin-top: 20px;
+                font-size: 1.8rem;
+            }
         }
 
         p {
@@ -86,6 +105,9 @@ main {
             margin: 25px 0px;
             border-left: solid 3px $secondary-color-orange;
             border-radius: 0px 5px 5px 0px;
+            @include m-screen(1500px) {
+                height: 55px;
+            }
 
             label {
                 letter-spacing: 1.5px;
@@ -130,6 +152,10 @@ main {
 
             .d1 {
                 width: 95%;
+
+                @include m-screen(1200px) {
+                    width: 90%;
+                }
             }
 
             .d2 {
@@ -182,6 +208,10 @@ main {
 
                     &:focus {
                         border: solid 2px $primary-color-orange;
+                    }
+
+                    @include m-screen(1000px) {
+                        height: 55px;
                     }
                 }
             }
