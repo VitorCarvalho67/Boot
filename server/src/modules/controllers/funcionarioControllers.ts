@@ -5,6 +5,7 @@ import { ValidateFuncionarioUseCase } from "../services/funcionario/ValidateFunc
 import { RecoveryFuncionarioUseCase } from "../services/funcionario/RecoveryUseCase";
 import { ValidateRecoveryUseCase } from "../services/funcionario/ValidateRecoveryUseCase";
 import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase";
+import { RegisterVagaUseCase } from "../services/funcionario/RegisterVagasUseCase";
 
 export class InitFuncionarioController {
     async handle(req: Request, res: Response) {
@@ -69,11 +70,49 @@ export class ValidateRecoveryController {
 
 export class RefreshTokenController {
     async handle(req: Request, res: Response) {
-        const email = req.body.entidade.email;
+        const email = req.body.funcionario.email;
 
         const refreshTokenUseCase = new RefreshTokenUseCase();
 
         const result = await refreshTokenUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RegisterVagaController {
+    async handle(req: Request, res: Response) {
+        const cadastrador = req.body.funcionario.email;
+        const { 
+            titulo,
+            empresa,
+            requisitos,
+            beneficios,
+            remuneracao,
+            cargaHoraria,
+            entrada,
+            saida,
+            status,
+            curso,
+            descricao
+        } = req.body;
+
+        const registerVagaUseCase = new RegisterVagaUseCase();
+
+        const result = await registerVagaUseCase.execute({
+            cadastrador,
+            titulo,
+            empresa,
+            requisitos,
+            beneficios,
+            remuneracao,
+            cargaHoraria,
+            entrada,
+            saida,
+            status,
+            curso,
+            descricao
+        });
 
         return res.status(201).json(result);
     }

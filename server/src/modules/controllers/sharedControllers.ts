@@ -18,6 +18,8 @@ import {
     IdentificadorEnum
 } from "../interfaces/sharedDTOs";
 import { SearchUsersUseCase } from "../services/shared/GetProfilesUseCase";
+import { GetEmpresasUseCase } from "../services/shared/GetEmpresasUseCase";
+import { GetVagasUseCase } from "../services/shared/GetVagasUseCase";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -122,6 +124,28 @@ export class GetCursosController {
         const getCursoUseCase = new GetCursosUseCase();
 
         const result = await getCursoUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetEmpresasController {
+    async handle(req: Request, res: Response) {
+
+        const getEmpresasUseCase = new GetEmpresasUseCase();
+
+        const result = await getEmpresasUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetVagasController {
+    async handle(req: Request, res: Response) {
+
+        const getVagasUseCase = new GetVagasUseCase();
+
+        const result = await getVagasUseCase.execute();
 
         return res.status(201).json(result);
     }

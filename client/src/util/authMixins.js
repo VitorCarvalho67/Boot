@@ -149,9 +149,11 @@ export const mixinFuncionario = {
             try {
                 const response = await refreshTokenFuncionario(this.funcionario.token);
                 if (response.status >= 200 && response.status < 300) {
-                    Cookies.set('token', `${response.data.token}`);
+                    console.log("Auth funcionário")
+                    Cookies.set('token-funcionario', `${response.data.token}`);
                 }
             } catch (error) {
+                console.log("Erro em auth funcionário: " + error)
                 router.push({ path: '/funcionario/init' });
             }
         },

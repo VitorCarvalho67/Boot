@@ -4,6 +4,7 @@
         <h1>Bem-vindo profissional!</h1>
         <nav>
             <button @click="logout">Logout</button>
+            <router-link to="/funcionario/register/vaga">Registrar Vaga</router-link>
         </nav>
     </main>
     <Footer />
