@@ -3,12 +3,8 @@
 
     main {
         @include flex(row, flex-start, start);
-        width: 100vw;
-        height: 100vh;
-        min-height: calc(100vh - 80px);
-        border-bottom: 1px solid #0000008f;
+        height: calc(100vh - 80px);
         background-color: $primary-color-dark;
-        position: relative;
 
         .content {
             @include flex(column, flex-start, start);
@@ -88,7 +84,7 @@
                 .vaga {
                     @include flex(column, flex-start, start);
                     width: 80%;
-                    height: 90px;
+                    height: 140px;
                     margin-bottom: 10px;
 
                     @include m-screen(1400px) {
@@ -130,6 +126,18 @@
                             
                             .contentVaga {
                                 @include flex(column, flex-start, start);
+                                width: 70%;
+                                
+                                .info{
+                                    @include flex(row, space-between, start);
+                                    width: 100%;
+
+                                    label {
+                                        @include font-inter(600);
+                                        color: $primary-color-dark;
+
+                                    }
+                                }
                             }
 
                             .box-button{

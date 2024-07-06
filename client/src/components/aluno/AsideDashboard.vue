@@ -33,7 +33,7 @@
                     </router-link>
                 </li>
                 <li :class="getClassForPage('estagios')">
-                    <router-link to="">
+                    <router-link to="/vagas">
                         <img :src="icons.job">
                         <p v-if="showPs">Estágios</p>
                     </router-link>

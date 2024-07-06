@@ -3,7 +3,8 @@ import {
     GetProfileImageController,
     GetBannerController,
     SearchUserController,
-    GetVagasController
+    GetVagasController,
+    GetVagaController
 } from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
@@ -12,4 +13,5 @@ export const createControllers = () => ({
     getBannerController: new GetBannerController(),
     searchUserController: new SearchUserController(),
     getVagasController: new GetVagasController(),
+    getVagaController: new GetVagaController(),
 });

@@ -7,6 +7,11 @@ export class SearchUsersUseCase {
     async execute() {
         try {
             const alunosBusca = await prisma.aluno.findMany({
+                where:{
+                    rm:{
+                        not: null
+                    }
+                },
                 select: {
                     email: true,
                     rm: true,
