@@ -18,6 +18,7 @@
             <form @submit.prevent="submitForm">
                 <div class="content">
                     <h1>Registre-se</h1>
+                    <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                     <div class="input-box" :class="{ 'focused': focused.nameFocused }">
                         <label for="name">Nome</label>
 
@@ -145,7 +146,8 @@ export default {
             },
             showPassword: false,
             showPasswordConfirm: false,
-            imagem: logo
+            imagem: logo,
+            errorMessage: ''
         }
     },
     computed: {
@@ -229,14 +231,13 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('cnpj-registro-empresa', `${response.data.cnpj}`, { expires: 10 });
-                    router.push({ name: 'ValidateEmpresa' })
-
-                    alert("Tudo certo! 😉");
+                    
+                    router.push({ name: 'ValidateEmpresa' });
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

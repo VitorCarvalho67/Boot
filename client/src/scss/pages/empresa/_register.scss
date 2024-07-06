@@ -14,20 +14,16 @@ main {
 }
 
 .box {
+    min-height: 70%;
     width: 30%;
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
-    @media (max-width: 1720px),
-        (max-width: 1250px),
-        (max-width: 1150px),
-        (max-width: 900px),
-        (max-width: 850px),
-        (max-width: 600px),
-        (max-width: 400px) {
-        height: auto;
-    }
     @include m-screen-box;
+    
+    li{
+        margin-top: 20px;
+    }
 
     nav {
         width: 100%;

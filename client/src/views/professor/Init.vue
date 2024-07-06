@@ -6,7 +6,7 @@
                 <h1>Entre como professor</h1>
                 <p class="p">Para acessar sua área exclusiva de professor na plataforma, por favor, insira seu e-mail
                     cadastrado e siga para a próxima página</p>
-
+                <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                 <div class="input-box" :class="{ 'focused': emailFocused }">
                     <label for="email">E-Mail</label>
                     <input type="email" id="email" v-model="professor.email" required @focus="emailFocused = true"
@@ -41,7 +41,8 @@ export default {
             professor: {
                 email: ''
             },
-            emailFocused: false
+            emailFocused: false,
+            errorMessage: ''
         }
     },
     methods: {
@@ -61,15 +62,12 @@ export default {
                     } else {
                         router.push({ name: 'LoginProfessor' });
                     }
-
-                    alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado... 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado... 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
-
         }
     }
 }

@@ -17,6 +17,7 @@
                     <div class="content">
                         <h1>Bem vindo!</h1>
                         <p>Entre com suas credencias de acesso empresarial</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': cnpjFocused }">
                             <label for="cnpj">CNPJ</label>
                             <input type="text" id="cnpj" v-model="empresa.cnpjExibido" required
@@ -74,6 +75,7 @@ export default {
             passwordFocused: false,
             imagem: img,
             showPassword: false,
+            errorMessage: ''
         }
     },
     computed: {
@@ -97,14 +99,13 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     this.login("token-empresa", `${response.data.token}`);
-                    
-                    alert("Tudo certo! 😉");
+
                     router.push({ path: "/empresa" });
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

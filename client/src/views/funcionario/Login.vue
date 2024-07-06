@@ -17,6 +17,7 @@
                     <div class="content">
                         <h1>Bem vindo, Profissional!</h1>
                         <p>Entre com suas credenciais de acesso do funcionário</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box focused">
                             <div class="d1">
                                 <label for="email">E-Mail</label>
@@ -68,6 +69,7 @@ export default {
             },
             showPassword: false,
             passwordFocused: false,
+            errorMessage: ''
         }
     },
     computed: {
@@ -92,13 +94,12 @@ export default {
                 if (200 <= response.status && response.status < 300) {
                     this.login("token-funcionario", `${response.data.token}`);
 
-                    alert("Tudo certo! 😉");
                     router.push({ name: "Funcionario" })
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         },
         async getEmail() {

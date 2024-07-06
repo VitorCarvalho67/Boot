@@ -8,6 +8,7 @@
 
                     <div v-if="etapa === 1" class="step" id="content1">
                         <h3>Nascimento</h3>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': focused.nascimentoFocused }">
                             <label for="nascimento">Data de nascimento</label>
                             <input type="date" id="nascimento" v-model="aluno.nascimento"
@@ -22,6 +23,7 @@
                     </div>
 
                     <div v-if="etapa === 2" class="step" id="content2">
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <h3>Endereço</h3>
                         <Select :dataSelect="dataSelectEstado" @input="$event => updateCidades($event)"/>
                         <Select :dataSelect="dataSelectCidade" @input="aluno.endereco.cidade = $event"/>
@@ -34,6 +36,7 @@
                     </div>
 
                     <div v-if="etapa === 3" class="step" id="content3">
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <h3>Curso</h3>
                         <Select :dataSelect="dataSelectCurso" @input="aluno.curso.name = $event"/>
                         <Select :dataSelect="dataSelectTurno" @input="aluno.curso.turno = $event"/>
@@ -45,6 +48,7 @@
                     </div>
 
                     <div v-if="etapa === 4" class="step" id="content4">
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <h3>Início</h3>
                         <Select :dataSelect="dataSelectInicio" @input="aluno.curso.inicio = $event"/>
                         <span class="alert" v-show="alerts.inicioAlert">Por favor, selecione a data de início.</span>
@@ -55,6 +59,7 @@
                     </div>
 
                     <div v-if="etapa === 5" class="step" id="content5">
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <h3>RM</h3>
                         <div class="input-box" :class="{ 'focused': focused.rmFocused }">
                             <label for="rm">RM</label>
@@ -158,7 +163,8 @@ export default {
                 description: "Início",
                 options: [],
             },
-            imagem: logo
+            imagem: logo,
+            errorMessage: ''
         };
     },
     computed: {
@@ -238,11 +244,11 @@ export default {
                     }
                 } else {
                     this.alerts.cursoAlert = true;
-                    alert("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado ao buscar as datas de início. 😕" + response.message;
                 }
             } catch (error) {
                 this.alerts.cursoAlert = true;
-                alert("Ops.. Algo deu errado ao buscar as datas de início. 😕\n" + error);
+                this.errorMessage = "Ops.. Algo deu errado ao buscar as datas de início. 😕";
             }
         },
         validateInicio() {
@@ -281,10 +287,10 @@ export default {
                         description: curso.name
                     }));
                 } else {
-                    alert("Ops.. Algo deu errado ao buscar os cursos. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado ao buscar os cursos. 😕" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao buscar os cursos. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado ao buscar os cursos. 😕";
             }
         }
     },

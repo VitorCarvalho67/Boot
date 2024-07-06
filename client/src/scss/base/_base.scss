@@ -24,3 +24,24 @@ a {
     user-select: none;
     transition: 0.2s;
 }
+
+.alertBox {
+    @include flex(row, flex-start, center);
+    @include font-inter(500);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alertBox-error {
+    color: $font-color-dark;
+    background-color: #b32323;
+    border-color: #a72727;
+}
+
+.alertBox-sucess {
+    color: $font-color-dark;
+    background-color: #07d873;
+    border-color: #0ccf4d;
+}

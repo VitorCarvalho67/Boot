@@ -5,7 +5,7 @@ main {
 }
 
 .box {
-    height: 65%;
+    min-height: 65%;
     width: 30%;
     border-radius: 20px;
     padding: 20px;
@@ -220,6 +220,7 @@ main {
 }
 
 #box2 {
+    height: 65%;
     @include flex-center;
 
     img {

@@ -18,6 +18,7 @@
                         <h1>Recupere sua senha</h1>
                         <p>Enviaremos uma senha temporária no email cadastrado para garantir que você é o(a)
                             proprietário(a) da conta de professor</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': focus.nameFocused }">
                             <label for="name">Nome do professor</label>
                             <input type="text" id="name" v-model="userProfessor.name" required
@@ -63,7 +64,8 @@ export default {
             focus: {
                 nameFocused: false,
                 emailFocused: false
-            }
+            },
+            errorMessage: ''
         }
     },
     methods: {
@@ -77,13 +79,11 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     Cookies.set('email-recovery-professor', `${this.userProfessor.email}`, { expires: 10 });
                     router.push({ name: 'ValidateRecoveryProfessor' });
-
-                    alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     }

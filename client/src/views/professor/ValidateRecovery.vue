@@ -17,6 +17,7 @@
                 <p>É necessário informar a senha temporária de recuperação enviada no email e criar um senha nova para
                     logar na plataforma.</p>
 
+                <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                 <div class="input-box email">
                     <div class="d1">
                         <p>{{ this.infoProfessor.email }}</p>
@@ -108,6 +109,7 @@ export default {
                 newPass: '',
                 confirmNewPass: ''
             },
+            errorMessage: ''
         }
     },
     methods: {
@@ -124,10 +126,10 @@ export default {
 
                     alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

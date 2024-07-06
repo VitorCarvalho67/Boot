@@ -18,6 +18,7 @@
                         <h1>Recupere sua senha</h1>
                         <p>Enviaremos uma senha temporária no email cadastrado para garantir que você é o(a)
                             proprietário(a) da conta de funcionário</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': focus.nameFocused }">
                             <label for="name">Nome:</label>
                             <input type="text" id="name" v-model="userFuncionario.name" required
@@ -63,7 +64,8 @@ export default {
             focus: {
                 nameFocused: false,
                 emailFocused: false
-            }
+            },
+            errorMessage: ''
         }
     },
     methods: {
@@ -80,10 +82,10 @@ export default {
 
                     alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     }
