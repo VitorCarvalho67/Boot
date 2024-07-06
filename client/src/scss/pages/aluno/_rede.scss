@@ -84,22 +84,6 @@ main {
                                 border-radius: 10px;
                                 color: $secondary-color-dark;
                                 border: solid 1px $primary-color-orange;
-                                transition: 0.1s linear;
-                                @include line;
-                                @include flex-center;
-                                @include m-screen(1120px) {
-                                    padding: 8px 18px;
-                                }
-    
-                                // &:after {
-                                //     height: 0;
-                                // }
-    
-                                // &:hover {
-                                //     background-color: transparent;
-                                //     border: solid 1px $primary-color-orange;
-                                //     color: $primary-color-orange;
-                                // }
                             }
                         }
 

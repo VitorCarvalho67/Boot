@@ -32,3 +32,13 @@ export const getBanner = async (info) => {
         return error.response.data;
     }
 }
+
+export const getUsers = async () => {
+    try {
+        const response = await api.get('shared/users');
+        console.log(response.data.alunos);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

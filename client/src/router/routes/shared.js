@@ -2,6 +2,7 @@ import Home from '../../views/shared/Home.vue';
 import NotFound from '../../views/shared/NotFound.vue';
 import PublicPerfilAluno from '../../views/shared/PerfilAluno.vue';
 import PublicPerfilProfessor from '../../views/shared/PerfilProfessor.vue';
+import Pesquisa from '../../views/shared/Pesquisa.vue';
 import { isAuthSomebody } from '../guards/guards';
 
 export const sharedRoutes = [
@@ -27,6 +28,11 @@ export const sharedRoutes = [
         path: "/professor/profile/:name",
         name: "PublicPerfilProfessor",
         component: PublicPerfilProfessor
+    },
+    {
+        path: '/buscar',
+        name: 'Pesquisa',
+        component: Pesquisa
     },
     {
         path: '/:pathMatch(.*)*',

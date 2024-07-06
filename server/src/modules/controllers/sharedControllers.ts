@@ -17,6 +17,7 @@ import {
     GetEntidadeDTO,
     IdentificadorEnum
 } from "../interfaces/sharedDTOs";
+import { SearchUsersUseCase } from "../services/shared/GetProfilesUseCase";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -167,11 +168,19 @@ export class CreateMessageController {
         const sender = req.body.entidade.email;
         const { message, recipient, senderIdentifier, recipientIdentifier } = req.body;
 
-        console.log
-
         const createMessageUseCase = new CreateMessageUseCase();
 
         const result = await createMessageUseCase.execute({ message, sender, recipient, senderIdentifier, recipientIdentifier });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class SearchUserController {
+    async handle(req: Request, res: Response) {
+        const searchUsersUseCase = new SearchUsersUseCase();
+
+        const result = await searchUsersUseCase.execute();
 
         return res.status(201).json(result);
     }

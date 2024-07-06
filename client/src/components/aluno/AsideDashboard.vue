@@ -15,7 +15,7 @@
                     </router-link>
                 </li>
                 <li :class="getClassForPage('pesquisa')">
-                    <router-link to="">
+                    <router-link to="/buscar">
                         <img :src="icons.search">
                         <p v-if="showPs">Pesquisa</p>
                     </router-link>
