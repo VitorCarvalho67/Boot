@@ -16,7 +16,8 @@
                                 <input type="file" ref="bannerInput" @change="previewBannerImage">
                                 <img src="../../assets/icons/envio.png" alt="">
                             </div>
-                            <button v-show="modeBanner === 'edit'" @click="updateBannerImage" type="button">
+                            <button v-show="modeBanner === 'edit' && $refs.bannerInput.value != []" 
+                                @click="updateBannerImage" type="button">
                                 <img :src="imgVerificar">Salvar
                             </button>
                             <button v-show="modeBanner === 'edit'" @click="cancelBanner" type="button">
@@ -27,12 +28,16 @@
                     <div class="infoProfile">
                         <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
                         <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
+                        <div class="inputUpload" v-show="modeImage === 'edit'">
+                            <input type="file" ref="profileInput" v-show="modeImage === 'edit'" @change="previewProfileImage">
+                            <img src="../../assets/icons/envio.png" alt="">
+                        </div>
                         <div class="editButtons">
                             <button v-show="modeImage === 'view'" @click="editModeImage" type="button">
                                 <img :src="imgLapis" alt="">Editar
                             </button>
-                            <input type="file" ref="profileInput" v-show="modeImage === 'edit'">
-                            <button v-show="modeImage === 'edit'" @click="updateProfileImage" type="button">
+                            <button v-show="modeImage === 'edit' && $refs.profileInput.value != []"
+                            @click="updateProfileImage" type="button">
                                 <img :src="imgVerificar">Salvar
                             </button>
                             <button v-show="modeImage === 'edit'" @click="cancelImage" type="button">
@@ -169,9 +174,13 @@ export default {
             this.editMode();
         },
         async cancelImage() {
+            await this.getCurriculoAluno();
+            this.$refs.profileInput.value = [];
             this.editModeImage();
         },
         async cancelBanner() {
+            await this.getCurriculoAluno();
+            this.$refs.bannerInput.value = [];
             this.editModeBanner();
         },
         calcularIdade(nascimento) {
@@ -229,6 +238,7 @@ export default {
                 });
 
                 if (responseBanner.status >= 200 && responseBanner.status < 300) {
+                    console.log("Pegando o banner do aluno");
                     this.aluno.bannerUrl = responseBanner.data.url;
                 } else {
                     console.log("Ops.. Algo deu errado ao recuperar a imagem de capa do perfil. 😕\n" + responseBanner.message);
@@ -272,6 +282,16 @@ export default {
 
             await this.getCurriculoAluno();
             this.editModeBanner();
+        },
+        previewProfileImage(event){
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                this.aluno.imageUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
         },
         previewBannerImage(event) {
             const file = event.target.files[0];
