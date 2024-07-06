@@ -144,7 +144,7 @@ export default {
                     this.aluno.bannerUrl = responseBanner.data.url;
                 }
             } catch (error) {
-                console.log("Imagem de perfil ou banner não encontrada para este usuário.");
+                router.push({path: "/notfound"});
             }
         },
         calcularIdade(nascimento) {
