@@ -72,7 +72,9 @@
                 }
 
                 .resultado {
-                    @include flex(column, flex-end, start);
+                    @include flex(column, center, end);
+                    text-align: right;
+                    width: 80%;
                     color: $secondary-color-orange;
                     margin-right: 10px;
                     margin-bottom: 10px;

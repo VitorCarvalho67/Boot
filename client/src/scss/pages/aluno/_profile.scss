@@ -102,17 +102,10 @@ main {
             }
 
             .infoProfile {
+                @include flex(row, flex-start, center);
                 z-index: 2;
                 position: relative;
-
-                .editButtons {
-                    @include flex-center;
-                    z-index: 2;
-                    position: absolute;
-                    top: 100px;
-                    right: auto;
-                }
-                @include flex(row, flex-start, center);
+                
                 > img {
                     @include flex-center;
                     position: absolute;
@@ -124,6 +117,45 @@ main {
                     background-color: $terciary-color-dark;
                 }
 
+                .inputUpload {
+                    @include flex(row, center, center);
+                    position: absolute;
+                    height: 250px;
+                    width: 250px;
+                    background-color: rgba(0, 0, 0, 0.664);
+    
+                    position: absolute;
+                    bottom: 0;
+                    height: 250px;
+                    width: 250px;
+                    object-fit: cover;
+                    border-radius: 50%;
+
+                    input {
+                        z-index: 2;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.664);
+                        opacity: 0;
+                    }
+    
+                    img{
+                        z-index: 1;
+                        position: absolute;
+                        height: 40px;
+                        width: 40px;
+                        filter: invert(100%);
+                    }
+                }
+
+                .editButtons {
+                    @include flex-center;
+                    z-index: 2;
+                    position: absolute;
+                    top: 100px;
+                    right: auto;                
+                }    
+                
                 .info {
                     @include flex(column, center, flex-start);
                     margin-left: 250px;
