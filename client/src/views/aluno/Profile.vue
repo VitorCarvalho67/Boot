@@ -2,72 +2,73 @@
     <Header />
     <div id="app">
         <main>
-            
-            
             <AsideDashboard pageName="profile" />
             <div class="content">
                 <div class="capa">
-                <div class="capaProfile">
-                    <img v-if="aluno.bannerUrl == 'default'" src="../../assets/imgs/defaultBanner.png" alt="Capa">
-                    <img v-else :src="aluno.bannerUrl" alt="Capa">
-                    <div class="editButtons">
-                        <button v-show="modeBanner === 'view'" @click="editModeBanner" type="button">
-                            <img :src="imgLapis" alt="">Editar
-                        </button>
-                        <input type="file" ref="bannerInput" v-show="modeBanner === 'edit'">
-                        <button v-show="modeBanner === 'edit'" @click="updateBannerImage" type="button">
-                            <img :src="imgVerificar">Salvar
-                        </button>
-                        <button v-show="modeBanner === 'edit'" @click="cancelBanner" type="button">
-                            <img :src="imgCruz">Cancelar
-                        </button>
-                    </div>
-                </div>
-                <div class="infoProfile">
-                    <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
-                    <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
-                    <div class="editButtons">
-                        <button v-show="modeImage === 'view'" @click="editModeImage" type="button">
-                            <img :src="imgLapis" alt="">Editar
-                        </button>
-                        <input type="file" ref="profileInput" v-show="modeImage === 'edit'">
-                        <button v-show="modeImage === 'edit'" @click="updateProfileImage" type="button">
-                            <img :src="imgVerificar">Salvar
-                        </button>
-                        <button v-show="modeImage === 'edit'" @click="cancelImage" type="button">
-                            <img :src="imgCruz">Cancelar
-                        </button>
-                    </div>
-                    <div class="info">
-                        <div class="box1">
-                            <h1 v-text="aluno.nome"></h1>
-                        </div>
-                        <div class="box2">
-                            <p v-text="aluno.idade"></p>
-                            <p v-text="aluno.endereco"></p>
+                    <div class="capaProfile">
+                        <img v-if="aluno.bannerUrl == 'default'" src="../../assets/imgs/defaultBanner.png" alt="Capa">
+                        <img v-else :src="aluno.bannerUrl" alt="Capa">
+                        <div class="capaEdit editButtons">
+                            <button v-show="modeBanner === 'view'" @click="editModeBanner" type="button">
+                                <img :src="imgLapis" alt="">Editar
+                            </button>
+                            <div class="inputUpload" v-show="modeBanner === 'edit'">
+                                <input type="file" ref="bannerInput" @change="previewBannerImage">
+                                <img src="../../assets/icons/envio.png" alt="">
+                            </div>
+                            <button v-show="modeBanner === 'edit'" @click="updateBannerImage" type="button">
+                                <img :src="imgVerificar">Salvar
+                            </button>
+                            <button v-show="modeBanner === 'edit'" @click="cancelBanner" type="button">
+                                <img :src="imgCruz">Cancelar
+                            </button>
                         </div>
                     </div>
-                </div>
-            </div>
-            <section class="sobreMim">
-                <h2>Sobre mim</h2>
-                <div>
-                    <p v-show="mode === 'view'" v-html="aluno.curriculo"></p>
-                    <textarea v-show="mode === 'edit'" name="" cols="30" rows="10" id="edit"
-                        v-model="aluno.curriculoEdit" ref="edit"></textarea>
-                    <div class="editButtons">
-                        <button v-show="mode === 'view'" @click="editMode" type="button">
-                            <img :src="imgLapis" alt="">Editar
-                        </button>
-                        <button v-show="mode === 'edit'" @click="updateCurriculoSubmit" type="button">
-                            <img :src="imgVerificar">Salvar
-                        </button>
-                        <button v-show="mode === 'edit'" @click="cancel" type="button">
-                            <img :src="imgCruz">Cancelar
-                        </button>
+                    <div class="infoProfile">
+                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
+                        <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
+                        <div class="editButtons">
+                            <button v-show="modeImage === 'view'" @click="editModeImage" type="button">
+                                <img :src="imgLapis" alt="">Editar
+                            </button>
+                            <input type="file" ref="profileInput" v-show="modeImage === 'edit'">
+                            <button v-show="modeImage === 'edit'" @click="updateProfileImage" type="button">
+                                <img :src="imgVerificar">Salvar
+                            </button>
+                            <button v-show="modeImage === 'edit'" @click="cancelImage" type="button">
+                                <img :src="imgCruz">Cancelar
+                            </button>
+                        </div>
+                        <div class="info">
+                            <div class="box1">
+                                <h1 v-text="aluno.nome"></h1>
+                            </div>
+                            <div class="box2">
+                                <p v-text="aluno.idade"></p>
+                                <p v-text="aluno.endereco"></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </section>
+                <section class="sobreMim">
+                    <h2>Sobre mim</h2>
+                    <div>
+                        <p v-show="mode === 'view'" v-html="aluno.curriculo"></p>
+                        <textarea v-show="mode === 'edit'" name="" cols="30" rows="10" id="edit"
+                            v-model="aluno.curriculoEdit" ref="edit"></textarea>
+                        <div class="editButtons">
+                            <button v-show="mode === 'view'" @click="editMode" type="button">
+                                <img :src="imgLapis" alt="">Editar
+                            </button>
+                            <button v-show="mode === 'edit'" @click="updateCurriculoSubmit" type="button">
+                                <img :src="imgVerificar">Salvar
+                            </button>
+                            <button v-show="mode === 'edit'" @click="cancel" type="button">
+                                <img :src="imgCruz">Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
@@ -271,6 +272,16 @@ export default {
 
             await this.getCurriculoAluno();
             this.editModeBanner();
+        },
+        previewBannerImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = e => {
+                this.aluno.bannerUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
     },
     mixins: [mixinAluno],

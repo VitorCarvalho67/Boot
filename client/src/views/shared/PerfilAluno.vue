@@ -139,14 +139,14 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     this.aluno.imageUrl = response.data.url;
                 } else {
-                    router.push({path: "/notfound"});
+                    // router.push({path: "/notfound"});
                 }
 
                 if (responseBanner.status >= 200 && responseBanner.status < 300) {
                     this.aluno.bannerUrl = responseBanner.data.url;
                 }
             } catch (error) {
-                router.push({path: "/notfound"});
+                // router.push({path: "/notfound"});
             }
         },
         calcularIdade(nascimento) {
