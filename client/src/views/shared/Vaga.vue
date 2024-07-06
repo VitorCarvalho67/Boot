@@ -1,0 +1,128 @@
+<template>
+    <Header />
+    <div id="app">
+        <main>
+            <AsideDashboard v-if="aluno.email" pageName="estagios"/>
+            <div class="content">
+                <div class="vaga-header">
+                    <h3 v-text="vaga.titulo"></h3>
+                    <router-link :to="'/empresa/' + vaga.empresa.cnpj">{{ vaga.empresa.name }}</router-link>
+                    <p class="status" v-text="situacao[vaga.status]"></p>
+                </div>
+
+                <section class="vaga-info">
+                    <h2>Requisitos</h2>
+                    <ul class="requisitos">
+                        <li v-for="(requisito, index) in parsedRequisitos" :key="index">
+                            <p v-text="requisito"></p>
+                        </li>
+                    </ul>
+
+                    <div class="vaga-details">
+                        <p><strong>Carga Horária:</strong> <span v-text="vaga.cargaHoraria"></span></p>
+                        <p><strong>Entrada:</strong> <span v-text="vaga.entrada"></span></p>
+                        <p><strong>Saída:</strong> <span v-text="vaga.saida"></span></p>
+                    </div>
+
+                    <section class="descricao">
+                        <h2>Descrição</h2>
+                        <div class="vaga-remuneracao">
+                            <p><strong>Remuneração:</strong> <span v-text="vaga.remuneracao"></span></p>
+                        </div>
+                        <p v-text="vaga.descricao"></p>
+                    </section>
+
+
+                    <h2>Benefícios</h2>
+                    <ul class="beneficios">
+                        <li v-for="(beneficio, index) in parsedBeneficios" :key="index">
+                            <p v-text="beneficio"></p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+    <Footer />
+</template>
+
+<script>
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
+import router from '../../router/index.js';
+import Cookies from 'js-cookie';
+import { getVaga } from '../../services/api/shared';
+import {
+    getMeAluno,
+} from '../../services/api/aluno';
+
+export default {
+    name: 'Vaga',
+    components: {
+        Header,
+        AsideDashboard,
+        Footer
+    },
+    data() {
+        return {
+            vaga: {
+                requisitos: '[]',
+                beneficios: '[]'
+            },
+            aluno: {
+                email: '',
+                token: ''
+            },
+            situacao: {
+                "DISPONIVEL": "Vaga disponível",
+                "INDISPONIVEL": "Vaga indisponível"
+            }
+        };
+    },
+    computed: {
+        parsedRequisitos() {
+            return JSON.parse(this.vaga.requisitos);
+        },
+        parsedBeneficios() {
+            return JSON.parse(this.vaga.beneficios);
+        }
+    },
+    methods: {
+        async getVaga() {
+            try {
+                const response = await getVaga({ id: this.$route.params.id });
+                if (response.status >= 200 && response.status < 300) {
+                    this.vaga = response.data.vaga;
+                } else {
+                    console.error("Erro ao recuperar os dados da vaga:", response.message);
+                }
+            } catch (error) {
+                console.error("Erro ao recuperar os dados da vaga:", error.message);
+            }
+        },
+        async testAluno(){
+            this.aluno.token = Cookies.get('token');
+        
+            if(this.aluno.token){
+                const responseMail = await getMeAluno(this.aluno.token);
+                if (responseMail.status >= 200 && responseMail.status < 300) {
+                    this.aluno.email = responseMail.data.email;
+                } else{
+                    console.log("Erro ao buscar aluno");
+                }
+            } else {
+                console.log("Token de aluno não encontrado");
+            }
+        }
+    },
+    async created() {
+        await this.testAluno();
+        await this.getVaga();
+    }
+};
+</script>
+
+<style lang="scss" scoped>
+@import "../../scss/pages/shared/vaga.scss";
+</style>

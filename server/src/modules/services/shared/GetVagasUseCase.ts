@@ -12,6 +12,7 @@ export class GetVagasUseCase {
 
         return vagas.map(vaga => {
             return {
+                id: vaga.id,
                 titulo: vaga.titulo,
                 empresa: vaga.empresa.name,
                 curso: vaga.curso.name,

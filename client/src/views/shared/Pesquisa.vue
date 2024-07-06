@@ -20,7 +20,9 @@
                             </div>
                         </a>
                     </li>
-                    <p class="resultado" v-else v-text="filteredUsers.length +  ' resultados encontrados para sua busca'"></p>
+                    <p class="resultado" v-else v-text="(filteredUsers.length > 1)?
+                    filteredUsers.length +  ' resultados encontrados para sua busca' :
+                    filteredUsers.length +  ' resultado encontrado para sua busca'"></p>
                     <li class="user" v-for="(estudante, index) in filteredUsers" :key="index">
                         <router-link :to="'/aluno/profile/' +  estudante.rm">
                             <img v-if="estudante.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="estudante.name">
@@ -39,8 +41,8 @@
                 </ul>
             </section>
         </main>
+        <Footer />
     </div>
-    <Footer />
 </template>
 
 <script>

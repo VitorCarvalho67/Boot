@@ -51,3 +51,15 @@ export const getVagas = async () => {
         return error.response.data;
     }
 }
+
+export const getVaga = async (id) => {
+    try {
+        const response = await api.get('shared/vaga', {
+            params: id
+        });
+        console.log(response.data.alunos);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

@@ -20,6 +20,7 @@ import {
 import { SearchUsersUseCase } from "../services/shared/GetProfilesUseCase";
 import { GetEmpresasUseCase } from "../services/shared/GetEmpresasUseCase";
 import { GetVagasUseCase } from "../services/shared/GetVagasUseCase";
+import { GetVagaUseCase } from "../services/shared/GetVagaUseCase";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -146,6 +147,17 @@ export class GetVagasController {
         const getVagasUseCase = new GetVagasUseCase();
 
         const result = await getVagasUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetVagaController {
+    async handle(req: Request, res: Response) {
+        const id = req.query.id;
+        const getVagaUseCase = new GetVagaUseCase();
+
+        const result = await getVagaUseCase.execute(id as string);
 
         return res.status(201).json(result);
     }

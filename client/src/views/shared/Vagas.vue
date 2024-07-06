@@ -2,11 +2,11 @@
     <Header />
     <div id="app">
         <main>
-            <AsideDashboard v-if="aluno.connected" pageName="pesquisa" />
+            <AsideDashboard v-if="aluno.connected" pageName="estagios" />
             <section class="content">
                 <div class="search">
                     <div class="box">
-                        <input type="text" placeholder="Buscar usuário" v-model="busca" @keyup.enter="filterVagas">
+                        <input type="text" placeholder="Buscar estágio" v-model="busca" @keyup.enter="filterVagas">
                         <button @click="filterVagas">
                             <img :src="icons.search" alt="Buscar">
                         </button>
@@ -20,16 +20,31 @@
                             </div>
                         </a>
                     </li>
-                    <p class="resultado" v-else v-text="filteredVagas.length +  ' resultados encontrados para sua busca'"></p>
+                    <p class="resultado" v-else v-text="(filteredVagas.length > 1)?
+                    filteredVagas.length +  ' resultados encontrados para sua busca' :
+                    filteredVagas.length +  ' resultado encontrado para sua busca'"></p>
                     <li class="vaga" v-for="(vaga, index) in filteredVagas" :key="index">
-                        <router-link :to="'/aluno/profile/' +  vaga.titulo">
+                        <router-link :to="'/vaga/' +  vaga.id">
                             <div class="infoVaga">
                                 <div class="contentVaga name">
                                     <p class="who">{{ vaga.titulo }}</p>
-                                    <p>{{ vaga.remuneracao }}</p>
-                                    <p>{{ vaga.cargaHoraria }}</p>
-                                    <p>{{ vaga.endereco }}</p>
-                                    <p>{{ vaga.curso }}</p>
+                                    
+                                    <div class="info">
+                                        <label>Salário</label>
+                                        <p v-text="vaga.remuneracao"></p>
+                                    </div>
+                                    <div class="info">
+                                        <label>Carga horária</label>
+                                        <p v-text="vaga.cargaHoraria"></p>
+                                    </div>
+                                    <div class="info">
+                                        <label>Oferecida por</label>
+                                        <p v-text="vaga.empresa"></p>
+                                    </div>
+                                    <div class="info">
+                                        <label>Curso preferencial</label>
+                                        <p v-text="vaga.curso"></p>
+                                    </div>
                                 </div>
                                 <div class="box-button">
                                     <button>Ver vaga</button>
@@ -40,8 +55,8 @@
                 </ul>
             </section>
         </main>
+        <Footer />
     </div>
-    <Footer />
 </template>
 
 <script>
