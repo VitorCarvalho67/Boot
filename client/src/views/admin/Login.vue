@@ -17,6 +17,7 @@
                     <div class="content">
                         <h1>Bem vindo, Admin!</h1>
                         <p>Entre com suas credencias de acesso do administrador</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box">
                             <label for="email">E-Mail</label>
                             <input type="email" id="email" v-model="userAdmin.email" required>
@@ -72,6 +73,7 @@ export default {
             passwordFocused: false,
             imagem: img,
             showPassword: false,
+            errorMessage: ''
         }
     },
     computed: {
@@ -96,13 +98,12 @@ export default {
                 if (response.status >= 200 && response.status < 300) {
                     this.login('token-admin', `${response.data.token}`);
 
-                    alert("Tudo certo! 😉");
                     router.push({ path: "/admin" });
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

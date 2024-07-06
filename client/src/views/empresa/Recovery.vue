@@ -18,6 +18,7 @@
                         <h1>Recupere sua senha</h1>
                         <p>Enviaremos uma senha temporária no email cadastrado para garantir que você é o(a)
                             proprietário(a) da conta empresarial</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': focus.cnpjFocused }">
                             <label for="cnpj">CNPJ:</label>
                             <input type="text" id="cnpj" v-model="empresa.cnpjExibido" required
@@ -66,6 +67,7 @@ export default {
                 cnpjFocused: false,
                 emailFocused: false
             },
+            errorMessage: ''
         }
     },
     methods: {
@@ -80,13 +82,11 @@ export default {
                     Cookies.set('email-recovery-empresa', `${this.empresa.email}`, { expires: 50 });
                     Cookies.set('cnpj-recovery-empresa', `${this.empresa.cnpj}`, { expires: 50 });
                     router.push({ name: 'ValidateRecoveryEmpresa' });
-
-                    alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

@@ -18,7 +18,7 @@
                     <p>Para sua segurança te enviamos um código de verificação no email inserido anteriormente, termine
                         seu registro inserindo-o abaixo
                     </p>
-
+                    <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                     <div class="input-box focused">
                         <div class="d1">
                             <label for="">CNPJ</label>
@@ -88,7 +88,8 @@ export default {
                     token5: '',
                     token6: ''
                 }
-            }
+            },
+            errorMessage: ''
         }
     },
     methods: {
@@ -175,10 +176,10 @@ export default {
 
                     alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },

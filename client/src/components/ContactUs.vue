@@ -12,6 +12,8 @@
         </div>
         <div class="box" id="box2">
             <form @submit.prevent="submitForm">
+                <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
+                <li v-if="sucessMessage" class="alertBox alertBox-sucess">{{ sucessMessage }}</li>
                 <input type="text" id="name" v-model="contact.name" placeholder="Nome" required>
                 <input type="text" id="name" v-model="contact.email" placeholder="Email" required>
                 <input type="text" id="name" v-model="contact.assunto" placeholder="Assunto" required>
@@ -41,12 +43,14 @@ export default defineComponent({
                 email: '',
                 assunto: '',
                 msg: ''
-            }
+            },
+            errorMessage: '',
+            sucessMessage: ''
         }
     },
     methods: {
         async submitForm() {
-            alert('tudo certo 🙏')
+            this.sucessMessage = 'tudo certo 👍';
         }
     }
 });

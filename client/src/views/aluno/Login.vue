@@ -17,6 +17,7 @@
                     <div class="content">
                         <h1>Bem vindo!</h1>
                         <p>Entre com suas credencias de acesso do aluno</p>
+                        <li v-if="errorMessage" class="alertBox alertBox-error">{{ errorMessage }}</li>
                         <div class="input-box" :class="{ 'focused': emailFocused }">
                             <label for="email">E-Mail</label>
                             <input type="email" id="email" v-model="userAluno.email" required
@@ -76,6 +77,7 @@ export default {
             passwordFocused: false,
             imagem: logo,
             showPassword: false,
+            errorMessage: ''
         }
     },
     computed: {
@@ -108,12 +110,11 @@ export default {
                     Cookies.set('email-aluno', this.userAluno.email)
 
                     router.push({ path: '/aluno' });
-                    alert("Tudo certo! 😉");
                 } else {
-                    alert("Ops.. Algo deu errado. 😕\n" + response.message);
+                    this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado. 😕\n" + error.message);
+                this.errorMessage = "Ops.. Algo deu errado. 😕";
             }
         }
     },
