@@ -63,9 +63,48 @@ export const validateRecovery = async(infoFuncionario) => {
     }
 }
 
+export const registerVaga = async(infoVaga, token) => {
+    try {
+        const response = await api.post('funcionario/register/vaga', infoVaga, {
+        headers: {
+            authorization: `${token}`
+        }
+    });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
 export const refreshTokenFuncionario = async (token) => {
     try {
         const response = await api.get('funcionario/token/refresh', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getCursos = async(token) => {
+    try {
+        const response = await api.get('funcionario/cursos', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getEmpresas = async(token) => {
+    try {
+        const response = await api.get('funcionario/empresas', {
             headers: {
                 authorization: `${token}`
             }

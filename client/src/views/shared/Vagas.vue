@@ -6,32 +6,33 @@
             <section class="content">
                 <div class="search">
                     <div class="box">
-                        <input type="text" placeholder="Buscar usuário" v-model="busca" @keyup.enter="filterUsers">
-                        <button @click="filterUsers">
+                        <input type="text" placeholder="Buscar usuário" v-model="busca" @keyup.enter="filterVagas">
+                        <button @click="filterVagas">
                             <img :src="icons.search" alt="Buscar">
                         </button>
                     </div>
                 </div>
                 <ul class="box">
-                    <li class="user" v-if="filteredUsers.length < 1">
+                    <li class="vaga" v-if="filteredVagas.length < 1">
                         <a href="">
                             <div class="infoAluno">
-                                <p>Nenhum usuário com esse nome ou email encontrado</p>
+                                <p>Nenhuma vaga com essas especificações encontrada</p>
                             </div>
                         </a>
                     </li>
-                    <p class="resultado" v-else v-text="filteredUsers.length +  ' resultados encontrados para sua busca'"></p>
-                    <li class="user" v-for="(estudante, index) in filteredUsers" :key="index">
-                        <router-link :to="'/aluno/profile/' +  estudante.rm">
-                            <img v-if="estudante.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="estudante.name">
-                            <img v-else :src="estudante.imageUrl" :alt="estudante.name">
-                            <div class="infoAluno">
-                                <div class="contentAluno name">
-                                    <p class="who">{{ estudante.name }}</p>
-                                    <p>{{ estudante.endereco }}</p>
+                    <p class="resultado" v-else v-text="filteredVagas.length +  ' resultados encontrados para sua busca'"></p>
+                    <li class="vaga" v-for="(vaga, index) in filteredVagas" :key="index">
+                        <router-link :to="'/aluno/profile/' +  vaga.titulo">
+                            <div class="infoVaga">
+                                <div class="contentVaga name">
+                                    <p class="who">{{ vaga.titulo }}</p>
+                                    <p>{{ vaga.remuneracao }}</p>
+                                    <p>{{ vaga.cargaHoraria }}</p>
+                                    <p>{{ vaga.endereco }}</p>
+                                    <p>{{ vaga.curso }}</p>
                                 </div>
                                 <div class="box-button">
-                                    <button>Ver perfil</button>
+                                    <button>Ver vaga</button>
                                 </div>
                             </div>        
                         </router-link>
@@ -52,12 +53,12 @@ import searchIcon from '../../assets/icons/procurar.png';
 import Cookies from 'js-cookie';
 
 import {
-    getUsers
+    getVagas
 } from '../../services/api/shared';
 import { getMeAluno } from '../../services/api/aluno';
 
 export default {
-    name: 'Pesquisa',
+    name: 'Vagas',
     components: {
         Header,
         Footer,
@@ -75,25 +76,23 @@ export default {
             icons: {
                 search: searchIcon,
             },
-            users: {
-                alunos: []
-            },
+            vagas: [],
             busca: '',
-            filteredUsers: []
+            filteredVagas: []
         };
     },
     methods: {
-        async loadUsers(){
+        async loadVagas(){
             try {
-                const response = await getUsers();
+                const response = await getVagas();
                 if (response.status >= 200 && response.status < 300) {
-                    this.users.alunos = response.data.alunos;
-                    this.filteredUsers = this.users.alunos;
+                    this.vagas = response.data;
+                    this.filteredVagas = this.vagas;
                 } else{
-                    console.log("Ops.. Algo deu errado ao buscar os usuários. 😕\n" + response.message);
+                    console.log("Ops.. Algo deu errado ao buscar as vagas. 😕\n" + response.message);
                 }
             } catch (error) {
-                console.log("Ops.. Algo deu errado ao recuperar os seus vínculos. 😕\n" + error);
+                console.log("Ops.. Algo deu errado ao buscar as vagas. 😕\n" + error);                
             }
         },
         async GetToken(){
@@ -106,24 +105,23 @@ export default {
                 this.aluno.token = '';
             }
         },
-        filterUsers() {
+        filterVagas() {
             const terms = this.busca.trim().split(' ');
-            this.filteredUsers = this.users.alunos.filter(aluno => {
+            this.filteredVagas = this.vagas.filter(aluno => {
                 return terms.some(term => 
-                    aluno.name.toLowerCase().includes(term.toLowerCase()) ||
-                    aluno.email.toLowerCase().includes(term.toLowerCase()) ||
-                    aluno.rm.toLowerCase().includes(term.toLowerCase())
+                    vaga.titulo.toLowerCase().includes(term.toLowerCase()) ||
+                    vaga.descricao.toLowerCase().includes(term.toLowerCase())
                 );
             });
         }
     },
     async created() {
-        await this.loadUsers();
+        await this.loadVagas();
         await this.GetToken();
     }
 };
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/shared/_pesquisa.scss";
+    @import "../../scss/pages/shared/_vagas.scss";
 </style>

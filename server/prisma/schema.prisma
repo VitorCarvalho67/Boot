@@ -171,19 +171,21 @@ model Empresa {
 
 model Vaga {
     id            String      @id @default(uuid())
-    curso         Curso       @relation(fields: [cursoId], references: [id])
+    titulo        String
     cursoId       String
-    empresa       Empresa     @relation(fields: [empresaId], references: [id])
     empresaId     String
     requisitos    String
     beneficios    String
     remuneracao   String
     cargaHoraria  String
-    dataInicio    String
-    dataFim       String
+    entrada       String
+    saida         String
     status        String
-    funcionario   Funcionario @relation(fields: [cadastradorId], references: [id])
+    descricao     String
     cadastradorId String
+    empresa       Empresa     @relation(fields: [empresaId], references: [id])
+    curso         Curso       @relation(fields: [cursoId], references: [id])
+    funcionario   Funcionario @relation(fields: [cadastradorId], references: [id])
     createdAt     DateTime    @default(now())
     updatedAt     DateTime    @updatedAt
 

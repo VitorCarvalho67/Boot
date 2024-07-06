@@ -3,6 +3,7 @@ import NotFound from '../../views/shared/NotFound.vue';
 import PublicPerfilAluno from '../../views/shared/PerfilAluno.vue';
 import PublicPerfilProfessor from '../../views/shared/PerfilProfessor.vue';
 import Pesquisa from '../../views/shared/Pesquisa.vue';
+import Vagas from '../../views/shared/Vagas.vue';
 import { isAuthSomebody } from '../guards/guards';
 
 export const sharedRoutes = [
@@ -33,6 +34,11 @@ export const sharedRoutes = [
         path: '/buscar',
         name: 'Pesquisa',
         component: Pesquisa
+    },
+    {
+        path: '/vagas',
+        name: 'Vagas',
+        component: Vagas
     },
     {
         path: '/:pathMatch(.*)*',
