@@ -42,3 +42,24 @@ export const getUsers = async () => {
         return error.response.data;
     }
 }
+
+export const getVagas = async () => {
+    try {
+        const response = await api.get('shared/vagas');
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getVaga = async (id) => {
+    try {
+        const response = await api.get('shared/vaga', {
+            params: id
+        });
+        console.log(response.data.alunos);
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

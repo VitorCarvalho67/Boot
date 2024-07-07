@@ -359,7 +359,6 @@ export default {
         this.aluno.rm = this.$route.params.rm;
         await this.getCurriculoAluno();
         await this.possuiVinculo();
-        await this.getCurriculoAluno();
 
         console.log(this.conected);
 

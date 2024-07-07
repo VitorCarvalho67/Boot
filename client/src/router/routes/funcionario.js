@@ -10,12 +10,13 @@ import {
     isInitingFuncionario,
     isRecoveringFuncionario
 } from '../guards/guards.js';
+import RegisterVaga from '../../views/funcionario/RegisterVaga.vue';
 
 export const funcionarioRoutes = [
     {
         path: '/funcionario/init',
         name: 'InitFuncionario',
-        component: InitFuncionario
+        component: InitFuncionario,
     },
     {
         path: '/funcionario/validate',
@@ -44,6 +45,14 @@ export const funcionarioRoutes = [
         component: ValidateRecoveryFuncionario,
         beforeEnter: async (to, from, next) => {
             (await isRecoveringFuncionario()) ? next() : next("/funcionario/recovery");
+        }
+    },
+    {
+        path: '/funcionario/register/vaga',
+        name: 'RegisterVaga',
+        component: RegisterVaga,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthFuncionario()) ? next() : next("/funcionario/init");
         }
     },
     {

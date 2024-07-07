@@ -31,3 +31,18 @@ export interface ValidateRecoveryDTO {
     recoveryPass: string,
     newPass: string
 }
+
+export interface RegisterVagaDTO {
+    titulo: string;
+    cadastrador: string;
+    empresa: string;
+    requisitos: string[];
+    beneficios: string[];
+    remuneracao: string;
+    cargaHoraria: string;
+    entrada: string;
+    saida: string;
+    status: string;
+    curso: string;
+    descricao: string;
+}

@@ -20,7 +20,9 @@
                             </div>
                         </a>
                     </li>
-                    <p class="resultado" v-else v-text="filteredUsers.length +  ' resultados encontrados para sua busca'"></p>
+                    <p class="resultado" v-else v-text="(filteredUsers.length > 1)?
+                    filteredUsers.length +  ' resultados encontrados para sua busca' :
+                    filteredUsers.length +  ' resultado encontrado para sua busca'"></p>
                     <li class="user" v-for="(estudante, index) in filteredUsers" :key="index">
                         <router-link :to="'/aluno/profile/' +  estudante.rm">
                             <img v-if="estudante.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="estudante.name">
@@ -39,8 +41,8 @@
                 </ul>
             </section>
         </main>
+        <Footer />
     </div>
-    <Footer />
 </template>
 
 <script>
@@ -88,12 +90,12 @@ export default {
                 const response = await getUsers();
                 if (response.status >= 200 && response.status < 300) {
                     this.users.alunos = response.data.alunos;
-                    this.filteredUsers = this.users.alunos; // Initialize filtered users
+                    this.filteredUsers = this.users.alunos;
                 } else{
-                    alert("Ops.. Algo deu errado ao os seus vínculos. 😕\n" + response.message);
+                    console.log("Ops.. Algo deu errado ao buscar os usuários. 😕\n" + response.message);
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao recuperar os seus vínculos. 😕\n" + error);                
+                console.log("Ops.. Algo deu errado ao recuperar os seus vínculos. 😕\n" + error);
             }
         },
         async GetToken(){

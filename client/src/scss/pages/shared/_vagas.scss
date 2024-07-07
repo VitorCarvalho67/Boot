@@ -1,0 +1,166 @@
+#app{
+    height: 100vh;
+
+    main {
+        @include flex(row, flex-start, start);
+        height: calc(100vh - 80px);
+        background-color: $primary-color-dark;
+
+        .content {
+            @include flex(column, flex-start, start);
+            width: calc(100% - 300px);
+            height: 100%;
+
+            @include m-screen(1200px) {
+                width: 100%;
+            }
+
+            .search {
+                @include flex(row, center, start);
+                height: 50px;
+                width: 62%;
+                padding: 20px 30px 20px 80px;
+
+                .box{
+                    @include flex(row, cen, start);
+                    height: 50px;
+                    border-radius: 25px;
+                    width: calc(100% - 40px);
+                    background-color: $secondary-color-dark;
+                    
+                    input {
+                        color: $font-color-dark-2;
+                        width: 94%;
+                        height: 100%;
+                        padding-inline: 15px;
+                        outline: none;
+                        background: transparent;
+                        border: none;
+                        font-size: medium
+                    }
+        
+                    button {
+                        @include flex-center;
+                        height: 100%;
+                        background-color: transparent;
+                        border: none;
+        
+                        img {
+                            height: 55%;
+                            object-fit: cover;
+                            opacity: 0.8;
+                            filter: invert(100%)
+                        }
+                    }
+                }
+            }
+
+            >.box {
+                @include flex(column, flex-start, start);
+                padding: 50px 0px 0px 100px;
+                width: 70%;
+                height: 100%;
+
+                @include m-screen(1400px) {
+                    @include flex(column, center, center);
+                    padding: 50px 0px 0px 0px;
+                    width: 100%;
+                }
+
+                .resultado {
+                    @include flex(column, center, end);
+                    text-align: right;
+                    width: 80%;
+                    color: $secondary-color-orange;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                    height: 100%;
+                    font-size: small;
+                    font-weight: 200;
+                    @include font-inter(600);
+                }
+                
+
+                .vaga {
+                    @include flex(column, flex-start, start);
+                    width: 80%;
+                    height: 140px;
+                    margin-bottom: 10px;
+
+                    @include m-screen(1400px) {
+                        width: 70%;
+                    }
+
+                    @include m-screen(800px) {
+                        width: 90%;
+                    }
+
+                    a {
+                        @include flex(row, flex-start, start);
+                        width: 100%;
+                        height: 100%;
+                        background-color: $secondary-color-dark;
+                        padding: 15px;
+                        border-radius: 5px;
+                        text-decoration: none;
+                        color: $font-color-dark;
+
+                        img {
+                            height: 60px;
+                            width: 60px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                            margin-right: 20px;
+                        }
+                        
+                        .infoVaga {
+                            @include flex(row, space-between, start);
+                            width: calc(100% - 60px);
+                            height: 100%;
+
+                            .who {
+                                color: $primary-color-orange;
+                                margin-right: 10px;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .contentVaga {
+                                @include flex(column, flex-start, start);
+                                width: 70%;
+                                
+                                .info{
+                                    @include flex(row, space-between, start);
+                                    width: 100%;
+
+                                    label {
+                                        @include font-inter(600);
+                                        color: $primary-color-dark;
+
+                                    }
+                                }
+                            }
+
+                            .box-button{
+                                height: 100%;
+                                @include flex(column, center, center);
+
+                                button{
+                                    background-color: $primary-color-orange;
+                                    padding: 10px 20px;
+                                    border-radius: 10px;
+                                    color: $secondary-color-dark;
+                                    border: solid 1px $primary-color-orange;
+                                }
+                            }
+
+                        }
+
+                        p {
+                            @include font-inter(600);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
