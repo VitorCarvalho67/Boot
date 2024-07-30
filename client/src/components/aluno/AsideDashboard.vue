@@ -1,5 +1,5 @@
 <template>
-    <aside :class="['aside-dashboard', view, { fixed: isFixed }]">
+    <aside :class="['aside-dashboard', view, { fixed: isFixed && view === 'yeah' }]">
         <div>
             <ul>
                 <li :class="getClassForPage('home')">
@@ -108,12 +108,12 @@ export default defineComponent({
         },
         changePsVisualization() {
             this.showPs = !this.showPs;
-            this.view = (this.view == 'yeah') ? 'none' : 'yeah';
-            this.checkScreenWidth();
+            this.view = this.showPs ? 'yeah' : 'none';
             localStorage.setItem('asideDashboardState', JSON.stringify({
                 showPs: this.showPs,
                 view: this.view
             }));
+            this.updateFixedState();
         },
         loadStateFromStorage() {
             const state = localStorage.getItem('asideDashboardState');
@@ -125,10 +125,22 @@ export default defineComponent({
         },
         checkScreenWidth() {
             if (window.innerWidth < 1000) {
-                this.isFixed = this.view === 'yeah';
+                this.showPs = false;
+                this.view = 'none';
+                this.updateFixedState();
             } else {
                 this.isFixed = false;
+                if (this.showPs) {
+                    this.view = 'yeah';
+                }
             }
+            localStorage.setItem('asideDashboardState', JSON.stringify({
+                showPs: this.showPs,
+                view: this.view
+            }));
+        },
+        updateFixedState() {
+            this.isFixed = (this.view === 'yeah' && window.innerWidth < 1000);
         }
     },
     mounted() {
