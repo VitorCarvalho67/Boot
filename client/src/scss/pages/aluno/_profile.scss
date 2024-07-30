@@ -2,10 +2,15 @@ main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
     @include flex(row, flex-start, start);
+
     .content {
         @include flex(column, flex-start, start);
         padding: 20px 100px;
         width: calc(100% - 300px);
+
+        @include m-screen(1300px) {
+            padding: 20px 50px;
+        }
 
         .editButtons {
             @include flex-center;
@@ -67,7 +72,7 @@ main {
                     opacity: 0;
                 }
 
-                img{
+                img {
                     z-index: 1;
                     position: absolute;
                     height: 40px;
@@ -87,6 +92,10 @@ main {
             height: 400px;
             position: relative;
 
+            @include m-screen(1300px) {
+                height: 300px;
+            }
+
             .capaProfile {
                 height: 66.66%;
                 border-radius: 6px;
@@ -105,7 +114,7 @@ main {
                 @include flex(row, flex-start, center);
                 z-index: 2;
                 position: relative;
-                
+
                 > img {
                     @include flex-center;
                     position: absolute;
@@ -115,6 +124,11 @@ main {
                     object-fit: cover;
                     border-radius: 50%;
                     background-color: $terciary-color-dark;
+
+                    @include m-screen(1300px) {
+                        height: 200px;
+                        width: 200px;
+                    }
                 }
 
                 .inputUpload {
@@ -123,13 +137,17 @@ main {
                     height: 250px;
                     width: 250px;
                     background-color: rgba(0, 0, 0, 0.664);
-    
                     position: absolute;
                     bottom: 0;
                     height: 250px;
                     width: 250px;
                     object-fit: cover;
                     border-radius: 50%;
+
+                    @include m-screen(1300px) {
+                        height: 200px;
+                        width: 200px;
+                    }
 
                     input {
                         z-index: 2;
@@ -138,8 +156,8 @@ main {
                         background-color: rgba(0, 0, 0, 0.664);
                         opacity: 0;
                     }
-    
-                    img{
+
+                    img {
                         z-index: 1;
                         position: absolute;
                         height: 40px;
@@ -153,18 +171,30 @@ main {
                     z-index: 2;
                     position: absolute;
                     top: 100px;
-                    right: auto;                
-                }    
-                
+                    right: auto;
+
+                    @include m-screen(1300px) {
+                        top: 90px;
+                    }
+                }
+
                 .info {
                     @include flex(column, center, flex-start);
                     margin-left: 250px;
                     padding: 10px 20px;
 
+                    @include m-screen(1300px) {
+                        margin-left: 200px;
+                    }
+
                     .box1 h1 {
                         @include font-inter(300);
                         font-size: 2rem;
                         color: $font-color-dark;
+
+                        @include m-screen(1300px) {
+                            font-size: 1.6rem;
+                        }
                     }
                     .box2 {
                         @include flex(row, flex-start, center);

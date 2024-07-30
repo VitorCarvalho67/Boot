@@ -1,8 +1,23 @@
-aside {
+.aside-dashboard {
     height: 100%;
     @include flex(row, space-between, start);
     width: 300px;
     background-color: $secondary-color-dark;
+    
+    &.none {
+        width: auto;
+    }
+    
+    &.fixed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+
+    @include m-screen(800px){
+        display: none;
+    }
 
     div {
         height: 100%;
@@ -70,15 +85,10 @@ aside {
             object-fit: cover;
             margin-right: 10px;
             filter: invert(100%);
+            transform: rotateY(0deg);
         }
-    }
-}
 
-.none{
-    width: auto;
-
-    button {
-        img {
+        &.none img {
             transform: rotateY(180deg);
         }
     }

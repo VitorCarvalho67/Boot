@@ -1,5 +1,5 @@
 <template>
-    <aside :class="view">
+    <aside :class="['aside-dashboard', view, { fixed: isFixed }]">
         <div>
             <ul>
                 <li :class="getClassForPage('home')">
@@ -98,16 +98,18 @@ export default defineComponent({
                 config: configIcon
             },
             showPs: true,
-            view: 'yeah'
+            view: 'yeah',
+            isFixed: false
         }
     },
     methods: {
         getClassForPage(pageLoad) {
             return this.pageName === pageLoad ? "page" : "";
         },
-        changePsVisualization(){
+        changePsVisualization() {
             this.showPs = !this.showPs;
             this.view = (this.view == 'yeah') ? 'none' : 'yeah';
+            this.checkScreenWidth();
             localStorage.setItem('asideDashboardState', JSON.stringify({
                 showPs: this.showPs,
                 view: this.view
@@ -120,10 +122,22 @@ export default defineComponent({
                 this.showPs = parsedState.showPs;
                 this.view = parsedState.view;
             }
+        },
+        checkScreenWidth() {
+            if (window.innerWidth < 1000) {
+                this.isFixed = this.view === 'yeah';
+            } else {
+                this.isFixed = false;
+            }
         }
     },
     mounted() {
         this.loadStateFromStorage();
+        this.checkScreenWidth();
+        window.addEventListener('resize', this.checkScreenWidth);
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.checkScreenWidth);
     }
 });
 </script>
