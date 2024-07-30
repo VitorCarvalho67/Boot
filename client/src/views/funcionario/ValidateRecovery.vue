@@ -1,6 +1,6 @@
 <template>
     <Header />
-    <main>
+    <main v-if="!success">
         <div class="box">
             <nav>
                 <ul>
@@ -83,12 +83,16 @@
             </form>
         </div>
     </main>
+    <main v-else>
+        <Sucess :dataSucess="dataSucess" />
+    </main>
     <Footer />
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import Sucess from '../../components/Sucess.vue';
 
 import Cookies from 'js-cookie';
 import router from '../../router/index.js';
@@ -109,7 +113,15 @@ export default {
                 newPass: '',
                 confirmNewPass: ''
             },
-            errorMessage: ''
+            errorMessage: '',
+            success: false,
+            errorMessage: '',
+            dataSucess: {
+                title: 'Senha recuperada com sucesso',
+                description: 'Realize seu login e tenha acesso a plataforma como funcionário.',
+                routerLink: '/funcionario/login',
+                buttonName: 'login'
+            }
         }
     },
     methods: {
@@ -122,9 +134,7 @@ export default {
                 });
 
                 if (200 <= response.status && response.status < 300) {
-                    router.push({ name: 'LoginFuncionario' });
-
-                    alert("Tudo certo! 😉");
+                    this.success = true;
                 } else {
                     this.errorMessage = "Ops.. Algo deu errado. 😕\n" + response.message;
                 }

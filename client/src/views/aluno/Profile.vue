@@ -82,7 +82,6 @@
 
 <script>
 import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import {
     getCurriculo,
@@ -103,7 +102,6 @@ export default {
     name: 'PerfilAluno',
     components: {
         Header,
-        Footer,
         AsideDashboard
     },
     data() {
@@ -314,4 +312,28 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/aluno/_profile.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>

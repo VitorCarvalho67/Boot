@@ -1,28 +1,30 @@
 <template>
     <Header />
-    <main>
-        <AsideDashboard pageName='home'/>
-        <div class="content">
-            <div class="box" id="box1">
-                <H1>Novidades</H1>
-                <h2>O que houve enquanto você esteve fora</h2>
-            </div>
-            <div class="box" id="box2">
-                <router-link to="/aluno/me" class="profile">
-                    <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
-                    <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
-                    <div class="info">
-                        <h3 v-text="aluno.nome"></h3>
-                        <p v-text="aluno.idade"></p>
-                        <p v-text="aluno.endereco"></p>
+    <div id="app">
+        <main>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <div class="box" id="box1">
+                    <H1>Novidades</H1>
+                    <h2>O que houve enquanto você esteve fora</h2>
+                </div>
+                <div class="box" id="box2">
+                    <router-link to="/aluno/me" class="profile">
+                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
+                        <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
+                        <div class="info">
+                            <h3 v-text="aluno.nome"></h3>
+                            <p v-text="aluno.idade"></p>
+                            <p v-text="aluno.endereco"></p>
+                        </div>
+                    </router-link>
+                    <div class="vinculos">
+                        <h3>Sugestões de vínculo</h3>
                     </div>
-                </router-link>
-                <div class="vinculos">
-                    <h3>Sugestões de vínculo</h3>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
+    </div>
     <Footer />
 
 </template>
@@ -66,7 +68,7 @@ export default {
             }
         }
     },
-    methods:{
+    methods: {
         calcularIdade(nascimento) {
             const hoje = new Date();
             const dataNascimento = new Date(nascimento);
@@ -127,4 +129,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../scss/pages/aluno/_home.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>
