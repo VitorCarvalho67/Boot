@@ -30,3 +30,17 @@ export interface CreateActivityDTO {
     professorId: string;
     imagem: Express.Multer.File;
 }
+
+export interface RelateAlunoAtividadeDTO {
+    alunoId: string;
+    atividadeId: string;
+    professorId: string;
+    mencao: Mencao;
+}
+
+export enum Mencao{
+    I = "I",
+    R = "R",
+    B = "B",
+    MB = "MB"
+}

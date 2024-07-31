@@ -24,6 +24,7 @@ model Aluno {
     tentativasRestantes     Int               @default(5)
     validated               Boolean           @default(false)
     turmas                  AlunoTurma[]
+    atividades              AlunoAtividade[]
     cursosExtracurriculares Extracurricular[]
     vinculosAluno           Vinculo[]         @relation("AlunoVinculo")
     vinculoComoAluno        Vinculo[]         @relation("VinculoComAluno")
@@ -133,6 +134,24 @@ model AlunoTurma {
     @@map("alunos_turmas")
 }
 
+model AlunoAtividade {
+    alunoId String @default(uuid())
+    atividadeId String @default(uuid())
+    mencao Mencao
+    aluno   Aluno  @relation(fields: [alunoId], references: [id])
+    atividade   Atividade  @relation(fields: [atividadeId], references: [id])
+
+    @@id([alunoId, atividadeId])
+    @@map("alunos_atividades")
+}
+
+enum Mencao {
+    I
+    R
+    B
+    MB
+}
+
 model Extracurricular {
     extracurricularId String   @id @default(uuid())
     alunoId           String
@@ -234,9 +253,10 @@ model Atividade {
     id          String    @id @default(uuid())
     title       String
     descricao   String    @db.VarChar(1000)
-    professor   Professor @relation(fields: [professorId], references: [id])
     professorId String
     imagem      String?
+    alunos      AlunoAtividade[]
+    professor   Professor @relation(fields: [professorId], references: [id])
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
 
