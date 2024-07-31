@@ -1,4 +1,4 @@
-.aside-dashboard {
+aside, .aside-dashboard {
     height: 100%;
     @include flex(row, space-between, start);
     width: 300px;
@@ -85,10 +85,15 @@
             object-fit: cover;
             margin-right: 10px;
             filter: invert(100%);
-            transform: rotateY(0deg);
         }
+    }
+}
 
-        &.none img {
+.none{
+    width: auto;
+
+    button {
+        img {
             transform: rotateY(180deg);
         }
     }
