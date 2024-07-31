@@ -5,6 +5,8 @@ import { ValidateProfessorUseCase } from "../services/professor/ValidateProfesso
 import { ValidateRecoveryUseCase } from "../services/professor/ValidateRecoveryUseCase";
 import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfessorUseCase";
 import { RefreshTokenUseCase } from "../services/professor/RefreshTokenUseCase";
+import { CreateActivityUseCase } from "../services/professor/CreateActivityUseCase";
+import { RelateAlunoAtividadeUseCase } from "../services/professor/LinkAlunoActivityUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
@@ -73,6 +75,33 @@ export class RefreshTokenController {
         const refreshTokenUseCase = new RefreshTokenUseCase();
 
         const result = await refreshTokenUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class CreateActivityController {
+    async handle(req: Request, res: Response) {
+        const professorId = req.body.entidade.id;
+        const {title, descricao} = req.body;
+        const imagem = req.file as Express.Multer.File;
+        
+        const createActivityUseCase = new CreateActivityUseCase();
+
+        const result = await createActivityUseCase.execute({title, descricao, professorId, imagem});
+
+        return res.status(201).json(result);
+    }
+}
+
+export class RelateAlunoAtividadeController {
+    async handle(req: Request, res: Response) {
+        const professorId = req.body.entidade.id;
+        const {alunoId, atividadeId, mencao} = req.body;
+        
+        const relateAlunoAtividadeUseCase = new RelateAlunoAtividadeUseCase();
+
+        const result = await relateAlunoAtividadeUseCase.execute({alunoId, atividadeId, professorId, mencao});
 
         return res.status(201).json(result);
     }

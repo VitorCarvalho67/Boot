@@ -13,7 +13,9 @@ import {
     InitProfessorController,
     RecoveryProfessorController,
     ValidateRecoveryController,
-    RefreshTokenController
+    RefreshTokenController,
+    CreateActivityController,
+    RelateAlunoAtividadeController
 } from "../../../modules/controllers/professorControllers";
 
 export const createControllers = () => ({
@@ -29,5 +31,7 @@ export const createControllers = () => ({
     getVinculosController: new GetVinculosController(),
     getUnlinkedsController: new GetUnlinkedsController(),
     refreshTokenController: new RefreshTokenController(),
-    createMessageController: new CreateMessageController()
+    createMessageController: new CreateMessageController(),
+    createActivityController: new CreateActivityController(),
+    relateAlunoAtividadeController :new RelateAlunoAtividadeController(),
 });

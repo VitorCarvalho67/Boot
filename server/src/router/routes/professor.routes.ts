@@ -19,6 +19,8 @@ professorRoutes.post("/link/accept", controllers.acceptVinculoController.handle)
 professorRoutes.post("/link/reject", controllers.ignoreVinculoController.handle);
 professorRoutes.post("/link/delete", controllers.deleteVinculoController.handle);
 professorRoutes.post("/message/send", controllers.createMessageController.handle);
+professorRoutes.post("/activity/create", controllers.createActivityController.handle);
+professorRoutes.post("/activity/relate", controllers.recoveryProfessorController.handle);
 
 professorRoutes.get("/auth", (req, res) => {
     res.status(200).send("Professor autenticado com sucesso.");
