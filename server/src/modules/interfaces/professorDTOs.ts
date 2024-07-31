@@ -23,3 +23,10 @@ export interface ValidateRecoveryDTO {
     recoveryPass: string,
     newPass: string
 }
+
+export interface CreateActivityDTO {
+    title: string;
+    descricao: string;
+    professorId: string;
+    imagem: Express.Multer.File;
+}
