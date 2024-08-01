@@ -1,18 +1,22 @@
 <template>
     <Header />
-    <main>
-        <h1>Bem-vindo admin!</h1>
-        <nav>
-            <router-link to="/admin/register/coordenador">Coordenadores</router-link>
-            <router-link to="/admin/register/professor">Professores</router-link>
-            <router-link to="/admin/register/funcionario">Funcionários</router-link>
-            <router-link to="/admin/register/curso">Cursos</router-link>
-            <router-link to="/admin/register/turma">Turmas</router-link>
-            <button @click="logout">Logout</button>
-        </nav>
-    </main>
+    <div id="app">
+        <main>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <h1>Bem-vindo admin!</h1>
+                <nav>
+                    <router-link to="/admin/register/coordenador">Coordenadores</router-link>
+                    <router-link to="/admin/register/professor">Professores</router-link>
+                    <router-link to="/admin/register/funcionario">Funcionários</router-link>
+                    <router-link to="/admin/register/curso">Cursos</router-link>
+                    <router-link to="/admin/register/turma">Turmas</router-link>
+                    <button @click="logout">Logout</button>
+                </nav>
+            </div>
+        </main>
+    </div>
     <Footer />
-
 </template>
 
 <script>
@@ -29,7 +33,7 @@ export default {
     },
     data() {
         return {
-            
+
         }
     },
     methods: {
@@ -43,5 +47,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/admin/_dashboard.scss"
+@import "../../scss/pages/admin/_dashboard.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>

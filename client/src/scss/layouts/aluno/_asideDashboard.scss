@@ -1,5 +1,5 @@
 aside, .aside-dashboard {
-    height: 100%;
+    height: calc(100vh - 80px);
     @include flex(row, space-between, start);
     width: 300px;
     background-color: $secondary-color-dark;
@@ -10,7 +10,7 @@ aside, .aside-dashboard {
     
     &.fixed {
         position: fixed;
-        top: 0;
+        top: 80px;
         left: 0;
         z-index: 1000;
     }
