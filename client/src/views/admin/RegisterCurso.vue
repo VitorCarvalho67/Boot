@@ -4,33 +4,45 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
+                <div class="path">
+                    <p>Dashboard</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Formulários</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Registro de cursos</p>
+                </div>
                 <div class="register">
                     <form @submit.prevent="submitForm">
                         <h1>Registro de Curso</h1>
+                        <p>Preencha os dados abaixo para registrar um novo curso. Certifique-se de fornecer informações
+                            corretas sobre o nome, turno, duração e coordenador do curso.</p>
 
-                        <div>
+
+                        <div class="input-box">
                             <label for="name">Nome do curso:</label>
                             <input type="text" id="name" v-model="curso.name" required>
                         </div>
 
-                        <div>
+                        <div class="select-box">
                             <Select :dataSelect="dataSelectTurno" @input="curso.turno = $event" />
                         </div>
 
-                        <div>
-                            <label>Duração:</label>
-                            <div>
-                                <input type="number" v-model="curso.duracao_quantidade" required>
-                                <Select :dataSelect="dataSelectDuracao" @input="curso.duracao_periodo = $event" />
-                            </div>
+                        <div class="input-box">
+                            <label for="">Quantidade de meses ou anos:</label>
+                            <input type="number" v-model="curso.duracao_quantidade" required>
                         </div>
 
-                        <div>
+                        <div class="select-box">
+                            <Select :dataSelect="dataSelectDuracao" @input="curso.duracao_periodo = $event" />
+                        </div>
+
+                        <div class="select-box">
                             <Select :dataSelect="dataSelectCoordenador" @input="curso.coordenador = $event" />
                         </div>
 
-                        <br>
-                        <button type="submit">Registrar</button>
+                        <div class="button-box">
+                            <button type="submit">Registrar</button>
+                        </div>
 
                     </form>
                 </div>
@@ -46,6 +58,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
 import AsideDashboard from '../../components/admin/AsideDashboard.vue';
+import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { getCoordenadores, registerCurso } from '../../services/api/admin';
@@ -60,6 +73,7 @@ export default {
     },
     data() {
         return {
+            anguloIcon,
             curso: {
                 name: '',
                 turno: '',
@@ -142,14 +156,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/admin/_registerCurso.scss";
+
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
 
     main {
         display: flex;
-        flex: 1;
         overflow: hidden;
 
         .content {

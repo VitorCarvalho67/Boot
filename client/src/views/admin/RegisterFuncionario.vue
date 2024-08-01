@@ -4,27 +4,37 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
+                <div class="path">
+                    <p>Dashboard</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Formulários</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Registro de funcionários</p>
+                </div>
                 <div class="register">
                     <form @submit.prevent="submitForm">
                         <h1>Registro de funcionário</h1>
-                        <div>
+                        <p>Preencha os dados abaixo para registrar um novo funcionário na nossa empresa. Certifique-se
+                            de fornecer informações corretas e completas.</p>
+
+                        <div class="input-box">
                             <label for="name">Nome:</label>
                             <input type="text" id="name" v-model="funcionario.name" required>
                         </div>
-                        <div>
+
+                        <div class="select-box">
                             <Select :dataSelect="dataSelect" @input="funcionario.cargo = $event" />
                         </div>
-                        <div>
+
+                        <div class="input-box">
                             <label for="email">Email:</label>
                             <input type="email" id="email" v-model="funcionario.email" @input="checkData" required>
                         </div>
-                        <br>
 
-
-                        <button v-show="allRequirementsMet" type="submit">Registrar - valido</button>
-                        <button v-show="!allRequirementsMet" type="button">Registrar - invalido</button>
-                        <br>
-
+                        <div class="button-box">
+                            <button v-show="allRequirementsMet" type="submit">Registrar</button>
+                            <button v-show="!allRequirementsMet" type="button">Registrar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -39,6 +49,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
 import AsideDashboard from '../../components/admin/AsideDashboard.vue';
+import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerFuncionario } from '../../services/api/admin';
@@ -53,6 +64,7 @@ export default {
     },
     data() {
         return {
+            anguloIcon,
             funcionario: {
                 name: '',
                 cargo: '',
@@ -116,14 +128,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/admin/_registerFuncionario.scss";
+
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
 
     main {
         display: flex;
-        flex: 1;
         overflow: hidden;
 
         .content {

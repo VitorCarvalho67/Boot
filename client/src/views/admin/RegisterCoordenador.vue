@@ -4,14 +4,24 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
+                <div class="path">
+                    <p>Dashboard</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Formulários</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Registro de Coordenador</p>
+                </div>
                 <div class="register">
                     <form @submit.prevent="submitForm">
                         <h1>Registro de Coordenador</h1>
+                        <p>Associando um professor ao cargo de coordenador, será possível atribuir turmas de um curso a
+                            esse professor.</p>
 
-                        <label for="professor">Professor a se tornar coordenador:</label>
                         <Select :dataSelect="dataSelect" @input="coordenador.name = $event" />
 
-                        <button type="submit">Registrar</button>
+                        <div class="button-box">
+                            <button type="submit">Registrar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -25,6 +35,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
 import AsideDashboard from '../../components/admin/AsideDashboard.vue';
+import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { getProfessores, registerCoordenador } from '../../services/api/admin';
@@ -39,6 +50,7 @@ export default {
     },
     data() {
         return {
+            anguloIcon,
             coordenador: {
                 name: '',
             },
@@ -97,11 +109,10 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
 
     main {
         display: flex;
-        flex: 1;
         overflow: hidden;
 
         .content {
