@@ -4,15 +4,7 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
-                <h1>Bem-vindo admin!</h1>
-                <nav>
-                    <router-link to="/admin/register/coordenador">Coordenadores</router-link>
-                    <router-link to="/admin/register/professor">Professores</router-link>
-                    <router-link to="/admin/register/funcionario">Funcionários</router-link>
-                    <router-link to="/admin/register/curso">Cursos</router-link>
-                    <router-link to="/admin/register/turma">Turmas</router-link>
-                    <button @click="logout">Logout</button>
-                </nav>
+                <!-- <h1>Bem-vindo admin!</h1> -->   
             </div>
         </main>
     </div>
@@ -22,6 +14,7 @@
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import router from '../../router/index.js'
 import { mixinAdmin } from '../../util/authMixins.js';
 
@@ -29,6 +22,7 @@ export default {
     name: 'Admin',
     components: {
         Header,
+        AsideDashboard,
         Footer
     },
     data() {

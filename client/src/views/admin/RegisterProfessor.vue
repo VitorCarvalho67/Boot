@@ -1,34 +1,39 @@
 <template>
     <Header />
-    <main>
-        <div class="register">
-            <form @submit.prevent="submitForm">
-                <h1>Registro de professor</h1>
-                <div>
-                    <label for="name">Nome:</label>
-                    <input type="text" id="name" v-model="professor.name" required>
-                </div>
-                <div>
-                    <label for="titulo">Título principal:</label>
-                    <input type="text" id="name" v-model="professor.tituloPrincipal" required>
-                </div>
-                <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" v-model="professor.email" @input="checkData" required>
-                </div>
-                <br>
+    <div id="app">
+        <main>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <div class="register">
+                    <form @submit.prevent="submitForm">
+                        <h1>Registro de professor</h1>
+                        <div>
+                            <label for="name">Nome:</label>
+                            <input type="text" id="name" v-model="professor.name" required>
+                        </div>
+                        <div>
+                            <label for="titulo">Título principal:</label>
+                            <input type="text" id="name" v-model="professor.tituloPrincipal" required>
+                        </div>
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" v-model="professor.email" @input="checkData" required>
+                        </div>
+                        <br>
 
-                <button type="submit">Registrar</button>
-            </form>
-        </div>
-    </main>
+                        <button type="submit">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
     <Footer />
-
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerProfessor } from '../../services/api/admin';
@@ -37,6 +42,7 @@ export default {
     name: 'RegisterProfessor',
     components: {
         Header,
+        AsideDashboard,
         Footer
     },
     data() {
@@ -81,4 +87,27 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/admin/_registerProfessor.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>
