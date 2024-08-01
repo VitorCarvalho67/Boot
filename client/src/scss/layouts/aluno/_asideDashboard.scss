@@ -26,6 +26,14 @@ aside, .aside-dashboard {
         ul {
             width: 100%;
             padding: 40px 0px 0px 30px;
+
+            ul{
+                padding: 0px 0px 0px 30px;
+                li {
+                    margin: 5px 0px;
+                    padding: 5px 10px;
+                }
+            }
             
             .page {
                 background-color: $terciary-color-dark;

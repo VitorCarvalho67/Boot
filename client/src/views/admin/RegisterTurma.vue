@@ -1,37 +1,42 @@
 <template>
     <Header />
-    <main>
-        <div class="register">
-            <form @submit.prevent="submitForm">
-                <h1>Registro de Turma</h1>
-                <label>Ínicio:</label>
-                <div>
-                    <input type="date" name="" id="" v-model="turma.inicio" @input="checkDateValidity">
+    <div id="app">
+        <main>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <div class="register">
+                    <form @submit.prevent="submitForm">
+                        <h1>Registro de Turma</h1>
+                        <label>Ínicio:</label>
+                        <div>
+                            <input type="date" name="" id="" v-model="turma.inicio" @input="checkDateValidity">
+                        </div>
+
+                        <label>Fim:</label>
+                        <div>
+                            <input type="date" name="" id="" v-model="turma.fim" @input="checkDateValidity">
+                        </div>
+
+                        <Select :dataSelect="selectData" @input="turma.curso = $event" />
+
+                        <br>
+
+                        <button type="submit" v-show="!invalidDate">Registrar val</button>
+                        <button type="button" v-show="invalidDate">Registrar inv</button>
+
+                    </form>
                 </div>
-
-                <label>Fim:</label>
-                <div>
-                    <input type="date" name="" id="" v-model="turma.fim" @input="checkDateValidity">
-                </div>
-
-                <Select :dataSelect="selectData" @input="turma.curso = $event"/>
-
-                <br>
-
-                <button type="submit" v-show="!invalidDate">Registrar val</button>
-                <button type="button" v-show="invalidDate">Registrar inv</button>
-
-            </form>
-        </div>
-    </main>
+            </div>
+        </main>
+    </div>
     <Footer />
-
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
+import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerTurma, getCursos } from '../../services/api/admin';
@@ -41,6 +46,7 @@ export default {
     components: {
         Header,
         Footer,
+        AsideDashboard,
         Select
     },
     data() {
@@ -53,7 +59,7 @@ export default {
             invalidDate: true,
             cursos: [],
             selectData: {
-                title: "Selecione um curso", 
+                title: "Selecione um curso",
                 description: "Curso",
                 options: [],
             },
@@ -98,7 +104,7 @@ export default {
                 this.selectData.options = this.cursos.map(curso => ({
                     value: curso.name,
                     description: curso.name
-                })) 
+                }))
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }
@@ -115,4 +121,27 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/admin/_registerTurma.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>

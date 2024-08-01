@@ -1,18 +1,22 @@
 <template>
     <Header />
-    <main>
-        <div class="register">
-            <form @submit.prevent="submitForm">
-                <h1>Registro de Coordenador</h1>
+    <div id="app">
+        <main>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <div class="register">
+                    <form @submit.prevent="submitForm">
+                        <h1>Registro de Coordenador</h1>
 
-                <label for="professor">Professor a se tornar coordenador:</label>
-                <Select :dataSelect="dataSelect" @input="coordenador.name = $event"/>
+                        <label for="professor">Professor a se tornar coordenador:</label>
+                        <Select :dataSelect="dataSelect" @input="coordenador.name = $event" />
 
-                <button type="submit">Registrar</button>
-
-            </form>
-        </div>
-    </main>
+                        <button type="submit">Registrar</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
     <Footer />
 </template>
 
@@ -20,6 +24,7 @@
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
+import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { getProfessores, registerCoordenador } from '../../services/api/admin';
@@ -29,6 +34,7 @@ export default {
     components: {
         Header,
         Footer,
+        AsideDashboard,
         Select
     },
     data() {
@@ -37,7 +43,7 @@ export default {
                 name: '',
             },
             dataSelect: {
-                title: "Selecione um professor", 
+                title: "Selecione um professor",
                 description: "Professor",
                 options: [],
             },
@@ -64,7 +70,7 @@ export default {
                 const response = await getProfessores(this.admin.token);
                 this.professores = response.data
 
-                
+
                 this.dataSelect.options = this.professores.map(professor => ({
                     value: professor.name,
                     description: professor.name
@@ -86,5 +92,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/pages/admin/_registerCoordenador.scss"
+@import "../../scss/pages/admin/_registerCoordenador.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>
