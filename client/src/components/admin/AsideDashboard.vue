@@ -40,16 +40,6 @@
                             <p v-if="showPs">Professores</p>
                         </router-link>
                     </li>
-                    <li>
-                        <router-link to="/vagas">
-                            <p v-if="showPs">Estágios</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="">
-                            <p v-if="showPs">Rankings</p>
-                        </router-link>
-                    </li>
                 </ul>
                 <li>
                     <router-link to="/admin">
@@ -59,14 +49,59 @@
                 </li>
                 <ul class="tables">
                     <li>
-                        <router-link to="/admin">
-                            <p v-if="showPs">Tabelas</p>
+                        <router-link to="/admin/register/coordenador">
+                            <p v-if="showPs">Coordenadores</p>
                         </router-link>
-
+                    </li>
+                    <li>
+                        <router-link to="/admin/register/funcionario">
+                            <p v-if="showPs">Funcionários</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin/register/curso">
+                            <p v-if="showPs">Cursos</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin/register/turma">
+                            <p v-if="showPs">Turmas</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin/register/professor">
+                            <p v-if="showPs">Professores</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin">
+                            <p v-if="showPs">Estágios</p>
+                        </router-link>
                     </li>
                 </ul>
-            </ul>
-            <ul>
+                <li>
+                    <router-link to="/admin">
+                        <img :src="icons.ranking">
+                        <p v-if="showPs">Rankings</p>
+                    </router-link>
+                </li>
+                <ul>
+                    <li>
+                        <router-link to="/admin">
+                            <p v-if="showPs">Geral</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin">
+                            <p v-if="showPs">Nota</p>
+                        </router-link>
+                    </li>
+                    <li>
+                        <router-link to="/admin">
+                            <p v-if="showPs">Atividade</p>
+                        </router-link>
+                    </li>
+                </ul>
                 <li :class="getClassForPage('config')">
                     <router-link to="/config">
                         <img :src="icons.config">

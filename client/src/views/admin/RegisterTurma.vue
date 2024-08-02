@@ -4,26 +4,36 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
+                <div class="path">
+                    <p>Dashboard</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Formulários</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Registro de turmas</p>
+                </div>
                 <div class="register">
                     <form @submit.prevent="submitForm">
                         <h1>Registro de Turma</h1>
-                        <label>Ínicio:</label>
-                        <div>
+                        <p>Preencha os dados abaixo para registrar uma nova turma. Certifique-se de fornecer informações corretas sobre as datas de início e fim, e selecione o curso apropriado.</p>
+
+                        <div class="input-box">
+                            <label>Ínicio:</label>
                             <input type="date" name="" id="" v-model="turma.inicio" @input="checkDateValidity">
                         </div>
 
-                        <label>Fim:</label>
-                        <div>
+                        <div class="input-box">
+                            <label>Fim:</label>
                             <input type="date" name="" id="" v-model="turma.fim" @input="checkDateValidity">
                         </div>
 
-                        <Select :dataSelect="selectData" @input="turma.curso = $event" />
+                        <div class="select-box">
+                            <Select :dataSelect="selectData" @input="turma.curso = $event" />
+                        </div>
 
-                        <br>
-
-                        <button type="submit" v-show="!invalidDate">Registrar val</button>
-                        <button type="button" v-show="invalidDate">Registrar inv</button>
-
+                        <div class="button-box">
+                            <button type="submit" v-show="!invalidDate">Registrar</button>
+                            <button type="button" v-show="invalidDate">Registrar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -37,6 +47,7 @@ import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
 import Select from '../../components/Select.vue';
 import AsideDashboard from '../../components/admin/AsideDashboard.vue';
+import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
 import { registerTurma, getCursos } from '../../services/api/admin';
@@ -51,6 +62,7 @@ export default {
     },
     data() {
         return {
+            anguloIcon,
             turma: {
                 inicio: '',
                 fim: '',
@@ -125,11 +137,10 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
 
     main {
         display: flex;
-        flex: 1;
         overflow: hidden;
 
         .content {
@@ -137,6 +148,7 @@ export default {
             padding: 20px;
             overflow-y: auto;
             height: 100%;
+            @include flex(column, start, flex-start);
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);

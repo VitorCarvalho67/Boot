@@ -42,7 +42,7 @@ aside, .aside-dashboard {
             li {
                 @include flex(row, flex-start, center);
                 width: 100%;
-                margin: 20px 0px;
+                margin: 20px 0px 0px 0px;
                 padding: 10px;
                 border-radius: 5px;
 
