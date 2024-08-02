@@ -375,3 +375,22 @@ function enterSockets(token){
         }
     );
 }
+
+export const sendBoletim = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        
+        const response = await api.post('aluno/upload/boletim', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log("ARQUIVO: " + file);
+        // return error.response.data;
+    }
+}

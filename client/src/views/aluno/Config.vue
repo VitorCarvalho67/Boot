@@ -38,6 +38,13 @@
                     </div>
                 </router-link>
             </div>
+            <div class="inputUpload">
+                <p>Anexo suas notas aqui enviando um boletim</p>
+                <input type="file" ref="boletimInput">
+                <button @click="sendBoletim" type="button">
+                    <img :src="imgVerificar">Salvar
+                </button>
+            </div>
         </div>
     </main>
     <Footer />
@@ -49,14 +56,16 @@ import Header from '../../components/Header.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue'
 import Footer from '../../components/Footer.vue';
 
-import router from '../../router/index.js'
-import Cookies from 'js-cookie';
 import {
     getCurriculo,
+    sendBoletim
 } from '../../services/api/aluno';
 import {
     getImage,
 } from '../../services/api/shared';
+
+import imgVerificar from '../../assets/icons/verificar.png';
+
 import { mixinAluno } from '../../util/authMixins.js';
 
 
@@ -134,6 +143,21 @@ export default {
                 console.log("Ops.. Algo deu errado ao recuperar a imagem de perfil. 😕\n" + error);
             }
         },
+        async sendBoletim(){
+            const file = this.$refs.boletimInput.files[0];
+            if (!file) return;
+
+            const response = await sendBoletim(file, this.aluno.token);
+
+            if (response.status >= 200 && response.status < 300) {
+                alert("Notas carregadas com sucesso! 😉");
+                await this.getCurriculoAluno();
+            } else {
+                alert("Ops.. Algo deu errado ao enviar notas. 😕\n" + response.message);
+            }
+
+            this.$refs.boletimInput.value = '';
+        }
     },
     mixins: [mixinAluno],
     async created() {
