@@ -1,3 +1,5 @@
+import { Multer } from "multer"
+
 export interface ValidateAlunoDTO {
     email: string,
     token: string
@@ -44,15 +46,42 @@ export interface GetTurmasByCursoDTO {
     turno: Turno
 }
 
-export interface UploadImageDTO{
+export interface UploadImageDTO {
     email: string,
     file: Express.Multer.File
 }
 
-export interface UpdatePassDTO{
+export interface UpdatePassDTO {
     email: string,
     oldPass: string
     newPass: string
+}
+
+export interface RegisterExtracurricularDTO {
+    alunoId: string;
+    instituicao: string;
+    descricao: string;
+    inicio: Date;
+    fim: Date;
+}
+
+export interface EditExtracurricularDTO {
+    alunoId: string;
+    extracurricularId: string;
+    instituicao?: string;
+    descricao?: string;
+    inicio?: Date;
+    fim?: Date;
+}
+
+export interface ExcludeExtracurricularDTO {
+    extracurricularId: string;
+    alunoId: string;
+}
+
+export interface SendNotasDTO {
+    alunoId: string;
+    boletim: Express.Multer.File
 }
 
 export enum Turno {

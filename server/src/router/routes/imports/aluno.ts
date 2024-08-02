@@ -25,7 +25,11 @@ import {
     UploadCapaController,
     ChangePassController,
     GetLastMessagesController,
-    GetMessagesBetweenController
+    GetMessagesBetweenController,
+    RegisterExtracurricularController,
+    EditExtracurricularController,
+    ExcludeExtracurricularController,
+    SendBoletimController
 } from "../../../modules/controllers/alunoControllers";
 
 export const createControllers = () => ({
@@ -53,5 +57,9 @@ export const createControllers = () => ({
     changePassController: new ChangePassController(),
     createMessageController: new CreateMessageController(),
     getLastMessagesController: new GetLastMessagesController(),
-    getMessagesBetweenController: new GetMessagesBetweenController()
+    getMessagesBetweenController: new GetMessagesBetweenController(),
+    registerExtracurricularController: new RegisterExtracurricularController(),
+    editExtracurricularController: new EditExtracurricularController(),
+    excludeExtracurricularController: new ExcludeExtracurricularController(),
+    sendBoletimController: new SendBoletimController()
 });

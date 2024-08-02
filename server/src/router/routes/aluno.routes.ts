@@ -12,8 +12,9 @@ alunoRoutes.post("/validate", controllers.validateAlunoController.handle);
 alunoRoutes.post("/login", controllers.loginAlunoController.handle);
 alunoRoutes.post("/recovery", controllers.recoveryAlunoController.handle);
 
-alunoRoutes.post('/upload/image/banner', upload.single('file'), alunoAuthMiddleware, controllers.uploadCapaController.handle );
+alunoRoutes.post('/upload/image/banner', upload.single('file'), alunoAuthMiddleware, controllers.uploadCapaController.handle);
 alunoRoutes.post('/upload/image/profile', upload.single('file'), alunoAuthMiddleware, controllers.uploadImgProfileController.handle);
+alunoRoutes.post('/upload/boletim', upload.single('file'), alunoAuthMiddleware, controllers.sendBoletimController.handle);
 
 alunoRoutes.use(alunoAuthMiddleware);
 
@@ -26,7 +27,9 @@ alunoRoutes.post("/link/reject", controllers.ignoreVinculoController.handle);
 alunoRoutes.post("/link/delete", controllers.deleteVinculoController.handle);
 alunoRoutes.post("/password/change", controllers.changePassController.handle);
 alunoRoutes.post("/message/send", controllers.createMessageController.handle);
-
+alunoRoutes.post("/extracurricular/send", controllers.registerExtracurricularController.handle);
+alunoRoutes.post("/extracurricular/edit", controllers.editExtracurricularController.handle);
+alunoRoutes.post("/extracurricular/exclude", controllers.excludeExtracurricularController.handle);
 
 alunoRoutes.get("/auth", (req, res) => {
     res.status(200).send("Aluno autenticado com sucesso.");
