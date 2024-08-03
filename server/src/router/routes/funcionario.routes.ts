@@ -14,6 +14,7 @@ funcionarioRoutes.get("/init", controllers.initFuncionarioController.handle);
 
 funcionarioRoutes.use(funcionarioAuthMiddleware);
 funcionarioRoutes.post("/register/vaga", controllers.registerVagaController.handle);
+funcionarioRoutes.post("/update/empresa", controllers.registerVagaController.handle);
 
 funcionarioRoutes.get("/auth", (req, res) => {
     res.status(200).send("Funcionário autenticado com sucesso.");

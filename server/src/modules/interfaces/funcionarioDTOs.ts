@@ -46,3 +46,8 @@ export interface RegisterVagaDTO {
     curso: string;
     descricao: string;
 }
+
+export interface SetEmpresaParceiraDTO {
+    funcionarioId: string;
+    emailEmpresa: string;
+}

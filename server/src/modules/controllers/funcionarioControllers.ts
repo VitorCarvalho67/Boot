@@ -6,6 +6,8 @@ import { RecoveryFuncionarioUseCase } from "../services/funcionario/RecoveryUseC
 import { ValidateRecoveryUseCase } from "../services/funcionario/ValidateRecoveryUseCase";
 import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase";
 import { RegisterVagaUseCase } from "../services/funcionario/RegisterVagasUseCase";
+import { SetEmpresaParceiraUseCase } from "../services/funcionario/SetAsParceiraUseCase";
+import { SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
 
 export class InitFuncionarioController {
     async handle(req: Request, res: Response) {
@@ -115,5 +117,17 @@ export class RegisterVagaController {
         });
 
         return res.status(201).json(result);
+    }
+}
+
+export class FuncionarioController {
+    async handle(req: Request, res: Response) {
+        const funcionarioId = req.body.funcionario.id;
+        const { emailEmpresa }: SetEmpresaParceiraDTO = req.body;
+
+        const setEmpresaParceiraUseCase = new SetEmpresaParceiraUseCase();
+
+        const result = await setEmpresaParceiraUseCase.execute({ funcionarioId, emailEmpresa });
+        return res.status(200).json(result);
     }
 }
