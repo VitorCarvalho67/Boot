@@ -5,11 +5,12 @@ import {
     RecoveryFuncionarioController,
     ValidateRecoveryController,
     RefreshTokenController,
-    RegisterVagaController
+    RegisterVagaController,
+    FuncionarioController,
 } from "../../../modules/controllers/funcionarioControllers";
 import { 
     GetCursosController,
-    GetEmpresasController
+    GetEmpresasController,
 } from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
@@ -21,5 +22,6 @@ export const createControllers = () => ({
     refreshTokenController: new RefreshTokenController(),
     registerVagaController: new RegisterVagaController(),
     getCursosController: new GetCursosController(),
-    getEmpresasController: new GetEmpresasController()
+    getEmpresasController: new GetEmpresasController(),
+    funcionarioController: new FuncionarioController(),
 });

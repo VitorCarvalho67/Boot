@@ -7,11 +7,11 @@
 - [ ] conversa professor
 - [ ] conversa empresa
 - [ ] exportar currículo
-- [ ] colocar o boletim
+- [x] colocar o boletim
 
 ## Funcionário
-- [ ] classificar empresa como parceira
-- [ ] Ver empresas
+- [x] classificar empresa como parceira
+- [ ] Validar boletim
 
 ## Professor
 - [ ] Mandar mensagem aluno

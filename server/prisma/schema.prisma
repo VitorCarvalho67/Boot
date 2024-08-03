@@ -24,6 +24,7 @@ model Aluno {
     tentativasRestantes     Int               @default(5)
     validated               Boolean           @default(false)
     turmas                  AlunoTurma[]
+    boletins                Boletim[]
     atividades              AlunoAtividade[]
     cursosExtracurriculares Extracurricular[]
     vinculosAluno           Vinculo[]         @relation("AlunoVinculo")
@@ -134,12 +135,29 @@ model AlunoTurma {
     @@map("alunos_turmas")
 }
 
+model Boletim {
+    id      String          @id @default(uuid())
+    alunoId String          @default(uuid())
+    link    String
+    caminho String
+    status  SituacaoBoletim @default(EM_ANALISE)
+    aluno   Aluno           @relation(fields: [alunoId], references: [id])
+
+    @@map("boletins")
+}
+
+enum SituacaoBoletim {
+    EM_ANALISE
+    RECUSADO
+    APROVADO
+}
+
 model AlunoAtividade {
-    alunoId String @default(uuid())
-    atividadeId String @default(uuid())
-    mencao Mencao
-    aluno   Aluno  @relation(fields: [alunoId], references: [id])
-    atividade   Atividade  @relation(fields: [atividadeId], references: [id])
+    alunoId     String    @default(uuid())
+    atividadeId String    @default(uuid())
+    mencao      Mencao
+    aluno       Aluno     @relation(fields: [alunoId], references: [id])
+    atividade   Atividade @relation(fields: [atividadeId], references: [id])
 
     @@id([alunoId, atividadeId])
     @@map("alunos_atividades")
@@ -250,15 +268,15 @@ enum Cargo {
 }
 
 model Atividade {
-    id          String    @id @default(uuid())
+    id          String           @id @default(uuid())
     title       String
-    descricao   String    @db.VarChar(1000)
+    descricao   String           @db.VarChar(1000)
     professorId String
     imagem      String?
     alunos      AlunoAtividade[]
-    professor   Professor @relation(fields: [professorId], references: [id])
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
+    professor   Professor        @relation(fields: [professorId], references: [id])
+    createdAt   DateTime         @default(now())
+    updatedAt   DateTime         @updatedAt
 
     @@map("atividades")
 }
