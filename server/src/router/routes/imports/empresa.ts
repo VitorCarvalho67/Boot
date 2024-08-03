@@ -4,8 +4,12 @@ import {
     LoginEmpresaController,
     RecoveryEmpresaController,
     ValidateRecoveryEmpresaController,
-    RefreshTokenController
+    RefreshTokenController,
+    GetMessagesBetweenController
 } from "../../../modules/controllers/empresaControllers";
+import {
+    CreateMessageController,
+} from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
     registerEmpresaController: new RegisterEmpresaController(),
@@ -13,5 +17,7 @@ export const createControllers = () => ({
     loginEmpresaController: new LoginEmpresaController(),
     recoveryEmpresaController: new RecoveryEmpresaController(),
     validateRecoveryEmpresaController: new ValidateRecoveryEmpresaController(),
-    refreshTokenController: new RefreshTokenController()
+    refreshTokenController: new RefreshTokenController(),
+    createMessageController: new CreateMessageController(),
+    getMessagesBetweenController: new GetMessagesBetweenController(),
 });

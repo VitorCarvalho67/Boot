@@ -7,10 +7,12 @@ import {
     RefreshTokenController,
     RegisterVagaController,
     FuncionarioController,
+    GetMessagesBetweenController
 } from "../../../modules/controllers/funcionarioControllers";
 import { 
     GetCursosController,
     GetEmpresasController,
+    CreateMessageController
 } from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
@@ -24,4 +26,6 @@ export const createControllers = () => ({
     getCursosController: new GetCursosController(),
     getEmpresasController: new GetEmpresasController(),
     funcionarioController: new FuncionarioController(),
+    createMessageController: new CreateMessageController(),
+    getMessagesBetweenController: new GetMessagesBetweenController(),
 });

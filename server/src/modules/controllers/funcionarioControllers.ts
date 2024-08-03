@@ -8,6 +8,8 @@ import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase
 import { RegisterVagaUseCase } from "../services/funcionario/RegisterVagasUseCase";
 import { SetEmpresaParceiraUseCase } from "../services/funcionario/SetAsParceiraUseCase";
 import { SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
+import { EntidadeEnum } from "../interfaces/sharedDTOs";
+import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
 
 export class InitFuncionarioController {
     async handle(req: Request, res: Response) {
@@ -129,5 +131,25 @@ export class FuncionarioController {
 
         const result = await setEmpresaParceiraUseCase.execute({ funcionarioId, emailEmpresa });
         return res.status(200).json(result);
+    }
+}
+
+export class GetMessagesBetweenController {
+    async handle(req: Request, res: Response) {
+        const email1 = req.body.entidade.email as string;
+        const identifier1 = "FUNCIONARIO" as EntidadeEnum;
+
+        const email2 = req.query.email2 as string;
+        const identifier2 = req.query.identifier2 as EntidadeEnum;
+
+        if (!email2 || !identifier2) {
+            return res.status(400).json({ error: "Parâmetros insuficientes ou inválidos." });
+        }
+
+        const getMessagesBetween = new GetMessagesBetweenUseCase();
+
+        const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
+
+        return res.status(201).json(result);
     }
 }

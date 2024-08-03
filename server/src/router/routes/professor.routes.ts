@@ -29,5 +29,7 @@ professorRoutes.get("/auth", (req, res) => {
 professorRoutes.get("/links", controllers.getVinculosController.handle);
 professorRoutes.get("/unlinkeds", controllers.getUnlinkedsController.handle);
 professorRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
+professorRoutes.get("/messages/between", controllers.getMessagesBetweenController.handle);
+
 
 export { professorRoutes };

@@ -15,6 +15,7 @@ funcionarioRoutes.get("/init", controllers.initFuncionarioController.handle);
 funcionarioRoutes.use(funcionarioAuthMiddleware);
 funcionarioRoutes.post("/register/vaga", controllers.registerVagaController.handle);
 funcionarioRoutes.post("/update/empresa", controllers.registerVagaController.handle);
+funcionarioRoutes.post("/message/send", controllers.createMessageController.handle);
 
 funcionarioRoutes.get("/auth", (req, res) => {
     res.status(200).send("Funcionário autenticado com sucesso.");
@@ -23,5 +24,7 @@ funcionarioRoutes.get("/auth", (req, res) => {
 funcionarioRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
 funcionarioRoutes.get("/cursos", controllers.getCursosController.handle);
 funcionarioRoutes.get("/empresas", controllers.getEmpresasController.handle);
+funcionarioRoutes.get("/messages/between", controllers.getMessagesBetweenController.handle);
+
 
 export { funcionarioRoutes };
