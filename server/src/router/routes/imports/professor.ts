@@ -15,7 +15,8 @@ import {
     ValidateRecoveryController,
     RefreshTokenController,
     CreateActivityController,
-    RelateAlunoAtividadeController
+    RelateAlunoAtividadeController,
+    GetMessagesBetweenController
 } from "../../../modules/controllers/professorControllers";
 
 export const createControllers = () => ({
@@ -33,5 +34,6 @@ export const createControllers = () => ({
     refreshTokenController: new RefreshTokenController(),
     createMessageController: new CreateMessageController(),
     createActivityController: new CreateActivityController(),
-    relateAlunoAtividadeController :new RelateAlunoAtividadeController(),
+    relateAlunoAtividadeController: new RelateAlunoAtividadeController(),
+    getMessagesBetweenController: new GetMessagesBetweenController()
 });

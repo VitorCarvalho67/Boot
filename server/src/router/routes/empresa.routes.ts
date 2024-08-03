@@ -12,11 +12,13 @@ empresaRoutes.post("/recovery", controllers.recoveryEmpresaController.handle);
 empresaRoutes.post("/recovery/validate", controllers.validateRecoveryEmpresaController.handle);
 
 empresaRoutes.use(empresaAuthMiddleware);
+empresaRoutes.post("/message/send", controllers.createMessageController.handle);
 
 empresaRoutes.get("/auth", (req, res) => {
     res.status(200).send("Empresa autenticada com sucesso.");
 });
 
 empresaRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
+empresaRoutes.get("/messages/between", controllers.getMessagesBetweenController.handle);
 
 export { empresaRoutes };

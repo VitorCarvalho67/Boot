@@ -7,6 +7,8 @@ import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfesso
 import { RefreshTokenUseCase } from "../services/professor/RefreshTokenUseCase";
 import { CreateActivityUseCase } from "../services/professor/CreateActivityUseCase";
 import { RelateAlunoAtividadeUseCase } from "../services/professor/LinkAlunoActivityUseCase";
+import { EntidadeEnum } from "../interfaces/sharedDTOs";
+import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
@@ -102,6 +104,26 @@ export class RelateAlunoAtividadeController {
         const relateAlunoAtividadeUseCase = new RelateAlunoAtividadeUseCase();
 
         const result = await relateAlunoAtividadeUseCase.execute({alunoId, atividadeId, professorId, mencao});
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetMessagesBetweenController {
+    async handle(req: Request, res: Response) {
+        const email1 = req.body.entidade.email as string;
+        const identifier1 = "PROFESSOR" as EntidadeEnum;
+
+        const email2 = req.query.email2 as string;
+        const identifier2 = req.query.identifier2 as EntidadeEnum;
+
+        if (!email2 || !identifier2) {
+            return res.status(400).json({ error: "Parâmetros insuficientes ou inválidos." });
+        }
+
+        const getMessagesBetween = new GetMessagesBetweenUseCase();
+
+        const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
 
         return res.status(201).json(result);
     }

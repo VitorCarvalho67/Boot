@@ -4,8 +4,7 @@
 - [x] add extracurricular
 - [x] edit extracurricular
 - [x] exclude extracurricular
-- [ ] conversa professor
-- [ ] conversa empresa
+- [x] conversa empresa
 - [ ] exportar currículo
 - [x] colocar o boletim
 
@@ -14,7 +13,6 @@
 - [ ] Validar boletim
 
 ## Professor
-- [ ] Mandar mensagem aluno
 
 ## Empresa
 
