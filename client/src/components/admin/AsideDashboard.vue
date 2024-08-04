@@ -49,7 +49,7 @@
                 </li>
                 <ul class="tables">
                     <li>
-                        <router-link to="/admin/register/coordenador">
+                        <router-link to="/admin/table/coordenador">
                             <p v-if="showPs">Coordenadores</p>
                         </router-link>
                     </li>

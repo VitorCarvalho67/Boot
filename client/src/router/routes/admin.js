@@ -5,6 +5,7 @@ import RegisterCoordenador from '../../views/admin/RegisterCoordenador.vue';
 import RegisterCurso from '../../views/admin/RegisterCurso.vue';
 import RegisterFuncionario from '../../views/admin/RegisterFuncionario.vue';
 import RegisterTurma from '../../views/admin/RegisterTurma.vue';
+import TableCoordenadores from '../../views/admin/TableCoordenador.vue';
 
 import {
     isAuthAdmin
@@ -61,5 +62,10 @@ export const adminRoutes = [
         name: 'RegisterFuncionario',
         component: RegisterFuncionario,
 
-    }
+    },
+    {
+        path: '/admin/table/coordenador',
+        name: 'TableCoordenadores',
+        component: TableCoordenadores,
+    },
 ]
