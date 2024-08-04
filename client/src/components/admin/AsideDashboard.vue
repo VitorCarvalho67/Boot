@@ -54,22 +54,22 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin/register/funcionario">
+                        <router-link to="/admin/table/funcionario">
                             <p v-if="showPs">Funcionários</p>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin/register/curso">
+                        <router-link to="/admin/table/curso">
                             <p v-if="showPs">Cursos</p>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin/register/turma">
+                        <router-link to="/admin/table/turma">
                             <p v-if="showPs">Turmas</p>
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin/register/professor">
+                        <router-link to="/admin/table/professor">
                             <p v-if="showPs">Professores</p>
                         </router-link>
                     </li>
