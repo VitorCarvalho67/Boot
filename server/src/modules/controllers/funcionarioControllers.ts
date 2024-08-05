@@ -7,9 +7,11 @@ import { ValidateRecoveryUseCase } from "../services/funcionario/ValidateRecover
 import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase";
 import { RegisterVagaUseCase } from "../services/funcionario/RegisterVagasUseCase";
 import { SetEmpresaParceiraUseCase } from "../services/funcionario/SetAsParceiraUseCase";
-import { SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
+import { CompareBoletimDTO, SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
 import { EntidadeEnum } from "../interfaces/sharedDTOs";
 import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
+import { CompareBoletimUseCase } from "../services/funcionario/CompareBoletinsUseCase";
+import { GetBoletinsEmAnaliseUseCase } from "../services/funcionario/GetunapprovedUsecase";
 
 export class InitFuncionarioController {
     async handle(req: Request, res: Response) {
@@ -149,6 +151,30 @@ export class GetMessagesBetweenController {
         const getMessagesBetween = new GetMessagesBetweenUseCase();
 
         const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class CompareBoletimController {
+    async handle(req: Request, res: Response): Promise<Response> {
+        const { boletimId } = req.body;
+        const file = req.file as Express.Multer.File;
+
+        const compareBoletimUseCase = new CompareBoletimUseCase();
+
+        const result = await compareBoletimUseCase.execute({boletimId, file});
+
+        return res.status(200).json(result);
+        
+    }
+}
+
+export class GetBoletinsEmAnaliseController {
+    async handle(req: Request, res: Response) {
+        const getBoletinsEmAnaliseUseCase = new GetBoletinsEmAnaliseUseCase();
+
+        const result = await getBoletinsEmAnaliseUseCase.execute();
 
         return res.status(201).json(result);
     }

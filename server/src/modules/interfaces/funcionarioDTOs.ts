@@ -51,3 +51,8 @@ export interface SetEmpresaParceiraDTO {
     funcionarioId: string;
     emailEmpresa: string;
 }
+
+export interface CompareBoletimDTO {
+    boletimId: string;
+    file: Express.Multer.File;
+}
