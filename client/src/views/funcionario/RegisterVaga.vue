@@ -1,88 +1,109 @@
 <template>
+    <Header />
     <div id="app">
-        <Header />
         <main>
-            <div class="register">
-                <form @submit.prevent="submitForm">
-                    <h1>Registro de vaga</h1>
+            <AsideDashboard pageName='home' />
+            <div class="content">
+                <div class="path">
+                    <p>Dashboard</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Formulários</p>
+                    <img :src="anguloIcon" alt="">
+                    <p>Registro de vagas</p>
+                </div>
+                <div class="register">
+                    <form @submit.prevent="submitForm">
+                        
+                        <div class="box1 box">
+                            <h1>Registro de vaga</h1>
+                            
+                            <div class="input-box">
+                                <label>Título</label>
+                                <input type="text" v-model="vaga.titulo">
+                            </div>
 
-                    <div>
-                        <label>Título</label>
-                        <input type="text" v-model="vaga.titulo">
-                    </div>
+                            <div class="select-box">
+                                <Select :dataSelect="selectDataEmpresas" @input="vaga.empresa = $event" />
+                            </div>
 
-                    <Select :dataSelect="selectDataEmpresas" @input="vaga.empresa = $event" />
+                            <div class="requisitos input-box">
+                                <label>Requisitos</label>
+                                <div v-for="(requisito, index) in vaga.requisitos" :key="index" class="requisito">
+                                    <p :v-text="'Requisito' + index + ':'"></p>
+                                    <input type="text" v-model="vaga.requisitos[index]">
+                                </div>
+                                <button type="button" @click="addRequisito"
+                                    v-if="vaga.requisitos[vaga.requisitos.length - 1] != ''">
+                                    Adicionar requisito
+                                </button>
+                            </div>
 
-                    <div class="requisitos">
-                        <label>Requisitos</label>
-                        <div v-for="(requisito, index) in vaga.requisitos" :key="index" class="requisito">
-                            <p :v-text="'Requisito' + index + ':'"></p>
-                            <input type="text" v-model="vaga.requisitos[index]">
+                            <div class="beneficios input-box">
+                                <label>Benefícios</label>
+                                <div v-for="(beneficio, index) in vaga.beneficios" :key="index" class="beneficio">
+                                    <p :v-text="'beneficio' + index + ':'"></p>
+                                    <input type="text" v-model="vaga.beneficios[index]">
+                                </div>
+                                <button type="button" @click="addBeneficio"
+                                    v-if="vaga.beneficios[vaga.beneficios.length - 1] != ''">
+                                    Adicionar beneficio
+                                </button>
+                            </div>
+
+                            <div class="input-box">
+                                <label>Remuneração</label>
+                                <input type="text" v-model="vaga.remuneracao">
+                            </div>
+
                         </div>
-                        <button type="button" @click="addRequisito"
-                            v-if="vaga.requisitos[vaga.requisitos.length - 1] != ''">
-                            <img src="" alt="">
-                            <p>Adicionar requisito</p>
-                        </button>
-                    </div>
 
-                    <div class="beneficios">
-                        <label>Benefícios</label>
-                        <div v-for="(beneficio, index) in vaga.beneficios" :key="index" class="beneficio">
-                            <p :v-text="'beneficio' + index + ':'"></p>
-                            <input type="text" v-model="vaga.beneficios[index]">
+                        <div class="box2 box">
+
+                            <div class="input-box">
+                                <label>Carga horária</label>
+                                <input type="text" v-model="vaga.cargaHoraria">
+                            </div>
+                            
+                            <div class="input-box">
+                                <label>Entrada</label>
+                                <input type="text" v-model="vaga.inicio">
+                            </div>
+                            
+                            <div class="input-box">
+                                <label>Saída</label>
+                                <input type="text" v-model="vaga.fim">
+                            </div>
+                            
+                            <div class="select-box">
+                                <Select :dataSelect="selectData" @input="vaga.curso = $event" />
+                                <Select :dataSelect="selectDataStatus" @input="vaga.status = $event" />
+                            </div>
+                            
+                            <div class="input-box">
+                            <label>Descrição</label>
+                            <textarea v-model="vaga.descricao"></textarea>
                         </div>
-                        <button type="button" @click="addBeneficio"
-                            v-if="vaga.beneficios[vaga.beneficios.length - 1] != ''">
-                            <img src="" alt="">
-                            <p>Adicionar beneficio</p>
-                        </button>
+                        
+                        <div class="button-box">
+                            <button type="button" @click="submitForm">Registrar</button>
+                        </div>
                     </div>
-
-                    <div>
-                        <label>Remuneração</label>
-                        <input type="text" v-model="vaga.remuneracao">
-                    </div>
-
-                    <div>
-                        <label>Carga horária</label>
-                        <input type="text" v-model="vaga.cargaHoraria">
-                    </div>
-
-                    <div>
-                        <label>Entrada</label>
-                        <input type="text" v-model="vaga.inicio">
-                    </div>
-
-                    <div>
-                        <label>Saída</label>
-                        <input type="text" v-model="vaga.fim">
-                    </div>
-
-                    <Select :dataSelect="selectData" @input="vaga.curso = $event" />
-                    <br>
-
-                    <Select :dataSelect="selectDataStatus" @input="vaga.status = $event" />
-                    <br>
-                    
-                    <div>
-                        <label>Descrição</label>
-                        <textarea v-model="vaga.descricao"></textarea>
-                    </div>
-
-                    <button type="button" @click="submitForm">Registrar</button>
-
-                </form>
+                        
+                    </form>
+                </div>
             </div>
         </main>
-        <Footer />
     </div>
+    <Footer />
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/funcionario/AsideDashboard.vue';
 import Select from '../../components/Select.vue';
+import anguloIcon from '../../assets/icons/angulo.png';
+
 
 import { mixinFuncionario } from '../../util/authMixins.js';
 import { registerVaga, getCursos, getEmpresas } from '../../services/api/funcionario';
@@ -91,11 +112,13 @@ export default {
     name: 'RegisterVaga',
     components: {
         Header,
+        AsideDashboard,
         Footer,
         Select
     },
     data() {
         return {
+            anguloIcon,
             vaga: {
                 titulo: '',
                 empresa: '',
@@ -216,4 +239,26 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../scss/pages/funcionario/_registerVaga.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 80px);
+
+    main {
+        display: flex;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>
