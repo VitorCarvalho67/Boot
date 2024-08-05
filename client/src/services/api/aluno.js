@@ -390,7 +390,6 @@ export const sendBoletim = async (file, token) => {
         });
         return response;
     } catch (error) {
-        console.log("ARQUIVO: " + file);
-        // return error.response.data;
+        return error.response.data;
     }
 }

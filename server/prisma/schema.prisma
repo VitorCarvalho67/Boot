@@ -23,6 +23,7 @@ model Aluno {
     rm                      String?           @unique
     tentativasRestantes     Int               @default(5)
     validated               Boolean           @default(false)
+    notas                   Nota[]
     turmas                  AlunoTurma[]
     boletins                Boletim[]
     atividades              AlunoAtividade[]
@@ -91,16 +92,17 @@ model Admin {
 }
 
 model Curso {
-    id            String      @id @default(uuid())
+    id            String         @id @default(uuid())
     name          String
     turno         Turno
     duracao       String
-    coordenador   Coordenador @relation(fields: [coordenadorId], references: [id])
+    coordenador   Coordenador    @relation(fields: [coordenadorId], references: [id])
     coordenadorId String
+    materias      CursoMateria[]
     turma         Turma[]
     vaga          Vaga[]
-    createdAt     DateTime    @default(now())
-    updatedAt     DateTime    @updatedAt
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
 
     @@map("cursos")
 }
@@ -304,4 +306,40 @@ model Mensagem {
     updatedAt                 DateTime     @updatedAt
 
     @@map("mensagens")
+}
+
+model Materia {
+    id        String         @id @default(uuid())
+    name      String
+    cursos    CursoMateria[]
+    createdAt DateTime       @default(now())
+    updatedAt DateTime       @updatedAt
+    Nota      Nota[]
+
+    @@map("materias")
+}
+
+model CursoMateria {
+    cursoId   String  @default(uuid())
+    materiaId String  @default(uuid())
+    curso     Curso   @relation(fields: [cursoId], references: [id])
+    materia   Materia @relation(fields: [materiaId], references: [id])
+
+    @@id([cursoId, materiaId])
+    @@map("cursos_materias")
+}
+
+model Nota {
+    id        String   @id @default(uuid())
+    alunoId   String
+    materiaId String
+    bimestre  Int
+    ano       Int
+    mencao    Mencao
+    aluno     Aluno    @relation(fields: [alunoId], references: [id])
+    materia   Materia  @relation(fields: [materiaId], references: [id])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("notas")
 }
