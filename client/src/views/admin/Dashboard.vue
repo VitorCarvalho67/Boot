@@ -4,7 +4,7 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
-                <!-- <h1>Bem-vindo admin!</h1> -->   
+                <h1>Bem-vindo, Administrador!</h1>   
             </div>
         </main>
     </div>

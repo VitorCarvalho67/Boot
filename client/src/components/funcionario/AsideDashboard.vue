@@ -16,28 +16,8 @@
                 </li>
                 <ul class="forms">
                     <li>
-                        <router-link to="/admin/register/coordenador">
-                            <p v-if="showPs">Coordenadores</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/register/funcionario">
-                            <p v-if="showPs">Funcionários</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/register/curso">
-                            <p v-if="showPs">Cursos</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/register/turma">
-                            <p v-if="showPs">Turmas</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/register/professor">
-                            <p v-if="showPs">Professores</p>
+                        <router-link to="/funcionario/register/vaga">
+                            <p v-if="showPs">Registro de Vagas</p>
                         </router-link>
                     </li>
                 </ul>
@@ -49,56 +29,8 @@
                 </li>
                 <ul class="tables">
                     <li>
-                        <router-link to="/admin/table/coordenador">
-                            <p v-if="showPs">Coordenadores</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/table/funcionario">
-                            <p v-if="showPs">Funcionários</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/table/curso">
-                            <p v-if="showPs">Cursos</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/table/turma">
-                            <p v-if="showPs">Turmas</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin/table/professor">
-                            <p v-if="showPs">Professores</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin">
-                            <p v-if="showPs">Estágios</p>
-                        </router-link>
-                    </li>
-                </ul>
-                <li>
-                    <router-link to="/admin">
-                        <img :src="icons.ranking">
-                        <p v-if="showPs">Rankings</p>
-                    </router-link>
-                </li>
-                <ul>
-                    <li>
-                        <router-link to="/admin">
-                            <p v-if="showPs">Geral</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin">
-                            <p v-if="showPs">Nota</p>
-                        </router-link>
-                    </li>
-                    <li>
-                        <router-link to="/admin">
-                            <p v-if="showPs">Atividade</p>
+                        <router-link to="/funcionario/table/vaga">
+                            <p v-if="showPs">Vagas Registradas</p>
                         </router-link>
                     </li>
                 </ul>

@@ -52,7 +52,6 @@ export default {
     methods: {
         async fetchCoordenadores() {
             const data = await getCoordenadores(this.admin.token);
-            console.log('Received coordenadores data:', data.data);
             this.coordenadores = data.data;
         }
     },

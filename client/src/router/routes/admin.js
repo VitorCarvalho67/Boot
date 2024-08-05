@@ -6,6 +6,10 @@ import RegisterCurso from '../../views/admin/RegisterCurso.vue';
 import RegisterFuncionario from '../../views/admin/RegisterFuncionario.vue';
 import RegisterTurma from '../../views/admin/RegisterTurma.vue';
 import TableCoordenadores from '../../views/admin/TableCoordenador.vue';
+import TableCursos from '../../views/admin/TableCurso.vue';
+import TableFuncionarios from '../../views/admin/TableFuncionario.vue';
+import TableProfessores from '../../views/admin/TableProfessor.vue';
+import TableTurmas from '../../views/admin/TableTurma.vue';
 
 import {
     isAuthAdmin
@@ -67,5 +71,25 @@ export const adminRoutes = [
         path: '/admin/table/coordenador',
         name: 'TableCoordenadores',
         component: TableCoordenadores,
+    },
+    {
+        path: '/admin/table/curso',
+        name: 'TableCursos',
+        component: TableCursos,
+    },
+    {
+        path: '/admin/table/funcionario',
+        name: 'TableFuncionarios',
+        component: TableFuncionarios,
+    },
+    {
+        path: '/admin/table/professor',
+        name: 'TableProfessores',
+        component: TableProfessores,
+    },
+    {
+        path: '/admin/table/turma',
+        name: 'TableTurmas',
+        component: TableTurmas,
     },
 ]
