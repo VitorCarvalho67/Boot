@@ -7,10 +7,16 @@ import {
     RegisterProfessorController,
     RegisterFuncionarioController,
     RegisterCoordenadorController,
-    GetAllProfessorController,
-    GetCoordenadorController,
+    GetAllProfessoresController,
+    GetAllCoordenadoresController,
     RegisterTurmaController,
-    RefreshTokenController
+    RefreshTokenController,
+    GetFullProfessoresController,
+    GetFullCoordenadoresController,
+    GetFullCursosController,
+    GetFullEstagiosController,
+    GetFullFuncionariosController,
+    GetFullTurmasController
 } from "../../../modules/controllers/adminControllers";
 
 export const createControllers = () => ({
@@ -20,8 +26,15 @@ export const createControllers = () => ({
     registerFuncionarioController: new RegisterFuncionarioController(),
     registerCoordenadorController: new RegisterCoordenadorController(),
     registerTurmaController: new RegisterTurmaController(),
-    getAllProfessorController: new GetAllProfessorController(),
-    getCoordenadoresController: new GetCoordenadorController(),
     getCursosController: new GetCursosController(),
     refreshTokenController: new RefreshTokenController(),
+    getAllProfessoresController: new GetAllProfessoresController(),
+    getAllCoordenadoresController: new GetAllCoordenadoresController(),
+    getFullProfessoresController: new GetFullProfessoresController(),
+    getFullCoordenadoresController: new GetFullCoordenadoresController(),
+    getFullCursosController: new GetFullCursosController(),
+    getFullEstagiosController: new GetFullEstagiosController(),
+    getFullFuncionariosController: new GetFullFuncionariosController(),
+    getFullTurmasController: new GetFullTurmasController()
+
 });

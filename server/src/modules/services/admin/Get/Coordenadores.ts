@@ -1,5 +1,4 @@
-import { prisma } from "../../../prisma/client";
-import { AppError } from "../../../errors/error";
+import { prisma } from "../../../../prisma/client";
 import { Coordenador } from "@prisma/client";
 
 export class GetCoordenadorUseCase {

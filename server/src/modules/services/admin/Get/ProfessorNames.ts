@@ -1,9 +1,9 @@
-import { prisma } from "../../../prisma/client";
-import { AppError } from "../../../errors/error";
+import { prisma } from "../../../../prisma/client";
+import { AppError } from "../../../../errors/error";
 import { Professor } from "@prisma/client";
 import { Coordenador } from "@prisma/client";
 
-export class GetAllProfessorUseCase {
+export class GetAllProfessoresNamesUseCase {
     async execute(): Promise<Pick<Professor, 'name'>[]> {
 
         const professores = await prisma.professor.findMany({
