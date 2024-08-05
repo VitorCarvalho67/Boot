@@ -7,7 +7,9 @@ import {
     RefreshTokenController,
     RegisterVagaController,
     FuncionarioController,
-    GetMessagesBetweenController
+    GetMessagesBetweenController,
+    CompareBoletimController,
+    GetBoletinsEmAnaliseController
 } from "../../../modules/controllers/funcionarioControllers";
 import { 
     GetCursosController,
@@ -28,4 +30,6 @@ export const createControllers = () => ({
     funcionarioController: new FuncionarioController(),
     createMessageController: new CreateMessageController(),
     getMessagesBetweenController: new GetMessagesBetweenController(),
+    compareBoletimController: new CompareBoletimController(),
+    getBoletinsEmAnaliseController: new GetBoletinsEmAnaliseController(),
 });
