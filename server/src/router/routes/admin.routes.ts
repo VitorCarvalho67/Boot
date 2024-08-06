@@ -19,9 +19,15 @@ adminRoutes.get("/auth", (req, res) => {
     res.status(200).send("Admin autenticado com sucesso.");
 });
 
-adminRoutes.get("/professores", controllers.getAllProfessorController.handle);
-adminRoutes.get("/coordenadores", controllers.getCoordenadoresController.handle);
+adminRoutes.get("/professores", controllers.getAllProfessoresController.handle);
+adminRoutes.get("/coordenadores", controllers.getAllCoordenadoresController.handle);
 adminRoutes.get("/cursos", controllers.getCursosController.handle);
 adminRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
+adminRoutes.get("table/professores", controllers.getFullProfessoresController.handle);
+adminRoutes.get("table/coordenadores", controllers.getFullCoordenadoresController.handle);
+adminRoutes.get("table/cursos", controllers.getFullCursosController.handle);
+adminRoutes.get("table/estagios", controllers.getFullEstagiosController.handle);
+adminRoutes.get("table/funcionarios", controllers.getFullFuncionariosController.handle);
+adminRoutes.get("table/turmas", controllers.getFullTurmasController.handle);
 
 export { adminRoutes };

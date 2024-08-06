@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { GetAllProfessorUseCase } from "../services/admin/GetAllProfessorUseCase";
-import { GetCoordenadorUseCase } from "../services/admin/GetCoordenadoresUseCase";
 import { LoginAdminUseCase } from "../services/admin/LoginAdminUseCase";
 import { RegisterCoordenadorUseCase } from '../services/admin/RegisterCoordenadorUseCase';
 import { RegisterCursosUseCase } from '../services/admin/RegisterCursosUseCase';
@@ -8,19 +6,49 @@ import { RegisterFuncionarioUseCase } from '../services/admin/RegisterFuncionari
 import { RegisterProfessorUseCase } from '../services/admin/RegisterProfessorUseCase';
 import { RegisterTurmasUseCase } from '../services/admin/RegisterTurmasUseCase';
 import { RefreshTokenUseCase } from "../services/admin/RefreshTokenUseCase";
+import { GetProfessoresUseCase } from "../services/admin/Get/Professores";
+import { GetFullTurmasUseCase } from "../services/admin/Get/Turmas";
+import { GetFullFuncionariosUseCase } from "../services/admin/Get/Funcionario";
+import { GetFullEstagiosUseCase } from "../services/admin/Get/Estagios";
+import { GetFullCursosUseCase } from "../services/admin/Get/Cursos";
+import { GetCoordenadorUseCase } from "../services/admin/Get/Coordenadores";
+import { GetAllProfessoresNamesUseCase } from "../services/admin/Get/ProfessorNames";
+import { GetCoordenadoresNamesUseCase } from "../services/admin/Get/CoordenasdoresNames";
 
-export class GetAllProfessorController {
+export class GetAllProfessoresController {
     async handle(req: Request, res: Response) {
 
-        const getAllProfessorUseCase = new GetAllProfessorUseCase();
+        const getProfessoresUseCase = new GetAllProfessoresNamesUseCase();
 
-        const result = await getAllProfessorUseCase.execute();
+        const result = await getProfessoresUseCase.execute();
 
         return res.status(201).json(result);
     }
 }
 
-export class GetCoordenadorController {
+export class GetAllCoordenadoresController {
+    async handle(req: Request, res: Response) {
+
+        const getCoordenadorUseCase = new GetCoordenadoresNamesUseCase();
+
+        const result = await getCoordenadorUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullProfessoresController {
+    async handle(req: Request, res: Response) {
+
+        const getProfessoresUseCase = new GetProfessoresUseCase();
+
+        const result = await getProfessoresUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullCoordenadoresController {
     async handle(req: Request, res: Response) {
 
         const getCoordenadorUseCase = new GetCoordenadorUseCase();
@@ -110,6 +138,50 @@ export class RefreshTokenController {
         const refreshTokenUseCase = new RefreshTokenUseCase();
 
         const result = await refreshTokenUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullTurmasController {
+    async handle(req: Request, res: Response) {
+
+        const getFullTurmasUseCase = new GetFullTurmasUseCase();
+
+        const result = await getFullTurmasUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullEstagiosController {
+    async handle(req: Request, res: Response) {
+
+        const getFullEstagiosUseCase = new GetFullEstagiosUseCase();
+
+        const result = await getFullEstagiosUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullFuncionariosController {
+    async handle(req: Request, res: Response) {
+
+        const getFullFuncionariosUseCase = new GetFullFuncionariosUseCase();
+
+        const result = await getFullFuncionariosUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullCursosController {
+    async handle(req: Request, res: Response) {
+
+        const getFullCursosUseCase = new GetFullCursosUseCase();
+
+        const result = await getFullCursosUseCase.execute();
 
         return res.status(201).json(result);
     }
