@@ -9,7 +9,7 @@
                     <img :src="anguloIcon" alt="">
                     <p>Tabelas</p>
                     <img :src="anguloIcon" alt="">
-                    <p>Funcionarios</p>
+                    <p>Funcionários</p>
                 </div>
                 <div class="table">
                     <div class="table-header">
@@ -19,7 +19,13 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="funcionario in funcionarios" :key="funcionario.id">
-                            <div class="table-cell">{{ funcionario }}</div>
+                            <div class="table-cell">
+                                <p>{{funcionario.name}}</p>
+                                <p>{{funcionario.email}}</p>
+                                <p>Validado: {{funcionario.validated}}</p>
+                                <p>Ocupação: {{cargos[funcionario.cargo]}}</p>
+                                <p>Registro: {{ formatarData(funcionario.createdAt) }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,13 +52,37 @@ export default {
     data() {
         return {
             anguloIcon,
-            funcionarios: []
+            funcionarios: [],
+            cargos: {
+                GESTAO: "Gestão",
+                ADMINISTRACAO: "Administração",
+                DIRECAO: "Direção",
+                ORIENTACAO: "Orientação"
+            }
         }
     },
     methods: {
         async fetchFuncionarios() {
             const data = await getFullFuncionarios(this.admin.token);
             this.funcionarios = data.data;
+        },
+        formatarData(data) {
+            const dataAtual = new Date();
+            const dataMensagem = new Date(data);
+
+            if (dataMensagem.toDateString() === dataAtual.toDateString()) {
+                return dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                const diff = Math.floor((dataAtual - dataMensagem) / (1000 * 60 * 60 * 24));
+
+                if (diff === 1) {
+                    return `Ontem, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (diff <= 7) {
+                    return `${dataMensagem.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return dataMensagem.toLocaleString();
+                }
+            }
         }
     },
     mixins: [mixinAdmin],

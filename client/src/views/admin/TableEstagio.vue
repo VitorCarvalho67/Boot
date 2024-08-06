@@ -9,17 +9,55 @@
                     <img :src="anguloIcon" alt="">
                     <p>Tabelas</p>
                     <img :src="anguloIcon" alt="">
-                    <p>estagios</p>
+                    <p>Estágios</p>
                 </div>
                 <div class="table">
                     <div class="table-header">
                         <div class="table-row">
-                            <div class="table-cell">Estagios Registradas</div>
+                            <div class="table-cell">Vagas Registradas</div>
                         </div>
                     </div>
                     <div class="table-body">
-                        <div class="table-row" v-for="estagio in estagios" :key="estagio.id">
-                            <div class="table-cell">{{ estagio }}</div>
+                        <div class="table-row" v-for="vaga in estagios" :key="vaga.id">
+                            <div class="table-cell">
+                                <div class="vaga-header">
+                                    <strong v-text="vaga.titulo"></strong>
+                                    <p v-text="'Registrado por ' + vaga.funcionario.name"></p>
+                                    <p>Empresa: <router-link :to="'/empresa/' + vaga.empresa.cnpj">{{ vaga.empresa.name}}</router-link></p>
+                                    <p class="status" v-text="situacao[vaga.status]"></p>
+                                </div>
+
+                                <section class="vaga-info">
+                                    <strong>Requisitos</strong>
+                                    <ul class="requisitos">
+                                        <li v-for="(requisito, index) in parsedRequisitos" :key="index">
+                                            <p v-text="requisito"></p>
+                                        </li>
+                                    </ul>
+
+                                    <div class="vaga-details">
+                                        <p>Carga Horária: <span v-text="vaga.cargaHoraria"></span></p>
+                                        <p>Entrada: <span v-text="vaga.entrada"></span></p>
+                                        <p>Saída: <span v-text="vaga.saida"></span></p>
+                                    </div>
+
+                                    <section class="descricao">
+                                        <strong>Descrição</strong>
+                                        <div class="vaga-remuneracao">
+                                            <p>Remuneração: <span v-text="vaga.remuneracao"></span></p>
+                                        </div>
+                                        <p v-text="vaga.descricao"></p>
+                                    </section>
+
+
+                                    <strong>Benefícios</strong>
+                                    <ul class="beneficios">
+                                        <li v-for="(beneficio, index) in parsedBeneficios" :key="index">
+                                            <p v-text="beneficio"></p>
+                                        </li>
+                                    </ul>
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +84,11 @@ export default {
     data() {
         return {
             anguloIcon,
-            estagios: []
+            estagios: [],
+            situacao: {
+                "DISPONIVEL": "Vaga disponível",
+                "INDISPONIVEL": "Vaga indisponível"
+            }
         }
     },
     methods: {

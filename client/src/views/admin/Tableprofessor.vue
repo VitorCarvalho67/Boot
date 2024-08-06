@@ -19,7 +19,20 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="professor in professores" :key="professor.id">
-                            <div class="table-cell">{{ professor }}</div>
+                            <div class="table-cell">
+                                <!-- <p v-text="professor.id"></p> -->
+                                <p v-text="'Nome: ' + professor.name"></p>
+                                <p v-text="'Email: ' + professor.email"></p>
+                                <!-- <p v-text="professor.password"></p>
+                                <p v-text="professor.recoveryPass"></p> -->
+                                <p v-text="'Título principal: ' + professor.tituloPrincipal"></p>
+                                <p v-text="professor.imagem"></p>
+                                <p v-text="professor.banner"></p>
+                                <p v-text="'Conta validada: ' + professor.validated"></p>
+                                <!-- <p v-text="professor.tentativasRestantes"></p> -->
+                                <p v-text="'Registro: ' + formatarData(professor.createdAt)"></p>
+                                <!-- <p v-text="professor.updatedAt"></p> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,6 +67,24 @@ export default {
             const data = await getFullProfessores(this.admin.token);
             this.professores = data.data;
             console.log(data)
+        },
+        formatarData(data) {
+            const dataAtual = new Date();
+            const dataMensagem = new Date(data);
+
+            if (dataMensagem.toDateString() === dataAtual.toDateString()) {
+                return dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                const diff = Math.floor((dataAtual - dataMensagem) / (1000 * 60 * 60 * 24));
+
+                if (diff === 1) {
+                    return `Ontem, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (diff <= 7) {
+                    return `${dataMensagem.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return dataMensagem.toLocaleString();
+                }
+            }
         }
     },
     mixins: [mixinAdmin],

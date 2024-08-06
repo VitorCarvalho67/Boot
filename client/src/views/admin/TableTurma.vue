@@ -19,7 +19,16 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="turma in turmas" :key="turma.id">
-                            <div class="table-cell">{{ turma }}</div>
+                            <div class="table-cell">
+                                <p v-text="'Curso: ' + turma.curso.name"></p>
+                                <p v-text="'Data de início: ' + turma.inicio"></p>
+                                <p v-text="'Data de término: ' + turma.fim"></p>
+                                <div class="alunos">
+                                    <div class="aluno" v-for="(aluno, index) in  turma.lista_de_alunos" :key="index">
+                                        {{aluno.name}}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
