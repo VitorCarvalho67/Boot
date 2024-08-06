@@ -74,7 +74,7 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/admin">
+                        <router-link to="/admin/table/estagio">
                             <p v-if="showPs">Estágios</p>
                         </router-link>
                     </li>

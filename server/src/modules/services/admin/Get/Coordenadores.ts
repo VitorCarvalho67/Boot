@@ -1,15 +1,20 @@
 import { prisma } from "../../../../prisma/client";
-import { Coordenador } from "@prisma/client";
+import { Coordenador, Curso } from "@prisma/client";
 
 export class GetCoordenadorUseCase {
-    async execute(): Promise<Pick<Coordenador, 'name'>[]> {
+    async execute(): Promise<(Coordenador & { cursos: Curso[] })[]> {
 
-        const coordenadores = await prisma.coordenador.findMany({});
-
-        return coordenadores.map(coordenador => {
-            return {
-                name: coordenador.name
-            }
+        const coordenadores = await prisma.coordenador.findMany({
+            include: {
+                curso: true,
+            },
         });
+
+        const coordenadoresComCursos = coordenadores.map(coordenador => ({
+            ...coordenador,
+            cursos: coordenador.curso
+        }));
+
+        return coordenadoresComCursos;
     }
 }

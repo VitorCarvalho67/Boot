@@ -14,12 +14,15 @@
                 <div class="table">
                     <div class="table-header">
                         <div class="table-row">
-                            <div class="table-cell">Nome dos coordenadores Registrados</div>
+                            <div class="table-cell">Coordenadores Registrados</div>
                         </div>
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="coordenador in coordenadores" :key="coordenador.id">
-                            <div class="table-cell">{{ coordenador.name }}</div>
+                            <div class="table-cell">{{ coordenador }}</div>
+                            <!-- <div class="table-cell">{{ coordenador.name }}</div>
+                            <div v-if="coordenador.curso[0]" class="table-cell">{{ coordenador.curso[0].name }}</div>
+                            <div v-else class="table-cell">Não está atrelado a nenhum curso</div> -->
                         </div>
                     </div>
                 </div>
@@ -35,7 +38,7 @@ import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-import { getCoordenadores } from '../../services/api/admin';
+import { getFullCoordenadores } from '../../services/api/admin';
 
 export default {
     name: 'TableCoordenadores',
@@ -51,7 +54,7 @@ export default {
     },
     methods: {
         async fetchCoordenadores() {
-            const data = await getCoordenadores(this.admin.token);
+            const data = await getFullCoordenadores(this.admin.token);
             this.coordenadores = data.data;
         }
     },

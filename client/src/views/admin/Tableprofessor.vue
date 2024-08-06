@@ -14,12 +14,12 @@
                 <div class="table">
                     <div class="table-header">
                         <div class="table-row">
-                            <div class="table-cell">Nome dos Professores Registrados</div>
+                            <div class="table-cell">Professores Registrados</div>
                         </div>
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="professor in professores" :key="professor.id">
-                            <div class="table-cell">{{ professor.name }}</div>
+                            <div class="table-cell">{{ professor }}</div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-import { getProfessores } from '../../services/api/admin';
+import { getFullProfessores } from '../../services/api/admin.js';
 
 export default {
     name: 'TableProfessores',
@@ -51,7 +51,7 @@ export default {
     },
     methods: {
         async fetchProfessores() {
-            const data = await getProfessores(this.admin.token);
+            const data = await getFullProfessores(this.admin.token);
             this.professores = data.data;
             console.log(data)
         }
