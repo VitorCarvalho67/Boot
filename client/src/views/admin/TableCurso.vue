@@ -9,7 +9,7 @@
                     <img :src="anguloIcon" alt="">
                     <p>Tabelas</p>
                     <img :src="anguloIcon" alt="">
-                    <p>Coordenadores</p>
+                    <p>Cursos</p>
                 </div>
                 <div class="table">
                     <div class="table-header">
@@ -19,7 +19,14 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="curso in cursos" :key="curso.id">
-                            <div class="table-cell">{{ curso }}</div>
+                            <div class="table-cell">
+                                <p>{{ curso.name }}</p>
+                                <p>Coordenador: {{ curso.coordenador }}</p>
+                                <p>Turmas: {{ curso.quantidadeTurmas }}</p>
+                                <p>Alunos: {{ curso.quantidadeAlunos }}</p>
+                                <p>Duração: {{ curso.duracao }}</p>
+                                <p>Turno: {{ turnos[curso.turno] }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -46,7 +53,13 @@ export default {
     data() {
         return {
             anguloIcon,
-            cursos: []
+            cursos: [],
+            turnos: {
+                MANHA: "Manhã",
+                TARDE: "Tarde",
+                NOITE: "Noite",
+                INTEGRAL: "Integral"
+            }
         }
     },
     methods: {

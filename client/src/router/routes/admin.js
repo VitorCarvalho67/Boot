@@ -66,36 +66,56 @@ export const adminRoutes = [
         path: '/admin/register/funcionario',
         name: 'RegisterFuncionario',
         component: RegisterFuncionario,
-
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/coordenador',
         name: 'TableCoordenadores',
         component: TableCoordenadores,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/curso',
         name: 'TableCursos',
         component: TableCursos,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/funcionario',
         name: 'TableFuncionarios',
         component: TableFuncionarios,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/professor',
         name: 'TableProfessores',
         component: TableProfessores,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/turma',
         name: 'TableTurmas',
         component: TableTurmas,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
     {
         path: '/admin/table/estagio',
         name: 'TableEstagio',
         component: TableEstagio,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
     },
 ]

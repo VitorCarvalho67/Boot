@@ -19,10 +19,12 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="coordenador in coordenadores" :key="coordenador.id">
-                            <div class="table-cell">{{ coordenador }}</div>
-                            <!-- <div class="table-cell">{{ coordenador.name }}</div>
-                            <div v-if="coordenador.curso[0]" class="table-cell">{{ coordenador.curso[0].name }}</div>
-                            <div v-else class="table-cell">Não está atrelado a nenhum curso</div> -->
+                            <div class="table-cell">
+                                <p>Nome: {{ coordenador.name }}</p>
+                                <p>Registro: {{ formatarData(coordenador.createdAt) }}</p>
+                                <p v-if="coordenador.curso[0]">Coordena {{ coordenador.curso[0].name }}</p>
+                                <p v-else >Não está atrelado a nenhum curso</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,6 +58,24 @@ export default {
         async fetchCoordenadores() {
             const data = await getFullCoordenadores(this.admin.token);
             this.coordenadores = data.data;
+        },
+        formatarData(data) {
+            const dataAtual = new Date();
+            const dataMensagem = new Date(data);
+
+            if (dataMensagem.toDateString() === dataAtual.toDateString()) {
+                return dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                const diff = Math.floor((dataAtual - dataMensagem) / (1000 * 60 * 60 * 24));
+
+                if (diff === 1) {
+                    return `Ontem, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (diff <= 7) {
+                    return `${dataMensagem.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return dataMensagem.toLocaleString();
+                }
+            }
         }
     },
     mixins: [mixinAdmin],
