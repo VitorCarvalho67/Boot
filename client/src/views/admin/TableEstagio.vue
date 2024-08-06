@@ -9,21 +9,21 @@
                     <img :src="anguloIcon" alt="">
                     <p>Tabelas</p>
                     <img :src="anguloIcon" alt="">
-                    <p>Funcionarios</p>
+                    <p>estagios</p>
                 </div>
                 <div class="table">
                     <div class="table-header">
                         <div class="table-row">
-                            <div class="table-cell">Funcionários Registrados</div>
+                            <div class="table-cell">Estagios Registradas</div>
                         </div>
                     </div>
                     <div class="table-body">
-                        <div class="table-row" v-for="funcionario in funcionarios" :key="funcionario.id">
-                            <div class="table-cell">{{ funcionario }}</div>
+                        <div class="table-row" v-for="estagio in estagios" :key="estagio.id">
+                            <div class="table-cell">{{ estagio }}</div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </main>
     </div>
 </template>
@@ -35,10 +35,10 @@ import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-import { getFullFuncionarios } from '../../services/api/admin';
+import { getFullEstagios } from '../../services/api/admin.js';
 
 export default {
-    name: 'TableFuncionarios',
+    name: 'TableEstagios',
     components: {
         Header,
         AsideDashboard,
@@ -46,25 +46,25 @@ export default {
     data() {
         return {
             anguloIcon,
-            funcionarios: []
+            estagios: []
         }
     },
     methods: {
-        async fetchFuncionarios() {
-            const data = await getFullFuncionarios(this.admin.token);
-            this.funcionarios = data.data;
+        async fetchEstagios() {
+            const data = await getFullEstagios(this.admin.token);
+            this.estagios = data.data;
         }
     },
     mixins: [mixinAdmin],
     async created() {
         this.getToken();
-        await this.fetchFuncionarios();
+        await this.fetchEstagios();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/pages/admin/_tableFuncionario.scss";
+@import "../../scss/pages/admin/_tableEstagio.scss";
 
 #app {
     display: flex;

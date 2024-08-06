@@ -14,12 +14,12 @@
                 <div class="table">
                     <div class="table-header">
                         <div class="table-row">
-                            <div class="table-cell">Nome dos Turmas Registrados</div>
+                            <div class="table-cell">Turmas Registradas</div>
                         </div>
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="turma in turmas" :key="turma.id">
-                            <div class="table-cell">{{ turma.name }}</div>
+                            <div class="table-cell">{{ turma }}</div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-// import { getTurmas } from '../../services/api/admin';
+import { getFullTurmas } from '../../services/api/admin';
 
 export default {
     name: 'TableTurmas',
@@ -51,15 +51,14 @@ export default {
     },
     methods: {
         async fetchTurmas() {
-            // const data = await getTurmas(this.admin.token);
-            // this.turmas = data.data;
-            // console.log(data)
+            const data = await getFullTurmas(this.admin.token);
+            this.turmas = data.data;
         }
     },
     mixins: [mixinAdmin],
     async created() {
         this.getToken();
-        // await this.fetchTurmas();
+        await this.fetchTurmas();
     }
 }
 </script>

@@ -19,7 +19,7 @@
                     </div>
                     <div class="table-body">
                         <div class="table-row" v-for="curso in cursos" :key="curso.id">
-                            <div class="table-cell">{{ curso.name }}</div>
+                            <div class="table-cell">{{ curso }}</div>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 
 import { mixinAdmin } from '../../util/authMixins.js';
-import { getCursos } from '../../services/api/admin';
+import { getFullCursos } from '../../services/api/admin';
 
 export default {
     name: 'TableCursos',
@@ -51,7 +51,7 @@ export default {
     },
     methods: {
         async fetchCursos() {
-            const data = await getCursos(this.admin.token);
+            const data = await getFullCursos(this.admin.token);
             this.cursos = data.data;
         }
     },

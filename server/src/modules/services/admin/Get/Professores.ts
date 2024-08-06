@@ -2,20 +2,10 @@ import { prisma } from "../../../../prisma/client";
 import { Professor } from "@prisma/client";
 
 export class GetProfessoresUseCase {
-    async execute(): Promise<Pick<Professor, 'name'>[]> {
+    async execute(): Promise<Professor[]> {
 
-        const professores = await prisma.professor.findMany({
-            where: {
-                coordenador: {
-                    none: {}
-                }
-            }
-        });
+        const professores = await prisma.professor.findMany({});
 
-        return professores.map(professor => {
-            return {
-                name: professor.name
-            }
-        });
+        return professores;
     }
 }

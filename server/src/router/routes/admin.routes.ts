@@ -23,11 +23,11 @@ adminRoutes.get("/professores", controllers.getAllProfessoresController.handle);
 adminRoutes.get("/coordenadores", controllers.getAllCoordenadoresController.handle);
 adminRoutes.get("/cursos", controllers.getCursosController.handle);
 adminRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
-adminRoutes.get("table/professores", controllers.getFullProfessoresController.handle);
-adminRoutes.get("table/coordenadores", controllers.getFullCoordenadoresController.handle);
-adminRoutes.get("table/cursos", controllers.getFullCursosController.handle);
-adminRoutes.get("table/estagios", controllers.getFullEstagiosController.handle);
-adminRoutes.get("table/funcionarios", controllers.getFullFuncionariosController.handle);
-adminRoutes.get("table/turmas", controllers.getFullTurmasController.handle);
+adminRoutes.get("/table/professores", controllers.getFullProfessoresController.handle);
+adminRoutes.get("/table/coordenadores", controllers.getFullCoordenadoresController.handle);
+adminRoutes.get("/table/cursos", controllers.getFullCursosController.handle);
+adminRoutes.get("/table/estagios", controllers.getFullEstagiosController.handle);
+adminRoutes.get("/table/funcionarios", controllers.getFullFuncionariosController.handle);
+adminRoutes.get("/table/turmas", controllers.getFullTurmasController.handle);
 
 export { adminRoutes };

@@ -10,6 +10,7 @@ import TableCursos from '../../views/admin/TableCurso.vue';
 import TableFuncionarios from '../../views/admin/TableFuncionario.vue';
 import TableProfessores from '../../views/admin/TableProfessor.vue';
 import TableTurmas from '../../views/admin/TableTurma.vue';
+import TableEstagio from '../../views/admin/TableEstagio.vue';
 
 import {
     isAuthAdmin
@@ -91,5 +92,10 @@ export const adminRoutes = [
         path: '/admin/table/turma',
         name: 'TableTurmas',
         component: TableTurmas,
+    },
+    {
+        path: '/admin/table/estagio',
+        name: 'TableEstagio',
+        component: TableEstagio,
     },
 ]

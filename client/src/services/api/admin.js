@@ -145,3 +145,82 @@ export const refreshTokenAdmin = async (token) => {
         return error.response.data;
     }
 }
+
+export const getFullCoordenadores = async(token) => {
+    try {
+        const response = await api.get('admin/table/coordenadores', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getFullCursos = async(token) => {
+    try {
+        const response = await api.get('admin/table/cursos', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getFullEstagios = async(token) => {
+    try {
+        const response = await api.get('admin/table/estagios', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getFullFuncionarios = async(token) => {
+    try {
+        const response = await api.get('admin/table/funcionarios', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getFullTurmas = async(token) => {
+    try {
+        const response = await api.get('admin/table/turmas', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getFullProfessores = async(token) => {
+    try {
+        const response = await api.get('admin/table/professores', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
