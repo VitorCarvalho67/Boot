@@ -13,7 +13,7 @@
                 </div>
                 <div class="table">
                     <div class="table-header">
-                        <div class="table-row">
+                        <div class="table-row table-row1">
                             <div class="table-cell">Funcionários Registrados</div>
                         </div>
                     </div>

@@ -51,12 +51,16 @@ main {
     .table-row {
         display: flex;
         flex-direction: row;
+        border-bottom: 1px dashed $font-color-dark-2;
+    }
+
+    .table-row1{
+        border-bottom: 0px solid $font-color-dark;
     }
 
     .table-cell {
         flex: 1;
         padding: 8px;
-        border-right: 1px solid #ddd;
         font-size: 1rem;
         @include font-inter(300);
         color: $font-color-dark;
