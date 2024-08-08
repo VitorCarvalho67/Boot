@@ -14,6 +14,7 @@ import { GetFullCursosUseCase } from "../services/admin/Get/Cursos";
 import { GetCoordenadorUseCase } from "../services/admin/Get/Coordenadores";
 import { GetAllProfessoresNamesUseCase } from "../services/admin/Get/ProfessorNames";
 import { GetCoordenadoresNamesUseCase } from "../services/admin/Get/CoordenasdoresNames";
+import { GetEmpresasWithEstagiosUseCase } from "../services/admin/Get/Empresas";
 
 export class GetAllProfessoresController {
     async handle(req: Request, res: Response) {
@@ -182,6 +183,17 @@ export class GetFullCursosController {
         const getFullCursosUseCase = new GetFullCursosUseCase();
 
         const result = await getFullCursosUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetFullEmpresasController {
+    async handle(req: Request, res: Response) {
+
+        const getEmpresasWithEstagiosUseCase = new GetEmpresasWithEstagiosUseCase();
+
+        const result = await getEmpresasWithEstagiosUseCase.execute();
 
         return res.status(201).json(result);
     }

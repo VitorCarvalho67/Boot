@@ -224,3 +224,16 @@ export const getFullProfessores = async(token) => {
     }
 }
 
+export const getFullEmpresas = async(token) => {
+    try {
+        const response = await api.get('admin/table/empresas', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+

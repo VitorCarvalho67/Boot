@@ -11,6 +11,7 @@ import TableFuncionarios from '../../views/admin/TableFuncionario.vue';
 import TableProfessores from '../../views/admin/TableProfessor.vue';
 import TableTurmas from '../../views/admin/TableTurma.vue';
 import TableEstagio from '../../views/admin/TableEstagio.vue';
+import TableEmpresas from '../../views/admin/TableEmpresa.vue';
 
 import {
     isAuthAdmin
@@ -114,6 +115,14 @@ export const adminRoutes = [
         path: '/admin/table/estagio',
         name: 'TableEstagio',
         component: TableEstagio,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
+        }
+    },
+    {
+        path: '/admin/table/empresa',
+        name: 'TableEmpresa',
+        component: TableEmpresas,
         beforeEnter: async (to, from, next) => {
             (await isAuthAdmin()) ? next() : next({path: "/admin/login"});
         }

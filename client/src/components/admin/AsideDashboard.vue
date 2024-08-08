@@ -78,6 +78,11 @@
                             <p v-if="showPs">Estágios</p>
                         </router-link>
                     </li>
+                    <li>
+                        <router-link to="/admin/table/empresa">
+                            <p v-if="showPs">Empresas</p>
+                        </router-link>
+                    </li>
                 </ul>
                 <li>
                     <router-link to="/admin">

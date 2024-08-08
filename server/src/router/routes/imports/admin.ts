@@ -16,7 +16,8 @@ import {
     GetFullCursosController,
     GetFullEstagiosController,
     GetFullFuncionariosController,
-    GetFullTurmasController
+    GetFullTurmasController,
+    GetFullEmpresasController
 } from "../../../modules/controllers/adminControllers";
 
 export const createControllers = () => ({
@@ -35,6 +36,6 @@ export const createControllers = () => ({
     getFullCursosController: new GetFullCursosController(),
     getFullEstagiosController: new GetFullEstagiosController(),
     getFullFuncionariosController: new GetFullFuncionariosController(),
-    getFullTurmasController: new GetFullTurmasController()
-
+    getFullTurmasController: new GetFullTurmasController(),
+    getFullEmpresasController: new GetFullEmpresasController(),
 });
