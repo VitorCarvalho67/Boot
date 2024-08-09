@@ -10,5 +10,6 @@ sharedRoutes.get("/profile/banner", controllers.getBannerController.handle);
 sharedRoutes.get("/users", controllers.searchUserController.handle);
 sharedRoutes.get("/vagas", controllers.getVagasController.handle);
 sharedRoutes.get("/vaga", controllers.getVagaController.handle);
+sharedRoutes.get("/extracurriculares", controllers.getExtracurricularsByRMController.handle);
 
 export { sharedRoutes };
