@@ -1,6 +1,15 @@
 import api from '../api';
 import { socket } from '../../socket.js';
 
+function enterSockets(token){
+    socket.emit(
+        'enter',
+        {
+            authorization: `${token}`
+        }
+    );
+}
+
 export const authAluno = async (token) => {
     try {
         const response = await api.get('aluno/auth', {
@@ -367,15 +376,6 @@ export const getMessages = async(info, token) => {
     }
 }
 
-function enterSockets(token){
-    socket.emit(
-        'enter',
-        {
-            authorization: `${token}`
-        }
-    );
-}
-
 export const sendBoletim = async (file, token) => {
     try {
         const formData = new FormData();
@@ -386,6 +386,58 @@ export const sendBoletim = async (file, token) => {
             headers: {
                 authorization: `${token}`,
                 'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const addExtracurricular = async (data, token) => {
+    try {
+        const response = await api.post('aluno/extracurricular/send', data, {
+            headers: {
+                authorization: `${token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const editExtracurricular = async (data, token) => {
+    try {
+        const response = await api.post('aluno/extracurricular/edit', data, {
+            headers: {
+                authorization: `${token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const deleteExtracurricular = async (data, token) => {
+    try {
+        const response = await api.post('aluno/extracurricular/exclude', data, {
+            headers: {
+                authorization: `${token}`,
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getExtracurriculares = async (token) => {
+    try {
+        const response = await api.get('aluno/extracurriculares', {
+            headers: {
+                authorization: `${token}`,
             }
         });
         return response;
