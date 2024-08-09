@@ -253,5 +253,114 @@ main {
                 }
             }
         }
+
+        .extracurriculares {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: $secondary-color-dark;
+            border-radius: 10px;
+            color: $font-color-dark;
+            @include flex(column, flex-start, start);
+            width: 100%;
+
+            h2 {
+                @include font-inter(700);
+                font-size: 1.5rem;
+                color: $secondary-color-orange;
+                margin: 20px 0px 10px 0px;
+            }
+            
+            .activity {
+                background-color: $terciary-color-dark;
+                padding: 15px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                @include flex(column, flex-start, start);
+        
+                p {
+                    font-size: 1rem;
+                    margin-bottom: 10px;
+                    strong {
+                        font-weight: 500;
+                    }
+                }
+        
+                button {
+                    height: 40px;
+                    width: 100px;
+                    margin-right: 10px;
+                    background-color: $primary-color-orange;
+                    border: none;
+                    border-radius: 3px;
+                    @include font-inter(400);
+                    font-size: 0.9rem;
+                    color: $secondary-color-dark;
+                    cursor: pointer;
+                    transition: background-color 0.2s linear;
+        
+                    &:hover {
+                        background-color: $secondary-color-dark;
+                        color: $primary-color-orange;
+                    }
+                }
+            }
+        
+            .activity.editMode {
+                input {
+                    background-color: $primary-color-dark;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    color: $font-color-dark;
+                    @include font-inter(400);
+                    font-size: 1rem;
+                    width: 100%;
+                }
+            }
+        
+            .editMode,
+            .viewMode {
+                button {
+                    margin-top: 10px;
+                }
+            }
+        
+            [v-show="showAddForm"] {
+                input {
+                    background-color: $primary-color-dark;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    color: $font-color-dark;
+                    @include font-inter(400);
+                    font-size: 1rem;
+                    width: 100%;
+                }
+        
+                button {
+                    margin-top: 10px;
+                }
+            }
+        
+            > button {
+                height: 40px;
+                width: 180px;
+                background-color: $primary-color-orange;
+                border: none;
+                border-radius: 3px;
+                @include font-inter(400);
+                font-size: 0.9rem;
+                color: $secondary-color-dark;
+                cursor: pointer;
+                transition: background-color 0.2s linear;
+        
+                &:hover {
+                    background-color: $secondary-color-dark;
+                    color: $primary-color-orange;
+                }
+            }
+        }        
     }
 }

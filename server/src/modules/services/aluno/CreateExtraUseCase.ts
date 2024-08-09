@@ -38,8 +38,8 @@ export class RegisterExtracurricularUseCase {
         alunoId,
         instituicao,
         descricao,
-        inicio,
-        fim,
+        inicio: new Date(inicio),
+        fim: new Date(fim),
       },
     });
 
