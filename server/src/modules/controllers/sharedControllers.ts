@@ -21,6 +21,7 @@ import { SearchUsersUseCase } from "../services/shared/GetProfilesUseCase";
 import { GetEmpresasUseCase } from "../services/shared/GetEmpresasUseCase";
 import { GetVagasUseCase } from "../services/shared/GetVagasUseCase";
 import { GetVagaUseCase } from "../services/shared/GetVagaUseCase";
+import { GetExtracurricularsByRMUseCase } from "../services/shared/GetExtraUseCase";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -217,6 +218,18 @@ export class SearchUserController {
         const searchUsersUseCase = new SearchUsersUseCase();
 
         const result = await searchUsersUseCase.execute();
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetExtracurricularsByRMController {
+    async handle(req: Request, res: Response) {
+        const rm = req.query.rm as string;
+
+        const getExtracurricularsByRMUseCase = new GetExtracurricularsByRMUseCase();
+
+        const result = await getExtracurricularsByRMUseCase.execute(rm);
 
         return res.status(201).json(result);
     }

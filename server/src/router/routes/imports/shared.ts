@@ -4,7 +4,8 @@ import {
     GetBannerController,
     SearchUserController,
     GetVagasController,
-    GetVagaController
+    GetVagaController,
+    GetExtracurricularsByRMController
 } from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
@@ -14,4 +15,5 @@ export const createControllers = () => ({
     searchUserController: new SearchUserController(),
     getVagasController: new GetVagasController(),
     getVagaController: new GetVagaController(),
+    getExtracurricularsByRMController: new GetExtracurricularsByRMController()
 });
