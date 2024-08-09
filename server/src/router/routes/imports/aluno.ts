@@ -29,7 +29,8 @@ import {
     RegisterExtracurricularController,
     EditExtracurricularController,
     ExcludeExtracurricularController,
-    SendBoletimController
+    SendBoletimController,
+    GetExtracurricularesController
 } from "../../../modules/controllers/alunoControllers";
 
 export const createControllers = () => ({
@@ -61,5 +62,6 @@ export const createControllers = () => ({
     registerExtracurricularController: new RegisterExtracurricularController(),
     editExtracurricularController: new EditExtracurricularController(),
     excludeExtracurricularController: new ExcludeExtracurricularController(),
-    sendBoletimController: new SendBoletimController()
+    sendBoletimController: new SendBoletimController(),
+    getExtracurricularesController: new GetExtracurricularesController()
 });

@@ -22,6 +22,7 @@ import { RegisterExtracurricularUseCase } from '../services/aluno/CreateExtraUse
 import { EditExtracurricularUseCase } from '../services/aluno/EditExtraUsecase';
 import { ExcludeExtracurricularUseCase } from '../services/aluno/ExcludeExtraUseCase';
 import { SendBoletimUseCase } from '../services/aluno/SendBoletimUseCase';
+import { GetExtracurricularsByEmailUseCase } from '../services/aluno/GetExtracurricularesUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -306,6 +307,18 @@ export class SendBoletimController {
         const sendBoletimUseCase = new SendBoletimUseCase();
 
         const result = await sendBoletimUseCase.execute({ alunoId, boletim });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetExtracurricularesController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email as string;
+
+        const getExtracurricularsByEmailUseCase = new GetExtracurricularsByEmailUseCase();
+
+        const result = await getExtracurricularsByEmailUseCase.execute(email);
 
         return res.status(201).json(result);
     }

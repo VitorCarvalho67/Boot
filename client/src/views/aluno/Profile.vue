@@ -16,7 +16,7 @@
                                 <input type="file" ref="bannerInput" @change="previewBannerImage">
                                 <img src="../../assets/icons/envio.png" alt="">
                             </div>
-                            <button v-show="modeBanner === 'edit' && $refs.bannerInput.value != []" 
+                            <button v-show="modeBanner === 'edit' && $refs.bannerInput.value != []"
                                 @click="updateBannerImage" type="button">
                                 <img :src="imgVerificar">Salvar
                             </button>
@@ -29,7 +29,8 @@
                         <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
                         <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
                         <div class="inputUpload" v-show="modeImage === 'edit'">
-                            <input type="file" ref="profileInput" v-show="modeImage === 'edit'" @change="previewProfileImage">
+                            <input type="file" ref="profileInput" v-show="modeImage === 'edit'"
+                                @change="previewProfileImage">
                             <img src="../../assets/icons/envio.png" alt="">
                         </div>
                         <div class="editButtons">
@@ -37,7 +38,7 @@
                                 <img :src="imgLapis" alt="">Editar
                             </button>
                             <button v-show="modeImage === 'edit' && $refs.profileInput.value != []"
-                            @click="updateProfileImage" type="button">
+                                @click="updateProfileImage" type="button">
                                 <img :src="imgVerificar">Salvar
                             </button>
                             <button v-show="modeImage === 'edit'" @click="cancelImage" type="button">
@@ -74,6 +75,43 @@
                         </div>
                     </div>
                 </section>
+                <section class="extracurriculares">
+                    <h2>Atividades Extracurriculares</h2>
+                    <button v-if="!showAddForm" @click="showAddForm = true">Adicionar Nova Atividade</button>
+
+                    <div v-for="(activity, index) in extracurriculares" :key="activity.id" class="activity">
+                        <div v-show="activity.editMode === 'view'">
+                            <p><strong>Instituição:</strong> {{ activity.instituicao }}</p>
+                            <p><strong>Descrição:</strong> {{ activity.descricao }}</p>
+                            <p><strong>Início:</strong> {{ formatDate(activity.inicio) }}</p>
+                            <p><strong>Fim:</strong> {{ formatDate(activity.fim) }}</p>
+
+                            <button @click="toggleEditMode(activity, index)">Editar</button>
+                            <button @click="confirmDelete(activity, index)">Excluir</button>
+                        </div>
+
+                        <div v-show="activity.editMode === 'edit'">
+                            <input v-model="activity.instituicao" placeholder="Instituição">
+                            <input v-model="activity.descricao" placeholder="Descrição">
+                            <input v-model="activity.inicio" type="date">
+                            <input v-model="activity.fim" type="date">
+
+                            <button @click="saveEdit(activity, index)">Salvar</button>
+                            <button @click="cancelEdit(activity, index)">Cancelar</button>
+                        </div>
+                    </div>
+
+                    <div v-if="showAddForm">
+                        <input v-model="newActivity.instituicao" placeholder="Instituição">
+                        <input v-model="newActivity.descricao" placeholder="Descrição">
+                        <input v-model="newActivity.inicio" type="date">
+                        <input v-model="newActivity.fim" type="date">
+
+                        <button @click="addNewActivity">Adicionar</button>
+                        <button @click="cancelAdd">Cancelar</button>
+                    </div>
+
+                </section>
             </div>
         </main>
     </div>
@@ -88,6 +126,10 @@ import {
     updateCurriculo,
     updateBanner,
     updateImage,
+    addExtracurricular,
+    editExtracurricular,
+    deleteExtracurricular,
+    getExtracurriculares
 } from '../../services/api/aluno';
 import {
     getImage,
@@ -122,7 +164,10 @@ export default {
             modeBanner: 'view',
             imgLapis,
             imgVerificar,
-            imgCruz
+            imgCruz,
+            extracurriculares: [],
+            showAddForm: false,
+            newActivity: { instituicao: '', descricao: '', inicio: '', fim: '' },
         };
     },
     methods: {
@@ -281,7 +326,7 @@ export default {
             await this.getCurriculoAluno();
             this.editModeBanner();
         },
-        previewProfileImage(event){
+        previewProfileImage(event) {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -300,12 +345,77 @@ export default {
                 this.aluno.bannerUrl = e.target.result;
             };
             reader.readAsDataURL(file);
+        },
+        async fetchExtracurriculares() {
+            const response = await getExtracurriculares(this.aluno.token);
+            if (response.status >= 200 && response.status < 300) {
+                this.extracurriculares = response.data.cursosExtracurriculares.map(activity => ({ ...activity, editMode: 'view' }));
+            } else {
+                alert("Ops.. Algo deu errado ao carregar as atividades extracurriculares. 😕\n" + response.message);
+            }
+        },
+
+        toggleEditMode(activity, index) {
+            this.extracurriculares[index] = { ...activity, editMode: 'edit' };
+        },
+
+        cancelEdit(activity, index) {
+            this.extracurriculares[index] = { ...activity, editMode: 'view' };
+        },
+
+
+        async saveEdit(activity, index) {
+            const response = await editExtracurricular(activity, this.aluno.token);
+            if (response.status >= 200 && response.status < 300) {
+                alert("Atividade atualizada com sucesso! 😉");
+                this.fetchExtracurriculares();
+            } else {
+                alert("Ops.. Algo deu errado ao editar a atividade extracurricular. 😕\n" + response.message);
+            }
+        },
+
+        confirmDelete(activity, index) {
+            if (confirm("Você tem certeza que deseja excluir esta atividade extracurricular?")) {
+                this.deleteActivity(activity, index);
+            }
+        },
+
+        async deleteActivity(activity, index) {
+            const response = await deleteExtracurricular({ extracurricularId: activity.id, alunoId: this.aluno.id }, this.aluno.token);
+            if (response.status >= 200 && response.status < 300) {
+                alert("Atividade excluída com sucesso! 😉");
+                this.extracurriculares.splice(index, 1);
+            } else {
+                alert("Ops.. Algo deu errado ao excluir a atividade extracurricular. 😕\n" + response.message);
+            }
+        },
+
+        async addNewActivity() {
+            const response = await addExtracurricular(this.newActivity, this.aluno.token);
+            if (response.status >= 200 && response.status < 300) {
+                alert("Nova atividade adicionada com sucesso! 😉");
+                this.showAddForm = false;
+                this.newActivity = { instituicao: '', descricao: '', inicio: '', fim: '' };
+                this.fetchExtracurriculares();
+            } else {
+                alert("Ops.. Algo deu errado ao adicionar a nova atividade extracurricular. 😕\n" + response.message);
+            }
+        },
+
+        cancelAdd() {
+            this.showAddForm = false;
+            this.newActivity = { instituicao: '', descricao: '', inicio: '', fim: '' };
+        },
+
+        formatDate(date) {
+            return new Date(date).toLocaleDateString('pt-BR');
         }
     },
     mixins: [mixinAluno],
     async created() {
         this.getToken();
         await this.getCurriculoAluno();
+        await this.fetchExtracurriculares();
     }
 };
 </script>
@@ -329,7 +439,7 @@ export default {
             overflow-y: auto;
             height: 100%;
 
-            
+
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);
             }

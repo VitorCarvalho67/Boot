@@ -45,5 +45,6 @@ alunoRoutes.get("/me", controllers.getMeController.handle);
 alunoRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
 alunoRoutes.get("/messages", controllers.getLastMessagesController.handle);
 alunoRoutes.get("/messages/between", controllers.getMessagesBetweenController.handle);
+alunoRoutes.get("/extracurriculares", controllers.getExtracurricularesController.handle);
 
 export { alunoRoutes };
