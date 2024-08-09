@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/admin/Header.vue';
 import AsideDashboard from '../../components/admin/AsideDashboard.vue';
 import anguloIcon from '../../assets/icons/angulo.png';
 

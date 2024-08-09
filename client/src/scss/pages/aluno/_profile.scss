@@ -2,11 +2,20 @@ main {
     height: calc(100vh - 80px);
     background-color: $primary-color-dark;
     @include flex(row, flex-start, start);
+    overflow: hidden;
+    flex: 1;
 
     .content {
         @include flex(column, flex-start, start);
-        padding: 20px 100px;
+        padding: 20px 100px 40px 100px;
         width: calc(100% - 300px);
+        flex: 1;
+        height: calc(100vh - 80px);
+        overflow-y: auto;
+
+        @media (max-width: 1000px) {
+            width: calc(100% - 100px);
+        }
 
         @include m-screen(1300px) {
             padding: 20px 50px;
@@ -263,20 +272,141 @@ main {
             @include flex(column, flex-start, start);
             width: 100%;
 
+            div{
+            @include flex(row, flex-start, center);
+            }
+
+            .input-box {
+                @include flex(row, center, center);
+                width: 100%;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: $terciary-color-dark;
+                border-left: solid 3px $terciary-color-dark;
+                margin-right: 25px;
+
+                &.focused {
+                    border-left: solid 3px $secondary-color-orange;
+                    border-radius: 0px 5px 5px 0px;
+                }
+
+                label {
+                    letter-spacing: 1.5px;
+                    @include font-inter(200);
+                    font-size: 0.8rem;
+                    color: $font-color-dark-2;
+                }
+
+                p {
+                    background-color: transparent;
+                    width: 90%;
+                    margin-top: 5px;
+                    outline: none;
+                    color: $font-color-dark;
+                    border: none;
+                    @include font-inter(400);
+                    font-size: 1rem;
+                    @include flex(row, flex-start, center);
+                }
+
+                input {
+                    background-color: transparent;
+                    width: 100%;
+                    margin-top: 5px;
+                    outline: none;
+                    color: $font-color-dark;
+                    border: none;
+                    @include font-inter(400);
+                    font-size: 1rem;
+                }
+
+                textarea {
+                    background-color: transparent;
+                    border: none;
+                    width: 100%;
+                    outline: none;
+                }
+
+                .d1 {
+                    width: 95%;
+                }
+
+                .d2 {
+                    width: 5%;
+
+                    button {
+                        height: 20px;
+                        width: 20px;
+                        border: none;
+                        background-color: transparent;
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        filter: invert(100%);
+                        cursor: pointer;
+                    }
+
+                    .show {
+                        background-image: url("../../assets/icons/olho-1.png");
+                    }
+
+                    .hide {
+                        background-image: url("../../assets/icons/olho-2.png");
+                    }
+
+                    @include m-screen(1200px) {
+                        width: 10%;
+                    }
+                }
+
+            }
+
+            .button-box {
+                width: 100%;
+                @include flex(row, flex-end, center);
+
+                button {
+                    height: 40px;
+                    width: 140px;
+                    background-color: $primary-color-orange;
+                    border: none;
+                    border-radius: 3px;
+                    @include font-inter(400);
+                    font-size: 0.9rem;
+                    color: $secondary-color-dark;
+                    border: solid 1px $primary-color-orange;
+                    cursor: pointer;
+                    transition: 0.1s linear;
+                    margin-right: 20px;
+
+                    &:hover, &:last-child {
+                        background-color: $secondary-color-dark;
+                        color: $primary-color-orange;
+                    }
+                }
+
+                @include m-screen(1800px) {
+                    margin-top: 20px;
+                }
+                @include m-screen(600px) {
+                    @include flex(row, flex-end, center);
+                }
+            }
+
             h2 {
                 @include font-inter(700);
                 font-size: 1.5rem;
                 color: $secondary-color-orange;
                 margin: 20px 0px 10px 0px;
             }
-            
+
             .activity {
                 background-color: $terciary-color-dark;
                 padding: 15px;
                 border-radius: 8px;
                 margin-bottom: 20px;
                 @include flex(column, flex-start, start);
-        
+
                 p {
                     font-size: 1rem;
                     margin-bottom: 10px;
@@ -284,7 +414,7 @@ main {
                         font-weight: 500;
                     }
                 }
-        
+
                 button {
                     height: 40px;
                     width: 100px;
@@ -297,14 +427,14 @@ main {
                     color: $secondary-color-dark;
                     cursor: pointer;
                     transition: background-color 0.2s linear;
-        
+
                     &:hover {
                         background-color: $secondary-color-dark;
                         color: $primary-color-orange;
                     }
                 }
             }
-        
+
             .activity.editMode {
                 input {
                     background-color: $primary-color-dark;
@@ -318,14 +448,14 @@ main {
                     width: 100%;
                 }
             }
-        
+
             .editMode,
             .viewMode {
                 button {
                     margin-top: 10px;
                 }
             }
-        
+
             [v-show="showAddForm"] {
                 input {
                     background-color: $primary-color-dark;
@@ -338,12 +468,12 @@ main {
                     font-size: 1rem;
                     width: 100%;
                 }
-        
+
                 button {
                     margin-top: 10px;
                 }
             }
-        
+
             > button {
                 height: 40px;
                 width: 180px;
@@ -355,12 +485,12 @@ main {
                 color: $secondary-color-dark;
                 cursor: pointer;
                 transition: background-color 0.2s linear;
-        
+
                 &:hover {
                     background-color: $secondary-color-dark;
                     color: $primary-color-orange;
                 }
             }
-        }        
+        }
     }
 }

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/aluno/Header.vue';
 import { getMessages, sendMessage } from '../../services/api/aluno';
 import { mixinAluno } from "../../util/authMixins";
 import { socket } from "../../socket";

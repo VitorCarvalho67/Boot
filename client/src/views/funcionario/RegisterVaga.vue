@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/funcionario/Header.vue';
 import Footer from '../../components/Footer.vue';
 import AsideDashboard from '../../components/funcionario/AsideDashboard.vue';
 import Select from '../../components/Select.vue';

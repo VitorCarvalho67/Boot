@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/professor/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
 import { mixinProfessor } from '../../util/authMixins.js';

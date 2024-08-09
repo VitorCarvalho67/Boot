@@ -37,41 +37,49 @@ Digital platform tailored for the educational environment, designed to facilitat
 ## How To Use
 
 Clone the repository
+
 ```bash
 git clone https://github.com/VitorCarvalho67/Boot.git
 ```
 
 Navigate to the project directory on sever side
+
 ```bash
 cd Boot/server
 ```
 
 Install dependencies
+
 ```bash
 npm install
 ```
 
 Run Prisma migrations
+
 ```bash
 npx prisma migrate dev
 ```
 
 Start the API
+
 ```bash
 npm run dev
 ```
 
 Navigate to the client directory
+
 ```bash
 cd Boot/client
 ```
 
 Install dependencies
+
 ```bash
 npm install
 ```
 
 Start the client
+
 ```bash
 npm run dev
 ```
@@ -87,11 +95,3 @@ sudo docker-compose up
 # or 
 sudo docker-compose up -d
 ```
-## Contributing
-Contributions to this project are welcome. Please follow these steps to contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes.
-4. Push to the branch.
-5. Submit a pull request.

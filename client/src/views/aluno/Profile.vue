@@ -91,26 +91,45 @@
                         </div>
 
                         <div v-show="activity.editMode === 'edit'">
-                            <input v-model="activity.instituicao" placeholder="Instituição">
-                            <input v-model="activity.descricao" placeholder="Descrição">
-                            <input v-model="activity.inicio" type="date">
-                            <input v-model="activity.fim" type="date">
+                            <div class="input-box">
+                                <input v-model="activity.instituicao" placeholder="Instituição">
+                            </div>
+                            <div class="input-box">
+                                <input v-model="activity.descricao" placeholder="Descrição">
+                            </div>
+                            <div class="input-box">
+                                <input v-model="activity.inicio" type="date">
+                            </div>
+                            <div class="input-box">
+                                <input v-model="activity.fim" type="date">
+                            </div>
 
-                            <button @click="saveEdit(activity, index)">Salvar</button>
-                            <button @click="cancelEdit(activity, index)">Cancelar</button>
+                            <div class="button-box">
+                                <button @click="saveEdit(activity, index)">Salvar</button>
+                                <button @click="cancelEdit(activity, index)">Cancelar</button>
+                            </div>
                         </div>
                     </div>
 
                     <div v-if="showAddForm">
-                        <input v-model="newActivity.instituicao" placeholder="Instituição">
-                        <input v-model="newActivity.descricao" placeholder="Descrição">
-                        <input v-model="newActivity.inicio" type="date">
-                        <input v-model="newActivity.fim" type="date">
+                        <div class="input-box">
+                            <input v-model="newActivity.instituicao" placeholder="Instituição">
+                        </div>
+                        <div class="input-box">
+                            <input v-model="newActivity.descricao" placeholder="Descrição">
+                        </div>
+                        <div class="input-box">
+                            <input v-model="newActivity.inicio" type="date">
+                        </div>
+                        <div class="input-box">
+                            <input v-model="newActivity.fim" type="date">
+                        </div>
 
-                        <button @click="addNewActivity">Adicionar</button>
-                        <button @click="cancelAdd">Cancelar</button>
+                        <div class="button-box">
+                            <button @click="addNewActivity">Adicionar</button>
+                            <button @click="cancelAdd">Cancelar</button>
+                        </div>
                     </div>
-
                 </section>
             </div>
         </main>
@@ -119,7 +138,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/aluno/Header.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import {
     getCurriculo,
@@ -426,24 +445,5 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-
-    main {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            height: 100%;
-
-
-            @media (max-width: 1000px) {
-                width: calc(100% - 100px);
-            }
-        }
-    }
 }
 </style>
