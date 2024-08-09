@@ -57,9 +57,22 @@ export const getVaga = async (id) => {
         const response = await api.get('shared/vaga', {
             params: id
         });
-        console.log(response.data.alunos);
         return response;
     } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getExtracurriculares = async (rm) => {
+    try {
+        const response = await api.get('shared/extracurriculares', {
+            params: {
+                rm: rm
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log('Erro: ' + error);
         return error.response.data;
     }
 }

@@ -2,7 +2,7 @@
     <Header />
     <div id="app">
         <main>
-            <AsideDashboard v-if="visualizador.email"/>
+            <AsideDashboard v-if="visualizador.email" />
             <div class="content">
                 <div class="capa">
                     <div class="capaProfile">
@@ -19,15 +19,16 @@
                             <div class="box2">
                                 <p v-text="aluno.idade"></p>
                                 <p v-text="aluno.endereco"></p>
-                                <button v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
-                                @click="sendSolicitation">Vincular-se</button>
-                                
+                                <button
+                                    v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
+                                    @click="sendSolicitation">Vincular-se</button>
+
                                 <router-link v-show="visualizador.conected && !visualizador.isOwner"
-                                :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
-                                
-                                <button v-show="visualizador.situacao == 'recebido'"
-                                @click="acceptSolicitation">Aceitar pedido</button>
-                                
+                                    :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
+
+                                <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar
+                                    pedido</button>
+
                                 <button v-show="visualizador.situacao == 'recebido'"
                                     @click="removeSolicitation('recipient')">Dispensar pedido</button>
                                 <button v-show="visualizador.situacao == 'pendente'"
@@ -42,6 +43,18 @@
                         <p v-html="aluno.curriculo"></p>
                     </div>
                 </section>
+                <section class="extracurriculares">
+                    <h2>Atividades Extracurriculares</h2>
+
+                    <div v-for="(activity, index) in aluno.extracurriculares" :key="activity.id" class="activity">
+                        <div>
+                            <p><strong>Instituição:</strong> {{ activity.instituicao }}</p>
+                            <p><strong>Descrição:</strong> {{ activity.descricao }}</p>
+                            <p><strong>Início:</strong> {{ formatDate(activity.inicio) }}</p>
+                            <p><strong>Fim:</strong> {{ formatDate(activity.fim) }}</p>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
@@ -54,10 +67,11 @@ import Footer from '../../components/Footer.vue';
 
 import router from '../../router/index.js'
 import Cookies from 'js-cookie';
-import { 
+import {
     getCurriculo,
     getImage,
-    getBanner
+    getBanner,
+    getExtracurriculares,
 } from '../../services/api/shared';
 import {
     getVinculosAluno,
@@ -100,6 +114,7 @@ export default {
                 curriculoEdit: '',
                 imgUrl: '../../assets/img/defaultImage.png',
                 bannerUrl: 'default',
+                extracurriculares: []
             },
             mode: 'view'
         };
@@ -144,7 +159,7 @@ export default {
                     this.aluno.bannerUrl = responseBanner.data.url;
                 }
             } catch (error) {
-                router.push({path: "/notfound"});
+                router.push({ path: "/notfound" });
             }
         },
         calcularIdade(nascimento) {
@@ -163,14 +178,14 @@ export default {
         },
         async possuiVinculo() {
             this.visualizador.conected = false,
-            this.visualizador.semiconectado = false,
-            this.visualizador.situacao = '',
-            this.visualizador.token = '',
-            this.visualizador.isOwner = false,
-            this.visualizador.email = ''
-            
+                this.visualizador.semiconectado = false,
+                this.visualizador.situacao = '',
+                this.visualizador.token = '',
+                this.visualizador.isOwner = false,
+                this.visualizador.email = ''
+
             this.visualizador.token = Cookies.get('token') ? Cookies.get('token') : Cookies.get('token-professor');
-            
+
             if (this.visualizador.token) {
                 let response;
                 let responseMail;
@@ -179,13 +194,13 @@ export default {
                         responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
                             this.visualizador.email = responseMail.data.email;
-                            
+
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
                                 router.push({ path: '/aluno/me' });
                             }
                         }
-                        
+
                         response = await getVinculosProfileAluno({
                             identifier: "ALUNO"
                         }, this.visualizador.token);
@@ -194,7 +209,7 @@ export default {
                             identifier: "PROFESSOR"
                         }, this.visualizador.token);
                     }
-                    
+
                     if (response.status >= 200 && response.status < 300) {
                         console.log("Possui vínculo function");
                         const email = this.aluno.email;
@@ -338,27 +353,43 @@ export default {
                         if (response.status >= 200 && response.status < 300) {
                             await this.possuiVinculo();
                         } else {
-                    alert(
-                        agent == "sender"?
-                        "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
-                        "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
-                    );
+                            alert(
+                                agent == "sender" ?
+                                    "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message :
+                                    "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                            );
+                        }
+                    } catch (error) {
+                        alert(
+                            agent == "sender" ?
+                                "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message :
+                                "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
+                        );
+                    }
+                }
+            }
+        },
+        async fetchExtracurriculares() {
+            try {
+                const response = await getExtracurriculares(this.aluno.rm);
+                if (response.status >= 200 && response.status < 300) {
+                    this.aluno.extracurriculares = response.data;
+                } else {
+                    alert("Ops.. Algo deu errado ao carregar as atividades extracurriculares. 😕\n" + response.message);
                 }
             } catch (error) {
-                alert(
-                    agent == "sender"?
-                    "Ops.. Algo deu errado ao remover o pedido, tente novamente mais tarde. 😕\n" + response.message:
-                    "Ops.. Algo deu errado ao ignorar o pedido, tente novamente mais tarde. 😕\n" + response.message
-                );
+                alert("Ops.. Ocorreu um erro ao carregar as atividades extracurriculares. 😕\n" + error.message);
             }
-                }
-            }
+        },
+        formatDate(date) {
+            return new Date(date).toLocaleDateString('pt-BR');
         }
     },
     async created() {
         this.aluno.rm = this.$route.params.rm;
         await this.getCurriculoAluno();
         await this.possuiVinculo();
+        await this.fetchExtracurriculares();
 
         console.log(this.conected);
 
