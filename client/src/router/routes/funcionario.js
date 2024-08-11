@@ -4,6 +4,7 @@ import InitFuncionario from '../../views/funcionario/Init.vue';
 import LoginFuncionario from '../../views/funcionario/Login.vue';
 import RecoveryFuncionario from '../../views/funcionario/Recovery.vue';
 import ValidateRecoveryFuncionario from '../../views/funcionario/ValidateRecovery.vue';
+import Boletins from '../../views/funcionario/Boletins.vue';
 
 import {
     isAuthFuncionario,
@@ -59,6 +60,14 @@ export const funcionarioRoutes = [
         path: "/funcionario",
         name: "Funcionario",
         component: Funcionario,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthFuncionario()) ? next() : next("/funcionario/init");
+        }
+    },
+    {
+        path: "/funcionario/boletins",
+        name: "Boletins",
+        component: Boletins,
         beforeEnter: async (to, from, next) => {
             (await isAuthFuncionario()) ? next() : next("/funcionario/init");
         }
