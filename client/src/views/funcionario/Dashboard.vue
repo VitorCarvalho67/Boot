@@ -4,7 +4,8 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
-                <h1>Bem-vindo à plataforma!</h1>   
+                <h1>Bem-vindo à plataforma!</h1>
+                
             </div>
         </main>
     </div>

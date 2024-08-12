@@ -114,3 +114,35 @@ export const getEmpresas = async(token) => {
         return error.response.data;
     }
 }
+
+export const getBoletins = async(token) => {
+    try {
+        const response = await api.get('funcionario/boletins', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const compareBoletins = async (file, id, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('boletimId', id);
+
+        
+        const response = await api.post('funcionario/boletim/compare', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

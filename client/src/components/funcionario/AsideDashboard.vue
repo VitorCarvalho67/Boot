@@ -3,41 +3,15 @@
         <div>
             <ul>
                 <li :class="getClassForPage('home')">
-                    <router-link to="/admin">
+                    <router-link to="/funcionario">
                         <img :src="icons.home">
                         <p v-if="showPs">Home</p>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/admin">
+                    <router-link to="/funcionario/boletins">
                         <img :src="icons.form">
-                        <p v-if="showPs">Formulários</p>
-                    </router-link>
-                </li>
-                <ul class="forms">
-                    <li>
-                        <router-link to="/funcionario/register/vaga">
-                            <p v-if="showPs">Registro de Vagas</p>
-                        </router-link>
-                    </li>
-                </ul>
-                <li>
-                    <router-link to="/admin">
-                        <img :src="icons.table">
-                        <p v-if="showPs">Tabelas</p>
-                    </router-link>
-                </li>
-                <ul class="tables">
-                    <li>
-                        <router-link to="/funcionario/table/vaga">
-                            <p v-if="showPs">Vagas Registradas</p>
-                        </router-link>
-                    </li>
-                </ul>
-                <li :class="getClassForPage('config')">
-                    <router-link to="/config">
-                        <img :src="icons.config">
-                        <p v-if="showPs">Configurações</p>
+                        <p v-if="showPs">Boletins</p>
                     </router-link>
                 </li>
             </ul>
