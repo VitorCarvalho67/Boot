@@ -5,7 +5,7 @@
             <AsideDashboard pageName='home' />
             <div class="content">
                 <h1>Boletins a serem validados</h1>
-                
+
                 <div v-if="boletins.length === 0">Nenhum boletim em análise encontrado.</div>
 
                 <div v-for="boletim in boletins" :key="boletim.id" class="boletim-item">
@@ -15,7 +15,9 @@
                         <strong>Link:</strong> <a :href="boletim.url" target="_blank">Baixar Boletim</a>
                     </div>
                     <input type="file" @change="(event) => handleFileChange(event, boletim.id)" />
-                    <button @click="compareBoletim(boletim.id)">Comparar</button>
+                    <button :disabled="!selectedFiles[boletim.id]" @click="compareBoletim(boletim.id)">
+                        Comparar
+                    </button>
                 </div>
             </div>
         </main>
@@ -45,20 +47,18 @@ export default {
     },
     methods: {
         async fetchBoletins() {
-            const token = this.getToken();
-            const response = await getBoletins(token);
-            this.boletins = response.data || []; // Assumindo que os dados vêm na estrutura correta
+            const response = await getBoletins(this.funcionario.token);
+            this.boletins = response.data;
         },
         handleFileChange(event, boletimId) {
             this.selectedFiles[boletimId] = event.target.files[0];
         },
         async compareBoletim(boletimId) {
             const file = this.selectedFiles[boletimId];
-            const token = this.getToken();
 
             if (file) {
-                const response = await compareBoletins(file, boletimId, token);
-                alert(response.message || 'Erro ao comparar boletim.'); // Você pode modificar essa parte para melhor feedback ao usuário
+                const response = await compareBoletins(file, boletimId, this.funcionario.token);
+                alert(response.message || 'Erro ao comparar boletim.');
             } else {
                 alert('Por favor, selecione um arquivo para comparação.');
             }
@@ -66,7 +66,8 @@ export default {
     },
     mixins: [mixinFuncionario],
     async created() {
-        await this.fetchBoletins(); // Carrega os boletins ao criar o componente
+        await this.getToken();
+        await this.fetchBoletins();
     }
 }
 </script>
