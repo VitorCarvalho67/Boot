@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Header from '../../components/Header.vue';
+import Header from '../../components/empresa/Header.vue';
 import Footer from '../../components/Footer.vue';
 import router from '../../router/index.js';
 import { mixinEmpresa } from '../../util/authMixins.js';
