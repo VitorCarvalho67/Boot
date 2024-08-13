@@ -2,9 +2,10 @@
     <Header />
     <div id="app">
         <main>
-            <AsideDashboard pageName='home' />
+            <AsideDashboard pageName="home" />
             <div class="content">
-                <h1>Bem-vindo, Administrador!</h1>   
+                <h1>Bem-vindo, Administrador!</h1>
+                <p>Escolha uma opção no menu lateral para começar.</p>
             </div>
         </main>
     </div>
@@ -12,32 +13,28 @@
 </template>
 
 <script>
-import Header from '../../components/admin/Header.vue';
-import Footer from '../../components/Footer.vue';
-import AsideDashboard from '../../components/admin/AsideDashboard.vue';
-import router from '../../router/index.js'
-import { mixinAdmin } from '../../util/authMixins.js';
+import Header from "../../components/admin/Header.vue";
+import Footer from "../../components/Footer.vue";
+import AsideDashboard from "../../components/admin/AsideDashboard.vue";
+import router from "../../router/index.js";
+import { mixinAdmin } from "../../util/authMixins.js";
 
 export default {
-    name: 'Admin',
+    name: "Admin",
     components: {
         Header,
         AsideDashboard,
-        Footer
+        Footer,
     },
     data() {
-        return {
-
-        }
+        return {};
     },
-    methods: {
-
-    },
+    methods: {},
     mixins: [mixinAdmin],
     async created() {
         this.getToken();
-    }
-}
+    },
+};
 </script>
 
 <style lang="scss" scoped>

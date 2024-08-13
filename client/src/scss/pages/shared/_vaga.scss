@@ -9,68 +9,103 @@ main {
         @include flex(column, flex-start, start);
         padding: 20px 100px;
 
-        .vaga-header {
-            h3 {
-                @include font-inter(700);
-                font-size: 2rem;
-                color: $font-color-dark;
-            }
+        .back-button {
+            @include flex(row, flex-end, center);
+            width: 100%;
+            margin-bottom: 20px;
 
-            .status {
-                @include font-inter(300);
+            a {
+                @include flex(row, flex-end, center);
+                text-decoration: none;
+                color: $font-color-dark;
+                @include font-inter(700);
                 font-size: 1rem;
-                color: $font-color-dark-2;
+
+                img {
+                    height: 15px;
+                    margin-right: 5px;
+                    filter: invert(100%);
+                }
             }
         }
 
-        .vaga-info {
-            margin-top: 20px;
+        .vaga {
+            width: 80%;
+            @include flex(column, stretch, start);
 
-            h2 {
-                @include font-inter(700);
-                font-size: 1.5rem;
-                color: $secondary-color-orange;
-                margin-bottom: 10px;
+            .main-information {
+                @include flex(row, flex-start, start);
+                width: 80%;
             }
 
-            .requisitos, .beneficios {
-                list-style: none;
-                padding: 0;
-                margin: 0;
+            .vaga-header {
+                @include flex(row, flex-start, center);
 
-                li {
-                    margin-bottom: 5px;
+                h3 {
+                    @include font-inter(700);
+                    font-size: 2rem;
+                    color: $secondary-color-orange;
+                    margin-right: 20px;
+                }
+
+                .status {
+                    @include font-inter(300);
+                    font-size: 1rem;
+                    color: $font-color-dark-2;
+                }
+            }
+
+            .vaga-info {
+                margin-top: 20px;
+
+                h2 {
+                    @include font-inter(700);
+                    font-size: 1.5rem;
+                    color: $secondary-color-orange;
+                    margin-bottom: 10px;
+                }
+
+                .requisitos,
+                .beneficios {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+
+                    li {
+                        margin-bottom: 5px;
+
+                        p {
+                            @include font-inter(300);
+                            font-size: 1rem;
+                            color: $font-color-dark-2;
+                        }
+                    }
+                }
+
+                .vaga-details,
+                .vaga-remuneracao {
+                    margin-top: 20px;
+
+                    p {
+                        @include font-inter(300);
+                        font-size: 1rem;
+                        color: $font-color-dark-2;
+
+                        strong {
+                            font-weight: 700;
+                        }
+                    }
+                }
+
+                .descricao {
+                    margin-top: 20px;
+                    margin-bottom: 20px;
 
                     p {
                         @include font-inter(300);
                         font-size: 1rem;
                         color: $font-color-dark-2;
                     }
-                }
-            }
-
-            .vaga-details, .vaga-remuneracao {
-                margin-top: 20px;
-
-                p {
-                    @include font-inter(300);
-                    font-size: 1rem;
-                    color: $font-color-dark-2;
-
-                    strong {
-                        font-weight: 700;
-                    }
-                }
-            }
-
-            .descricao {
-                margin-top: 20px;
-                margin-bottom: 20px;
-
-                p {
-                    @include font-inter(300);
-                    font-size: 1rem;
-                    color: $font-color-dark-2;
                 }
             }
         }
