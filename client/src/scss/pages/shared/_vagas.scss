@@ -56,43 +56,37 @@
             }
 
             > .box {
-                @include flex(column, flex-start, start);
+                @include flex(column, flex-start, end);
                 padding: 50px 0px 0px 100px;
                 width: 70%;
                 height: 100%;
 
-                @include m-screen(1400px) {
-                    @include flex(column, center, center);
-                    padding: 50px 0px 0px 0px;
-                    width: 100%;
+                @include m-screen(1600px) {
+                    width: 80%;
+                }
+
+                @include m-screen(1200px) {
+                    width: 90%;
                 }
 
                 .resultado {
                     @include flex(column, center, end);
                     text-align: right;
-                    width: 80%;
                     color: $secondary-color-orange;
                     margin-right: 10px;
                     margin-bottom: 20px;
                     font-size: small;
                     font-weight: 200;
+                    width: 100%;
                     @include font-inter(600);
                 }
 
                 .vaga {
-                    @include flex(column, flex-start, start);
-                    width: 80%;
+                    @include flex(column, flex-end, start);
+                    width: 100%;
                     height: 140px;
                     border-left: solid 5px $secondary-color-orange;
                     margin-bottom: 10px;
-
-                    @include m-screen(1400px) {
-                        width: 70%;
-                    }
-
-                    @include m-screen(800px) {
-                        width: 90%;
-                    }
 
                     a {
                         @include flex(row, flex-start, start);
