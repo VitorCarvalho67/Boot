@@ -19,24 +19,31 @@
 
                     <div class="main-information">
                         <div class="enterprise">
-                            <img :src="vaga.empresa.logo" :alt="vaga.empresa.name" />
-                            <h4>Empresa:</h4>
-                            <router-link :to="'/empresa/' + vaga.empresa.cnpj">{{
-                                vaga.empresa.name
-                                }}</router-link>
+                            <img
+                                :src="vaga.empresa.logo"
+                                :alt="vaga.empresa.name"
+                            />
+                            <div class="info-enterprise">
+                                <strong>Empresa:</strong>
+                                <router-link
+                                    :to="'/empresa/' + vaga.empresa.cnpj"
+                                    >{{ vaga.empresa.name }}</router-link
+                                >
+                            </div>
                         </div>
                         <div class="remuneracao">
-                            <p>
-                                <strong>Remuneração:</strong>
-                                <span v-text="vaga.remuneracao"></span>
-                            </p>
+                            <strong>Remuneração:</strong>
+                            <span v-text="vaga.remuneracao"></span>
                         </div>
                     </div>
 
                     <section class="vaga-info">
                         <h2>Requisitos</h2>
                         <ul class="requisitos">
-                            <li v-for="(requisito, index) in parsedRequisitos" :key="index">
+                            <li
+                                v-for="(requisito, index) in parsedRequisitos"
+                                :key="index"
+                            >
                                 <p v-text="requisito"></p>
                             </li>
                         </ul>
@@ -58,24 +65,20 @@
 
                         <section class="descricao">
                             <h2>Descrição</h2>
-                            <div class="vaga-remuneracao">
-                                <p>
-                                    <strong>Remuneração:</strong>
-                                    <span v-text="vaga.remuneracao"></span>
-                                </p>
-                            </div>
                             <p v-text="vaga.descricao"></p>
                         </section>
 
                         <h2>Benefícios</h2>
                         <ul class="beneficios">
-                            <li v-for="(beneficio, index) in parsedBeneficios" :key="index">
+                            <li
+                                v-for="(beneficio, index) in parsedBeneficios"
+                                :key="index"
+                            >
                                 <p v-text="beneficio"></p>
                             </li>
                         </ul>
                     </section>
                 </div>
-
             </div>
         </main>
     </div>

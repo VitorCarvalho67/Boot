@@ -35,7 +35,56 @@ main {
 
             .main-information {
                 @include flex(row, flex-start, start);
-                width: 80%;
+
+                .enterprise {
+                    @include flex(row, flex-start, center);
+                    img {
+                        @include flex(row, center, center);
+                        width: 70px;
+                        height: 70px;
+                        border-radius: 50%;
+                        margin-right: 20px;
+                        background-color: $secondary-color-orange;
+                    }
+
+                    .info-enterprise {
+                        @include flex(column, flex-start, start);
+                        strong {
+                            @include font-inter(300);
+                            font-size: 0.9rem;
+                            color: $font-color-dark-2;
+                            margin-bottom: 10px;
+                        }
+
+                        a {
+                            @include flex(row, flex-start, center);
+                            text-decoration: none;
+                            color: $font-color-dark;
+                            @include font-inter(700);
+                            font-size: 1rem;
+                        }
+                    }
+                }
+
+                .remuneracao {
+                    @include flex(column, center, start);
+                    margin-left: 50px;
+                    height: 70px;
+
+                    strong {
+                        @include font-inter(300);
+                        font-size: 0.9rem;
+                        color: $font-color-dark-2;
+                        margin-bottom: 10px;
+                    }
+
+                    span {
+                        @include flex(row, flex-start, center);
+                        color: $secondary-color-orange;
+                        @include font-inter(700);
+                        font-size: 1rem;
+                    }
+                }
             }
 
             .vaga-header {
@@ -55,13 +104,18 @@ main {
                 }
             }
 
+            h2 {
+                @include font-inter(600);
+                color: $font-color-dark;
+                margin-bottom: 10px;
+            }
+
             .vaga-info {
                 margin-top: 20px;
 
                 h2 {
-                    @include font-inter(700);
-                    font-size: 1.5rem;
-                    color: $secondary-color-orange;
+                    @include font-inter(600);
+                    color: $font-color-dark;
                     margin-bottom: 10px;
                 }
 
