@@ -21,11 +21,6 @@ export class GetBoletinsEmAnaliseUseCase {
             orderBy: [
                 {
                     aluno: {
-                        turmas: {}
-                    }
-                },
-                {
-                    aluno: {
                         name: 'asc'
                     }
                 }

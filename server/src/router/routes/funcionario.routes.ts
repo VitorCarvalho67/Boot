@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { funcionarioAuthMiddleware } from '../../middleware/auth/autentication';
 import { createControllers } from "./imports/funcionario";
+import multer from "multer";
 
 const controllers = createControllers();
+const upload = multer({ dest: 'uploads/' });
 const funcionarioRoutes = Router();
 
 funcionarioRoutes.post("/validate", controllers.validateFuncionarioController.handle);
@@ -12,11 +14,12 @@ funcionarioRoutes.post("/recovery/validate", controllers.validateRecoveryControl
 
 funcionarioRoutes.get("/init", controllers.initFuncionarioController.handle);
 
+funcionarioRoutes.post('/boletim/compare', upload.single('file'), funcionarioAuthMiddleware, controllers.compareBoletimController.handle);
+
 funcionarioRoutes.use(funcionarioAuthMiddleware);
 funcionarioRoutes.post("/register/vaga", controllers.registerVagaController.handle);
 funcionarioRoutes.post("/update/empresa", controllers.registerVagaController.handle);
 funcionarioRoutes.post("/message/send", controllers.createMessageController.handle);
-funcionarioRoutes.post("/boletim/compare", controllers.compareBoletimController.handle);
 
 funcionarioRoutes.get("/auth", (req, res) => {
     res.status(200).send("Funcionário autenticado com sucesso.");

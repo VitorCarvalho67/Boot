@@ -16,20 +16,22 @@ export class CompareBoletimUseCase {
             throw new AppError('Arquivo do boletim não fornecido.');
         }
 
+        
         const boletim = await prisma.boletim.findUnique({
             where: {
                 id: boletimId,
             },
         });
-
+        
         if (!boletim) {
             throw new AppError('Boletim não encontrado.');
         }
-
+        
         const filePath = path.resolve(file.path);
         const fileBuffer = fs.readFileSync(filePath);
-
+        
         const storedBoletimBuffer = await downloadFromMinio('boot', boletim.caminho);
+        console.log("here");
 
         const isEqual = fileBuffer.equals(storedBoletimBuffer);
 

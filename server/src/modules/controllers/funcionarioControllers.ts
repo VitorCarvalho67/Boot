@@ -7,7 +7,7 @@ import { ValidateRecoveryUseCase } from "../services/funcionario/ValidateRecover
 import { RefreshTokenUseCase } from "../services/funcionario/RefreshTokenUseCase";
 import { RegisterVagaUseCase } from "../services/funcionario/RegisterVagasUseCase";
 import { SetEmpresaParceiraUseCase } from "../services/funcionario/SetAsParceiraUseCase";
-import { CompareBoletimDTO, SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
+import { SetEmpresaParceiraDTO } from "../interfaces/funcionarioDTOs";
 import { EntidadeEnum } from "../interfaces/sharedDTOs";
 import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
 import { CompareBoletimUseCase } from "../services/funcionario/CompareBoletinsUseCase";
@@ -158,7 +158,9 @@ export class GetMessagesBetweenController {
 
 export class CompareBoletimController {
     async handle(req: Request, res: Response): Promise<Response> {
-        const { boletimId } = req.body;
+        console.log(req.body);
+        
+        const boletimId = req.body.boletimId;
         const file = req.file as Express.Multer.File;
 
         const compareBoletimUseCase = new CompareBoletimUseCase();

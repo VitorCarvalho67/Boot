@@ -24,10 +24,11 @@ export const uploadToMinio = async (bucketName: string, objectName: string, file
 };
 
 export async function downloadFromMinio(bucketName: string, objectName: string): Promise<Buffer> {
-    const tempFilePath = `../uploads/tmp/${objectName}`;
+    const tempFilePath = `./uploads/tmp/${objectName}`;
     const fileStream = fs.createWriteStream(tempFilePath);
-
+    
     const downloadStream = await minioClient.getObject(bucketName, objectName);
+    console.log("Here");
     downloadStream.pipe(fileStream);
 
     await promisify(stream.finished)(fileStream);
