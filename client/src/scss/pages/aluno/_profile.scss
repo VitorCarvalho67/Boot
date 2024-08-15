@@ -272,8 +272,8 @@ main {
             @include flex(column, flex-start, start);
             width: 100%;
 
-            div{
-            @include flex(row, flex-start, center);
+            div {
+                @include flex(row, flex-start, center);
             }
 
             .input-box {
@@ -358,7 +358,6 @@ main {
                         width: 10%;
                     }
                 }
-
             }
 
             .button-box {
@@ -379,7 +378,8 @@ main {
                     transition: 0.1s linear;
                     margin-right: 20px;
 
-                    &:hover, &:last-child {
+                    &:hover,
+                    &:last-child {
                         background-color: $secondary-color-dark;
                         color: $primary-color-orange;
                     }
