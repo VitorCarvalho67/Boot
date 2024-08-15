@@ -45,12 +45,22 @@ export class CompareBoletimUseCase {
 
         const isEqual = storedFileText === uploadedFileText;
 
+        console.log(uploadedFileText);
+
         const novoStatus = isEqual ? 'APROVADO' : 'RECUSADO';
 
-        await prisma.boletim.update({
-            where: { id: boletimId },
-            data: { status: novoStatus }
-        });
+        // await prisma.boletim.update({
+        //     where: { id: boletimId },
+        //     data: { status: novoStatus }
+        // });
+
+        if(isEqual){
+            const relevantText = this.extractRelevantText(storedFileText);
+
+            const materias = this.extractMateriasAndNotas(relevantText);
+
+            console.log(materias);
+        }
 
         await clearUploads();
 
@@ -85,5 +95,57 @@ export class CompareBoletimUseCase {
         } catch (error) {
             throw new AppError(`Erro ao extrair texto do PDF: ${error}`);
         }
+    }
+
+    private extractRelevantText(text: string): string {
+        const start = text.indexOf("Resultado Final porComponente");
+        const end = text.indexOf("Assiduidade Parcial");
+
+        if (start === -1 || end === -1) {
+            throw new AppError("Texto do boletim incompleto ou não encontrado.");
+        }
+
+        return text.slice(start, end).trim();
+    }
+
+    private extractMateriasAndNotas(text: string): any[] {
+        const materias = [] as any;
+        const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
+        lines.forEach(line => {
+            const result = this.extractNotaFromLine(line);
+            if (result) {
+                materias.push(result);
+            }
+        });
+
+        return materias;
+    }
+
+    private extractNotaFromLine(line: string): any | null {
+        // Separar a linha entre nome da matéria e as notas
+        const match = line.match(/^(.+?)(\d{2,3})([MBIR\-]+)$/);
+        if (!match) return null;
+    
+        const nomeMateria = match[1].trim();
+        const notasRaw = match[3].trim();
+    
+        const bimestre1 = this.extractNota(notasRaw.slice(0, 2));
+        const bimestre2 = this.extractNota(notasRaw.slice(2, 4));
+    
+        return {
+            materia: nomeMateria,
+            bimestre1,
+            bimestre2
+        };
+    }
+    
+    private extractNota(notaRaw: string): string {
+        if (notaRaw === 'MB') return 'MB';
+        if (notaRaw[0] === 'M') return 'MB';
+        if (notaRaw[0] === 'B') return 'B';
+        if (notaRaw[0] === 'I') return 'I';
+        if (notaRaw[0] === 'R') return 'R';
+        return '-';
     }
 }
