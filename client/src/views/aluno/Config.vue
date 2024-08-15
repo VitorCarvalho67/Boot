@@ -4,7 +4,27 @@
         <AsideDashboard pageName="config" />
         <div class="content">
             <div class="box" id="box1">
-                <H1>Suas informações</H1>
+                <H1>Configurações</H1>
+                <h2 class="title">
+                    Configure seu perfil e veja suas informações
+                </h2>
+
+                <h3>Anexe suas notas</h3>
+
+                <div class="inputUpload">
+                    <p>Anexo suas notas aqui enviando um boletim</p>
+                    <input type="file" ref="boletimInput" @change="checkFile" />
+                    <button
+                        @click="sendBoletim"
+                        type="button"
+                        v-if="fileSelected"
+                    >
+                        <img :src="imgVerificar" />Salvar
+                    </button>
+                </div>
+
+                <h3>Seus dados</h3>
+
                 <ul>
                     <li>
                         <bold>Email</bold>
@@ -30,7 +50,7 @@
             </div>
             <div class="box" id="box2">
                 <router-link to="/aluno/me" class="profile">
-                    <img :src="aluno.imageUrl" :alt="aluno.nome">
+                    <img :src="aluno.imageUrl" :alt="aluno.nome" />
                     <div class="info">
                         <h3 v-text="aluno.nome"></h3>
                         <p v-text="aluno.idade"></p>
@@ -38,61 +58,48 @@
                     </div>
                 </router-link>
             </div>
-            <div class="inputUpload">
-                <p>Anexo suas notas aqui enviando um boletim</p>
-                <input type="file" ref="boletimInput">
-                <button @click="sendBoletim" type="button">
-                    <img :src="imgVerificar">Salvar
-                </button>
-            </div>
         </div>
     </main>
     <Footer />
-
 </template>
 
 <script>
-import Header from '../../components/aluno/Header.vue';
-import AsideDashboard from '../../components/aluno/AsideDashboard.vue'
-import Footer from '../../components/Footer.vue';
+import Header from "../../components/aluno/Header.vue";
+import AsideDashboard from "../../components/aluno/AsideDashboard.vue";
+import Footer from "../../components/Footer.vue";
 
-import {
-    getCurriculo,
-    sendBoletim
-} from '../../services/api/aluno';
-import {
-    getImage,
-} from '../../services/api/shared';
+import { getCurriculo, sendBoletim } from "../../services/api/aluno";
+import { getImage } from "../../services/api/shared";
 
-import imgVerificar from '../../assets/icons/verificar.png';
+import imgVerificar from "../../assets/icons/verificar.png";
 
-import { mixinAluno } from '../../util/authMixins.js';
-
+import { mixinAluno } from "../../util/authMixins.js";
 
 export default {
-    name: 'ConfigAluno',
+    name: "ConfigAluno",
     components: {
         Header,
         AsideDashboard,
-        Footer
+        Footer,
     },
     data() {
         return {
             aluno: {
-                token: '',
-                nome: '',
-                endereco: '',
-                nascimento: '',
-                idade: '',
-                email: '',
-                curriculo: '',
-                curriculoEdit: '',
-                imgUrl: '../../assets/img/defaultImage.png',
-                bannerUrl: '../../assets/img/defaultBanner.png',
-            }
-        }
+                token: "",
+                nome: "",
+                endereco: "",
+                nascimento: "",
+                idade: "",
+                email: "",
+                curriculo: "",
+                curriculoEdit: "",
+                imgUrl: "../../assets/img/defaultImage.png",
+                bannerUrl: "../../assets/img/defaultBanner.png",
+            },
+            fileSelected: false,
+        };
     },
-    methods:{
+    methods: {
         calcularIdade(nascimento) {
             const hoje = new Date();
             const dataNascimento = new Date(nascimento);
@@ -101,7 +108,11 @@ export default {
             const mesAtual = hoje.getMonth() + 1;
             const mesNascimento = dataNascimento.getMonth() + 1;
 
-            if (mesAtual < mesNascimento || (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())) {
+            if (
+                mesAtual < mesNascimento ||
+                (mesAtual === mesNascimento &&
+                    hoje.getDate() < dataNascimento.getDate())
+            ) {
                 idade--;
             }
 
@@ -112,38 +123,56 @@ export default {
 
             try {
                 if (response.status >= 200 && response.status < 300) {
-                    this.aluno.curriculo = response.data.curriculo.replace(/\n/g, '<br>');
+                    this.aluno.curriculo = response.data.curriculo.replace(
+                        /\n/g,
+                        "<br>",
+                    );
                     this.aluno.curriculoEdit = response.data.curriculo;
                     this.aluno.endereco = response.data.endereco;
                     this.aluno.nascimento = response.data.nascimento;
                     this.calcularIdade(this.aluno.nascimento);
-                    this.aluno.nascimento = this.aluno.nascimento.split('T')[0].split('-').reverse().join('/');
+                    this.aluno.nascimento = this.aluno.nascimento
+                        .split("T")[0]
+                        .split("-")
+                        .reverse()
+                        .join("/");
                     this.aluno.nome = response.data.nome;
                     this.aluno.email = response.data.email;
                     this.aluno.rm = response.data.rm;
                 } else {
-                    alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + response.message);
+                    alert(
+                        "Ops.. Algo deu errado ao recuperar os dados. 😕\n" +
+                            response.message,
+                    );
                 }
             } catch (error) {
-                alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error);
+                alert(
+                    "Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error,
+                );
             }
 
             try {
                 const response = await getImage({
                     identifier: "ALUNO",
-                    email: this.aluno.email
+                    email: this.aluno.email,
                 });
 
                 if (response.status >= 200 && response.status < 300) {
                     this.aluno.imageUrl = response.data.url;
                 } else {
-                    console.log("Ops.. Algo deu errado ao recuperar a imagem. 😕\n" + response.message);
+                    console.log(
+                        "Ops.. Algo deu errado ao recuperar a imagem. 😕\n" +
+                            response.message,
+                    );
                 }
             } catch (error) {
-                console.log("Ops.. Algo deu errado ao recuperar a imagem de perfil. 😕\n" + error);
+                console.log(
+                    "Ops.. Algo deu errado ao recuperar a imagem de perfil. 😕\n" +
+                        error,
+                );
             }
         },
-        async sendBoletim(){
+        async sendBoletim() {
             const file = this.$refs.boletimInput.files[0];
             if (!file) return;
 
@@ -153,21 +182,27 @@ export default {
                 alert("Notas carregadas com sucesso! 😉");
                 await this.getCurriculoAluno();
             } else {
-                alert("Ops.. Algo deu errado ao enviar notas. 😕\n" + response.message);
+                alert(
+                    "Ops.. Algo deu errado ao enviar notas. 😕\n" +
+                        response.message,
+                );
             }
 
-            this.$refs.boletimInput.value = '';
-        }
+            this.$refs.boletimInput.value = "";
+            this.fileSelected = false;
+        },
+        checkFile() {
+            this.fileSelected = !!this.$refs.boletimInput.files.length;
+        },
     },
     mixins: [mixinAluno],
     async created() {
         this.getToken();
         this.RefreshToken();
         this.getData();
-    }
-}
-
+    },
+};
 </script>
 <style lang="scss" scoped>
-@import "../../scss/pages/aluno/_home.scss";
+@import "../../scss/pages/aluno/_config.scss";
 </style>
