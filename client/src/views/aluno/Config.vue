@@ -9,10 +9,10 @@
                     Configure seu perfil e veja suas informações
                 </h2>
 
-                <h3>Anexe suas notas</h3>
+                <h3>Envio de boletim</h3>
 
                 <div class="inputUpload">
-                    <p>Anexo suas notas aqui enviando um boletim</p>
+                    <p>Anexe suas notas aqui enviando um boletim</p>
                     <input type="file" ref="boletimInput" @change="checkFile" />
                     <button
                         @click="sendBoletim"
@@ -205,4 +205,26 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "../../scss/pages/aluno/_config.scss";
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    main {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            height: 100%;
+
+            @media (max-width: 1000px) {
+                width: calc(100% - 100px);
+            }
+        }
+    }
+}
 </style>

@@ -7,7 +7,7 @@ main {
         @include flex(row, flex-start, start);
         width: calc(100% - 300px);
         height: 100%;
-        padding: 40px 20px;
+        padding: 50px 20px 20px 100px;
         background-color: $primary-color-dark;
 
         .box {
