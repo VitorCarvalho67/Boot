@@ -5,7 +5,8 @@ import {
     SearchUserController,
     GetVagasController,
     GetVagaController,
-    GetExtracurricularsByRMController
+    GetExtracurricularsByRMController,
+    GetRankingController
 } from "../../../modules/controllers/sharedControllers";
 
 export const createControllers = () => ({
@@ -15,5 +16,6 @@ export const createControllers = () => ({
     searchUserController: new SearchUserController(),
     getVagasController: new GetVagasController(),
     getVagaController: new GetVagaController(),
-    getExtracurricularsByRMController: new GetExtracurricularsByRMController()
+    getExtracurricularsByRMController: new GetExtracurricularsByRMController(),
+    getRankingController: new GetRankingController() 
 });

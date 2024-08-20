@@ -22,6 +22,7 @@ import { GetEmpresasUseCase } from "../services/shared/GetEmpresasUseCase";
 import { GetVagasUseCase } from "../services/shared/GetVagasUseCase";
 import { GetVagaUseCase } from "../services/shared/GetVagaUseCase";
 import { GetExtracurricularsByRMUseCase } from "../services/shared/GetExtraUseCase";
+import { GetRankingUseCase } from "../services/shared/GetRanking";
 
 export class CreateVinculoController {
     async handle(req: Request, res: Response) {
@@ -230,6 +231,16 @@ export class GetExtracurricularsByRMController {
         const getExtracurricularsByRMUseCase = new GetExtracurricularsByRMUseCase();
 
         const result = await getExtracurricularsByRMUseCase.execute(rm);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetRankingController {
+    async handle(req: Request, res: Response) {
+        const getRankingUseCase = new GetRankingUseCase();
+
+        const result = await getRankingUseCase.execute();
 
         return res.status(201).json(result);
     }
