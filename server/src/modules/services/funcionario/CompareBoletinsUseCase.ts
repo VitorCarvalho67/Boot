@@ -6,6 +6,7 @@ import { AppError } from "../../../errors/error";
 import { CompareBoletimDTO } from '../../interfaces/funcionarioDTOs';
 import { clearUploads } from '../shared/helpers/helpers';
 import { minioClient } from '../../../minioService';
+import { Readable } from 'stream';
 
 export class CompareBoletimUseCase {
     async execute({ boletimId, file }: CompareBoletimDTO) {
@@ -69,11 +70,11 @@ export class CompareBoletimUseCase {
 
     async getFileFromMinio(bucketName: string, objectName: string): Promise<Buffer> {
         return new Promise((resolve, reject) => {
-            minioClient.getObject(bucketName, objectName, (error: Error | null, dataStream: any) => {
+            minioClient.getObject(bucketName, objectName, (error: Error | null, dataStream: Readable) => {
                 if (error) {
                     return reject(error);
                 }
-
+    
                 const chunks: Buffer[] = [];
                 dataStream.on('data', (chunk: Buffer) => {
                     chunks.push(chunk);
