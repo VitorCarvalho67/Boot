@@ -40,5 +40,5 @@ const io = new Server(httpServer, {
 appSocket(io);
 
 httpServer.listen(port, () => {
-    console.log(`Server is running on port ${port} 🚀`);
+    console.log(`Server is running on port ${port} 🚀\nDatabase URL: ${process.env.DATABASE_URL}`);
 });
