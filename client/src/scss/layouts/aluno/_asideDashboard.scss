@@ -1,6 +1,7 @@
 aside,
 .aside-dashboard {
     height: calc(100vh - 80px);
+    min-height: 510px;
     @include flex(row, space-between, start);
     width: 300px;
     background-color: $secondary-color-dark;
@@ -10,7 +11,7 @@ aside,
     }
 
     &.fixed {
-        position: fixed;
+        position: absolute;
         top: 80px;
         left: 0;
         z-index: 1000;
@@ -37,6 +38,14 @@ aside,
                 li {
                     margin: 5px 0px;
                     padding: 5px 10px;
+                    @include m-screen(1450px) {
+                        margin: 3px 0px;
+                        padding: 3px 8px;
+                    }
+                }
+
+                @include m-screen(1450px) {
+                    padding: 0px 0px 0px 20px;
                 }
             }
 
@@ -50,12 +59,21 @@ aside,
                 margin: 20px 0px 0px 0px;
                 padding: 10px;
                 border-radius: 5px;
+                
+                @include m-screen(1450px) {
+                    margin: 10px 0px 0px 0px;
+                }
 
                 img {
                     height: 20px;
                     width: 20px;
                     object-fit: cover;
                     filter: invert(100%);
+
+                    @include m-screen(1650px) {
+                        height: 15px;
+                        width: 15px;
+                    }
                 }
 
                 a {

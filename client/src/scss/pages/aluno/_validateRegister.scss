@@ -5,7 +5,8 @@ main {
 }
 
 .box {
-    min-height: 65%;
+    min-height: 500px;
+
     width: 30%;
     border-radius: 20px;
     padding: 20px;
@@ -18,8 +19,10 @@ main {
         background-color: $primary-color-dark;
     }
     @include m-screen-box;
-
-    li{
+    @include m-screen(1150px) {
+        min-height: auto;
+    }
+    li {
         margin-top: 20px;
     }
 

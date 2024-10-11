@@ -19,6 +19,7 @@ main {
     .content {
         @include flex(row-reverse, center, center);
         height: 55vh;
+        min-height: 320px;
         width: 100%;
         @include m-screen(600px){
             height: 45vh;

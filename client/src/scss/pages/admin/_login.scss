@@ -5,7 +5,7 @@ main {
 }
 
 .box {
-    min-height: 65%;
+    min-height: 500px;
     width: 30%;
     border-radius: 20px;
     padding: 20px;
@@ -15,7 +15,9 @@ main {
         width: 40%;
     }
     @include m-screen-box;
-
+    @include m-screen(1150px) {
+        min-height: auto;
+    }
     nav {
         width: 100%;
 
@@ -174,14 +176,13 @@ main {
             @include m-screen(600px) {
                 @include flex(row, flex-start, center);
             }
-
         }
 
         .button-box {
             width: 100%;
             margin-top: 40px;
             @include flex(row, flex-start, center);
-            
+
             button {
                 height: 40px;
                 width: 140px;

@@ -11,6 +11,10 @@ main {
     border-radius: 20px;
     padding: 20px;
     color: $font-color-dark;
+    min-height: 500px;
+    @include m-screen(1150px) {
+        min-height: auto;
+    }
     @include m-screen(1600px) {
         height: 75%;
         width: 40%;
