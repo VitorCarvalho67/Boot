@@ -10,6 +10,11 @@ main {
         padding: 40px 20px;
         background-color: $primary-color-dark;
 
+        @include m-screen(700px) {
+            @include flex(column-reverse, flex-start, start);
+            justify-content: flex-end;
+        }
+
         .box {
             @include flex(column, flex-start, start);
         }
@@ -46,6 +51,15 @@ main {
             }
 
             width: 70%;
+
+            @include m-screen(1000px) {
+                width: 60%;
+            }
+
+            @include m-screen(700px) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
         }
 
         #box2 {
@@ -81,12 +95,20 @@ main {
                 }
             }
 
-            .vinculos{
+            .vinculos {
                 h3 {
                     font-size: 1.2rem;
                     color: $font-color-dark;
                     @include font-inter(300);
                 }
+            }
+
+            @include m-screen(1000px) {
+                width: 40%;
+            }
+
+            @include m-screen(700px) {
+                width: 100%;
             }
         }
     }
