@@ -134,10 +134,13 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: calc(100vh - 80px);
+    min-height: 510px;
 
     main {
         display: flex;
         flex: 1;
+        height: calc(100vh - 80px);
         overflow: hidden;
 
         .content {

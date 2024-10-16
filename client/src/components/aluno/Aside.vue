@@ -3,10 +3,30 @@
         <div class="overlay" @click="handleOutsideClick" v-if="visible">
             <aside @click.stop>
                 <ul>
-                    <li><router-link to="">Rankings</router-link></li>
-                    <li><router-link to="">Estágios</router-link></li>
-                    <li><router-link to="/mensagens">Mensagens</router-link></li>
-                    <li><router-link to="/aluno/me">Perfil</router-link></li>
+                    <li>
+                        <router-link to="/aluno">Página inicial</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/aluno/me">Meu perfil</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/buscar">Pesquisa</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/rede">Meus vínculos</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/mensagens">Mensagens</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/vagas">Estágios</router-link>
+                    </li>
+                    <li>
+                        <router-link to="">Rankings</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/config">Configurações</router-link>
+                    </li>
                 </ul>
             </aside>
         </div>

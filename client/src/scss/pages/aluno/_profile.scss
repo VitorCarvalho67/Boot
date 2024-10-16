@@ -21,6 +21,10 @@ main {
             padding: 20px 50px;
         }
 
+        @include m-screen(700px) {
+            padding: 20px 30px;
+        }
+
         .editButtons {
             @include flex-center;
             z-index: 2;
@@ -138,6 +142,11 @@ main {
                         height: 200px;
                         width: 200px;
                     }
+
+                    @include m-screen(760px) {
+                        height: 180px;
+                        width: 180px;
+                    }
                 }
 
                 .inputUpload {
@@ -196,6 +205,11 @@ main {
                         margin-left: 200px;
                     }
 
+                    @include m-screen(700px) {
+                        margin-left: 170px;
+                    }
+
+
                     .box1 h1 {
                         @include font-inter(300);
                         font-size: 2rem;
@@ -203,6 +217,9 @@ main {
 
                         @include m-screen(1300px) {
                             font-size: 1.6rem;
+                        }
+                        @include m-screen(760px) {
+                            font-size: 1.4rem;
                         }
                     }
                     .box2 {
@@ -213,6 +230,10 @@ main {
                             @include font-inter(300);
                             font-size: 1rem;
                             color: $font-color-dark-2;
+
+                            @include m-screen(760px) {
+                                font-size: 0.9rem;
+                            }
                         }
                     }
                 }
@@ -228,6 +249,10 @@ main {
                 font-size: 1.5rem;
                 color: $secondary-color-orange;
                 margin: 20px 0px 10px 0px;
+
+                @include m-screen(760px) {
+                    font-size: 1.3rem;
+                }
             }
 
             > div {
@@ -244,6 +269,10 @@ main {
                     font-size: 1rem;
                     color: $font-color-dark-2;
                     min-height: 300px;
+
+                    @include m-screen(760px) {
+                        font-size: 0.9rem;
+                    }
                 }
 
                 textarea {
@@ -266,120 +295,132 @@ main {
         .extracurriculares {
             margin-top: 40px;
             padding: 20px;
-            background-color: $secondary-color-dark;
-            border-radius: 10px;
             color: $font-color-dark;
             @include flex(column, flex-start, start);
             width: 100%;
-
-            div {
-                @include flex(row, flex-start, center);
-            }
-
-            .input-box {
-                @include flex(row, center, center);
-                width: 100%;
-                padding: 10px;
-                border-radius: 5px;
-                background-color: $terciary-color-dark;
-                border-left: solid 3px $terciary-color-dark;
-                margin-right: 25px;
-
-                &.focused {
-                    border-left: solid 3px $secondary-color-orange;
-                    border-radius: 0px 5px 5px 0px;
-                }
-
-                label {
-                    letter-spacing: 1.5px;
-                    @include font-inter(200);
-                    font-size: 0.8rem;
-                    color: $font-color-dark-2;
-                }
-
-                p {
-                    background-color: transparent;
-                    width: 90%;
-                    margin-top: 5px;
-                    outline: none;
-                    color: $font-color-dark;
-                    border: none;
-                    @include font-inter(400);
-                    font-size: 1rem;
-                    @include flex(row, flex-start, center);
-                }
-
-                input {
-                    background-color: transparent;
-                    width: 100%;
-                    margin-top: 5px;
-                    outline: none;
-                    color: $font-color-dark;
-                    border: none;
-                    @include font-inter(400);
-                    font-size: 1rem;
-                }
-
-                textarea {
-                    background-color: transparent;
-                    border: none;
-                    width: 100%;
-                    outline: none;
-                }
-
-                .d1 {
-                    width: 95%;
-                }
-
-                .d2 {
-                    width: 5%;
-
-                    button {
-                        height: 20px;
-                        width: 20px;
-                        border: none;
-                        background-color: transparent;
-                        background-position: center;
-                        background-size: cover;
-                        background-repeat: no-repeat;
-                        filter: invert(100%);
-                        cursor: pointer;
-                    }
-
-                    .show {
-                        background-image: url("../../assets/icons/olho-1.png");
-                    }
-
-                    .hide {
-                        background-image: url("../../assets/icons/olho-2.png");
-                    }
-
-                    @include m-screen(1200px) {
-                        width: 10%;
-                    }
-                }
-            }
 
             h2 {
                 @include font-inter(700);
                 font-size: 1.5rem;
                 color: $secondary-color-orange;
-                margin: 20px 0px 10px 0px;
+                margin: 20px 0px 20px 0px;
+                text-align: center;
+            }
+
+            .activities {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                justify-content: flex-start;
+
+                .input-box {
+                    @include flex(row, center, center);
+                    width: 100%;
+                    padding: 10px;
+                    border-radius: 5px;
+                    background-color: $terciary-color-dark;
+                    border-left: solid 3px $terciary-color-dark;
+                    margin-bottom: 10px;
+
+                    &.focused {
+                        border-left: solid 3px $secondary-color-orange;
+                        border-radius: 0px 5px 5px 0px;
+                    }
+
+                    label {
+                        letter-spacing: 1.5px;
+                        @include font-inter(200);
+                        font-size: 0.8rem;
+                        color: $font-color-dark-2;
+                    }
+
+                    p {
+                        background-color: transparent;
+                        width: 90%;
+                        margin-top: 5px;
+                        outline: none;
+                        color: $font-color-dark;
+                        border: none;
+                        @include font-inter(400);
+                        font-size: 1rem;
+                        @include flex(row, flex-start, center);
+                    }
+
+                    input {
+                        background-color: transparent;
+                        width: 100%;
+                        margin-top: 5px;
+                        outline: none;
+                        color: $font-color-dark;
+                        border: none;
+                        @include font-inter(400);
+                        font-size: 1rem;
+                    }
+
+                    textarea {
+                        background-color: transparent;
+                        border: none;
+                        width: 100%;
+                        outline: none;
+                    }
+
+                    .d1 {
+                        width: 95%;
+                    }
+
+                    .d2 {
+                        width: 5%;
+
+                        button {
+                            height: 20px;
+                            width: 20px;
+                            border: none;
+                            background-color: transparent;
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;
+                            filter: invert(100%);
+                            cursor: pointer;
+                        }
+
+                        .show {
+                            background-image: url("../../assets/icons/olho-1.png");
+                        }
+
+                        .hide {
+                            background-image: url("../../assets/icons/olho-2.png");
+                        }
+
+                        @include m-screen(1200px) {
+                            width: 10%;
+                        }
+                    }
+                }
+            }
+
+            button {
+                margin-top: 15px;
             }
 
             .activity {
                 background-color: $terciary-color-dark;
                 padding: 15px;
                 border-radius: 8px;
-                margin-bottom: 20px;
-                @include flex(column, center, center);
+                margin-bottom: 5px;
+                @include flex(column, flex-start, flex-start);
+                flex: 1 1 300px;
+                max-width: 400px;
 
                 p {
                     @include flex(row, flex-start, center);
                     font-size: 1rem;
-                    margin-left: 10px;
+                    margin: 5px 0;
                     color: $font-color-dark;
                     @include font-inter(300);
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    width: 100%;
+                    max-width: 100%;
 
                     strong {
                         font-weight: 500;
@@ -392,10 +433,14 @@ main {
                     border: none;
                     color: $primary-color-orange;
                     @include font-inter(300);
-                    font-size: .9rem;
+                    font-size: 0.9rem;
                     cursor: pointer;
                     transition: 0.1s linear;
-                    margin-left: 10px;
+                    margin: 10px 5px;
+
+                    &:hover {
+                        color: darken($primary-color-orange, 10%);
+                    }
 
                     &:last-child {
                         color: $secondary-color-orange;
@@ -403,42 +448,29 @@ main {
                 }
             }
 
-            .activity.editMode {
-                input {
-                    background-color: $primary-color-dark;
-                    border: none;
-                    border-radius: 5px;
-                    padding: 10px;
-                    margin-bottom: 10px;
-                    color: $font-color-dark;
-                    @include font-inter(400);
-                    font-size: 1rem;
-                    width: 100%;
-                }
-            }
-
-            .editMode,
-            .viewMode {
-                button {
-                    margin-top: 10px;
-                }
-            }
-
-            [v-show="showAddForm"] {
-                input {
-                    background-color: $primary-color-dark;
-                    border: none;
-                    border-radius: 5px;
-                    padding: 10px;
-                    margin-bottom: 10px;
-                    color: $font-color-dark;
-                    @include font-inter(400);
-                    font-size: 1rem;
-                    width: 100%;
-                }
+            .button-box {
+                width: 100%;
+                @include flex(row, flex-end, center);
 
                 button {
-                    margin-top: 10px;
+                    padding: 8px 12px;
+                    background-color: transparent;
+                    border: none;
+                    color: $primary-color-orange;
+                    @include font-inter(300);
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    transition: 0.2s linear;
+                    margin: 0px 10px;
+
+                    &:hover {
+                        color: $secondary-color-orange;
+                    }
+
+                    &:nth-child(1) {
+                        background-color: $primary-color-orange;
+                        color: $font-color-light;
+                    }
                 }
             }
 
@@ -458,31 +490,22 @@ main {
                     color: $primary-color-orange;
                 }
             }
-        
-            .button-box {
-                width: 100%;
-                @include flex(row, flex-end, center);
 
-                button {
-                    background-color: transparent;
-                    border: none;
-                    color: $primary-color-orange;
-                    @include font-inter(300);
-                    font-size: .9rem;
-                    cursor: pointer;
-                    transition: 0.1s linear;
-                    margin: 0px 20px 0px 20px;
+            @media (max-width: 600px) {
+                .activity {
+                    padding: 10px;
 
-                    &:last-child {
-                        color: $secondary-color-orange;
+                    p {
+                        font-size: 0.9rem;
+                    }
+
+                    button {
+                        font-size: 0.8rem;
                     }
                 }
 
-                @include m-screen(1800px) {
-                    margin-top: 20px;
-                }
-                @include m-screen(600px) {
-                    @include flex(row, flex-end, center);
+                .button-box button {
+                    padding: 6px 10px;
                 }
             }
         }
