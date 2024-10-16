@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/28aaf26c-e68c-439d-bdf3-756a406cfab6" alt="Imagem logo" />
+  <img src="https://github.com/user-attachments/assets/57ee70df-b6d6-4a20-b837-f94fc80dc88e" alt="Imagem logo" />
 </p>
 
 # BOOT
