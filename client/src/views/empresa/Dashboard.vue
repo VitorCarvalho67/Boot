@@ -2,11 +2,9 @@
     <Header />
     <div id="app">
         <main>
+            <AsideDashboard pageName='home' />
             <div class="content">
-                <div class="box" id="box1">
-                    <H1>Bem-vinda empresa!</H1>
-                    <button @click="logout">Logout</button>
-                </div>
+                <h1>Bem-vindo à plataforma!</h1>
             </div>
         </main>
     </div>
@@ -14,27 +12,32 @@
 </template>
 
 <script>
-import Header from "../../components/empresa/Header.vue";
-import Footer from "../../components/Footer.vue";
-
-import router from "../../router/index.js";
-import { mixinEmpresa } from "../../util/authMixins.js";
+import Header from '../../components/empresa/Header.vue';
+import Footer from '../../components/Footer.vue';
+import AsideDashboard from '../../components/empresa/AsideDashboard.vue';
+import router from '../../router/index.js'
+import { mixinEmpresa } from '../../util/authMixins.js';
 
 export default {
-    name: "Empresa",
+    name: 'Empresa',
     components: {
         Header,
-        Footer,
+        AsideDashboard,
+        Footer
     },
     data() {
-        return {};
+        return {
+
+        }
     },
-    methods: {},
+    methods: {
+
+    },
     mixins: [mixinEmpresa],
     async created() {
         this.getToken();
-    },
-};
+    }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -43,7 +46,7 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: calc(100vh - 80px);
 
     main {
         display: flex;
