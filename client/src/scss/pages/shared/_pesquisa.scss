@@ -1,11 +1,11 @@
-#app{
-    height: 100vh;
+#app {
+    height: calc(100vh - 80px);
 
     main {
         @include flex(row, flex-start, start);
         width: 100vw;
-        height: 100vh;
         min-height: calc(100vh - 80px);
+        height: calc(100vh - 80px);
         border-bottom: 1px solid #0000008f;
         background-color: $primary-color-dark;
         position: relative;
@@ -21,17 +21,16 @@
 
             .search {
                 @include flex(row, center, start);
-                height: 50px;
                 width: 62%;
-                padding: 20px 30px 20px 80px;
+                padding: 80px 30px 20px 80px;
 
-                .box{
+                .box {
                     @include flex(row, cen, start);
                     height: 50px;
                     border-radius: 25px;
                     width: calc(100% - 40px);
                     background-color: $secondary-color-dark;
-                    
+
                     input {
                         color: $font-color-dark-2;
                         width: 94%;
@@ -40,30 +39,31 @@
                         outline: none;
                         background: transparent;
                         border: none;
-                        font-size: medium
+                        font-size: medium;
                     }
-        
+
                     button {
                         @include flex-center;
                         height: 100%;
                         background-color: transparent;
                         border: none;
-        
+
                         img {
                             height: 55%;
                             object-fit: cover;
                             opacity: 0.8;
-                            filter: invert(100%)
+                            filter: invert(100%);
                         }
                     }
                 }
             }
 
-            >.box {
+            > .box {
                 @include flex(column, flex-start, start);
                 padding: 50px 0px 0px 100px;
-                width: 70%;
-                height: 100%;
+                width: 100%;
+                max-height: 100%;
+                overflow-y: auto;
 
                 @include m-screen(1400px) {
                     @include flex(column, center, center);
@@ -83,7 +83,6 @@
                     font-weight: 200;
                     @include font-inter(600);
                 }
-                
 
                 .user {
                     @include flex(column, flex-start, start);
@@ -116,7 +115,7 @@
                             border-radius: 50%;
                             margin-right: 20px;
                         }
-                        
+
                         .infoAluno {
                             @include flex(row, space-between, start);
                             width: calc(100% - 60px);
@@ -127,16 +126,16 @@
                                 margin-right: 10px;
                                 margin-bottom: 10px;
                             }
-                            
+
                             .contentAluno {
                                 @include flex(column, flex-start, start);
                             }
 
-                            .box-button{
+                            .box-button {
                                 height: 100%;
                                 @include flex(column, center, center);
 
-                                button{
+                                button {
                                     background-color: $primary-color-orange;
                                     padding: 10px 20px;
                                     border-radius: 10px;
@@ -144,7 +143,6 @@
                                     border: solid 1px $primary-color-orange;
                                 }
                             }
-
                         }
 
                         p {
