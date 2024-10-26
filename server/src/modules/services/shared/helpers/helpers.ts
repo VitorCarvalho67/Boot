@@ -49,13 +49,15 @@ export const getImgUrl = async (entidade: Professor | Aluno ) => {
     
     let entityUrl = "default";
     
-    if (imageName) {
+    try {
         const objectExists = await minioClient.statObject(bucketName, imageName);
-        if(objectExists){
+        if (objectExists) {
             entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+        } else {
+            console.warn(`Imagem ${imageName} não encontrada no MinIO.`);
         }
-    }
-
-
+    } catch (error) {
+        console.error(`Erro ao buscar imagem ${imageName} no MinIO:`, error);
+    }    
     return entityUrl;
 }

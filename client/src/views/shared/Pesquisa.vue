@@ -41,13 +41,11 @@
                 </ul>
             </section>
         </main>
-        <Footer />
     </div>
 </template>
 
 <script>
 import Header from '../../components/Header.vue';
-import Footer from '../../components/Footer.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import searchIcon from '../../assets/icons/procurar.png';
 
@@ -62,7 +60,6 @@ export default {
     name: 'Pesquisa',
     components: {
         Header,
-        Footer,
         AsideDashboard
     },
     data() {

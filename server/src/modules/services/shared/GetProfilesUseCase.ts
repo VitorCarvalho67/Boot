@@ -24,7 +24,7 @@ export class SearchUsersUseCase {
                 }
             });
 
-            if (!alunosBusca) {
+            if (!alunosBusca || alunosBusca.length === 0) {
                 throw new AppError("Nenhum aluno encontrado.", 404);
             }
             
@@ -42,7 +42,7 @@ export class SearchUsersUseCase {
                 alunos: alunos
             }
         } catch (error) {
-            console.error("Erro ao buscar alunos:", error);
+            console.error("Erro ao buscar alunos:", error);        
             throw new AppError("Erro ao buscar alunos.", 500);
         }
     }
