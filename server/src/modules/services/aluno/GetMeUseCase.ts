@@ -19,7 +19,8 @@ export class GetMeUseCase {
 
         return {
             email: email,
-            rm: aluno.rm
+            rm: aluno.rm,
+            name: aluno.name
         }
     }
 }

@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
     provider = "mysql"
-    url      = "mysql://root:123pass@database:3306/bootdb"
+    url      = env("DATABASE_URL")
 }
 
 model Aluno {
@@ -62,18 +62,19 @@ model Professor {
 }
 
 model Vinculo {
-    id                    String     @id @default(uuid())
+    id                    String        @id @default(uuid())
     alunoId               String?
     professorId           String?
     vinculoComAlunoId     String?
     vinculoComProfessorId String?
-    accepted              Boolean    @default(false)
-    aluno                 Aluno?     @relation("AlunoVinculo", fields: [alunoId], references: [id])
-    professor             Professor? @relation("ProfessorVinculo", fields: [professorId], references: [id])
-    vinculoComAluno       Aluno?     @relation("VinculoComAluno", fields: [vinculoComAlunoId], references: [id])
-    vinculoComProfessor   Professor? @relation("VinculoComProfessor", fields: [vinculoComProfessorId], references: [id])
-    createdAt             DateTime   @default(now())
-    updatedAt             DateTime   @updatedAt
+    accepted              Boolean       @default(false)
+    aluno                 Aluno?        @relation("AlunoVinculo", fields: [alunoId], references: [id])
+    professor             Professor?    @relation("ProfessorVinculo", fields: [professorId], references: [id])
+    vinculoComAluno       Aluno?        @relation("VinculoComAluno", fields: [vinculoComAlunoId], references: [id])
+    vinculoComProfessor   Professor?    @relation("VinculoComProfessor", fields: [vinculoComProfessorId], references: [id])
+    notificacao           Notificacao[]
+    createdAt             DateTime      @default(now())
+    updatedAt             DateTime      @updatedAt
 
     @@unique([alunoId, professorId, vinculoComAlunoId, vinculoComProfessorId])
     @@map("vinculos")
@@ -209,7 +210,7 @@ model Empresa {
 }
 
 model Vaga {
-    id            String      @id @default(uuid())
+    id            String        @id @default(uuid())
     titulo        String
     cursoId       String
     empresaId     String
@@ -222,11 +223,12 @@ model Vaga {
     status        String
     descricao     String
     cadastradorId String
-    empresa       Empresa     @relation(fields: [empresaId], references: [id])
-    curso         Curso       @relation(fields: [cursoId], references: [id])
-    funcionario   Funcionario @relation(fields: [cadastradorId], references: [id])
-    createdAt     DateTime    @default(now())
-    updatedAt     DateTime    @updatedAt
+    empresa       Empresa       @relation(fields: [empresaId], references: [id])
+    curso         Curso         @relation(fields: [cursoId], references: [id])
+    funcionario   Funcionario   @relation(fields: [cadastradorId], references: [id])
+    notificacao   Notificacao[]
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @updatedAt
 
     @@map("vagas")
 }
@@ -284,7 +286,7 @@ model Atividade {
 }
 
 model Mensagem {
-    id                        String       @id @default(uuid())
+    id                        String        @id @default(uuid())
     conteudo                  String
     alunoRemetenteId          String?
     alunoDestinatarioId       String?
@@ -294,16 +296,17 @@ model Mensagem {
     funcionarioDestinatarioId String?
     empresaRemetenteId        String?
     empresaDestinatarioId     String?
-    alunoRemetente            Aluno?       @relation("MensagensEnviadasAluno", fields: [alunoRemetenteId], references: [id], map: "alunoRemetente_FK")
-    alunoDestinatario         Aluno?       @relation("MensagensRecebidasAluno", fields: [alunoDestinatarioId], references: [id], map: "alunoDestinatario_FK")
-    professorRemetente        Professor?   @relation("MensagensEnviadasProfessor", fields: [professorRemetenteId], references: [id], map: "professorRemetente_FK")
-    professorDestinatario     Professor?   @relation("MensagensRecebidasProfessor", fields: [professorDestinatarioId], references: [id], map: "professorDestinatario_FK")
-    funcionarioRemetente      Funcionario? @relation("MensagensEnviadasFuncionario", fields: [funcionarioRemetenteId], references: [id], map: "funcionarioRemetente_FK")
-    funcionarioDestinatario   Funcionario? @relation("MensagensRecebidasFuncionario", fields: [funcionarioDestinatarioId], references: [id], map: "funcionarioDestinatario_FK")
-    empresaRemetente          Empresa?     @relation("MensagensEnviadasEmpresa", fields: [empresaRemetenteId], references: [id], map: "empresaRemetente_FK")
-    empresaDestinatario       Empresa?     @relation("MensagensRecebidasEmpresa", fields: [empresaDestinatarioId], references: [id], map: "empresaDestinatario_FK")
-    createdAt                 DateTime     @default(now())
-    updatedAt                 DateTime     @updatedAt
+    alunoRemetente            Aluno?        @relation("MensagensEnviadasAluno", fields: [alunoRemetenteId], references: [id], map: "alunoRemetente_FK")
+    alunoDestinatario         Aluno?        @relation("MensagensRecebidasAluno", fields: [alunoDestinatarioId], references: [id], map: "alunoDestinatario_FK")
+    professorRemetente        Professor?    @relation("MensagensEnviadasProfessor", fields: [professorRemetenteId], references: [id], map: "professorRemetente_FK")
+    professorDestinatario     Professor?    @relation("MensagensRecebidasProfessor", fields: [professorDestinatarioId], references: [id], map: "professorDestinatario_FK")
+    funcionarioRemetente      Funcionario?  @relation("MensagensEnviadasFuncionario", fields: [funcionarioRemetenteId], references: [id], map: "funcionarioRemetente_FK")
+    funcionarioDestinatario   Funcionario?  @relation("MensagensRecebidasFuncionario", fields: [funcionarioDestinatarioId], references: [id], map: "funcionarioDestinatario_FK")
+    empresaRemetente          Empresa?      @relation("MensagensEnviadasEmpresa", fields: [empresaRemetenteId], references: [id], map: "empresaRemetente_FK")
+    empresaDestinatario       Empresa?      @relation("MensagensRecebidasEmpresa", fields: [empresaDestinatarioId], references: [id], map: "empresaDestinatario_FK")
+    notificacao               Notificacao[]
+    createdAt                 DateTime      @default(now())
+    updatedAt                 DateTime      @updatedAt
 
     @@map("mensagens")
 }
@@ -342,4 +345,44 @@ model Nota {
     updatedAt DateTime @updatedAt
 
     @@map("notas")
+}
+
+model Notificacao {
+    id              String          @id @default(uuid())
+    titulo          String
+    descricao       String
+    criadorId       String
+    recipientEmails Json   
+    tipo            TipoNotificacao
+    dispensada      Boolean         @default(false)
+
+    mensagemId String?
+    estagioId  String?
+    vinculoId  String?
+
+    mensagem Mensagem? @relation(fields: [mensagemId], references: [id])
+    estagio  Vaga?     @relation(fields: [estagioId], references: [id])
+    vinculo  Vinculo?  @relation(fields: [vinculoId], references: [id])
+
+    criador  Identifier
+    receptor Identifier
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("notificacoes")
+}
+
+enum TipoNotificacao {
+    MENSAGEM
+    SOLICITACAO
+    ESTAGIO
+    ATVIDADE
+}
+
+enum Identifier {
+    ALUNO
+    EMPRESA
+    FUNCIONARIO
+    PROFESSOR
 }

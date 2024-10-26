@@ -3,6 +3,7 @@ import { Server, Socket } from 'socket.io';
 import { enter } from '../controllers/entryController';
 import { vinculoUpdate } from '../controllers/vinculoController';
 import { sendMessage } from '../controllers/messageControllers';
+import { sendNotification } from '../controllers/notificationController';
 
 const enterRoutes = (io: Server, socket: Socket) => {
     socket.on('enter', (data) => { enter(io, socket, data); });
@@ -15,6 +16,10 @@ const messageRoutes = (io: Server, socket: Socket) => {
     socket.on('send-message', (data) => { sendMessage(io, socket, data); });
 }
 
+const notificationRoutes = (io: Server, socket: Socket) => {
+    socket.on('send-notification', (data) => { sendNotification(io, socket, data); });
+}
+
 const disconnectRoute = (io: Server, socket: Socket) => {
     socket.on('disconnect', () => { console.log(`User disconnected: ${socket.id}`); });
 }
@@ -23,5 +28,6 @@ export const router = [
     enterRoutes,
     vinculoRoutes,
     messageRoutes,
+    notificationRoutes,
     disconnectRoute
 ]

@@ -7,6 +7,18 @@
                 <div class="box" id="box1">
                     <H1>Novidades</H1>
                     <h2>O que houve enquanto você esteve fora</h2>
+                    <ul>
+                        <li v-for="(notification, index) in notifications" :key="index">
+                            <div class="content">
+                                <b>{{ notification.titulo }}</b>
+                                <p>{{ notification.descricao }}</p>
+                                <p>{{ notification.createdAt }}</p>
+                            </div>
+                            <div class="box-button">
+                                <button>x</button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="box" id="box2">
                     <router-link to="/aluno/me" class="profile">
@@ -43,6 +55,7 @@ import {
     getImage,
 } from '../../services/api/shared';
 import { mixinAluno } from '../../util/authMixins.js';
+import { socket } from "../../socket";
 
 
 export default {
@@ -65,7 +78,8 @@ export default {
                 curriculoEdit: '',
                 imgUrl: '../../assets/img/defaultImage.png',
                 bannerUrl: '../../assets/img/defaultBanner.png',
-            }
+            },
+            notifications: [],
         }
     },
     methods: {
@@ -117,12 +131,40 @@ export default {
                 console.log("Ops.. Algo deu errado ao recuperar a imagem de perfil. 😕\n" + error);
             }
         },
+        formatarData(data) {
+            const dataAtual = new Date();
+            const dataMensagem = new Date(data);
+
+            if (dataMensagem.toDateString() === dataAtual.toDateString()) {
+                return dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                const diff = Math.floor((dataAtual - dataMensagem) / (1000 * 60 * 60 * 24));
+
+                if (diff === 1) {
+                    return `Ontem, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (diff <= 7) {
+                    return `${dataMensagem.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return dataMensagem.toLocaleString();
+                }
+            }
+        },
+        addNotification(data) {
+            this.notifications.push({
+                ...data,
+            });
+        },
     },
     mixins: [mixinAluno],
     async created() {
         this.getToken();
         this.RefreshToken();
         this.getData();
+
+        socket.on('new-notification', (data) => {
+            console.log("Notificação: " + data);
+            this.addNotification(data);
+        });
     }
 }
 

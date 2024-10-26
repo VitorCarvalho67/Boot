@@ -17,13 +17,23 @@ export class GetCurriculoUseCase {
             throw new AppError("Aluno não encontrado.");
         }
 
+        const vinculos = await prisma.vinculo.findMany({
+            where:{
+                OR: [
+                    {alunoId: aluno.id},
+                    {vinculoComAlunoId: aluno.id}
+                ]
+            }
+        });
+
         return {
             curriculo: aluno.curriculo,
             nome: aluno.name,
             endereco: aluno.endereco,
             nascimento: aluno.dataNascimento,
             email: email,
-            rm: aluno.rm
+            rm: aluno.rm,
+            quantidadeVinculos: vinculos.length
         };
     }
 }

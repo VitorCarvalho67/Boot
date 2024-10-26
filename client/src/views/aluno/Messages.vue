@@ -87,6 +87,11 @@ export default {
     async created() {
         await this.getToken();
         await this.getChats();
+
+        socket.on('new-message', async (data) => {
+            console.log("Nova mensagem");
+            await this.getChats();
+        });
     }
 }
 
