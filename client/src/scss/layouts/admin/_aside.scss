@@ -1,0 +1,94 @@
+.overlay {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    @include flex(column, flex-start, start);
+
+    aside {
+        background: $terciary-color-dark;
+        padding: 20px;
+        height: 100vh;
+        width: 60vw;
+        position: relative;
+        transform: translateX(0%);
+        transition: transform 0.5s ease;
+
+        > ul {
+            @include flex(column, flex-start, start);
+            
+            > li{
+                margin-top: 40px;
+                a {
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    color: $font-color-dark;
+                    font-size: .9rem;
+                    margin-bottom: 10px;
+                    @include flex(column, center, flex-start);
+                    @include font-inter(400);
+                    @include line;
+                }
+
+                
+            } 
+                
+
+            li:nth-child(2) {
+                cursor: pointer;
+                > div > ul {
+                    @include flex(column, space-evenly, flex-start);
+                    height: 100px;
+                    > li > a {
+                        position: relative;
+                        color: $font-color-dark-2;
+                        text-decoration: none;
+                        outline: none;
+                        font-size: 1rem;
+                        @include font-inter(400);
+                    }
+                }
+            }
+
+            > li a:first-child {
+                font-size: 1rem;
+                color: $primary-color-orange;
+            }
+
+            > li:last-child a {
+                background-color: $primary-color-orange;
+                padding: 10px 20px;
+                border-radius: 20px;
+                color: $secondary-color-dark;
+                border: solid 1px $primary-color-orange;
+                transition: 0.1s linear;
+                @include flex-center;
+
+                &:after {
+                    height: 0;
+                }
+
+                &:hover {
+                    background-color: transparent;
+                    border: solid 1px $primary-color-orange;
+                    color: $primary-color-orange;
+                }
+            }
+        }
+    }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.5s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    aside {
+        transform: translateX(-100%);
+    }
+}
