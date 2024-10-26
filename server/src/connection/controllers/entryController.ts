@@ -21,7 +21,7 @@ export const enter = async (io: Server, socket: Socket, data: dataDTO) => {
         console.log(`Usuário de email ${decoded.email} registrado`);
         socket.join(decoded.email);
 
-        console.log('Novo entrada', data);
+        console.log('Nova entrada', data);
     } catch (error) {
         console.log('Erro em enter-vinculo-aluno handler:', error);
     }

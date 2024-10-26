@@ -104,6 +104,7 @@ main {
                     padding: 10px 20px;
                     margin-left: 20px;
                     cursor: pointer;
+                    z-index: 100;
                     @include font-inter(300);
                 }
             }

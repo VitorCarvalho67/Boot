@@ -15,6 +15,12 @@
                     </router-link>
                 </li>
             </ul>
+            <li>
+                <router-link to="/funcionario/register/vaga">
+                    <img :src="icons.form">
+                    <p v-if="showPs">Vagas</p>
+                </router-link>
+            </li>
         </div>
         <button @click="changePsVisualization">
             <img :src="icons.angulo" alt="<">

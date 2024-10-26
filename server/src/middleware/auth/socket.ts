@@ -2,7 +2,9 @@ import { prisma } from '../../prisma/client';
 import { AppError } from '../../errors/error';
 import { JwtPayload } from 'jsonwebtoken';
 import { 
-    verfifyAccessTokenAluno
+    verfifyAccessTokenAluno,
+    verfifyAccessTokenFuncinario,
+    verfifyAccessTokenProfessor
 } from '../../jwt/jwtServices';
 
 
@@ -28,6 +30,61 @@ export async function validateTokenAluno(token: string){
         }
 
         return aluno;
+    } catch (error) {
+        throw new Error('Token inválido: ' + error);
+    }
+};
+
+export async function validateTokenProfessor(token: string){
+    try {
+        const decoded = verfifyAccessTokenProfessor(token);
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new Error('Invalid token');
+        }
+
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new AppError('Invalid token');
+        }
+
+        const professor = await prisma.professor.findUnique({
+            where: { id: (decoded as JwtPayload).professorId }
+        });
+
+        if (!professor) {
+            throw new Error('Professor not found');
+        }
+
+        return professor;
+    } catch (error) {
+        throw new Error('Token inválido: ' + error);
+    }
+};
+
+
+export async function validateTokenFuncionario(token: string){
+    try {
+        const decoded = verfifyAccessTokenFuncinario(token);
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new Error('Invalid token');
+        }
+
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new AppError('Invalid token');
+        }
+
+        const funcionario = await prisma.funcionario.findUnique({
+            where: { id: (decoded as JwtPayload).funcionarioId }
+        });
+
+        if (!funcionario) {
+            throw new Error('Funcionário not found');
+        }
+
+        return funcionario;
     } catch (error) {
         throw new Error('Token inválido: ' + error);
     }

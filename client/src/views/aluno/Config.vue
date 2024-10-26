@@ -12,10 +12,11 @@
                 <h3>Envio de boletim</h3>
 
                 <div class="inputUpload">
-                    <p>Anexe suas notas aqui enviando um boletim</p>
+                    <p v-if="!fileSelected" v-text="'Anexe suas notas aqui enviando um boletim'"></p>
+                    <p v-else v-text="file.name"></p>
                     <input type="file" ref="boletimInput" @change="checkFile" />
                     <button
-                        @click="sendBoletim"
+                        @click="SendBoletim"
                         type="button"
                         v-if="fileSelected"
                     >
@@ -44,7 +45,7 @@
                     </li>
                     <li>
                         <bold>Vinculos</bold>
-                        <router-link to="/rede">3 vínculos</router-link>
+                        <router-link to="/rede">{{aluno.quantidadeVinculos}} {{(aluno.quantidadeVinculos > 1) ? "vínculos" : "vínculo"}}</router-link>
                     </li>
                 </ul>
             </div>
@@ -96,6 +97,7 @@ export default {
                 imgUrl: "../../assets/img/defaultImage.png",
                 bannerUrl: "../../assets/img/defaultBanner.png",
             },
+            file: "",
             fileSelected: false,
         };
     },
@@ -139,6 +141,7 @@ export default {
                     this.aluno.nome = response.data.nome;
                     this.aluno.email = response.data.email;
                     this.aluno.rm = response.data.rm;
+                    this.aluno.quantidadeVinculos = response.data.quantidadeVinculos;
                 } else {
                     alert(
                         "Ops.. Algo deu errado ao recuperar os dados. 😕\n" +
@@ -172,27 +175,31 @@ export default {
                 );
             }
         },
-        async sendBoletim() {
+        async SendBoletim() {
             const file = this.$refs.boletimInput.files[0];
+            console.log(file);
             if (!file) return;
 
             const response = await sendBoletim(file, this.aluno.token);
 
             if (response.status >= 200 && response.status < 300) {
                 alert("Notas carregadas com sucesso! 😉");
-                await this.getCurriculoAluno();
+                this.$refs.boletimInput.value = "";
+                this.fileSelected = false;
             } else {
                 alert(
                     "Ops.. Algo deu errado ao enviar notas. 😕\n" +
                         response.message,
-                );
+                    );
+                    this.fileSelected = false;
             }
 
-            this.$refs.boletimInput.value = "";
-            this.fileSelected = false;
         },
         checkFile() {
-            this.fileSelected = !!this.$refs.boletimInput.files.length;
+            this.fileSelected = this.$refs.boletimInput.files.length > 0;
+            if(this.fileSelected) {
+                this.file = this.$refs.boletimInput.files[0];
+            };
         },
     },
     mixins: [mixinAluno],

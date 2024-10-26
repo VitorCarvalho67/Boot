@@ -194,6 +194,7 @@ export default {
                         responseMail = await getMeAluno(this.visualizador.token);
                         if (responseMail.status >= 200 && responseMail.status < 300) {
                             this.visualizador.email = responseMail.data.email;
+                            this.visualizador.nome = responseMail.data.name;
 
                             if (responseMail.data.email == this.aluno.email) {
                                 this.visualizador.isOwner = true;
@@ -252,13 +253,22 @@ export default {
                         }
 
                         const response = await sendVinculoSolicitationAluno({
-                            sender: responseMail.data.email,
-                            recipient: this.aluno.email,
-                            senderIdentifier: "ALUNO",
-                            recipientIdentifier: "ALUNO"
-                        },
+                                sender: responseMail.data.email,
+                                recipient: this.aluno.email,
+                                senderIdentifier: "ALUNO",
+                                recipientIdentifier: "ALUNO",
+                            },
                             this.aluno.email,
-                            this.visualizador.token
+                            this.visualizador.token, {
+                                titulo: "Nova solicitação de vínculo",
+                                descricao: this.visualizador.nome + " te enviou uma solitação de vínculo. Aceite para ampliar sua rede",
+                                email: this.aluno.email,
+                                identifier: "ALUNO",
+                                sender: responseMail.data.email,
+                                senderIdentifier: "ALUNO",
+                                tipo: 'VINCULO',
+                                createdAt: this.formatarData(new Date())
+                            }
                         );
 
                         if (response.status >= 200 && response.status < 300) {
@@ -383,6 +393,24 @@ export default {
         },
         formatDate(date) {
             return new Date(date).toLocaleDateString('pt-BR');
+        },
+        formatarData(data) {
+            const dataAtual = new Date();
+            const dataMensagem = new Date(data);
+
+            if (dataMensagem.toDateString() === dataAtual.toDateString()) {
+                return dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            } else {
+                const diff = Math.floor((dataAtual - dataMensagem) / (1000 * 60 * 60 * 24));
+
+                if (diff === 1) {
+                    return `Ontem, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else if (diff <= 7) {
+                    return `${dataMensagem.toLocaleDateString('pt-BR', { weekday: 'long' })}, ${dataMensagem.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+                } else {
+                    return dataMensagem.toLocaleString();
+                }
+            }
         }
     },
     async created() {
