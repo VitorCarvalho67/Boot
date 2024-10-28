@@ -27,9 +27,8 @@
                         </div>
                     </div>
                     <div class="infoProfile">
-                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png"
-                            :alt="aluno.nome" />
-                        <img v-else :src="aluno.imageUrl" :alt="aluno.nome" />
+                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" />
+                        <img v-else :src="aluno.imageUrl" />
                         <div class="inputUpload" v-show="modeImage === 'edit'">
                             <input type="file" ref="profileInput" v-show="modeImage === 'edit'"
                                 @change="previewProfileImage" />
