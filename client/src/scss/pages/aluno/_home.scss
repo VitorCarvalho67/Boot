@@ -39,6 +39,7 @@ main {
                 font-size: 1.3rem;
                 color: $font-color-dark-2;
                 @include font-inter(300);
+                margin-bottom: 60px;
                 @include m-screen(1400px) {
                     font-size: 1.1rem;
                 }
@@ -59,6 +60,53 @@ main {
             @include m-screen(700px) {
                 width: 100%;
                 margin-bottom: 20px;
+            }
+
+            .notfication-box {
+                @include flex(row, flex-start, center);
+                width: 90%;
+                margin-bottom: 30px;
+                padding: 20px;
+                border-radius: 0px 20px 20px 0px;
+                background-color: $secondary-color-dark;
+                border-left: solid 3px $secondary-color-orange;
+
+                .img-box {
+                    width: 100px;
+                    height: 100px;
+                    @include flex-center;
+                    margin-right: 20px;
+                    img {
+                        width: 70%;
+                        height: 70%;
+                    }
+                }
+                .info-box {
+                    width: calc(100% - 120px);
+                
+                    h3 {
+                        @include font-inter(700); 
+                        font-size: 1.5rem;
+                        color: $secondary-color-orange;
+                    }
+
+                    p{
+                        @include font-inter(300); 
+                        font-size: 1rem;
+                        opacity: 0.5;
+                    }
+
+                    .button-box {
+                        @include flex(row, flex-end, end);
+                    
+                        button{
+                            background-color: transparent;
+                            border: none;
+                            @include font-inter(300);
+                            color: $primary-color-orange;
+                        }
+                    }
+                }
             }
         }
 

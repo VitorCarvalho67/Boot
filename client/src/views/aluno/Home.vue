@@ -19,6 +19,43 @@
                             </div>
                         </li>
                     </ul>
+                    
+                    <div class="notfication-box">
+                        <div class="img-box">
+                            <img src="../../assets/icons/iconhome1.png" alt="">
+                        </div>
+                        <div class="info-box">
+                            <h3>Novos estágios para DS</h3>
+                            <p>A Nube acabou de adicionar novos estágios na plataforma, que tal dar uma olhada e ver se encontra o tão desejado estágio</p>
+                            <div class="button-box">
+                                <button>Saiba mais</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notfication-box">
+                        <div class="img-box">
+                            <img src="../../assets/icons/iconhome2.png" alt="">
+                        </div>
+                        <div class="info-box">
+                            <h3>Novas solicitações de vínculos</h3>
+                            <p>Amanda Barbosa Godinho, Daniel Rocha Alvarenga e .... mandaram uma solicitação de vinculo</p>
+                            <div class="button-box">
+                                <button>Saiba mais</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="notfication-box">
+                        <div class="img-box">
+                            <img src="../../assets/icons/iconhome3.png" alt="">
+                        </div>
+                        <div class="info-box">
+                            <h3>Você recebeu algumas mensagens</h3>
+                            <p>Amanda Barbosa Godinho, Daniel Rocha Alvarenga enviou mensagem</p>
+                            <div class="button-box">
+                                <button>Saiba mais</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="box" id="box2">
                     <router-link to="/aluno/me" class="profile">
