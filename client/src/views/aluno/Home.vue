@@ -28,7 +28,7 @@
                             <h3>Novos estágios para DS</h3>
                             <p>A Nube acabou de adicionar novos estágios na plataforma, que tal dar uma olhada e ver se encontra o tão desejado estágio</p>
                             <div class="button-box">
-                                <button>Saiba mais</button>
+                                <router-link to="/vagas">Saiba mais</router-link>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             <h3>Novas solicitações de vínculos</h3>
                             <p>Amanda Barbosa Godinho, Daniel Rocha Alvarenga e .... mandaram uma solicitação de vinculo</p>
                             <div class="button-box">
-                                <button>Saiba mais</button>
+                                <router-link to="/rede">Saiba mais</router-link>
                             </div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <h3>Você recebeu algumas mensagens</h3>
                             <p>Amanda Barbosa Godinho, Daniel Rocha Alvarenga enviou mensagem</p>
                             <div class="button-box">
-                                <button>Saiba mais</button>
+                                <router-link to="/mensagens">Saiba mais</router-link>
                             </div>
                         </div>
                     </div>

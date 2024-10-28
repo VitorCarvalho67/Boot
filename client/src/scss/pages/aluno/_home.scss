@@ -72,9 +72,10 @@ main {
                 border-left: solid 3px $secondary-color-orange;
 
                 .img-box {
-                    width: 100px;
-                    height: 100px;
+                    width: 70px;
+                    height: 70px;
                     @include flex-center;
+                    display: none;
                     margin-right: 20px;
                     img {
                         width: 70%;
@@ -82,26 +83,28 @@ main {
                     }
                 }
                 .info-box {
-                    width: calc(100% - 120px);
+                    width: 100%;
                 
                     h3 {
                         @include font-inter(700); 
-                        font-size: 1.5rem;
+                        font-size: 1.3rem;
                         color: $secondary-color-orange;
                     }
 
                     p{
                         @include font-inter(300); 
-                        font-size: 1rem;
+                        font-size: .9rem;
                         opacity: 0.5;
                     }
 
                     .button-box {
                         @include flex(row, flex-end, end);
                     
-                        button{
+                        a{
+                            text-decoration: none;
                             background-color: transparent;
                             border: none;
+                            cursor: pointer;
                             @include font-inter(300);
                             color: $primary-color-orange;
                         }
