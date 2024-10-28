@@ -23,6 +23,7 @@ import { EditExtracurricularUseCase } from '../services/aluno/EditExtraUsecase';
 import { ExcludeExtracurricularUseCase } from '../services/aluno/ExcludeExtraUseCase';
 import { SendBoletimUseCase } from '../services/aluno/SendBoletimUseCase';
 import { GetExtracurricularsByEmailUseCase } from '../services/aluno/GetExtracurricularesUseCase';
+import { GenerateCurriculumUseCase } from '../services/aluno/GenerateCurriculumUseCase';
 
 export class CreateAlunoController {
     async handle(req: Request, res: Response) {
@@ -319,6 +320,18 @@ export class GetExtracurricularesController {
         const getExtracurricularsByEmailUseCase = new GetExtracurricularsByEmailUseCase();
 
         const result = await getExtracurricularsByEmailUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GenerateCurriculumController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email as string;
+
+        const generateCurriculumUseCase = new GenerateCurriculumUseCase();
+
+        const result = await generateCurriculumUseCase.execute(email);
 
         return res.status(201).json(result);
     }

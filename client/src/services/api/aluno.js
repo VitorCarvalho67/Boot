@@ -250,6 +250,19 @@ export const getCurriculo = async (token) => {
     }
 }
 
+export const getCurriculoFile = async (token) => {
+    try {
+        const response = await api.get('aluno/curriculo/download', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.data;
+    }
+}
+
 export const getMeAluno = async (token) => {
     try {
         const response = await api.get('aluno/me', {

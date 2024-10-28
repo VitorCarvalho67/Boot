@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{ color: #eee;
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .section { 
+            margin-bottom: 20px;
+        }
+        .academic-training, .about-me {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{name}}</h1>
+    <p>{{email}}</p>
+    <h2>{{title}}</h2>
+    <img src="{{img}}">
+    <div class="section about-me">
+        <h3>About Me</h3>
+        <p>{{aboutMe}}</p>
+    </div>
+    <div class="section academic-training">
+        <h3>Academic Training</h3>
+        <ul>
+            {{academicTraining}}
+        </ul>
+    </div>
+</body>
+</html>

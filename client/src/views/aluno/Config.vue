@@ -9,6 +9,15 @@
                     Configure seu perfil e veja suas informações
                 </h2>
 
+                <div id="getCurriculo">
+                    <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
+                    <p v-if="linkstatus == 1">Gerando currículo</p>
+                    <p v-if="linkstatus == 2">Currículo gerado</p>
+                    <a v-if="linkstatus == 2">
+                        <button @click="downloadFile">Baixar</button>
+                    </a>
+                </div>
+
                 <h3>Envio de boletim</h3>
 
                 <div class="inputUpload">
@@ -71,7 +80,7 @@ import Header from "../../components/aluno/Header.vue";
 import AsideDashboard from "../../components/aluno/AsideDashboard.vue";
 import Footer from "../../components/Footer.vue";
 
-import { getCurriculo, sendBoletim } from "../../services/api/aluno";
+import { getCurriculo, getCurriculoFile, sendBoletim } from "../../services/api/aluno";
 import { getImage } from "../../services/api/shared";
 
 import imgVerificar from "../../assets/icons/verificar.png";
@@ -98,9 +107,11 @@ export default {
                 curriculoEdit: "",
                 imgUrl: "../../assets/img/defaultImage.png",
                 bannerUrl: "../../assets/img/defaultBanner.png",
+                link_curriculo: ""
             },
             file: "",
             fileSelected: false,
+            linkstatus: 0
         };
     },
     methods: {
@@ -203,6 +214,46 @@ export default {
                 this.file = this.$refs.boletimInput.files[0];
             };
         },
+        async GetCurriculoFile(){
+            this.linkstatus = 1;
+            const response = await getCurriculoFile(this.aluno.token);
+
+            if (response.status >= 200 && response.status < 300) {
+                console.log(response);
+                this.aluno.link_curriculo = response.data.url;
+                
+                this.linkstatus = 2;
+            } else {
+                alert(
+                    "Ops.. Algo deu errado ao gerar currículo. 😕\n" +
+                        response.message,
+                    );
+            }
+        },
+        async downloadFile() {
+            try {
+                const response = await fetch(this.aluno.link_curriculo);
+                
+                if (!response.ok) {
+                    throw new Error('Falha no download do arquivo.');
+                }
+
+                const blob = await response.blob();
+                
+                const blobUrl = window.URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.setAttribute('download', 'Curriculo.pdf');
+                document.body.appendChild(link);
+                link.click();
+                
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Erro ao baixar o arquivo:', error);
+            }
+        }
     },
     mixins: [mixinAluno],
     async created() {

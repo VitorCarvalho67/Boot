@@ -12,11 +12,33 @@ export const minioClient = new Client({
     secretKey: process.env.MINIO_SECRET_KEY as string
 });
 
+import * as path from 'path';
+
 export const uploadToMinio = async (bucketName: string, objectName: string, filePath: string) => {
     try {
+        const ext = path.extname(filePath).toLowerCase();
+        let contentType;
+
+        switch (ext) {
+            case '.jpeg':
+            case '.jpg':
+                contentType = 'image/jpeg';
+                break;
+            case '.png':
+                contentType = 'image/png';
+                break;
+            case '.pdf':
+                contentType = 'application/pdf';
+                break;
+            default:
+                contentType = 'application/octet-stream'; 
+                break;
+        }
+
         await minioClient.fPutObject(bucketName, objectName, filePath, {
-            'Content-Type': 'image/jpeg',
+            'Content-Type': contentType,
         });
+
         return `File uploaded successfully.`;
     } catch (error) {
         throw new AppError(`Error uploading file: ${error}`);
