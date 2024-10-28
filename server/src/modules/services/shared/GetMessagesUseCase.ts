@@ -76,15 +76,16 @@ export class GetLastMessagesUseCase {
             const entityName = otherEntity.name;
 
             const bucketName = 'boot';
-            const imageName = otherEntity.imagem as string;
+            let imageName = otherEntity.imagem as string;
             
             let entityUrl = "default";
             
             if (imageName) {
                 const objectExists = await minioClient.statObject(bucketName, imageName);
-                if(objectExists){
-                    entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                if(!objectExists){
+                    imageName = "assets/img/default_profile_image.png"
                 }
+                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
 
             const sentBy = isSent ? 'sent' : 'received';
