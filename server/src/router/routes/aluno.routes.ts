@@ -41,6 +41,7 @@ alunoRoutes.get("/unlinkeds", controllers.getUnlinkedsController.handle);
 alunoRoutes.get("/cursos", controllers.getCursosController.handle);
 alunoRoutes.get("/cursos/anos", controllers.getCourseYearController.handle);
 alunoRoutes.get("/curriculo", controllers.getCurriculoController.handle);
+alunoRoutes.get("/curriculo/download", controllers.generateCurriculoController.handle);
 alunoRoutes.get("/me", controllers.getMeController.handle);
 alunoRoutes.get("/token/refresh", controllers.refreshTokenController.handle);
 alunoRoutes.get("/messages", controllers.getLastMessagesController.handle);

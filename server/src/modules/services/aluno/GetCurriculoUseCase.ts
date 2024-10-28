@@ -19,11 +19,13 @@ export class GetCurriculoUseCase {
 
         const vinculos = await prisma.vinculo.findMany({
             where:{
-                OR: [
-                    {alunoId: aluno.id},
-                    {vinculoComAlunoId: aluno.id}
-                ]
-            }
+                AND: [
+                    {OR: [
+                        {alunoId: aluno.id},
+                        {vinculoComAlunoId: aluno.id}
+                    ]},
+                    {accepted: true}
+            ]}
         });
 
         return {
