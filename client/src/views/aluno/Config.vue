@@ -48,6 +48,8 @@
                         <router-link to="/rede">{{aluno.quantidadeVinculos}} {{(aluno.quantidadeVinculos > 1) ? "vínculos" : "vínculo"}}</router-link>
                     </li>
                 </ul>
+
+                <button class="logout" @click="logout"><img src="../../assets/icons/saida.png" alt="">Logout</button>
             </div>
             <div class="box" id="box2">
                 <router-link to="/aluno/me" class="profile">
