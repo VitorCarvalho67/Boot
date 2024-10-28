@@ -1,12 +1,12 @@
 main {
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     @include flex(row, flex-start, start);
     border-bottom: 1px solid #0000008f;
 
     .content {
         @include flex(row, flex-start, start);
         width: calc(100% - 300px);
-        height: 100%;
+        min-height: calc(100vh - 80px);
         padding: 40px 20px;
         background-color: $primary-color-dark;
 
@@ -39,6 +39,7 @@ main {
                 font-size: 1.3rem;
                 color: $font-color-dark-2;
                 @include font-inter(300);
+                margin-bottom: 60px;
                 @include m-screen(1400px) {
                     font-size: 1.1rem;
                 }
@@ -59,6 +60,56 @@ main {
             @include m-screen(700px) {
                 width: 100%;
                 margin-bottom: 20px;
+            }
+
+            .notfication-box {
+                @include flex(row, flex-start, center);
+                width: 90%;
+                margin-bottom: 30px;
+                padding: 20px;
+                border-radius: 0px 10px 10px 0px;
+                background-color: $secondary-color-dark;
+                border-left: solid 3px $secondary-color-orange;
+
+                .img-box {
+                    width: 70px;
+                    height: 70px;
+                    @include flex-center;
+                    display: none;
+                    margin-right: 20px;
+                    img {
+                        width: 70%;
+                        height: 70%;
+                    }
+                }
+                .info-box {
+                    width: 100%;
+                
+                    h3 {
+                        @include font-inter(700); 
+                        font-size: 1.3rem;
+                        color: $secondary-color-orange;
+                    }
+
+                    p{
+                        @include font-inter(300); 
+                        font-size: .9rem;
+                        opacity: 0.5;
+                    }
+
+                    .button-box {
+                        @include flex(row, flex-end, end);
+                    
+                        a{
+                            text-decoration: none;
+                            background-color: transparent;
+                            border: none;
+                            cursor: pointer;
+                            @include font-inter(300);
+                            color: $primary-color-orange;
+                        }
+                    }
+                }
             }
         }
 

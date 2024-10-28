@@ -1,4 +1,5 @@
 # Server
+- [ ] arrumar o erro das imgs
 
 ## Aluno
 - [ ] exportar currículo
