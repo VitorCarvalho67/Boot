@@ -212,21 +212,20 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     min-height: 510px;
 
     main {
         display: flex;
         flex: 1;
-        height: calc(100vh - 80px);
+        min-height: calc(100vh - 80px);
         overflow: hidden;
 
         .content {
             flex: 1;
+            min-height: calc(100vh - 80px);
             padding: 20px;
             overflow-y: auto;
-            height: 100%;
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);

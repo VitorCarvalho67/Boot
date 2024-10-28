@@ -1,12 +1,12 @@
 main {
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     @include flex(row, flex-start, start);
     border-bottom: 1px solid #0000008f;
 
     .content {
         @include flex(row, flex-start, start);
         width: calc(100% - 300px);
-        height: 100%;
+        min-height: calc(100vh - 80px);
         padding: 40px 20px;
         background-color: $primary-color-dark;
 
@@ -67,7 +67,7 @@ main {
                 width: 90%;
                 margin-bottom: 30px;
                 padding: 20px;
-                border-radius: 0px 20px 20px 0px;
+                border-radius: 0px 10px 10px 0px;
                 background-color: $secondary-color-dark;
                 border-left: solid 3px $secondary-color-orange;
 
