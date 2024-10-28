@@ -59,8 +59,8 @@
                 </div>
                 <div class="box" id="box2">
                     <router-link to="/aluno/me" class="profile">
-                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png" :alt="aluno.nome">
-                        <img v-else :src="aluno.imageUrl" :alt="aluno.nome">
+                        <img v-if="aluno.imageUrl == 'default'" src="../../assets/icons/artwork.png">
+                        <img v-else :src="aluno.imageUrl">
                         <div class="info">
                             <h3 v-text="aluno.nome"></h3>
                             <p v-text="aluno.idade"></p>
