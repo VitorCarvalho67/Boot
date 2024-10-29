@@ -47,14 +47,22 @@ export class GenerateCurriculumUseCase {
         const imageResponse = await axios.get(imageURL, { responseType: 'arraybuffer' });
         const imageBase64 = `data:image/png;base64,${Buffer.from(imageResponse.data).toString('base64')}`;
 
+        const cssPath = path.join(__dirname, '../../../pdf/style.css');
+        const styleContent = fs.readFileSync(cssPath, 'utf-8');
+
         const templatePath = path.join(__dirname, '../../../pdf/curriculum_template.html');
         let html = fs.readFileSync(templatePath, 'utf8');
         html = html.replace('{{name}}', name)
-                    .replace('{{email}}', email)
-                   .replace('{{title}}', title)
-                   .replace('{{aboutMe}}', curriculo || "Sem informações adicionais")
-                   .replace('{{academicTraining}}', academicTraining)
-                   .replace('{{img}}', imageBase64);
+                .replace('{{style}}', styleContent)
+                .replace('{{endereco}}', aluno.endereco)
+                .replace('{{cidade}}', "Rio Grande da Serra")
+                .replace('{{numero}}', "11 97134-5610")
+                .replace('{{rm}}', "2228")
+                .replace('{{email}}', email)
+                .replace('{{titulo}}', "Técnico em Desenvolvimento de sistemas")
+                .replace('{{aboutMe}}', curriculo || "Sem informações adicionais")
+                .replace('{{academicTraining}}', " ")
+                .replace('{{img}}', imageBase64);
 
 
         const file = { content: html };
