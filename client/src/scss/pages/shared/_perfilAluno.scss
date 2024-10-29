@@ -124,14 +124,16 @@ main {
                             }
                         }
 
-                        button {
+                        a, button {
                             background-color: $secondary-color-orange;
                             color: $primary-color-dark;
                             border-radius: 5px;
                             padding: 5px 10px;
+                            text-decoration: none;
                             border: none;
                             cursor: pointer;
                             @include font-inter(400);
+                            margin-right: 15px
                         }
                     }
                 }

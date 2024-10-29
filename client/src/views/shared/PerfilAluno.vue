@@ -24,7 +24,7 @@
                                     @click="sendSolicitation">Vincular-se</button>
 
                                 <router-link v-show="visualizador.conected && !visualizador.isOwner"
-                                    :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
+                                    :to="'/mensagens/aluno/' + aluno.email">Conversar</router-link>
 
                                 <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar
                                     pedido</button>
