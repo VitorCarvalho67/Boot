@@ -3,34 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        *{ color: #eee;
-            background-color: #333;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .section { 
-            margin-bottom: 20px;
-        }
-        .academic-training, .about-me {
-            font-size: 14px;
-        }
-    </style>
 </head>
 <body>
-    <h1>{{name}}</h1>
-    <p>{{email}}</p>
-    <h2>{{title}}</h2>
-    <img src="{{img}}">
-    <div class="section about-me">
-        <h3>About Me</h3>
+    <div class="box box-1">
+        <div>
+            <div>
+                <h1>{{name}}</h1>
+                <p>{{endereco}}</p>
+                <p>{{cidade}}</p>
+                <p><b>Telefone:</b>{{numero}}</p>
+                <p><b>Email:</b>{{email}}</p>
+                <p>{{titulo}}</p>
+            </div>
+            <img src="{{img}}">
+        </div>
+    </div>
+
+    <hr/>
+    
+    <div class="box box-2">
+        <h2>Resumo</h2>
         <p>{{aboutMe}}</p>
     </div>
-    <div class="section academic-training">
-        <h3>Academic Training</h3>
+
+    <hr/>
+
+    <div class="box box-3">
+        <h2>Formação Acadêmica</h2>
         <ul>
+            <li>
+                <ul>
+                    <li><p><b>Instituição:</b>SENAI Anchieta</p></li>
+                    <li><p><b>Descrição:</b>Curso rápido de Inteligência Artificial</p></li>
+                    <li><p><b>Início:</b>20/06/2024</p></li>
+                    <li><p><b>Conclusão:</b>20/12/2024</p></li>
+                </ul>
+            </li>
+
+            <li>
+                <ul>
+                    <li><p><b>Instituição:</b>SENAI Anchieta</p></li>
+                    <li><p><b>Descrição:</b>Curso rápido de Inteligência Artificial</p></li>
+                    <li><p><b>Início:</b>20/06/2024</p></li>
+                    <li><p><b>Conclusão:</b>20/12/2024</p></li>
+                </ul>
+            </li>
+
+            <li>
+                <ul>
+                    <li><p><b>Instituição:</b>SENAI Anchieta</p></li>
+                    <li><p><b>Descrição:</b>Curso rápido de Inteligência Artificial</p></li>
+                    <li><p><b>Início:</b>20/06/2024</p></li>
+                    <li><p><b>Conclusão:</b>20/12/2024</p></li>
+                </ul>
+            </li>
             {{academicTraining}}
         </ul>
     </div>
+
+    <hr/>
+
+    <div class="box box-4">
+        <img src="" alt="">
+        <p>🌐 http://boot.portfolioeducacionalrgs.com/aluno/profile/{{rm}}</p>
+    </div>
+
 </body>
 </html>
+<style> {{style}} </style>
