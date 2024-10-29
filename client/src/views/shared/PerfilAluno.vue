@@ -24,7 +24,7 @@
                                     @click="sendSolicitation">Vincular-se</button>
 
                                 <router-link v-show="visualizador.conected && !visualizador.isOwner"
-                                    :to="'/mensagens/aluno/' + aluno.email">Mensagem</router-link>
+                                    :to="'/mensagens/aluno/' + aluno.email">Conversar</router-link>
 
                                 <button v-show="visualizador.situacao == 'recebido'" @click="acceptSolicitation">Aceitar
                                     pedido</button>
@@ -46,12 +46,14 @@
                 <section class="extracurriculares">
                     <h2>Atividades Extracurriculares</h2>
 
-                    <div v-for="(activity, index) in aluno.extracurriculares" :key="activity.id" class="activity">
-                        <div>
-                            <p><strong>Instituição:</strong> {{ activity.instituicao }}</p>
-                            <p><strong>Descrição:</strong> {{ activity.descricao }}</p>
-                            <p><strong>Início:</strong> {{ formatDate(activity.inicio) }}</p>
-                            <p><strong>Fim:</strong> {{ formatDate(activity.fim) }}</p>
+                    <div class="activities">
+                        <div v-for="(activity, index) in aluno.extracurriculares" :key="activity.id" class="activity">
+                            <div>
+                                <p><strong>Instituição:</strong> {{ activity.instituicao }}</p>
+                                <p><strong>Descrição:</strong> {{ activity.descricao }}</p>
+                                <p><strong>Início:</strong> {{ formatDate(activity.inicio) }}</p>
+                                <p><strong>Fim:</strong> {{ formatDate(activity.fim) }}</p>
+                            </div>
                         </div>
                     </div>
                 </section>

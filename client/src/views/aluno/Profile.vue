@@ -59,7 +59,17 @@
                     </div>
                 </div>
                 <section class="sobreMim">
-                    <h2>Sobre mim</h2>
+                    <h2>
+                        Sobre mim 
+                        <div id="getCurriculo">
+                            <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
+                            <p v-if="linkstatus == 1">Gerando currículo</p>
+                            <p v-if="linkstatus == 2">Currículo gerado</p>
+                            <a v-if="linkstatus == 2">
+                                <button @click="downloadFile">Baixar</button>
+                            </a>
+                        </div>
+                    </h2>
                     <div>
                         <p v-show="mode === 'view'" v-html="aluno.curriculo"></p>
                         <textarea v-show="mode === 'edit'" name="" cols="30" rows="10" id="edit"
@@ -176,6 +186,8 @@ import {
     editExtracurricular,
     deleteExtracurricular,
     getExtracurriculares,
+    getCurriculoFile
+
 } from "../../services/api/aluno";
 import { getImage, getBanner } from "../../services/api/shared";
 import { mixinAluno } from "../../util/authMixins";
@@ -199,9 +211,14 @@ export default {
                 email: "",
                 curriculo: "",
                 curriculoEdit: "",
-                imgUrl: "default",
+                token: "",
+                imgUrl: "../../assets/img/defaultImage.png",
                 bannerUrl: "default",
+                link_curriculo: ""
             },
+            file: "",
+            fileSelected: false,
+            linkstatus: 0,
             mode: "view",
             modeImage: "view",
             modeBanner: "view",
@@ -519,6 +536,102 @@ export default {
                     "Ops.. Algo deu errado ao adicionar a nova atividade extracurricular. 😕\n" +
                     response.message,
                 );
+            }
+        },
+
+        async getData() {
+            const response = await getCurriculo(this.aluno.token);
+
+            try {
+                if (response.status >= 200 && response.status < 300) {
+                    this.aluno.curriculo = response.data.curriculo.replace(
+                        /\n/g,
+                        "<br>",
+                    );
+                    this.aluno.curriculoEdit = response.data.curriculo;
+                    this.aluno.endereco = response.data.endereco;
+                    this.aluno.nascimento = response.data.nascimento;
+                    this.calcularIdade(this.aluno.nascimento);
+                    this.aluno.nascimento = this.aluno.nascimento
+                        .split("T")[0]
+                        .split("-")
+                        .reverse()
+                        .join("/");
+                    this.aluno.nome = response.data.nome;
+                    this.aluno.email = response.data.email;
+                    this.aluno.rm = response.data.rm;
+                    this.aluno.quantidadeVinculos = response.data.quantidadeVinculos;
+                } else {
+                    alert(
+                        "Ops.. Algo deu errado ao recuperar os dados. 😕\n" +
+                        response.message,
+                    );
+                }
+            } catch (error) {
+                alert(
+                    "Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error,
+                );
+            }
+
+            try {
+                const response = await getImage({
+                    identifier: "ALUNO",
+                    email: this.aluno.email,
+                });
+
+                if (response.status >= 200 && response.status < 300) {
+                    this.aluno.imageUrl = response.data.url;
+                } else {
+                    console.log(
+                        "Ops.. Algo deu errado ao recuperar a imagem. 😕\n" +
+                        response.message,
+                    );
+                }
+            } catch (error) {
+                console.log(
+                    "Ops.. Algo deu errado ao recuperar a imagem de perfil. 😕\n" +
+                    error,
+                );
+            }
+        },
+        async GetCurriculoFile() {
+            this.linkstatus = 1;
+            const response = await getCurriculoFile(this.aluno.token);
+
+            if (response.status >= 200 && response.status < 300) {
+                console.log(response);
+                this.aluno.link_curriculo = response.data.url;
+
+                this.linkstatus = 2;
+            } else {
+                alert(
+                    "Ops.. Algo deu errado ao gerar currículo. 😕\n" +
+                    response.message,
+                );
+            }
+        },
+        async downloadFile() {
+            try {
+                const response = await fetch(this.aluno.link_curriculo);
+
+                if (!response.ok) {
+                    throw new Error('Falha no download do arquivo.');
+                }
+
+                const blob = await response.blob();
+
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.setAttribute('download', 'Curriculo.pdf');
+                document.body.appendChild(link);
+                link.click();
+
+                window.URL.revokeObjectURL(blobUrl);
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Erro ao baixar o arquivo:', error);
             }
         },
 
