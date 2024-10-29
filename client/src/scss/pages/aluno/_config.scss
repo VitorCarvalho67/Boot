@@ -109,6 +109,26 @@ main {
                 }
             }
 
+            #getCurriculo {
+                margin-top: 20px;
+                @include font-inter(400);
+                @include flex-center;
+
+                p {
+                    font-size: 1rem;
+                    margin-right: 10px;
+                    color: $font-color-dark;
+                }
+
+                button {
+                    background-color: $secondary-color-orange;
+                    color: $secondary-color-dark;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    border: none;
+                }
+            }
+
             ul {
                 margin: 20px 0px 40px 0px;
                 list-style: none;
@@ -155,10 +175,10 @@ main {
                 padding: 5px 10px;
                 background-color: $secondary-color-orange;
                 border-radius: 3px;
-                border:  transparent 1px solid;
+                border: transparent 1px solid;
                 cursor: pointer;
 
-                img{
+                img {
                     width: 20px;
                     margin-right: 10px;
                 }

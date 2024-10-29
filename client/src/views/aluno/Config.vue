@@ -9,14 +9,7 @@
                     Configure seu perfil e veja suas informações
                 </h2>
 
-                <div id="getCurriculo">
-                    <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
-                    <p v-if="linkstatus == 1">Gerando currículo</p>
-                    <p v-if="linkstatus == 2">Currículo gerado</p>
-                    <a v-if="linkstatus == 2">
-                        <button @click="downloadFile">Baixar</button>
-                    </a>
-                </div>
+                
 
                 <h3>Envio de boletim</h3>
 
@@ -34,6 +27,15 @@
                 </div>
 
                 <h3>Seus dados</h3>
+                
+                <div id="getCurriculo">
+                    <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
+                    <p v-if="linkstatus == 1">Gerando currículo</p>
+                    <p v-if="linkstatus == 2">Currículo gerado</p>
+                    <a v-if="linkstatus == 2">
+                        <button @click="downloadFile">Baixar</button>
+                    </a>
+                </div>
 
                 <ul>
                     <li>

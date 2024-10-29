@@ -293,7 +293,7 @@ main {
                 border-radius: 8px;
                 margin-bottom: 5px;
                 @include flex(column, flex-start, flex-start);
-                flex: 1 1 300px;
+                flex: 1 1 auto;
                 max-width: 400px;
 
                 p {
