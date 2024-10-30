@@ -17,10 +17,7 @@
                                     <p>{{ vinculo.data.aluno.endereco }}</p>
                                 </div>
                                 <div class="box-button">
-                                    <button>Ver perfil</button>
-                                </div>
-                                <div class="box-button">
-                                    <button @click="removeVinculo(vinculo.data.aluno.email, vinculo.info)">Remover vínculo</button>
+                                    <button @click="removeVinculo(vinculo.data.aluno.email, vinculo.info)">Desvincular-se</button>
                                 </div>
                             </div>        
                         </router-link>
@@ -28,7 +25,7 @@
                         <div v-else-if="vinculo.data.professor">
                             <p>{{ vinculo.data.professor.nome }}</p>
                             <p>{{ vinculo.data.professor.titulo }}</p>
-                            <button @click="removeVinculo(vinculo.data.professor.email, vinculo.info)">Remover vínculo</button>
+                            <button @click="removeVinculo(vinculo.data.professor.email, vinculo.info)">Desvincular-se</button>
                         </div>
                     </li>
 
@@ -66,9 +63,6 @@
                                 <div class="contentVinculo name">
                                     <p class="who">{{ vinculo.data.aluno.nome }}</p>
                                     <p>{{ vinculo.data.aluno.endereco }}</p>
-                                </div>
-                                <div class="box-button">
-                                    <button>Ver perfil</button>
                                 </div>
                                 <div class="box-button">
                                     <button @click="removeSolicitation('sender', vinculo.info)">Remover pedido</button>
