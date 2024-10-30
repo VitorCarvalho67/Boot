@@ -90,6 +90,11 @@ main {
             margin-top: 10px;
         }
 
+        h3{
+            @include font-inter(500);
+            opacity: .5;
+        }
+
         .input-box {
             height: 65px;
             @include flex(column, center, flex-start);
@@ -195,6 +200,7 @@ p {
         border: solid 1px $primary-color-orange;
         cursor: pointer;
         transition: 0.1s linear;
+        margin-right: 10px;
 
         &:hover {
             background-color: $secondary-color-dark;
