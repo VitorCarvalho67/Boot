@@ -93,7 +93,7 @@ main {
 
                         .box-button {
                             height: 100%;
-                            @include flex(column, center, center);
+                            @include flex(row, center, center);
 
                             button {
                                 background-color: transparent;
@@ -106,6 +106,19 @@ main {
                                 @include m-screen(1000px) {
                                     font-size: 0.8rem;
                                     margin-right: 0px;
+                                }
+                            }
+
+                            .aceitar {
+                                padding: 5px 10px;
+                                border-radius: 10px;
+                                border: solid 1px $secondary-color-orange;
+                                background-color: $secondary-color-dark;
+                                color: $secondary-color-orange;
+                                
+                                &:hover {
+                                    color: $secondary-color-dark;
+                                    background-color: $secondary-color-orange;
                                 }
                             }
                         }

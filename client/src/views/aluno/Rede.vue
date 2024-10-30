@@ -39,9 +39,7 @@
                                     <p>{{ vinculo.data.aluno.endereco }}</p>
                                 </div>
                                 <div class="box-button">
-                                    <button @click="acceptSolicitation(vinculo.info)">Aceitar pedido</button>
-                                </div>
-                                <div class="box-button">
+                                    <button @click="acceptSolicitation(vinculo.info)" class="aceitar">Aceitar pedido</button>
                                     <button @click="removeSolicitation('recipient', vinculo.info)">Ignorar pedido</button>
                                 </div>
                             </div>        

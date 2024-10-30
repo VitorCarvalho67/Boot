@@ -143,11 +143,17 @@
                                 @include flex(column, center, center);
 
                                 button {
-                                    background-color: $primary-color-orange;
                                     padding: 10px 20px;
                                     border-radius: 10px;
-                                    color: $secondary-color-dark;
-                                    border: solid 1px $primary-color-orange;
+                                    font-size: 1rem;
+                                    border: solid 1px $secondary-color-orange;
+                                    background-color: $secondary-color-dark;
+                                    color: $secondary-color-orange;
+                                    
+                                    &:hover {
+                                        color: $secondary-color-dark;
+                                        background-color: $secondary-color-orange;
+                                    }
                                 }
                             }
                         }
