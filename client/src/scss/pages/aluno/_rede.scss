@@ -27,9 +27,22 @@ main {
                 width: 100%;
             }
 
+            .custom-select {
+                margin-bottom: 40px;
+                width: 100%;
+
+                @include m-screen(1400px) {
+                    width: 70%;
+                }
+
+                @include m-screen(800px) {
+                    width: 90%;
+                }
+            }
+
             .vinculo {
                 @include flex(column, flex-start, start);
-                width: 80%;
+                width: 100%;
                 height: 90px;
                 margin-bottom: 10px;
 
@@ -58,9 +71,9 @@ main {
                         border-radius: 50%;
                         margin-right: 20px;
                     }
-                    
+
                     .infoVinculo {
-                        @include flex(row, space-around, start);
+                        @include flex(row, space-between, start);
                         width: calc(100% - 60px);
                         height: 100%;
 
@@ -72,21 +85,43 @@ main {
 
                         .contentVinculo {
                             @include flex(column, flex-start, start);
-                        }
 
-                        .box-button{
-                            height: 100%;
-                            @include flex(column, center, center);
-
-                            button{
-                                background-color: $primary-color-orange;
-                                padding: 10px 20px;
-                                border-radius: 10px;
-                                color: $secondary-color-dark;
-                                border: solid 1px $primary-color-orange;
+                            @include m-screen(1000px) {
+                                font-size: 0.8rem;
                             }
                         }
 
+                        .box-button {
+                            height: 100%;
+                            @include flex(row, center, center);
+
+                            button {
+                                background-color: transparent;
+                                margin-right: 10px;
+                                @include font-inter(400);
+                                color: $secondary-color-orange;
+                                border: none;
+                                cursor: pointer;
+
+                                @include m-screen(1000px) {
+                                    font-size: 0.8rem;
+                                    margin-right: 0px;
+                                }
+                            }
+
+                            .aceitar {
+                                padding: 5px 10px;
+                                border-radius: 10px;
+                                border: solid 1px $secondary-color-orange;
+                                background-color: $secondary-color-dark;
+                                color: $secondary-color-orange;
+                                
+                                &:hover {
+                                    color: $secondary-color-dark;
+                                    background-color: $secondary-color-orange;
+                                }
+                            }
+                        }
                     }
 
                     p {

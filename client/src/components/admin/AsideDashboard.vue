@@ -107,11 +107,11 @@
                         </router-link>
                     </li>
                 </ul>
-                <li :class="getClassForPage('config')">
-                    <router-link to="/config">
+                <li>
+                    <button @click="logout">
                         <img :src="icons.config">
-                        <p v-if="showPs">Configurações</p>
-                    </router-link>
+                        <p v-if="showPs">Sair</p>
+                    </button>
                 </li>
             </ul>
         </div>
@@ -134,9 +134,10 @@ import jobIcon from '../../assets/icons/estagio.png';
 import rankingIcon from '../../assets/icons/trofeu.png';
 import anguloIcon from '../../assets/icons/angulo.png';
 import userIcon from '../../assets/icons/user.png';
-import configIcon from '../../assets/icons/config.png';
+import configIcon from '../../assets/icons/saida.png';
 import formIcon from '../../assets/icons/forma.png';
 import tablesIcon from '../../assets/icons/grafico-horizontal-simples.png';
+import { mixinAdmin } from '../../util/authMixins';
 
 
 export default defineComponent({
@@ -216,7 +217,8 @@ export default defineComponent({
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.checkScreenWidth);
-    }
+    },
+    mixins: [mixinAdmin]
 });
 </script>
 

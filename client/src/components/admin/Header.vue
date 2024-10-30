@@ -5,8 +5,6 @@
         </div>
         <nav>
             <ul>
-                <li><router-link to="">Ranking Geral</router-link></li>
-                <li><router-link to="">Sair</router-link></li>
                 <li class="hamburger">
                     <button @click="showAside = true">
                         <img :src="imgHamburger" alt="">
