@@ -64,6 +64,7 @@
                         <div class="info">
                             <h3 v-text="aluno.nome"></h3>
                             <p v-text="aluno.idade"></p>
+                            <p v-text="aluno.endereco_formatado"></p>
                         </div>
                     </router-link>
                     <div class="vinculos">
@@ -106,6 +107,8 @@ export default {
             aluno: {
                 token: '',
                 nome: '',
+                endereco: '',
+                endereco_formatado: '',
                 nascimento: '',
                 idade: '',
                 email: '',
@@ -144,6 +147,9 @@ export default {
                     this.calcularIdade(this.aluno.nascimento);
                     this.aluno.nome = response.data.nome;
                     this.aluno.email = response.data.email;
+
+                    this.aluno.endereco_formatado = (JSON.parse(this.aluno.endereco).municipio + ', ' + JSON.parse(this.aluno.endereco).estado)
+
                 } else {
                     alert("Ops.. Algo deu errado ao recuperar os dados. 😕\n" + response.message);
                 }
