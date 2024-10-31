@@ -18,7 +18,7 @@
                             </div>
                             <div class="box2">
                                 <p v-text="aluno.idade"></p>
-                                <p v-text="aluno.endereco"></p>
+                                <p v-text="JSON.parse(aluno.endereco).municipio + ', ' + JSON.parse(aluno.endereco).estado"></p>
                                 <button
                                     v-show="!visualizador.conected && !visualizador.isOwner && !visualizador.semiconectado"
                                     @click="sendSolicitation">Vincular-se</button>

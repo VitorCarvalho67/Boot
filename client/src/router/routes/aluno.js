@@ -80,7 +80,7 @@ export const alunoRoutes = [
         name: "Rede",
         component: Rede,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isCompletedAluno()) ? ((await isAuthAluno()) ? next() : next("/login")): next("/register/complete");
         }
     },
     {
@@ -88,7 +88,7 @@ export const alunoRoutes = [
         name: "Mensagens",
         component: Messages,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isCompletedAluno()) ? ((await isAuthAluno()) ? next() : next("/login")) : next("/register/complete");
         }
     },
     {
@@ -96,7 +96,7 @@ export const alunoRoutes = [
         name: "Mensagem",
         component: ChatAluno,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isCompletedAluno()) ? ((await isAuthAluno()) ? next() : next("/login")) : next("/register/complete");
         }
     },
     {
@@ -104,7 +104,7 @@ export const alunoRoutes = [
         name: "Config",
         component: ConfigAluno,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isCompletedAluno()) ? ((await isAuthAluno()) ? next() : next("/login")) : next("/register/complete");
         }
     }
 ];

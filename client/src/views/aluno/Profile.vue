@@ -53,7 +53,7 @@
                             </div>
                             <div class="box2">
                                 <p v-text="aluno.idade"></p>
-                                <p v-text="aluno.endereco"></p>
+                                <p v-text="JSON.parse(aluno.endereco).municipio + ', ' + JSON.parse(aluno.endereco).estado"></p>
                             </div>
                         </div>
                     </div>
@@ -396,6 +396,9 @@ export default {
 
             if (response.status >= 200 && response.status < 300) {
                 alert("Imagem de perfil atualizada com sucesso! 😉");
+
+                this.linkstatus = 0;
+
                 await this.getCurriculoAluno();
             } else {
                 alert(
@@ -480,6 +483,8 @@ export default {
                 this.aluno.token,
             );
             if (response.status >= 200 && response.status < 300) {
+                this.linkstatus = 0;
+
                 alert("Atividade atualizada com sucesso! 😉");
                 this.fetchExtracurriculares();
             } else {
@@ -507,6 +512,9 @@ export default {
             );
             if (response.status >= 200 && response.status < 300) {
                 alert("Atividade excluída com sucesso! 😉");
+
+                this.linkstatus = 0;
+
                 this.extracurriculares.splice(index, 1);
             } else {
                 alert(
@@ -530,6 +538,8 @@ export default {
                     inicio: "",
                     fim: "",
                 };
+
+                this.linkstatus = 0;
                 this.fetchExtracurriculares();
             } else {
                 alert(
