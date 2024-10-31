@@ -69,6 +69,7 @@ export class CompleteAlunoUseCase {
                     data: {
                         dataNascimento: nascimentoISO,
                         endereco: JSON.stringify(endereco),
+                        telefone,
                         rm: rm
                     }
                 });
