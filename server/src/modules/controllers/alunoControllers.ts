@@ -87,12 +87,12 @@ export class ValidateRecoveryController {
 
 export class CompleteAlunoController {
     async handle(req: Request, res: Response) {
-        const { nascimento, endereco, curso, inicio, rm } = req.body;
+        const { nascimento, endereco, curso, inicio, rm, telefone } = req.body;
         const email = req.body.entidade.email;
 
         const completeAluno = new CompleteAlunoUseCase();
 
-        const result = await completeAluno.execute({ email, nascimento, endereco, curso, inicio, rm });
+        const result = await completeAluno.execute({ email, nascimento, endereco, curso, inicio, rm, telefone });
 
         return res.status(201).json(result);
     }

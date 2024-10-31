@@ -64,7 +64,6 @@
                         <div class="info">
                             <h3 v-text="aluno.nome"></h3>
                             <p v-text="aluno.idade"></p>
-                            <p v-text="aluno.endereco"></p>
                         </div>
                     </router-link>
                     <div class="vinculos">
@@ -107,7 +106,6 @@ export default {
             aluno: {
                 token: '',
                 nome: '',
-                endereco: '',
                 nascimento: '',
                 idade: '',
                 email: '',

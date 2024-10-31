@@ -33,7 +33,16 @@ export interface CompleteAlunoDTO {
     curso: string,
     inicio: string,
     rm: string,
-    endereco: string
+    telefone: string,
+    endereco: Endereco
+}
+
+export interface Endereco {
+    cep: string,
+    municipio: string,
+    estado: string,
+    rua: string,
+    numero: string
 }
 
 export interface UpdateCurriculoDTO {

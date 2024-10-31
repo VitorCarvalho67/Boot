@@ -29,7 +29,7 @@
                 <h3>Seus dados</h3>
                 
                 <div id="getCurriculo">
-                    <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
+                    <button @click="GetCurriculoFile" v-if="linkstatus == 0">Exportar Currículo</button>
                     <p v-if="linkstatus == 1">Gerando currículo</p>
                     <p v-if="linkstatus == 2">Currículo gerado</p>
                     <a v-if="linkstatus == 2">
@@ -48,7 +48,9 @@
                     </li>
                     <li>
                         <bold>Endereço</bold>
-                        <p v-text="aluno.endereco"></p>
+                        <p v-text="'CEP: ' + JSON.parse(aluno.endereco).cep"></p>
+                        <p v-text="JSON.parse(aluno.endereco).rua + ', Nº ' + JSON.parse(aluno.endereco).numero"></p>
+                        <p v-text="JSON.parse(aluno.endereco).municipio + ', ' + JSON.parse(aluno.endereco).estado"></p>
                     </li>
                     <li>
                         <bold>Nascimento</bold>
@@ -68,7 +70,7 @@
                     <div class="info">
                         <h3 v-text="aluno.nome"></h3>
                         <p v-text="aluno.idade"></p>
-                        <p v-text="aluno.endereco"></p>
+                        <p v-text="JSON.parse(aluno.endereco).municipio + ', ' + JSON.parse(aluno.endereco).estado"></p>
                     </div>
                 </router-link>
             </div>

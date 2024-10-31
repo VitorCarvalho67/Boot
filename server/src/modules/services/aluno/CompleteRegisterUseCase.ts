@@ -3,9 +3,9 @@ import { CompleteAlunoDTO } from "../../interfaces/alunoDTOs"
 import { AppError } from "../../../errors/error";
 
 export class CompleteAlunoUseCase {
-    async execute({ email, nascimento, endereco, curso, inicio, rm }: CompleteAlunoDTO) {
+    async execute({ email, nascimento, endereco, curso, inicio, rm, telefone }: CompleteAlunoDTO) {
 
-        if (!email || !nascimento || !endereco || !curso || !inicio || !rm) {
+        if (!email || !nascimento || !endereco || !curso || !inicio || !rm || !telefone) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
         }
 
@@ -68,7 +68,7 @@ export class CompleteAlunoUseCase {
                     },
                     data: {
                         dataNascimento: nascimentoISO,
-                        endereco,
+                        endereco: JSON.stringify(endereco),
                         rm: rm
                     }
                 });

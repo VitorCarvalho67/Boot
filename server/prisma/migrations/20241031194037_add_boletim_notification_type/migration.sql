@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `notificacoes` MODIFY `tipo` ENUM('MENSAGEM', 'SOLICITACAO', 'ESTAGIO', 'ATVIDADE', 'BOLETIM') NOT NULL;

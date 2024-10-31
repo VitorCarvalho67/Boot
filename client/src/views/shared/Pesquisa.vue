@@ -30,7 +30,7 @@
                             <div class="infoAluno">
                                 <div class="contentAluno name">
                                     <p class="who">{{ estudante.name }}</p>
-                                    <p>{{ estudante.endereco }}</p>
+                                    <p>{{ JSON.parse(estudante.endereco).municipio + ", " + JSON.parse(estudante.endereco).estado }}</p>
                                 </div>
                                 <div class="box-button">
                                     <button>Ver perfil</button>

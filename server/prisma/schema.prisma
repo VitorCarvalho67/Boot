@@ -23,6 +23,7 @@ model Aluno {
     rm                      String?           @unique
     tentativasRestantes     Int               @default(5)
     validated               Boolean           @default(false)
+    telefone                String?
     notas                   Nota[]
     turmas                  AlunoTurma[]
     boletins                Boletim[]
@@ -378,6 +379,7 @@ enum TipoNotificacao {
     SOLICITACAO
     ESTAGIO
     ATVIDADE
+    BOLETIM
 }
 
 enum Identifier {
