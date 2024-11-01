@@ -14,7 +14,7 @@
                             <div class="infoVinculo">
                                 <div class="contentVinculo name">
                                     <p class="who">{{ vinculo.data.aluno.nome }}</p>
-                                    <p>{{ vinculo.data.aluno.endereco }}</p>
+                                    <p v-text="JSON.parse(vinculo.data.aluno.endereco).municipio + ', ' + JSON.parse(vinculo.data.aluno.endereco).estado"></p>
                                 </div>
                                 <div class="box-button">
                                     <button @click="removeVinculo(vinculo.data.aluno.email, vinculo.info)">Desvincular-se</button>
@@ -36,7 +36,7 @@
                             <div class="infoVinculo">
                                 <div class="contentVinculo name">
                                     <p class="who">{{ vinculo.data.aluno.nome }}</p>
-                                    <p>{{ vinculo.data.aluno.endereco }}</p>
+                                    <p v-text="JSON.parse(vinculo.data.aluno.endereco).municipio + ', ' + JSON.parse(vinculo.data.aluno.endereco).estado"></p>
                                 </div>
                                 <div class="box-button">
                                     <button @click="acceptSolicitation(vinculo.info)" class="aceitar">Aceitar pedido</button>
@@ -60,7 +60,7 @@
                             <div class="infoVinculo">
                                 <div class="contentVinculo name">
                                     <p class="who">{{ vinculo.data.aluno.nome }}</p>
-                                    <p>{{ vinculo.data.aluno.endereco }}</p>
+                                    <p v-text="JSON.parse(vinculo.data.aluno.endereco).municipio + ', ' + JSON.parse(vinculo.data.aluno.endereco).estado"></p>
                                 </div>
                                 <div class="box-button">
                                     <button @click="removeSolicitation('sender', vinculo.info)">Remover pedido</button>
