@@ -1,12 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import html_to_pdf from 'html-pdf-node';
 import axios from 'axios';
 import { prisma } from '../../../prisma/client';
-import { uploadToMinio } from '../../../minioService';
 import { minioClient } from '../../../minioService';
 import { AppError } from '../../../errors/error';
 import { Endereco } from '../../interfaces/alunoDTOs';
+import puppeteer from 'puppeteer'; // Adicionando importação do Puppeteer
 
 export class GenerateCurriculumUseCase {
     async execute(email: string) {
@@ -24,25 +23,22 @@ export class GenerateCurriculumUseCase {
         });
 
         if (!aluno) throw new AppError("Aluno não encontrado");
-        
-        if(aluno.endereco && aluno.rm && aluno.dataNascimento){
 
+        if (aluno.endereco && aluno.rm && aluno.dataNascimento) {
             const hoje = new Date();
             const dataNascimento = new Date(aluno.dataNascimento);
-
             let idade = hoje.getFullYear() - dataNascimento.getFullYear();
             const mesAtual = hoje.getMonth() + 1;
             const mesNascimento = dataNascimento.getMonth() + 1;
 
             if (
                 mesAtual < mesNascimento ||
-                (mesAtual === mesNascimento &&
-                    hoje.getDate() < dataNascimento.getDate())
+                (mesAtual === mesNascimento && hoje.getDate() < dataNascimento.getDate())
             ) {
                 idade--;
             }
 
-            const endereco = JSON.parse(aluno.endereco) as Endereco; 
+            const endereco = JSON.parse(aluno.endereco) as Endereco;
 
             const { name, curriculo } = aluno;
             const title = aluno.turmas[0]?.turma?.curso?.name ? `Técnico(a) em ${aluno.turmas[0].turma.curso.name}` : "Estudante";
@@ -61,13 +57,12 @@ export class GenerateCurriculumUseCase {
                 })
                 .join("");
 
-
             const bucketName = 'boot';
             var imageName = aluno.imagem as string;
 
             const objectExists = await minioClient.statObject(bucketName, imageName);
             if (!objectExists) {
-                imageName = "assets/img/default_profile_image.png"
+                imageName = "assets/img/default_profile_image.png";
             }
             const imageURL = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
 
@@ -92,21 +87,46 @@ export class GenerateCurriculumUseCase {
                 .replace('{{academicTraining}}', academicTraining)
                 .replace('{{img}}', imageBase64);
 
+            // Aqui começamos a usar o Puppeteer
+            const browser = await puppeteer.launch({
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH, // Usar o caminho do Chrome
+                headless: true, // Se quiser ver o navegador em ação, coloque como false
+                args: ['--no-sandbox', '--disable-setuid-sandbox'], // Adicionar flags
+            });
 
-            const file = { content: html };
+            const page = await browser.newPage();
+            await page.setContent(html);
+            const pdfBuffer = await page.pdf({ format: 'A4' });
 
-            const pdfBuffer = await html_to_pdf.generatePdf(file, { format: 'A4' });
+            await browser.close();
 
+            // Caminho do arquivo temporário para o PDF
             const tempFilePath = path.join(__dirname, 'curriculo_temp.pdf');
             fs.writeFileSync(tempFilePath, pdfBuffer);
 
-            const pdfPath = `aluno/${aluno.id}/curriculo.pdf`;
-            await uploadToMinio(bucketName, pdfPath, tempFilePath);
+            // Função de upload para o MinIO
+            try {
+                const pdfPath = `aluno/${aluno.rm}/curriculo.pdf`;
+                await this.uploadToMinio(bucketName, pdfPath, tempFilePath);
+                fs.unlinkSync(tempFilePath); // Remover o arquivo temporário após o upload
 
-            fs.unlinkSync(tempFilePath);
+                const url = await minioClient.presignedUrl('GET', bucketName, pdfPath, 24 * 60 * 60);
+                return { message: 'Currículo gerado com sucesso!', url };
+            } catch (error) {
+                console.error('Falha ao fazer upload do arquivo:', error);
+                throw new AppError("Falha ao fazer upload do arquivo no MinIO.");
+            }
+        }
+    }
 
-            const url = await minioClient.presignedUrl('GET', bucketName, pdfPath, 24 * 60 * 60);
-            return { message: 'Currículo gerado com sucesso!', url };
+    // Implementação da função de upload para o MinIO
+    async uploadToMinio(bucketName, objectName, filePath) {
+        try {
+            await minioClient.fPutObject(bucketName, objectName, filePath);
+            console.log(`Arquivo enviado com sucesso: ${objectName}`);
+        } catch (err) {
+            console.error('Error uploading file:', err);
+            throw new AppError('Erro ao fazer upload do arquivo', err); // Para tratamento de erros
         }
     }
 }
