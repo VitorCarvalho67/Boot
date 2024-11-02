@@ -21,8 +21,17 @@
 
             .search {
                 @include flex(row, center, start);
-                width: 62%;
+                width: 100%;
+                max-width: 1000px;
                 padding: 80px 30px 20px 80px;
+
+                @include m-screen(800px) {
+                    padding: 80px 30px 20px 20px;
+                }
+
+                @include m-screen(520px) {
+                    padding: 80px 10px 20px 10px;
+                }
 
                 .box {
                     @include flex(row, cen, start);
@@ -47,6 +56,7 @@
                         height: 100%;
                         background-color: transparent;
                         border: none;
+                        margin-right: 18px;
 
                         img {
                             height: 55%;
@@ -66,7 +76,7 @@
                 overflow-y: auto;
 
                 @include m-screen(1400px) {
-                    @include flex(column, center, center);
+                    @include flex(column, flex-start, center);
                     padding: 50px 0px 0px 0px;
                     width: 100%;
                 }
@@ -82,6 +92,10 @@
                     font-size: small;
                     font-weight: 200;
                     @include font-inter(600);
+                
+                    @include m-screen(1100px) {
+                        width: 90%;
+                    }
                 }
 
                 .user {
@@ -93,10 +107,16 @@
                     @include m-screen(1400px) {
                         width: 70%;
                     }
+                    
+                    @include m-screen(1100px) {
+                        width: 80%;
+                    }
 
                     @include m-screen(800px) {
                         width: 90%;
                     }
+
+                    
 
                     a {
                         @include flex(row, flex-start, start);
@@ -134,6 +154,10 @@
                             .box-button {
                                 height: 100%;
                                 @include flex(column, center, center);
+
+                                @include m-screen(520px) {
+                                    display: none;
+                                }                
 
                                 button {
                                     padding: 10px 20px;
