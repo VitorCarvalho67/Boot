@@ -109,11 +109,15 @@ main {
                 height: 300px;
             }
 
+            @include m-screen(820px) {
+                height: 200px;
+            }
+
             .capaProfile {
                 height: 66.66%;
                 border-radius: 6px;
                 background-color: $secondary-color-dark;
-
+                
                 > img {
                     height: 100%;
                     width: 100%;
@@ -121,12 +125,20 @@ main {
                     @include flex-center;
                     object-fit: cover;
                 }
+
+                
             }
 
             .infoProfile {
                 @include flex(row, flex-start, center);
                 z-index: 2;
                 position: relative;
+
+                @include m-screen(580px) {
+                    @include flex(column, flex-start, start);
+                    position: absolute;
+                    top: 20px;
+                }
 
                 > img {
                     @include flex-center;
@@ -149,6 +161,15 @@ main {
                         height: 180px;
                         width: 180px;
                     }
+
+                    @include m-screen(660px) {
+                        height: 140px;
+                        width: 140px;
+                    }
+
+                    @include m-screen(580px) {
+                        position: relative;
+                    }
                 }
 
                 .inputUpload {
@@ -157,7 +178,6 @@ main {
                     height: 250px;
                     width: 250px;
                     background-color: rgba(0, 0, 0, 0.664);
-                    position: absolute;
                     bottom: 0;
                     height: 250px;
                     width: 250px;
@@ -167,6 +187,21 @@ main {
                     @include m-screen(1300px) {
                         height: 200px;
                         width: 200px;
+                    }
+
+                    @include m-screen(760px) {
+                        height: 180px;
+                        width: 180px;
+                    }
+
+                    @include m-screen(660px) {
+                        height: 140px;
+                        width: 140px;
+                    }
+
+                    @include m-screen(580px) {
+                        position: absolute;
+                        top: 0px;
                     }
 
                     input {
@@ -183,6 +218,11 @@ main {
                         height: 40px;
                         width: 40px;
                         filter: invert(100%);
+
+                        @include m-screen(580px) {
+                            height: 30px;
+                            width: 30px;
+                        }
                     }
                 }
 
@@ -196,6 +236,16 @@ main {
                     @include m-screen(1300px) {
                         top: 90px;
                     }
+
+                    @include m-screen(800px) {
+                        top: 80px;
+                    }
+
+                    @include m-screen(580px) {
+                        top: 120px;
+                        left: 150px
+                    }
+
                 }
 
                 .info {
@@ -211,6 +261,15 @@ main {
                         margin-left: 170px;
                     }
 
+                    @include m-screen(660px) {
+                        margin-left: 140px;
+                    }
+
+                    @include m-screen(580px) {
+                        margin-left: 0px;
+                    }
+                    
+
                     .box1 h1 {
                         @include font-inter(300);
                         font-size: 2rem;
@@ -221,6 +280,9 @@ main {
                         }
                         @include m-screen(760px) {
                             font-size: 1.4rem;
+                        }
+                        @include m-screen(580px) {
+                            font-size: 1.2rem;
                         }
                     }
                     .box2 {
@@ -244,6 +306,11 @@ main {
         .sobreMim {
             @include flex(column, flex-start, start);
             width: 100%;
+            margin-top: 30px;
+
+            @include m-screen(580px) {
+                margin-top: 60px;
+            }
 
             h2 {
                 @include font-inter(700);

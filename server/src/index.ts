@@ -32,7 +32,7 @@ const httpServer = http.createServer(app);
 
 const io = new Server(httpServer, {
     cors: {
-    origin: ["http://localhost:5173", "https://boot.portfolioeducacionalrgs.com", "https://bootminio.portfolioeducacionalrgs.com", "https://bootserver.portfolioeducacionalrgs.com", "http://192.168.100.10:5173", "http://192.168.56.1:5173/"],
+    origin: ["http://localhost:5173", "https://boot.portfolioeducacionalrgs.com", "https://bootminio.portfolioeducacionalrgs.com", "https://bootserver.portfolioeducacionalrgs.com", "http://192.168.100.10:5173", "http://192.168.56.1:5173"],
         methods: ["GET", "POST"]
     }
 });
