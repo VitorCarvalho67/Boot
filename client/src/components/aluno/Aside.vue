@@ -10,7 +10,7 @@
                         <router-link to="/aluno/me">Meu perfil</router-link>
                     </li>
                     <li>
-                        <router-link to="/buscar">Pesquisa</router-link>
+                        <router-link to="/aluno/search">Pesquisa</router-link>
                     </li>
                     <li>
                         <router-link to="/rede">Meus vínculos</router-link>

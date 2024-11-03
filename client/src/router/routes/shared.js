@@ -5,7 +5,7 @@ import PublicPerfilProfessor from '../../views/shared/PerfilProfessor.vue';
 import Pesquisa from '../../views/shared/Pesquisa.vue';
 import Vagas from '../../views/shared/Vagas.vue';
 import Vaga from '../../views/shared/Vaga.vue';
-import { isAuthSomebody } from '../guards/guards';
+import { isAuthAluno, isAuthSomebody } from '../guards/guards';
 
 export const sharedRoutes = [
     {
@@ -34,7 +34,10 @@ export const sharedRoutes = [
     {
         path: '/buscar',
         name: 'Pesquisa',
-        component: Pesquisa
+        component: Pesquisa,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next("/aluno/search") : next();
+        }
     },
     {
         path: '/vagas',
