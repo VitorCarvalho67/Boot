@@ -10,6 +10,7 @@ import Rede from '../../views/aluno/Rede.vue';
 import ConfigAluno from '../../views/aluno/Config.vue';
 import Messages from '../../views/aluno/Messages.vue';  
 import ChatAluno from '../../views/aluno/Message.vue';  
+import Pesquisa from '../../views/aluno/Pesquisa.vue';
 
 import {
     isRecoveringAluno,
@@ -97,6 +98,14 @@ export const alunoRoutes = [
         component: ChatAluno,
         beforeEnter: async (to, from, next) => {
             (await isCompletedAluno()) ? ((await isAuthAluno()) ? next() : next("/login")) : next("/register/complete");
+        }
+    },
+    {
+        path: "/aluno/search",
+        name: "PesquisaALuno",
+        component: Pesquisa,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
         }
     },
     {
