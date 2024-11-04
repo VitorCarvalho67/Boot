@@ -76,7 +76,6 @@
             </div>
         </div>
     </main>
-    <Footer />
 </template>
 
 <script>
@@ -273,7 +272,7 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    
 
     main {
         display: flex;
@@ -283,7 +282,7 @@ export default {
         .content {
             flex: 1;
             overflow-y: auto;
-            height: 100%;
+            min-height: calc(100vh - 80px);
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);
