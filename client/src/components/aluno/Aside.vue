@@ -19,7 +19,7 @@
                         <router-link to="/mensagens">Mensagens</router-link>
                     </li>
                     <li>
-                        <router-link to="/vagas">Estágios</router-link>
+                        <router-link to="/aluno/vagas">Estágios</router-link>
                     </li>
                     <li>
                         <router-link to="">Rankings</router-link>
