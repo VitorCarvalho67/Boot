@@ -14,10 +14,20 @@ main {
             @include flex(column, flex-start, start);
         }
 
-        #box1 {
-            width: 70%;
-            margin-right: 20px;
+        @include m-screen(1000px) {
+            padding: 50px 20px 20px 70px;
+        }
 
+        @include m-screen(700px) {
+            @include flex(column-reverse, flex-start, start);
+            padding: 50px 20px 20px 50px;
+        }
+
+        @include m-screen(350px) {
+            padding: 50px 20px 20px 30px;
+        }
+
+        #box1 {width: 70%;
             h1 {
                 font-size: 2rem;
                 color: $secondary-color-orange;
@@ -36,9 +46,9 @@ main {
             h2 {
                 font-size: 1.3rem;
                 color: $font-color-dark-2;
-                margin-bottom: 40px;
-
+                margin-bottom: 60px;
                 @include font-inter(300);
+                
                 @include m-screen(1400px) {
                     font-size: 1.1rem;
                 }
@@ -49,7 +59,7 @@ main {
                     font-size: 0.9rem;
                 }
             }
-
+            
             h3 {
                 font-size: 1.5rem;
                 color: $font-color-dark;
@@ -64,8 +74,17 @@ main {
                 @include m-screen(860px) {
                     font-size: 0.7rem;
                 }
+            }   
+
+            @include m-screen(1000px) {
+                width: 60%;
             }
 
+            @include m-screen(700px) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
             .inputUpload {
                 position: relative;
                 margin: 20px 0px 40px 0px;
@@ -230,6 +249,14 @@ main {
                     color: $font-color-dark;
                     @include font-inter(300);
                 }
+            }
+
+            @include m-screen(1000px) {
+                width: 40%;
+            }
+
+            @include m-screen(700px) {
+                width: 100%;
             }
         }
     }
