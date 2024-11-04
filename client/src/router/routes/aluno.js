@@ -19,6 +19,7 @@ import {
     isAuthAluno,
     isCompletedAluno
 } from '../guards/guards.js';
+import Vaga from '../../views/aluno/Vaga.vue';
 
 export const alunoRoutes = [
     {
@@ -113,6 +114,14 @@ export const alunoRoutes = [
         path: "/aluno/vagas",
         name: "VagasALuno",
         component: Vagas,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next("/login");
+        }
+    },
+    {
+        path: "/aluno/vaga/:id",
+        name: "VagaALuno",
+        component: Vaga,
         beforeEnter: async (to, from, next) => {
             (await isAuthAluno()) ? next() : next("/login");
         }

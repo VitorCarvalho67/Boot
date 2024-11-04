@@ -50,7 +50,10 @@ export const sharedRoutes = [
     {
         path: '/vaga/:id',
         name: 'Vaga',
-        component: Vaga
+        component: Vaga,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next(`/aluno/vaga/${to.params.id}`) : next();
+        }
     },
     {
         path: '/:pathMatch(.*)*',
