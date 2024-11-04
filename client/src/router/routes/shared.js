@@ -24,7 +24,10 @@ export const sharedRoutes = [
     {
         path: "/aluno/profile/:rm",
         name: "PublicPerfilAluno",
-        component: PublicPerfilAluno
+        component: PublicPerfilAluno,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next(`/aluno/colega/${to.params.rm}`) : next();
+        }
     },
     {
         path: "/professor/profile/:name",
