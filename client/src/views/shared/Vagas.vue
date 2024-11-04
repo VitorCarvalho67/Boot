@@ -12,7 +12,7 @@
                         </button>
                     </div>
                 </div>
-                <ul class="box">
+                <ul class="box box2">
                     <li class="vaga" v-if="filteredVagas.length < 1">
                         <a href="">
                             <div class="infoAluno">
