@@ -57,7 +57,7 @@ body{
 }
 
 .box img {
-    width: 35%;
+    width: 350px;
     border-radius: 50%;
     object-fit: cover;
 }
