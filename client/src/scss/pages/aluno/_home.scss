@@ -30,9 +30,6 @@ main {
                 @include m-screen(1120px) {
                     font-size: 1.6rem;
                 }
-                @include m-screen(860px) {
-                    font-size: 1.3rem;
-                }
             }
 
             h2 {
@@ -45,9 +42,6 @@ main {
                 }
                 @include m-screen(1120px) {
                     font-size: 1rem;
-                }
-                @include m-screen(860px) {
-                    font-size: 0.9rem;
                 }
             }
 
@@ -70,6 +64,12 @@ main {
                 border-radius: 0px 10px 10px 0px;
                 background-color: $secondary-color-dark;
                 border-left: solid 3px $secondary-color-orange;
+
+                @include m-screen(700px) {
+                    width: 95%;
+                    padding: 15px;
+                    border-radius: 0px 8px 8px 0px;
+                }
 
                 .img-box {
                     width: 70px;
@@ -162,6 +162,7 @@ main {
 
             @include m-screen(700px) {
                 width: 100%;
+                margin-bottom: 20px;
             }
         }
     }
