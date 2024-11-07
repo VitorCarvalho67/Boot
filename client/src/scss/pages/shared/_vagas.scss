@@ -11,7 +11,7 @@
             width: calc(100% - 300px);
             height: 100%;
 
-            @include m-screen(1200px) {
+            @include m-screen(1300px) {
                 width: 100%;
             }
 
@@ -28,6 +28,10 @@
                 @include m-screen(520px) {
                     padding: 80px 10px 20px 10px;
                 }
+                
+                @include m-screen(400px) {
+                    padding: 40px 25px 20px 25px;
+                }
 
                 .box {
                     @include flex(row, cen, start);
@@ -35,6 +39,10 @@
                     border-radius: 25px;
                     width: calc(100% - 40px);
                     background-color: $secondary-color-dark;
+
+                    @include m-screen(400px) {
+                        width: 100%;
+                    }
 
                     input {
                         color: $font-color-dark-2;
@@ -88,12 +96,25 @@
                 scrollbar-color: rgba(0, 0, 0, 0) transparent;
 
 
-                @include m-screen(1500px) {
+                @include m-screen(1570px) {
                     width: 80%;
                 }
 
-                @include m-screen(1200px) {
+                @include m-screen(1400px) {
                     width: 90%;
+                }
+
+                @include m-screen(800px) {
+                    padding: 40px 30px 20px 45px;
+                }
+
+                @include m-screen(520px) {
+                    padding: 40px 10px 20px 35px;
+                }
+
+                @include m-screen(400px) {
+                    width: 100%;
+                    padding: 40px 25px 20px 25px;
                 }
 
                 .resultado {
@@ -115,8 +136,12 @@
                     border-left: solid 5px $secondary-color-orange;
                     margin-bottom: 10px;
 
+                    @include m-screen(1000px) {
+                        height: auto;
+                    }
+
                     a {
-                        @include flex(row, flex-start, start);
+                        @include flex(row, space-between, start);
                         width: 100%;
                         height: 100%;
                         background-color: $secondary-color-dark;
@@ -135,8 +160,17 @@
 
                         .infoVaga {
                             @include flex(row, space-between, start);
-                            width: calc(100% - 60px);
+                            width: 100%;
                             height: 100%;
+                            padding-right: 20px;
+
+                            @include m-screen(1000px) {
+                                @include flex(row, space-between, center);  
+                            }
+
+                            @include m-screen(600px) {
+                                @include flex(column, space-between, start);  
+                            }
 
                             .who {
                                 color: $primary-color-orange;
@@ -146,11 +180,21 @@
 
                             .contentVaga {
                                 @include flex(column, flex-start, start);
-                                width: 80%;
+                                width: calc(100% - 120px);
+
+                                @include m-screen(600px) {
+                                    width: 100%;
+                                    margin-bottom: 10px;  
+                                }
 
                                 .info {
                                     @include flex(row, start, start);
                                     width: 100%;
+
+                                    @include m-screen(1000px) {
+                                        @include flex(column, start, start);
+                                        margin-top: 5px;
+                                    }
 
                                     label {
                                         @include font-inter(300);
@@ -168,6 +212,11 @@
                             .box-button {
                                 height: 100%;
                                 @include flex(column, center, center);
+
+                                @include m-screen(600px) {
+                                    width: 100%;
+                                    @include flex(column, center, end);
+                                }
 
                                 button {
                                     padding: 10px 20px;
