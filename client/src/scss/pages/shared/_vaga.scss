@@ -1,13 +1,21 @@
 main {
     @include flex(row, flex-start, start);
-    height: calc(100vh - 80px);
+    min-height: calc(100vh - 80px);
     background-color: $primary-color-dark;
     .content {
-        height: calc(100vh - 80px);
+        min-height: calc(100vh - 80px);
         width: 100%;
         background-color: $primary-color-dark;
         @include flex(column, flex-start, start);
         padding: 20px 100px;
+
+        @include m-screen(1100px) {
+            padding: 20px 50px;
+        }
+
+        @include m-screen(630px) {
+            padding: 10px 40px;
+        }
 
         .back-button {
             @include flex(row, flex-end, center);
@@ -33,8 +41,16 @@ main {
             width: 80%;
             @include flex(column, stretch, start);
 
+            @include m-screen(950px) {
+                width: 100%;
+            }
+
             .main-information {
                 @include flex(row, flex-start, start);
+
+                @include m-screen(550px) {
+                    @include flex(column, flex-start, start);
+                }
 
                 .enterprise {
                     @include flex(row, flex-start, center);
@@ -71,6 +87,11 @@ main {
                     margin-left: 50px;
                     height: 70px;
 
+                    @include m-screen(550px) {
+                        margin-left: 0px;
+                        margin-top: 10px;
+                    }
+
                     strong {
                         @include font-inter(300);
                         font-size: 0.9rem;
@@ -83,12 +104,21 @@ main {
                         color: $secondary-color-orange;
                         @include font-inter(700);
                         font-size: 1rem;
+
+                        @include m-screen(450px) {
+                            font-size: .9rem;
+                        }
                     }
                 }
             }
 
             .vaga-header {
                 @include flex(row, flex-start, center);
+
+                @include m-screen(550px) {
+                    @include flex(column, flex-start, start);
+                    margin-bottom: 15px;
+                }
 
                 h3 {
                     @include font-inter(700);

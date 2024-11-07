@@ -28,6 +28,10 @@
                 @include m-screen(520px) {
                     padding: 80px 10px 20px 10px;
                 }
+                
+                @include m-screen(400px) {
+                    padding: 40px 25px 20px 25px;
+                }
 
                 .box {
                     @include flex(row, cen, start);
@@ -35,6 +39,10 @@
                     border-radius: 25px;
                     width: calc(100% - 40px);
                     background-color: $secondary-color-dark;
+
+                    @include m-screen(400px) {
+                        width: 100%;
+                    }
 
                     input {
                         color: $font-color-dark-2;
@@ -102,6 +110,11 @@
 
                 @include m-screen(520px) {
                     padding: 40px 10px 20px 35px;
+                }
+
+                @include m-screen(400px) {
+                    width: 100%;
+                    padding: 40px 25px 20px 25px;
                 }
 
                 .resultado {
@@ -180,6 +193,7 @@
 
                                     @include m-screen(1000px) {
                                         @include flex(column, start, start);
+                                        margin-top: 5px;
                                     }
 
                                     label {
