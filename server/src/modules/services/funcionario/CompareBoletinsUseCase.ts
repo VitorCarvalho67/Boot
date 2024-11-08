@@ -58,6 +58,8 @@ export class CompareBoletimUseCase {
         if(isEqual){
             const relevantText = this.extractRelevantText(storedFileText);
 
+            // const ano = this.extractYear(relevantText);
+            
             const materias = this.extractMateriasAndNotas(relevantText);
 
             console.log(materias);
@@ -99,54 +101,94 @@ export class CompareBoletimUseCase {
     }
 
     private extractRelevantText(text: string): string {
-        const start = text.indexOf("Resultado Final porComponente");
-        const end = text.indexOf("Assiduidade Parcial");
-
-        if (start === -1 || end === -1) {
+        const startMatch = text.match(/Resultado\s*Final\s*por\s*Componente/i);
+        const endMatch = text.match(/Assiduidade\s*Parcial/i);
+    
+        if (!startMatch || !endMatch) {
             throw new AppError("Texto do boletim incompleto ou não encontrado.");
         }
-
+    
+        const start = startMatch.index! + startMatch[0].length;
+        const end = endMatch.index!;
+    
         return text.slice(start, end).trim();
     }
+    
+    private extractYear(text: string): string {
+        const startMatch = text.match(/Ano\s*Letivo\s*\/\s*Semestre:\s*/i);
+        const endMatch = text.match(/\s*RM:/i);
+    
+        if (!startMatch || !endMatch) {
+            throw new AppError("Texto do boletim incompleto ou não encontrado.");
+        }
+    
+        const start = startMatch.index! + startMatch[0].length;
+        const end = endMatch.index!;
+    
+        return text.slice(start, end).trim();
+    }
+    
 
     private extractMateriasAndNotas(text: string): any[] {
-        const materias = [] as any;
+        const materias: any[] = [];
         const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
-
-        lines.forEach(line => {
-            const result = this.extractNotaFromLine(line);
+    
+        let buffer = "";
+    
+        lines.forEach((line) => {
+            if (!/\d{2,3}/.test(line) || /^[A-Za-z\s]+$/.test(line)) {
+                buffer += ` ${line}`;
+            } else {
+                buffer += ` ${line}`;
+                const result = this.extractNotaFromLine(buffer.trim());
+                if (result) {
+                    materias.push(result);
+                }
+                buffer = "";
+            }
+        });
+    
+        if (buffer) {
+            const result = this.extractNotaFromLine(buffer.trim());
             if (result) {
                 materias.push(result);
             }
-        });
-
+        }
+    
         return materias;
     }
 
     private extractNotaFromLine(line: string): any | null {
-        // Separar a linha entre nome da matéria e as notas
-        const match = line.match(/^(.+?)(\d{2,3})([MBIR\-]+)$/);
+        const match = line.match(/^(.+?)(\d[\d,]*)\s*(.*)/);
+    
         if (!match) return null;
     
         const nomeMateria = match[1].trim();
-        const notasRaw = match[3].trim();
-    
-        const bimestre1 = this.extractNota(notasRaw.slice(0, 2));
-        const bimestre2 = this.extractNota(notasRaw.slice(2, 4));
-    
+        
+        const bimestres = [];
+        
+        if (match) {
+            const group3 = match[3];
+
+            let i = 0;
+            while (i < group3.length && bimestres.length < 4) {
+                if (group3[i] === 'M' && group3[i + 1] === 'B') {
+                    bimestres.push('MB');
+                    i += 2;
+                } else {
+                    bimestres.push(group3[i]);
+                    i += 1;
+                }
+            }
+
+            console.log(bimestres);
+        } else{
+            throw new AppError(`Erro ao comparar boletins`);
+        }
+
         return {
             materia: nomeMateria,
-            bimestre1,
-            bimestre2
+            bimestres
         };
-    }
-    
-    private extractNota(notaRaw: string): string {
-        if (notaRaw === 'MB') return 'MB';
-        if (notaRaw[0] === 'M') return 'MB';
-        if (notaRaw[0] === 'B') return 'B';
-        if (notaRaw[0] === 'I') return 'I';
-        if (notaRaw[0] === 'R') return 'R';
-        return '-';
     }
 }
