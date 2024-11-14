@@ -22,7 +22,7 @@
                         <router-link to="/aluno/vagas">Estágios</router-link>
                     </li>
                     <li>
-                        <router-link to="">Rankings</router-link>
+                        <router-link to="/aluno/ranking">Rankings</router-link>
                     </li>
                     <li>
                         <router-link to="/config">Configurações</router-link>

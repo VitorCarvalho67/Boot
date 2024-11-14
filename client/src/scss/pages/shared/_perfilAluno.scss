@@ -44,18 +44,22 @@ main {
                 height: 300px;
             }
 
+            @include m-screen(820px) {
+                height: 200px;
+            }
+
             .capaProfile {
                 height: 66.66%;
                 border-radius: 6px;
                 background-color: $secondary-color-dark;
-
+                
                 > img {
                     height: 100%;
                     width: 100%;
                     border-radius: 6px;
                     @include flex-center;
                     object-fit: cover;
-                }
+                } 
             }
 
             .infoProfile {
@@ -63,12 +67,20 @@ main {
                 z-index: 2;
                 position: relative;
 
+                @include m-screen(580px) {
+                    @include flex(column, flex-start, start);
+                    position: absolute;
+                    top: 20px;
+                }
+
                 > img {
                     @include flex-center;
                     position: absolute;
                     bottom: 0;
                     height: 250px;
                     width: 250px;
+                    background-color: $secondary-color-dark;
+                    padding: 1px;
                     object-fit: cover;
                     border-radius: 50%;
                     background-color: $terciary-color-dark;
@@ -81,6 +93,15 @@ main {
                     @include m-screen(760px) {
                         height: 180px;
                         width: 180px;
+                    }
+
+                    @include m-screen(660px) {
+                        height: 140px;
+                        width: 140px;
+                    }
+
+                    @include m-screen(580px) {
+                        position: relative;
                     }
                 }
 
@@ -97,6 +118,18 @@ main {
                         margin-left: 170px;
                     }
 
+                    @include m-screen(660px) {
+                        margin-left: 140px;
+                    }
+
+                    @include m-screen(580px) {
+                        margin-left: 0px;
+                    }
+
+                    @include m-screen(600px) {
+                        padding: 10px 0px 20px 0px;
+                    }
+                    
 
                     .box1 h1 {
                         @include font-inter(300);
@@ -109,9 +142,16 @@ main {
                         @include m-screen(760px) {
                             font-size: 1.4rem;
                         }
+                        @include m-screen(580px) {
+                            font-size: 1.2rem;
+                        }
                     }
                     .box2 {
                         @include flex(row, flex-start, center);
+                        
+                        @include m-screen(600px) {
+                            @include flex(column, flex-start, start);
+                        }
 
                         p {
                             margin-inline-end: 10px;
@@ -121,6 +161,10 @@ main {
 
                             @include m-screen(760px) {
                                 font-size: 0.9rem;
+                            }
+
+                            @include m-screen(600px) {
+                                margin-top: 5px
                             }
                         }
 
@@ -133,7 +177,11 @@ main {
                             border: none;
                             cursor: pointer;
                             @include font-inter(400);
-                            margin-right: 15px
+                            margin-right: 15px;
+
+                            @include m-screen(600px) {
+                                margin-top: 10px
+                            }
                         }
                     }
                 }
@@ -143,15 +191,46 @@ main {
         .sobreMim {
             @include flex(column, flex-start, start);
             width: 100%;
+            margin-top: 30px;
+
+            @include m-screen(580px) {
+                margin-top: 60px;
+            }
+
+            @include m-screen(600px) {
+                margin-top: 70px
+            }
 
             h2 {
                 @include font-inter(700);
                 font-size: 1.5rem;
+                width: 100%;
                 color: $secondary-color-orange;
                 margin: 20px 0px 10px 0px;
+                @include flex(row, space-between, center);
 
                 @include m-screen(760px) {
                     font-size: 1.3rem;
+                }
+
+                #getCurriculo {
+                    @include flex-center;
+
+                    p{
+                        font-size: 1rem;
+                        margin-right: 10px;
+                        color: $font-color-dark;
+                        font-weight: 400;
+                    }
+
+                    button {
+                        background-color: $secondary-color-orange;
+                        color: $secondary-color-dark;
+                        padding: 5px 10px;
+                        border-radius: 5px;
+                        border: none;
+                        font-weight: 400;
+                    }
                 }
             }
 
@@ -173,6 +252,21 @@ main {
                     @include m-screen(760px) {
                         font-size: 0.9rem;
                     }
+                }
+
+                textarea {
+                    background-color: transparent;
+                    border: none;
+                    outline: none;
+                    min-width: 100%;
+                    height: auto;
+                    resize: none;
+                }
+                > .editButtons {
+                    position: absolute;
+                    top: auto;
+                    bottom: 10px;
+                    right: 10px;
                 }
             }
         }
@@ -293,7 +387,7 @@ main {
                 border-radius: 8px;
                 margin-bottom: 5px;
                 @include flex(column, flex-start, flex-start);
-                flex: 1 1 auto;
+                flex: 1 1 300px;
                 max-width: 400px;
 
                 p {
@@ -329,6 +423,32 @@ main {
 
                     &:last-child {
                         color: $secondary-color-orange;
+                    }
+                }
+            }
+
+            .button-box {
+                width: 100%;
+                @include flex(row, flex-end, center);
+
+                button {
+                    padding: 8px 12px;
+                    background-color: transparent;
+                    border: none;
+                    color: $primary-color-orange;
+                    @include font-inter(300);
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    transition: 0.2s linear;
+                    margin: 0px 10px;
+
+                    &:hover {
+                        color: $secondary-color-orange;
+                    }
+
+                    &:nth-child(1) {
+                        background-color: $primary-color-orange;
+                        color: $font-color-light;
                     }
                 }
             }
