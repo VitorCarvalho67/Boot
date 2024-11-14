@@ -1,0 +1,154 @@
+main {
+    min-height: calc(100vh - 80px);
+    @include flex(row, flex-start, start);
+    border-bottom: 1px solid #0000008f;
+
+    .content {
+        @include flex(row, flex-start, start);
+        width: calc(100% - 300px);
+        min-height: calc(100vh - 80px);
+        padding: 40px 20px;
+        background-color: $primary-color-dark;
+
+        @include m-screen(700px) {
+            @include flex(column-reverse, flex-start, start);
+            justify-content: flex-end;
+        }
+
+        .box {
+            @include flex(column, flex-start, start);
+        }
+
+        #box1 {
+            padding: 50px 0px 0px 100px;
+            width: 70%;
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 5px;
+                color: $secondary-color-orange;
+                @include font-inter(700);
+                @include m-screen(1400px) {
+                    font-size: 1.8rem;
+                }
+                @include m-screen(1120px) {
+                    font-size: 1.6rem;
+                }
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                margin-bottom: 60px;
+                @include m-screen(1400px) {
+                    font-size: 1.1rem;
+                }
+                @include m-screen(1120px) {
+                    font-size: 1rem;
+                }
+            }
+
+            @include m-screen(1000px) {
+                width: 60%;
+            }
+
+            @include m-screen(700px) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .alunos{
+                @include flex(column, flex-start, start);
+                width: 100%;
+
+                .info{
+                    color: $primary-color-orange;
+                    @include font-inter(bold);
+                    margin-bottom: 10px;
+                }
+
+                .aluno{
+                    position: relative;
+                    width: 100%;
+                    max-width: 1000px;
+                    @include flex(row, flex-start, center);
+                    height: 80px;
+                    border-radius: 5px;
+                    background-color: $secondary-color-dark;
+                    border: 4px solid $secondary-color-dark;
+                    margin: 10px 0px 10px 0px;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    color: $font-color-dark;
+
+                    &:hover{
+                        transform: scale(1.04);
+                    }
+
+                    b{
+                        font-size: 1.8rem;
+                        @include font-inter(bold);
+                        margin-right: 30px;
+                    }
+
+                    img{
+                        width: 40px;
+                        margin-right: 30px;
+                    }
+
+                    img:nth-child(3){
+                        width: 50px;
+                        border-radius: 50%;
+                        padding: 2px;
+                        background-color: $secondary-color-dark;
+                    }
+
+                    .normal {
+                        filter: saturate(0);
+                    }
+
+                    .name{
+                        font-size: 1.2rem;
+                        @include font-inter(400);
+                        margin-right: 30px;
+                    }
+
+                    .pontos{
+                        @include font-inter(bold);
+                        position: absolute;
+                        right: 20px;
+                    }
+                }
+
+                .aluno:nth-child(2) {
+                    background-color: rgba(211, 168, 29, 0.795);
+                    border: solid 4px rgb(255, 196, 0);
+                }
+
+                .aluno:nth-child(3) {
+                    background-color: #5f5f5f8f;
+                    border: solid 4px rgb(224, 224, 224);
+                }
+
+                .aluno:nth-child(4) {
+                    background-color: #ffa1498f;
+                    border: solid 4px #fc7e09;
+                }
+            }
+        }
+
+        #box2 {
+            width: 30%;
+
+            @include m-screen(1000px) {
+                width: 40%;
+            }
+
+            @include m-screen(700px) {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

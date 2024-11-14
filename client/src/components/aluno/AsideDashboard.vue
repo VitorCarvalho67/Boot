@@ -45,7 +45,7 @@
                     </router-link>
                 </li>
                 <li :class="getClassForPage('rankings')">
-                    <router-link to="">
+                    <router-link to="/aluno/ranking">
                         <img :src="icons.ranking" />
                         <p v-if="showPs">Rankings</p>
                     </router-link>
