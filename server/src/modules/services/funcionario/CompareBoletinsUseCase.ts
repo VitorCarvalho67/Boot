@@ -50,19 +50,26 @@ export class CompareBoletimUseCase {
 
         const novoStatus = isEqual ? 'APROVADO' : 'RECUSADO';
 
-        // await prisma.boletim.update({
-        //     where: { id: boletimId },
-        //     data: { status: novoStatus }
-        // });
-
-        if(isEqual){
+        if (isEqual) {
             const relevantText = this.extractRelevantText(storedFileText);
 
-            // const ano = this.extractYear(relevantText);
-            
+            const ano = this.extractYear(uploadedFileText);
             const materias = this.extractMateriasAndNotas(relevantText);
 
-            console.log(materias);
+            console.log(ano, materias);
+            if (ano) {
+                await this.registerOrUpdateMaterias(ano, materias);
+                
+                await this.registerOrUpdateNotas(materias, boletim.alunoId, ano);
+
+                await prisma.boletim.update({
+                    where: { id: boletimId },
+                    data: { status: novoStatus }
+                });
+
+            } else {
+                throw new AppError(`Erro ao extrair texto do PDF`);
+            }
         }
 
         await clearUploads();
@@ -76,7 +83,7 @@ export class CompareBoletimUseCase {
                 if (error) {
                     return reject(error);
                 }
-    
+
                 const chunks: Buffer[] = [];
                 dataStream.on('data', (chunk: Buffer) => {
                     chunks.push(chunk);
@@ -103,38 +110,38 @@ export class CompareBoletimUseCase {
     private extractRelevantText(text: string): string {
         const startMatch = text.match(/Resultado\s*Final\s*por\s*Componente/i);
         const endMatch = text.match(/Assiduidade\s*Parcial/i);
-    
+
         if (!startMatch || !endMatch) {
             throw new AppError("Texto do boletim incompleto ou não encontrado.");
         }
-    
+
         const start = startMatch.index! + startMatch[0].length;
         const end = endMatch.index!;
-    
+
         return text.slice(start, end).trim();
     }
-    
-    private extractYear(text: string): string {
+
+    private extractYear(text: string): number {
         const startMatch = text.match(/Ano\s*Letivo\s*\/\s*Semestre:\s*/i);
         const endMatch = text.match(/\s*RM:/i);
-    
+
         if (!startMatch || !endMatch) {
             throw new AppError("Texto do boletim incompleto ou não encontrado.");
         }
-    
+
         const start = startMatch.index! + startMatch[0].length;
         const end = endMatch.index!;
-    
-        return text.slice(start, end).trim();
+
+        return parseInt(text.slice(start, end).trim());
     }
-    
+
 
     private extractMateriasAndNotas(text: string): any[] {
         const materias: any[] = [];
         const lines = text.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
-    
+
         let buffer = "";
-    
+
         lines.forEach((line) => {
             if (!/\d{2,3}/.test(line) || /^[A-Za-z\s]+$/.test(line)) {
                 buffer += ` ${line}`;
@@ -147,26 +154,26 @@ export class CompareBoletimUseCase {
                 buffer = "";
             }
         });
-    
+
         if (buffer) {
             const result = this.extractNotaFromLine(buffer.trim());
             if (result) {
                 materias.push(result);
             }
         }
-    
+
         return materias;
     }
 
     private extractNotaFromLine(line: string): any | null {
         const match = line.match(/^(.+?)(\d[\d,]*)\s*(.*)/);
-    
+
         if (!match) return null;
-    
+
         const nomeMateria = match[1].trim();
-        
+
         const bimestres = [];
-        
+
         if (match) {
             const group3 = match[3];
 
@@ -182,7 +189,7 @@ export class CompareBoletimUseCase {
             }
 
             console.log(bimestres);
-        } else{
+        } else {
             throw new AppError(`Erro ao comparar boletins`);
         }
 
@@ -191,4 +198,85 @@ export class CompareBoletimUseCase {
             bimestres
         };
     }
+
+    private async registerOrUpdateMaterias(ano: number, materias: any[]) {
+        for (const materia of materias) {
+            const { materia: nomeMateria } = materia;
+
+            // Verifica se a matéria já existe
+            let materiaExistente = await prisma.materia.findFirst({
+                where: { name: nomeMateria },
+            });
+
+            if (!materiaExistente) {
+                // Registra a matéria se não existir
+                materiaExistente = await prisma.materia.create({
+                    data: { name: nomeMateria },
+                });
+            }
+        }
+    }
+
+    private async registerOrUpdateNotas(
+        materias: any[],
+        alunoId: string,
+        ano: number
+    ) {
+        for (const materia of materias) {
+            const { materia: nomeMateria, bimestres } = materia;
+
+            // Busca a matéria para associar ao registro de notas
+            const materiaExistente = await prisma.materia.findFirst({
+                where: { name: nomeMateria },
+            });
+
+            if (!materiaExistente) {
+                throw new AppError(`Matéria "${nomeMateria}" não encontrada.`);
+            }
+
+            // Processa cada bimestre
+            for (let i = 0; i < bimestres.length; i++) {
+                const mencao = bimestres[i];
+                const bimestre = i + 1;
+
+                // Valida a menção
+                if (!["MB", "B", "R", "I"].includes(mencao)) {
+                    console.log(`Menção "${mencao}" inválida para "${nomeMateria}".`);
+                    continue;
+                }
+
+                // Verifica se já existe nota para o aluno, matéria, ano e bimestre
+                const notaExistente = await prisma.nota.findFirst({
+                    where: {
+                        alunoId,
+                        materiaId: materiaExistente.id,
+                        ano,
+                        bimestre,
+                    },
+                });
+
+                if (notaExistente) {
+                    // Atualiza a nota se a menção for diferente
+                    if (notaExistente.mencao !== mencao) {
+                        await prisma.nota.update({
+                            where: { id: notaExistente.id },
+                            data: { mencao },
+                        });
+                    }
+                } else {
+                    // Cria nova nota
+                    await prisma.nota.create({
+                        data: {
+                            alunoId,
+                            materiaId: materiaExistente.id,
+                            ano,
+                            bimestre,
+                            mencao,
+                        },
+                    });
+                }
+            }
+        }
+    }
+
 }

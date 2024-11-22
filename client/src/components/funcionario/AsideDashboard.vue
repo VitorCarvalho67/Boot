@@ -16,7 +16,7 @@
                 </li>
                 <li>
                     <router-link to="/funcionario/register/vaga">
-                        <img :src="icons.form">
+                        <img :src="icons.job">
                         <p v-if="showPs">Vagas</p>
                     </router-link>
                 </li>

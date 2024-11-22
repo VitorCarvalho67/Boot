@@ -6,7 +6,7 @@
             <div class="content">
                 <h1>Boletins a serem validados</h1>
 
-                <div v-if="boletins.length === 0">Nenhum boletim em análise encontrado.</div>
+                <div v-if="boletins.length === 0">Nenhum boletim para análise no momento</div>
 
                 <div v-for="boletim in boletins" :key="boletim.id" class="boletim-item">
                     <div>
@@ -58,7 +58,7 @@ export default {
 
             if (file) {
                 const response = await compareBoletins(file, boletimId, this.funcionario.token);
-                alert(response.message || 'Erro ao comparar boletim.');
+                alert(response.data.message);
             } else {
                 alert('Por favor, selecione um arquivo para comparação.');
             }
