@@ -64,7 +64,7 @@ export const sharedRoutes = [
         name: 'RankingPublico',
         component: Ranking,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next(`/aluno/ranking}`) : next();
+            (await isAuthAluno()) ? next(`/aluno/ranking`) : next();
         }
     },
     {
