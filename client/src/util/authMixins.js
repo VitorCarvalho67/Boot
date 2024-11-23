@@ -149,7 +149,6 @@ export const mixinFuncionario = {
             try {
                 const response = await refreshTokenFuncionario(this.funcionario.token);
                 if (response.status >= 200 && response.status < 300) {
-                    console.log("Auth funcionário")
                     Cookies.set('token-funcionario', `${response.data.token}`);
                 }
             } catch (error) {
@@ -174,6 +173,7 @@ export const mixinEmpresa = {
     methods: {
         async getToken() {
             this.empresa.token = Cookies.get('token-empresa');
+
             if (!this.empresa.token) {
                 router.push({ path: '/empresa/login' });
             }

@@ -76,16 +76,24 @@ export class CreateMessageUseCase {
                 throw new AppError("Tipo de destinatário inválido!");
         }
 
-        await prisma.mensagem.create({
-            data,
-        });
+        try {
+            await prisma.mensagem.create({
+                data,
+            });
 
-        return {
-            message: {
-                conteudo: message,
-                email: recipient,
-                identifier: recipientIdentifier,
-            }
-        };
+            console.log("Mensagem cadastrada com sucesso!");
+            
+            return {
+                message: {
+                    conteudo: message,
+                    email: recipient,
+                    identifier: recipientIdentifier,
+                }
+            };
+        } catch (error) {
+            throw new AppError("Erro ao cadastrar a mensagem:", error);
+        }
+        
+
     }
 }

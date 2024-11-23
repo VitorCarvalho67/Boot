@@ -13,21 +13,21 @@ export class UploadProfileUseCase {
             throw new AppError("File precisa ser enviado.");
         }
 
-        const aluno = await prisma.aluno.findUnique({
+        const empresa = await prisma.empresa.findUnique({
             where: {
                 email
             }
         });
 
-        if (aluno) {
+        if (empresa) {
             const bucketName = 'boot';
-            const objectName = `aluno/${aluno.rm}/perfil`;
+            const objectName = `empresa/${empresa.id}/perfil`;
 
             try {
                 const filePath = file.path;
                 await uploadToMinio(bucketName, objectName, filePath);
                 
-                await prisma.aluno.update({
+                await prisma.empresa.update({
                     where: {
                         email
                     },

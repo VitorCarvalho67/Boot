@@ -30,22 +30,9 @@ export class GetMessagesBetweenUseCase {
         const messages = await prisma.mensagem.findMany({
             where: {
                 OR: [
-                    {
-                        AND: [
-                            { alunoRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
-                            // { professorRemetenteId: entidade1Id, professorDestinatarioId: entidade2Id },
-                            // { funcionarioRemetenteId: entidade1Id, funcionarioDestinatarioId: entidade2Id },
-                            // { empresaRemetenteId: entidade1Id, empresaDestinatarioId: entidade2Id }
-                        ]
-                    },
-                    {
-                        AND: [
-                            { alunoRemetenteId: entidade2Id, alunoDestinatarioId: entidade1Id }
-                            // { professorRemetenteId: entidade2Id, professorDestinatarioId: entidade1Id },
-                            // { funcionarioRemetenteId: entidade2Id, funcionarioDestinatarioId: entidade1Id },
-                            // { empresaRemetenteId: entidade2Id, empresaDestinatarioId: entidade1Id }
-                        ]
-                    }
+                    { alunoRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
+                    { alunoRemetenteId: entidade1Id, empresaDestinatarioId: entidade2Id },
+                    { empresaRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
                 ]
             },
             orderBy: {

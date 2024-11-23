@@ -144,7 +144,7 @@ export async function empresaAuthMiddleware(req: RequestWithEmpresa, res: Respon
             throw new AppError('Empresa not found');
         }
 
-        req.body.empresa = { id: empresa.id, email: empresa.email };
+        req.body.entidade = { id: empresa.id, email: empresa.email };
 
         next();
     } catch (error) {

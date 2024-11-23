@@ -424,7 +424,6 @@ export default {
         console.log(this.conected);
 
         socket.on('vinculo-update', async (data) => {
-            console.log("VINC UDATE");
             await this.possuiVinculo();
         });
     }

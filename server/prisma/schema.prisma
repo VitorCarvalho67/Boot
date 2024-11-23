@@ -194,6 +194,8 @@ model Empresa {
     email               String     @unique
     password            String
     imagem              String?
+    banner              String?
+    site                String?
     cnpj                String     @unique
     endereco            String?
     telefone            String?

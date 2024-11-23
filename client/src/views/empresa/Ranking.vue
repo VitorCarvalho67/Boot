@@ -5,13 +5,13 @@
             <AsideDashboard pageName="rankings" />
             <section class="content">
                 <div class="box" id="box1">
-                    <H1>Rankings</H1>
-                    <h2>Ranking gerados a partir das notas dos alunos. O objetivo desse ranking é proporcionar competitividade e destacar os alunos para as empresas.</h2>
+                    <H1>Ranking</H1>
+                    <h2>Ranking gerado a partir das notas dos alunos. A nota máxima é 1000.</h2>
                     
                     <div class="alunos">
-                        <p class="info">Ranking geral:</p>
+                        <p class="info">Clique para entrar em contato:</p>
                 
-                        <router-link v-for="(item, index) in ranking" :key="index" :to="`/aluno/profile/${item.aluno.rm}`" class="aluno">
+                        <router-link v-for="(item, index) in ranking" :key="index" :to="`/empresa/aluno/profile/${item.aluno.rm}`" class="aluno">
                             <b>#{{ index + 1 }}</b>
                             <img :src="(index + 1 < 4) ? '../assets/icons/m' + (index + 1) + '.png' : '../../assets/icons/m3.png'" :class="(index + 1 < 4) ? 'medalha' : 'medalha normal' " alt="">
                             <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import Header from '../../components/aluno/Header.vue';
-import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
+import Header from '../../components/empresa/Header.vue';
+import AsideDashboard from '../../components/empresa/AsideDashboard.vue';
 import searchIcon from '../../assets/icons/procurar.png';
 
 import Cookies from 'js-cookie';
@@ -57,6 +57,7 @@ export default {
                 const response = await getNotaRanking();
                 if (response.status >= 200 && response.status < 300) {
                     this.ranking = response.data;
+                    console.log(this.ranking)
                 } else {
                     console.error(
                         "Erro ao carregar ranking",
