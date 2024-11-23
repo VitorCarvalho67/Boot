@@ -2,7 +2,6 @@
     <Header />
     <div id="app">
         <main>
-            <AsideDashboard pageName="rankings" />
             <section class="content">
                 <div class="box" id="box1">
                     <H1>Rankings</H1>
@@ -28,7 +27,6 @@
 
 <script>
 import Header from '../../components/aluno/Header.vue';
-import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import searchIcon from '../../assets/icons/procurar.png';
 
 import Cookies from 'js-cookie';
@@ -39,7 +37,6 @@ export default {
     name: 'Ranking',
     components: {
         Header,
-        AsideDashboard
     },
     data() {
         return {

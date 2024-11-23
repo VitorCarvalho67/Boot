@@ -76,3 +76,14 @@ export const getExtracurriculares = async (rm) => {
         return error.response.data;
     }
 }
+
+export const getNotaRanking = async (rm) => {
+    try {
+        const response = await api.get('/shared/ranking/boletim', {
+        });
+        return response;
+    } catch (error) {
+        console.log('Erro: ' + error);
+        return error.response.data;
+    }
+}

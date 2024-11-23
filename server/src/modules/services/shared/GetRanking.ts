@@ -1,5 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
+import { minioClient } from "../../../minioService";
 
 const notaValores: { [key: string]: number } = {
   MB: 10,
@@ -58,13 +59,37 @@ export class GetRankingUseCase {
       }
     });
 
-    const rankingDetalhado = ranking.map(rank => {
-      const aluno = alunos.find(a => a.id === rank.alunoId);
-      return {
-        aluno,
-        rankingNota: rank.rankingNota
-      };
-    });
+    const rankingDetalhado = await Promise.all(
+      ranking.map(async rank => {
+        const aluno = alunos.find(a => a.id === rank.alunoId);
+        if (aluno) {
+          const bucketName = 'boot';
+          const imageName = aluno.imagem as string;
+    
+          let entityUrl = "default";
+    
+          if (imageName) {
+            try {
+              await minioClient.statObject(bucketName, imageName);
+              entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+            } catch (error) {
+              console.error(`Erro ao verificar objeto ${imageName}:`, error);
+            }
+          }
+    
+          return {
+            aluno: {
+              nome: aluno.name,
+              rm: aluno.rm,
+              imagem: entityUrl,
+            },
+            rankingNota: rank.rankingNota,
+          };
+        }
+    
+        return null; // Retorna null caso não encontre o aluno
+      })
+    );
 
     return rankingDetalhado;
   }
