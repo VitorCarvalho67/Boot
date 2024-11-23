@@ -8,8 +8,8 @@ const bcrypt = require('bcrypt');
 export class ValidateFuncionarioUseCase {
     async execute({ email, temporaryPassword, newPassword }: ValidateFuncionarioDTO): Promise<Pick<Funcionario, "name" | "email" | "cargo" | "validated">> {
 
-        if (!email || !temporaryPassword || newPassword) {
-            throw new AppError("Parâmetros insuficientes ou inválidos.");
+        if (!email || !temporaryPassword || !newPassword) {
+            throw new AppError("Parâmetros insuficientes ou inválidos: " + email +  temporaryPassword + newPassword);
         }
 
         const funcionario = await prisma.funcionario.findFirst({
