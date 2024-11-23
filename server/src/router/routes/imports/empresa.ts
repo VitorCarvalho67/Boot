@@ -5,7 +5,11 @@ import {
     RecoveryEmpresaController,
     ValidateRecoveryEmpresaController,
     RefreshTokenController,
-    GetMessagesBetweenController
+    GetMessagesBetweenController,
+    UploadImgProfileController,
+    UploadCapaController,
+    UpdateSiteController,
+    GetLastMessagesController,
 } from "../../../modules/controllers/empresaControllers";
 import {
     CreateMessageController,
@@ -20,4 +24,8 @@ export const createControllers = () => ({
     refreshTokenController: new RefreshTokenController(),
     createMessageController: new CreateMessageController(),
     getMessagesBetweenController: new GetMessagesBetweenController(),
+    uploadImgProfileController: new UploadImgProfileController(),
+    uploadCapaController: new UploadCapaController(),
+    UpdateSiteController: new UpdateSiteController(),
+    getLastMessagesController: new GetLastMessagesController(),
 });

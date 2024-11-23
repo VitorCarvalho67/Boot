@@ -4,43 +4,43 @@ import { uploadToMinio } from "../../../minioService";
 import { UploadImageDTO } from "../../interfaces/alunoDTOs";
 import { clearUploads } from "../shared/helpers/helpers";
 
-export class UploadProfileUseCase {
-    async execute({ email, file } : UploadImageDTO) {
+export class UploadCapaUseCase {
+    async execute({ email, file }: UploadImageDTO) {
 
-        if (!email) {
+        if (!email || !file) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
-        } else if (!file) {
-            throw new AppError("File precisa ser enviado.");
         }
 
-        const aluno = await prisma.aluno.findUnique({
+        const empresa = await prisma.empresa.findUnique({
             where: {
                 email
             }
         });
 
-        if (aluno) {
+        if (empresa) {
             const bucketName = 'boot';
-            const objectName = `aluno/${aluno.rm}/perfil`;
+            const objectName = `empresa/${empresa.id}/banner`;
 
             try {
                 const filePath = file.path;
                 await uploadToMinio(bucketName, objectName, filePath);
-                
-                await prisma.aluno.update({
+
+                await prisma.empresa.update({
                     where: {
                         email
                     },
                     data: {
-                        imagem: objectName
+                        banner: objectName
                     }
                 });
 
                 clearUploads();
-                return { message: 'Imagem de perfil salva com sucesso!.' };
+                return { message: 'Imagem de banner salva com sucesso!' };
             } catch (error) {
                 throw new AppError(`Error uploading image: ${error}`);
             }
+
+            return;
         } else {
             throw new AppError("Email não encontrado");
         }

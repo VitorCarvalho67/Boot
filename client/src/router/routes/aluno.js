@@ -133,7 +133,7 @@ export const alunoRoutes = [
         name: "PerfilColega",
         component: PublicPerfilAluno,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isAuthAluno()) ? next() : next(`/aluno/profile/${to.params.rm}`);
         }
     },
     {
@@ -149,7 +149,7 @@ export const alunoRoutes = [
         name: "Ranking",
         component: Ranking,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next() : next("/login");
+            (await isAuthAluno()) ? next() : next("/ranking");
         }
     }
 ];

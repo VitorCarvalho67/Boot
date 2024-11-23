@@ -99,6 +99,7 @@ export default {
 
                 if (response.status >= 200 && response.status < 300) {
                     this.login("token-empresa", `${response.data.token}`);
+                    Cookies.set(`email-empresa`, `${response.data.empresa.email}`);
 
                     router.push({ path: "/empresa" });
                 } else {

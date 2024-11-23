@@ -66,7 +66,6 @@ export default {
         async fetchProfessores() {
             const data = await getFullProfessores(this.admin.token);
             this.professores = data.data;
-            console.log(data)
         },
         formatarData(data) {
             const dataAtual = new Date();

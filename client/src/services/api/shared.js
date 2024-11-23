@@ -36,7 +36,6 @@ export const getBanner = async (info) => {
 export const getUsers = async () => {
     try {
         const response = await api.get('shared/users');
-        console.log(response.data.alunos);
         return response;
     } catch (error) {
         return error.response.data;
@@ -80,6 +79,21 @@ export const getExtracurriculares = async (rm) => {
 export const getNotaRanking = async (rm) => {
     try {
         const response = await api.get('/shared/ranking/boletim', {
+        });
+        return response;
+    } catch (error) {
+        console.log('Erro: ' + error);
+        return error.response.data;
+    }
+}
+
+
+export const getEmpresa = async (email) => {
+    try {
+        const response = await api.get('/shared/empresa', {
+            params: {
+                email: email
+            }
         });
         return response;
     } catch (error) {
