@@ -214,7 +214,6 @@ export default {
                     }
 
                     if (response.status >= 200 && response.status < 300) {
-                        console.log("Possui vínculo function");
                         const email = this.aluno.email;
                         const { aceitos, enviados, recebidos } = response.data;
 
@@ -421,10 +420,7 @@ export default {
         await this.possuiVinculo();
         await this.fetchExtracurriculares();
 
-        console.log(this.conected);
-
         socket.on('vinculo-update', async (data) => {
-            console.log("VINC UDATE");
             await this.possuiVinculo();
         });
     }

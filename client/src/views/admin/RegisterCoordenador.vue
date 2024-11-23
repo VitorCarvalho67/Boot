@@ -88,7 +88,6 @@ export default {
                     description: professor.name
                 }));
 
-                console.log(this.dataSelect.options);
             } catch (error) {
                 alert("Ops.. Algo deu errado. 😕\n" + error.message);
             }

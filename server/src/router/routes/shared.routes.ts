@@ -12,5 +12,6 @@ sharedRoutes.get("/vagas", controllers.getVagasController.handle);
 sharedRoutes.get("/vaga", controllers.getVagaController.handle);
 sharedRoutes.get("/extracurriculares", controllers.getExtracurricularsByRMController.handle);
 sharedRoutes.get("/ranking/boletim", controllers.getRankingController.handle);
+sharedRoutes.get("/empresa", controllers.getEmpresaController.handle);
 
 export { sharedRoutes };

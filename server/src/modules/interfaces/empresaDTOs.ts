@@ -30,3 +30,9 @@ export interface RegisterEmpresaDTO {
     cnpj: string,
     password: string
 }
+
+export interface UpdateSiteDTO{
+    email: string,
+    site: string
+
+}

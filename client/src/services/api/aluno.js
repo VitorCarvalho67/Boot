@@ -1,7 +1,7 @@
 import api from '../api';
 import { socket } from '../../socket.js';
 
-function enterSockets(token){
+export function enterSockets(token){
     socket.emit(
         'enter',
         {

@@ -373,7 +373,6 @@ export default {
                     responseBanner.status >= 200 &&
                     responseBanner.status < 300
                 ) {
-                    console.log("Pegando o banner do aluno");
                     this.aluno.bannerUrl = responseBanner.data.url;
                 } else {
                     console.log(
@@ -609,7 +608,6 @@ export default {
             const response = await getCurriculoFile(this.aluno.token);
 
             if (response.status >= 200 && response.status < 300) {
-                console.log(response);
                 this.aluno.link_curriculo = response.data.url;
 
                 this.linkstatus = 2;

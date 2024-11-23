@@ -6,7 +6,11 @@ import { RecoveryEmpresaUseCase } from '../services/empresa/RecoveryEmpresaUseCa
 import { ValidateRecoveryEmpresaUseCase } from '../services/empresa/ValidateRecoveryEmpresa'
 import { RefreshTokenUseCase } from "../services/empresa/RefreshTokenUseCase";
 import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
-import { EntidadeEnum } from "../interfaces/sharedDTOs";
+import { EntidadeEnum, IdentificadorEnum } from "../interfaces/sharedDTOs";
+import { UploadProfileUseCase } from "../services/empresa/UploadProfileUseCase";
+import { UploadCapaUseCase } from "../services/empresa/UploadCapaUseCase";
+import { UpdateSiteUseCase } from "../services/empresa/UpdateSiteUseCase";
+import { GetLastMessagesUseCase } from "../services/shared/GetMessagesUseCase";
 
 export class RegisterEmpresaController {
     async handle(req: Request, res: Response) {
@@ -95,6 +99,58 @@ export class GetMessagesBetweenController {
         const getMessagesBetween = new GetMessagesBetweenUseCase();
 
         const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadImgProfileController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+
+        const uploadProfileUseCase = new UploadProfileUseCase();
+
+        const result = await uploadProfileUseCase.execute({ email, file });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadCapaController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+
+        const uploadCapaUseCase = new UploadCapaUseCase();
+
+        const result = await uploadCapaUseCase.execute({ email, file });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UpdateSiteController {
+    async handle(req: Request, res: Response) {
+        const { site } = req.body;
+        const email = req.body.entidade.email;
+
+        const updateSite = new UpdateSiteUseCase();
+
+        const result = await updateSite.execute({ email, site });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetLastMessagesController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const identifier = "EMPRESA" as IdentificadorEnum;
+
+        const getLastMessagesUseCase = new GetLastMessagesUseCase();
+
+        const result = await getLastMessagesUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
     }
