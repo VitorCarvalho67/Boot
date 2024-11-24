@@ -14,6 +14,8 @@ import ChatAluno from '../../views/aluno/Message.vue';
 import Pesquisa from '../../views/aluno/Pesquisa.vue';
 import Vagas from '../../views/aluno/Vagas.vue';
 import Ranking from '../../views/aluno/Ranking.vue';
+import AlunoPerfilEmpresa from '../../views/aluno/PerfilEmpresa.vue';
+import PublicPerfilEmpresa from '../../views/shared/PerfilEmpresa.vue';
 
 import {
     isRecoveringAluno,
@@ -134,6 +136,14 @@ export const alunoRoutes = [
         component: PublicPerfilAluno,
         beforeEnter: async (to, from, next) => {
             (await isAuthAluno()) ? next() : next(`/aluno/profile/${to.params.rm}`);
+        }
+    },
+    {
+        path: "/aluno/empresa/:email",
+        name: "AlunoPerfilEmpresa",
+        component: AlunoPerfilEmpresa,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next(`/empresa/${to.params.email}`);
         }
     },
     {

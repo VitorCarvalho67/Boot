@@ -26,7 +26,7 @@
                             <div class="info-enterprise">
                                 <strong>Empresa:</strong>
                                 <router-link
-                                    :to="'/empresa/' + vaga.empresa.email">
+                                    :to="'/aluno/empresa/' + vaga.empresa.email">
                                     {{ vaga.empresa.name }}
                                 </router-link>
                             </div>
