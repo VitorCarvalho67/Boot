@@ -12,7 +12,8 @@
                 
                         <router-link v-for="(item, index) in ranking" :key="index" :to="`/aluno/profile/${item.aluno.rm}`" class="aluno">
                             <b>#{{ index + 1 }}</b>
-                            <img :src="(index + 1 < 4) ? '../assets/icons/m' + (index + 1) + '.png' : '../../assets/icons/m3.png'" :class="(index + 1 < 4) ? 'medalha' : 'medalha normal' " alt="">
+                            <img :src="index + 1 < 4 ? medalhas[index] : medalhas[3]"
+                                :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
                             <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
                             <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
                             <p class="name">{{ item.aluno.nome }} - 3º DS</p>
@@ -28,6 +29,11 @@
 <script>
 import Header from '../../components/aluno/Header.vue';
 import searchIcon from '../../assets/icons/procurar.png';
+import medalha1 from '../../assets/icons/m1.png';
+import medalha2 from '../../assets/icons/m2.png';
+import medalha3 from '../../assets/icons/m3.png';
+import medalhaDefault from '../../assets/icons/m3.png';
+
 
 import Cookies from 'js-cookie';
 
@@ -45,7 +51,8 @@ export default {
             },
             ranking: {
 
-            }
+            },
+            medalhas: [medalha1, medalha2, medalha3, medalhaDefault],
         };
     },
     methods: {

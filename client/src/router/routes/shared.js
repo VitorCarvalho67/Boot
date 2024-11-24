@@ -1,6 +1,7 @@
 import Home from '../../views/shared/Home.vue';
 import NotFound from '../../views/shared/NotFound.vue';
 import PublicPerfilAluno from '../../views/shared/PerfilAluno.vue';
+import PublicPerfilEmpresa from '../../views/shared/PerfilEmpresa.vue';
 import PublicPerfilProfessor from '../../views/shared/PerfilProfessor.vue';
 import Pesquisa from '../../views/shared/Pesquisa.vue';
 import Vagas from '../../views/shared/Vagas.vue';
@@ -29,6 +30,11 @@ export const sharedRoutes = [
         beforeEnter: async (to, from, next) => {
             (await isAuthAluno()) ? next(`/aluno/colega/${to.params.rm}`) : next();
         }
+    },
+    {
+        path: "/empresa/:email",
+        name: "PublicPerfilEmpresa",
+        component: PublicPerfilEmpresa
     },
     {
         path: "/professor/profile/:name",
@@ -64,7 +70,7 @@ export const sharedRoutes = [
         name: 'RankingPublico',
         component: Ranking,
         beforeEnter: async (to, from, next) => {
-            (await isAuthAluno()) ? next(`/aluno/ranking}`) : next();
+            (await isAuthAluno()) ? next(`/aluno/ranking`) : next();
         }
     },
     {
