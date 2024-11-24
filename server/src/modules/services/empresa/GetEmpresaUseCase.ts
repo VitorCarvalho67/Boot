@@ -32,9 +32,9 @@ export class GetEmpresaUseCase {
             let bannerUrl = "default";
             
             if (bannerName) {
-                const objectExists = await minioClient.statObject(bucketName, imageName);
+                const objectExists = await minioClient.statObject(bucketName, bannerName);
                 if(objectExists){
-                    bannerUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                    bannerUrl = await minioClient.presignedUrl('GET', bucketName, bannerName, 24 * 60 * 60);
                 }
             }
     

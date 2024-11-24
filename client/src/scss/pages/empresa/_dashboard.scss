@@ -25,6 +25,26 @@ main {
             padding: 20px 30px;
         }
 
+        .back-button {
+            @include flex(row, flex-end, center);
+            width: 100%;
+            margin-bottom: 20px;
+
+            a {
+                @include flex(row, flex-end, center);
+                text-decoration: none;
+                color: $font-color-dark;
+                @include font-inter(700);
+                font-size: 1rem;
+
+                img {
+                    height: 15px;
+                    margin-right: 5px;
+                    filter: invert(100%);
+                }
+            }
+        }
+
         .editButtons {
             @include flex-center;
             z-index: 2;
