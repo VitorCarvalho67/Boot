@@ -134,3 +134,63 @@ export const sendMessage = async (infoMesssage, token) => {
         return error.data;
     }
 }
+
+export const getCurriculo = async (token) => {
+    try {
+        const response = await api.get('professor/curriculo', {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.data;
+    }
+}
+
+export const updateCurriculo = async (curriculo, token) => {
+    try {
+        const response = await api.post('professor/curriculo/update', curriculo, {
+            headers: {
+                authorization: `${token}`
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const updateImage = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('professor/upload/image/profile', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const updateBanner = async (file, token) => {
+    try {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await api.post('professor/upload/image/banner', formData, {
+            headers: {
+                authorization: `${token}`,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        return response;
+    } catch (error) {
+        return error.response.data;
+    }
+}

@@ -48,6 +48,7 @@ model Professor {
     tituloPrincipal      String
     imagem               String?
     banner               String?
+    curriculo            String?
     validated            Boolean       @default(false)
     tentativasRestantes  Int           @default(5)
     atividade            Atividade[]

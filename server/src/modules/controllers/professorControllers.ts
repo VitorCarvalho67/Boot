@@ -9,6 +9,10 @@ import { CreateActivityUseCase } from "../services/professor/CreateActivityUseCa
 import { RelateAlunoAtividadeUseCase } from "../services/professor/LinkAlunoActivityUseCase";
 import { EntidadeEnum } from "../interfaces/sharedDTOs";
 import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
+import { GetCurriculoUseCase } from "../services/professor/GetCurriculoUseCase";
+import { UpdateCurriculoUseCase } from "../services/professor/UodateCurriculoUseCase";
+import { UploadCapaUseCase } from "../services/professor/UploadCapaUseCase";
+import { UploadProfileUseCase } from "../services/professor/UploadProfileUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
@@ -124,6 +128,57 @@ export class GetMessagesBetweenController {
         const getMessagesBetween = new GetMessagesBetweenUseCase();
 
         const result = await getMessagesBetween.execute({ email1, identifier1, email2, identifier2 });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetCurriculoController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+
+        const getCurriculoUseCase = new GetCurriculoUseCase();
+
+        const result = await getCurriculoUseCase.execute(email);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UpdateCurriculoController {
+    async handle(req: Request, res: Response) {
+        const { curriculo } = req.body;
+        const email = req.body.entidade.email;
+
+        const updateCurriculo = new UpdateCurriculoUseCase();
+
+        const result = await updateCurriculo.execute({ email, curriculo });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadImgProfileController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+
+        const uploadProfileUseCase = new UploadProfileUseCase();
+
+        const result = await uploadProfileUseCase.execute({ email, file });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class UploadCapaController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const file = req.file as Express.Multer.File;
+
+        const uploadCapaUseCase = new UploadCapaUseCase();
+
+        const result = await uploadCapaUseCase.execute({ email, file });
 
         return res.status(201).json(result);
     }

@@ -5,7 +5,7 @@
             <section class="content">
                 <div class="box" id="box1">
                     <H1>Rankings</H1>
-                    <h2>Ranking gerados a partir das notas dos alunos. O objetivo desse ranking é proporcionar competitividade e destacar os alunos para as empresas.</h2>
+                    <h2>Ranking gerado a partir das notas dos alunos. O objetivo desse ranking é proporcionar competitividade e destacar os alunos para as empresas.</h2>
                     
                     <div class="alunos">
                         <p class="info">Ranking geral:</p>

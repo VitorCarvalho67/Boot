@@ -16,7 +16,11 @@ import {
     RefreshTokenController,
     CreateActivityController,
     RelateAlunoAtividadeController,
-    GetMessagesBetweenController
+    GetMessagesBetweenController,
+    GetCurriculoController,
+    UpdateCurriculoController,
+    UploadImgProfileController,
+    UploadCapaController,
 } from "../../../modules/controllers/professorControllers";
 
 export const createControllers = () => ({
@@ -35,5 +39,9 @@ export const createControllers = () => ({
     createMessageController: new CreateMessageController(),
     createActivityController: new CreateActivityController(),
     relateAlunoAtividadeController: new RelateAlunoAtividadeController(),
-    getMessagesBetweenController: new GetMessagesBetweenController()
+    getMessagesBetweenController: new GetMessagesBetweenController(),
+    getCurriculoController:  new GetCurriculoController(),
+    updateCurriculoController: new UpdateCurriculoController(),
+    uploadImgProfileController: new UploadImgProfileController(),
+    uploadCapaController: new UploadCapaController(),
 });
