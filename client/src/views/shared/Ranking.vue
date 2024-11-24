@@ -24,10 +24,12 @@
             </section>
         </main>
     </div>
+    <Footer />
 </template>
 
 <script>
-import Header from '../../components/aluno/Header.vue';
+import Header from '../../components/Header.vue';
+import Footer from '../../components/Footer.vue';
 import searchIcon from '../../assets/icons/procurar.png';
 import medalha1 from '../../assets/icons/m1.png';
 import medalha2 from '../../assets/icons/m2.png';
@@ -43,6 +45,7 @@ export default {
     name: 'Ranking',
     components: {
         Header,
+        Footer
     },
     data() {
         return {
