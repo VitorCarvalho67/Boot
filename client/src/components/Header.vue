@@ -5,7 +5,7 @@
         </div>
         <nav>
             <ul>
-                <li><router-link to="/home">Rankings</router-link></li>
+                <li><router-link to="/ranking">Rankings</router-link></li>
                 <li @click="toggleSpanView" @mouseenter="toggleSpanView" @mouseleave="toggleSpanView">
                     <a>Entre como</a>
                     <div v-if="spanView" @mouseenter="toggleSpanView" @mouseleave="toggleSpanView">

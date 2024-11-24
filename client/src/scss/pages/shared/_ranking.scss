@@ -4,10 +4,10 @@ main {
     border-bottom: 1px solid #0000008f;
 
     .content {
-        @include flex(row, flex-start, start);
+        @include flex(row, center, start);
         width: calc(100% - 300px);
         min-height: calc(100vh - 80px);
-        padding: 40px 20px;
+        padding: 0px 20px;
         background-color: $primary-color-dark;
 
         @include m-screen(700px) {
@@ -20,7 +20,7 @@ main {
         }
 
         #box1 {
-            padding: 50px 0px 0px 100px;
+            padding: 50px 0px 0px 0px;
             width: 70%;
 
             h1 {
