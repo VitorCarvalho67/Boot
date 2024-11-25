@@ -1,5 +1,15 @@
+import { socket } from '../../socket';
 import api from '../api';
-import { enterSockets } from './aluno';
+
+export function enterSockets(token){
+    socket.emit(
+        'enter',
+        {
+            type: "EMPRESA",
+            authorization: `${token}`
+        }
+    );
+}
 
 export const authEmpresa = async (token) => {
     try {
@@ -148,10 +158,10 @@ export const sendMessage = async (infoMesssage, token) => {
             }
         });
 
-        // socket.emit('send-message', {
-        //     message: response.data.message,
-        //     authorization: `${token}`
-        // });
+        socket.emit('send-message', {
+            message: response.data.message,
+            authorization: `${token}`
+        });
 
         return response;
     } catch (error) {

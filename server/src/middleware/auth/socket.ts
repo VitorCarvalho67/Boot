@@ -3,6 +3,7 @@ import { AppError } from '../../errors/error';
 import { JwtPayload } from 'jsonwebtoken';
 import { 
     verfifyAccessTokenAluno,
+    verfifyAccessTokenEmpresa,
     verfifyAccessTokenFuncinario,
     verfifyAccessTokenProfessor
 } from '../../jwt/jwtServices';
@@ -21,7 +22,7 @@ export async function validateTokenAluno(token: string){
             throw new AppError('Invalid token');
         }
 
-        const aluno = await prisma.aluno.findUnique({
+        const aluno = await prisma.aluno.findFirst({
             where: { id: (decoded as JwtPayload).alunoId }
         });
 
@@ -89,3 +90,31 @@ export async function validateTokenFuncionario(token: string){
         throw new Error('Token inválido: ' + error);
     }
 };
+
+export async function validateTokenEmpresa(token: string){
+    try {
+        const decoded = verfifyAccessTokenEmpresa(token);
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new Error('Invalid token');
+        }
+
+
+        if (!decoded || typeof decoded === 'string') {
+            throw new AppError('Invalid token');
+        }
+
+        const empresa = await prisma.empresa.findUnique({
+            where: { id: (decoded as JwtPayload).empresaId }
+        });
+
+        if (!empresa) {
+            throw new Error('Empresa not found');
+        }
+
+        return empresa;
+    } catch (error) {
+        throw new Error('Token inválido: ' + error);
+    }
+};
+
