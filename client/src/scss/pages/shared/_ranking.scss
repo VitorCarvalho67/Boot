@@ -1,17 +1,14 @@
 main {
-    height: calc(100vh - 80px);
     @include flex(row, flex-start, start);
     border-bottom: 1px solid #0000008f;
 
     .content {
         @include flex(row, center, start);
         width: calc(100% - 300px);
-        height: calc(100vh - 80px);
         padding: 0px 20px;
         background-color: $primary-color-dark;
 
         overflow-y: auto; /* Ativa o scroll vertical */
-        max-height: calc(100vh - 80px);
 
         @include m-screen(700px) {
             @include flex(column-reverse, flex-start, start);

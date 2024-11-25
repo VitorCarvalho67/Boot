@@ -21,6 +21,15 @@ main {
 
         #box1 {
             padding: 50px 0px 0px 100px;
+
+            @include m-screen(1400px){
+                padding: 50px 0px 0px 40px;
+            }
+            
+            @include m-screen(1000px){
+                padding: 50px 0px 0px 10px;
+            }
+            
             h1 {
                 font-size: 2rem;
                 color: $secondary-color-orange;
