@@ -6,9 +6,8 @@
             <section class="content">
                 <div class="box" id="box1">
                     <H1>Rankings</H1>
-                    <h2>Ranking gerados a partir das notas dos alunos. O objetivo desse ranking é proporcionar
-                        competitividade e destacar os alunos para as empresas.</h2>
-
+                    <h2>Ranking gerado a partir das notas dos alunos. O objetivo desse ranking é proporcionar competitividade e destacar os alunos para as empresas.</h2>
+                    
                     <div class="alunos">
                         <p class="info">Ranking geral:</p>
 
@@ -20,11 +19,11 @@
                                     :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
                                 <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
                                 <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
-                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} pontos</p>
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
                             </div>
                             <div class="zz">
                                 <p class="name">{{ item.aluno.nome }} - 3º DS</p>
-                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} pontos</p>
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
                             </div>
                         </router-link>
                     </div>
