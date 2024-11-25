@@ -5,33 +5,64 @@
             <div class="content">
                 <div class="content">
                     <div class="capa">
-                        <div class="capaProfile">
-                            <img v-if="empresa.banner == 'default'" src="../../assets/imgs/defaultBanner.png"
-                                alt="Capa" />
-                            <img v-else :src="empresa.banner" alt="Capa" />
-                        </div>
-                        <div class="infoProfile">
-                            <img v-if="empresa.imagem == 'default'" src="../../assets/icons/artwork.png" />
-                            <img v-else :src="empresa.imagem" />
-                            <div class="info">
-                                <div class="box1">
-                                    <h1 v-text="empresa.nome"></h1>
-                                </div>
+                    <div class="capaProfile">
+                        <img v-if="empresa.banner === 'default'" src="../../assets/imgs/defaultBanner.png" alt="Capa" />
+                        <img v-else :src="empresa.banner" alt="Capa" />
+                    </div>
+                    <div class="infoProfile">
+                        <img v-if="empresa.imagem === 'default'" src="../../assets/icons/artwork.png" />
+                        <img v-else :src="empresa.imagem" />
+                        <div class="info">
+                            <div class="box1">
+                                <h1 v-text="empresa.nome"></h1>
+                            </div>
+                            <div class="box2">
+                                <p v-text="empresa.email"></p>
+                                <p v-show="mode === 'view'">
+                                    <a :href="empresa.site" target="_blank">{{ empresa.site }}</a>
+                                </p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <section class="sobreMim">
-                    <h2>
-                        Sobre a Empresa
-                    </h2>
-                    <div>
-                        CNPJ: {{empresa.cnpj}}
-                        Email: {{empresa.email}}
-                        <p  v-show="mode === 'view'">Site: <a :href="empresa.site" target="_blanck">{{empresa.site}}</a></p>
-                        <textarea v-show="mode === 'edit'" name="" cols="30" rows="10" id="edit"
-                            v-model="empresa.siteSubmit" ref="edit"></textarea>
-                    </div>
+                <section class="sobreMim">
+                    <h2>Nossos Estágios:</h2>
+                    <ul class="vagas">
+                        <li v-if="empresa.vagas && empresa.vagas.length < 1">
+                            <p>Nenhuma vaga cadastrada por esta empresa.</p>
+                        </li>
+                        <li class="vaga" v-for="(vaga, index) in empresa.vagas" :key="index">
+                            <router-link :to="'/vaga/' + vaga.id">
+                                <div class="infoVaga">
+                                    <div class="contentVaga name">
+                                        <p class="who">{{ vaga.titulo }}</p>
+
+                                        <div class="info">
+                                            <label>Salário</label>
+                                            <p v-text="vaga.remuneracao"></p>
+                                        </div>
+                                        <div class="info">
+                                            <label>Carga horária</label>
+                                            <p v-text="vaga.cargaHoraria"></p>
+                                        </div>
+                                        <div class="info">
+                                            <label>Oferecida por</label>
+                                            <p v-text="vaga.empresa"></p>
+                                        </div>
+                                        <div class="info">
+                                            <label>Curso preferencial</label>
+                                            <p v-text="vaga.curso"></p>
+                                        </div>
+                                    </div>
+                                    <div class="box-button">
+                                        <button>Ver vaga</button>
+                                    </div>
+                                </div>
+                            </router-link>
+                        </li>
+
+                    </ul>
                 </section>
                 </div>
             </div>
@@ -50,7 +81,7 @@ import imgLapis from "../../assets/icons/lapis.png";
 import imgVerificar from "../../assets/icons/verificar.png";
 import imgCruz from "../../assets/icons/cruz.png";
 
-import { getEmpresa } from '../../services/api/shared.js';
+import { getEmpresa, getVagas } from '../../services/api/shared.js';
 
 import Cookies from 'js-cookie';
 import { updateBanner, updateImage, updateSite } from '../../services/api/empresa.js';
@@ -73,68 +104,47 @@ export default {
                 site: '',
                 siteSubmit: '',
                 token: '',
+                vagas: [],
             },
-            file: "",
-            fileSelected: false,
-            linkstatus: 0,
             mode: "view",
-            modeImage: "view",
-            modeBanner: "view",
-            imgLapis,
-            imgVerificar,
-            imgCruz,
-            extracurriculares: [],
-            showAddForm: false,
-        }
+        };
     },
     methods: {
-        async GetEmpresa(){
+        async GetEmpresa() {
             try {
                 const response = await getEmpresa(this.empresa.email);
                 if (response.status >= 200 && response.status < 300) {
                     this.empresa = response.data;
-
                     this.empresa.siteSubmit = response.data.site;
 
+                    await this.loadVagasEmpresa();
                 } else {
-                    console.error(
-                        "Erro ao carregar dados da empresa",
-                        response.message,
-                    );
+                    console.error("Erro ao carregar dados da empresa", response.message);
                 }
             } catch (error) {
-                console.error(
-                    "Erro ao carregar dados da empresa",
-                    error.message,
-                );
+                console.error("Erro ao carregar dados da empresa", error.message);
             }
         },
-        previewProfileImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.empresa.imagem = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-        previewBannerImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                this.empresa.banner = e.target.result;
-            };
-            reader.readAsDataURL(file);
+        async loadVagasEmpresa() {
+            try {
+                const response = await getVagas();
+                if (response.status >= 200 && response.status < 300) {
+                    this.empresa.vagas = response.data.filter(
+                        (vaga) => vaga.empresa.toLowerCase() === this.empresa.nome.toLowerCase()
+                    );
+                } else {
+                    console.error("Erro ao carregar vagas da empresa.");
+                }
+            } catch (error) {
+                console.error("Erro ao carregar vagas da empresa.", error.message);
+            }
         },
     },
     async created() {
         this.empresa.email = this.$route.params.email;
-        await this.GetEmpresa(this.empresa.email);
+        await this.GetEmpresa();
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -152,9 +162,9 @@ export default {
 
         .content {
             flex: 1;
-            padding: 20px;
             overflow-y: auto;
             height: 100%;
+            width: 100%;
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);

@@ -2,7 +2,7 @@
     height: 100vh;
 
     main {
-        @include flex(row, flex-start, start);
+        @include flex(row, center, start);
         height: calc(100vh - 80px);
         background-color: $primary-color-dark;
 
