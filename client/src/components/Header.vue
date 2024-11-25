@@ -16,7 +16,7 @@
                         </ul>
                     </div>
                 </li>
-                <li><router-link to="/home">Sobre Nós</router-link></li>
+                <li><router-link to="/vagas">Estágios</router-link></li>
                 <li><router-link to="/register">Cadastre-se Agora</router-link></li>
                 <li class="hamburger">
                     <button @click="showAside = true">
