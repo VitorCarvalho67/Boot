@@ -84,6 +84,8 @@ export class GetRankingUseCase {
             }
           }
 
+          console.log("+++++++++\n\n\n\n" + rank.numeroNotas);
+
           return {
             aluno: {
               nome: aluno.name,
