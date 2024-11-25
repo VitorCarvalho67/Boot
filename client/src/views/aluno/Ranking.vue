@@ -19,11 +19,11 @@
                                     :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
                                 <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
                                 <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
-                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }}</p>
                             </div>
                             <div class="zz">
                                 <p class="name">{{ item.aluno.nome }} - 3º DS</p>
-                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }}</p>
                             </div>
                         </router-link>
                     </div>
@@ -95,18 +95,17 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 80px);
-    min-height: 510px;
+    height: calc(100vh - 80px);
 
     main {
         display: flex;
         flex: 1;
-        min-height: calc(100vh - 80px);
+        height: calc(100vh - 80px);
         overflow: hidden;
 
         .content {
             flex: 1;
-            min-height: calc(100vh - 80px);
+            height: calc(100vh - 80px);
             padding: 20px;
             overflow-y: auto;
 

@@ -1,0 +1,139 @@
+main {
+    height: calc(100vh - 80px);
+    background-color: $primary-color-dark;
+    @include flex(row, flex-start, start);
+    overflow: hidden;
+    flex: 1;
+
+    .content {
+        @include flex(column, flex-start, start);
+        padding: 20px 100px 40px 100px;
+        width: calc(100% - 300px);
+        flex: 1;
+        height: calc(100vh - 80px);
+        overflow-y: auto;
+
+        @media (max-width: 1000px) {
+            width: calc(100% - 100px);
+        }
+
+        @include m-screen(1300px) {
+            padding: 20px 50px;
+        }
+
+        @include m-screen(700px) {
+            padding: 20px 30px;
+        }
+
+        .box {
+            padding: 50px 0px 0px 100px;
+
+            @include m-screen(1400px) {
+                padding: 50px 0px 0px 40px;
+            }
+
+            @include m-screen(1000px) {
+                padding: 50px 0px 0px 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+                color: $secondary-color-orange;
+                @include font-inter(700);
+                @include m-screen(1400px) {
+                    font-size: 1.8rem;
+                }
+                @include m-screen(1120px) {
+                    font-size: 1.6rem;
+                }
+            }
+
+            h2 {
+                font-size: 1.3rem;
+                color: $font-color-dark-2;
+                @include font-inter(300);
+                margin-bottom: 60px;
+                @include m-screen(1400px) {
+                    font-size: 1.1rem;
+                }
+                @include m-screen(1120px) {
+                    font-size: 1rem;
+                }
+            }
+
+            .nb{
+                @include font-inter(700);
+                color: $primary-color-orange;
+            }
+
+            .boletim-item {
+                padding: 16px;
+                margin-bottom: 16px;
+                border: none;
+                border-left: 3px solid $secondary-color-orange;
+                background-color: $secondary-color-dark;
+                border-radius: 0px 8px 8px 0px;
+                @include font-inter(300);
+              
+                div {
+                  margin-bottom: 12px;
+              
+                  strong {
+                    @include font-inter(bold);
+                    color: $font-color-dark;
+                  }
+              
+                  a {
+                    color: $primary-color-orange;
+                    text-decoration: none;
+              
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  }
+                }
+              
+                input[type="file"] {
+                  display: block;
+                  margin-top: 8px;
+                  margin-bottom: 12px;
+                }
+              
+                .button-box {
+                    width: 100%;
+                    margin-top: 10px;
+                    @include flex(row, flex-end, center);
+        
+                    button {
+                        height: 40px;
+                        width: 140px;
+                        background-color: $primary-color-orange;
+                        border: none;
+                        border-radius: 3px;
+                        @include font-inter(400);
+                        font-size: 0.9rem;
+                        color: $secondary-color-dark;
+                        border: solid 1px $primary-color-orange;
+                        cursor: pointer;
+                        transition: 0.1s linear;
+        
+                        &:hover {
+                            background-color: $secondary-color-dark;
+                            color: $primary-color-orange;
+                        }
+                    }
+        
+                    @include m-screen(1800px) {
+                        margin-top: 20px;
+                    }
+                    @include m-screen(600px) {
+                        @include flex(row, flex-end, center);
+                    }
+                }
+              }
+              
+
+        }
+
+    }
+}

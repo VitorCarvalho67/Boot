@@ -4,22 +4,27 @@
         <main>
             <AsideDashboard pageName='home' />
             <div class="content">
-                <h1>Boletins a serem validados</h1>
-
-                <div v-if="boletins.length === 0">Nenhum boletim para análise no momento</div>
-
-                <div v-for="boletim in boletins" :key="boletim.id" class="boletim-item">
-                    <div>
-                        <strong>Aluno:</strong> {{ boletim.aluno.name }} <br />
-                        <strong>Turma:</strong> {{ boletim.aluno.turma }} <br />
-                        <strong>Link:</strong> <a :href="boletim.url" target="_blank">Baixar Boletim</a>
+                <div class="box">
+                    <h1>Boletins a serem validados</h1>
+                    <h2>Aqui estão boletins enviados para validação pela plataforma.</h2>
+                    
+                    <div class="nb" v-if="boletins.length === 0">Nenhum boletim para análise no momento</div>
+                    
+                    <div v-for="boletim in boletins" :key="boletim.id" class="boletim-item">
+                        <div>
+                            <strong>Aluno:</strong> {{ boletim.aluno.name }} <br />
+                            <strong>Turma:</strong> {{ boletim.aluno.turma }} <br />
+                            <strong>Link:</strong> <a :href="boletim.url" target="_blank">Baixar Boletim</a>
+                        </div>
+                        <input type="file" @change="(event) => handleFileChange(event, boletim.id)" />
+                        <div class="button-box">
+                            <button :disabled="!selectedFiles[boletim.id]" @click="compareBoletim(boletim.id)">
+                                Comparar
+                            </button>
+                        </div>
                     </div>
-                    <input type="file" @change="(event) => handleFileChange(event, boletim.id)" />
-                    <button :disabled="!selectedFiles[boletim.id]" @click="compareBoletim(boletim.id)">
-                        Comparar
-                    </button>
                 </div>
-            </div>
+                </div>
         </main>
     </div>
     <Footer />
@@ -73,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../scss/pages/funcionario/_dashboard.scss";
+@import "../../scss/pages/funcionario/_boletins.scss";
 
 #app {
     display: flex;
@@ -93,13 +98,6 @@ export default {
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);
-            }
-
-            .boletim-item {
-                margin-bottom: 20px;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
             }
         }
     }

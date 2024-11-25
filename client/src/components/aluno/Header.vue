@@ -5,8 +5,8 @@
         </div>
         <nav>
             <ul>
-                <li><router-link to="">Rankings</router-link></li>
-                <li><router-link to="">Estágios</router-link></li>
+                <li><router-link to="/aluno/ranking">Rankings</router-link></li>
+                <li><router-link to="/aluno/vagas">Estágios</router-link></li>
                 <li><router-link to="/mensagens">Mensagens</router-link></li>
                 <li class="hamburger">
                     <button @click="showAside = true">
