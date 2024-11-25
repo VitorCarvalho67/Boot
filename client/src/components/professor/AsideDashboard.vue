@@ -3,25 +3,25 @@
         <div>
             <ul>
                 <li :class="getClassForPage('home')">
-                    <router-link to="/empresa">
+                    <router-link to="/professor">
                         <img :src="icons.home">
                         <p v-if="showPs">Home</p>
                     </router-link>
                 </li>
                 <li :class="getClassForPage('message')">
-                    <router-link to="/empresa/mensagens">
+                    <router-link to="/professor/mensagens">
                         <img :src="icons.send" />
                         <p v-if="showPs">Mensagens</p>
                     </router-link>
                 </li>
                 <li :class="getClassForPage('estagios')">
-                    <router-link to="/empresa/vagas">
+                    <router-link to="/professor/vagas">
                         <img :src="icons.formIcon" />
                         <p v-if="showPs">Atividades</p>
                     </router-link>
                 </li>
                 <li :class="getClassForPage('rankings')">
-                    <router-link to="/empresa/ranking">
+                    <router-link to="/professor/ranking">
                         <img :src="icons.ranking" />
                         <p v-if="showPs">Rankings</p>
                     </router-link>
