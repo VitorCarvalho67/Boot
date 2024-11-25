@@ -10,6 +10,8 @@ export class ValidateProfessorUseCase {
 
         if (!email || !temporaryPassword || !newPassword) {
             throw new AppError("Parâmetros insuficientes ou inválidos.");
+        } else{
+            console.log("\n\n\n\n######\n\n\n\n\Senha temporária enviada: " +  temporaryPassword);
         }
 
         const professorEmail = await prisma.professor.findFirst({

@@ -21,6 +21,7 @@ import {
     UpdateCurriculoController,
     UploadImgProfileController,
     UploadCapaController,
+    GetLastMessagesController
 } from "../../../modules/controllers/professorControllers";
 
 export const createControllers = () => ({
@@ -44,4 +45,5 @@ export const createControllers = () => ({
     updateCurriculoController: new UpdateCurriculoController(),
     uploadImgProfileController: new UploadImgProfileController(),
     uploadCapaController: new UploadCapaController(),
+    getLastMessagesController: new GetLastMessagesController(),
 });

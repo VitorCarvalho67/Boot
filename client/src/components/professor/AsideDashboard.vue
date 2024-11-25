@@ -16,7 +16,7 @@
                 </li>
                 <li :class="getClassForPage('estagios')">
                     <router-link to="/professor/vagas">
-                        <img :src="icons.formIcon" />
+                        <img :src="icons.form" />
                         <p v-if="showPs">Atividades</p>
                     </router-link>
                 </li>

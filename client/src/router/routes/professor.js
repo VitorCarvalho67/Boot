@@ -5,6 +5,9 @@ import LoginProfessor from '../../views/professor/Login.vue';
 import RecoveryProfessor from '../../views/professor/Recovery.vue';
 import ValidateRecoveryProfessor from '../../views/professor/ValidateRecovery.vue';
 import PerfilProfessor from '../../views/professor/Profile.vue';
+import Messages from '../../views/professor/Mensagens.vue';
+import ChatProfessor from '../../views/professor/Mensagem.vue';
+import PublicPerfilAluno from '../../views/professor/Aluno.vue';
 
 import {
     isAuthProfessor,
@@ -62,5 +65,29 @@ export const professorRoutes = [
         beforeEnter: async (to, from, next) => {
             (await isAuthProfessor()) ? next() : next("/professor/init");
         }
-    }
+    },
+    {
+        path: "/professor/mensagens",
+        name: "MensagensProfessor",
+        component: Messages,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthProfessor()) ? next() : next("/professor/login");
+        }
+    },
+    {
+        path: "/professor/aluno/profile/:rm",
+        name: "ProfessorPerfilAluno",
+        component: PublicPerfilAluno,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthProfessor()) ? next() : next(`/aluno/profile/${to.params.rm}`);
+        }
+    },
+    {
+        path: "/professor/mensagens/:identifier/:email",
+        name: "MensagemProfessor",
+        component: ChatProfessor,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthProfessor()) ? next() : next("/professor/login");
+        }
+    },
 ]

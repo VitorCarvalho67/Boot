@@ -68,7 +68,7 @@ export function generateRegisterFuncionarioEmail(firstName: string, email: strin
                         <p>Senha: ${password}</p>
                     </div>
                     <p class="instructions">
-                        Caso esse email não faça sentido para você por favor ignore este e-mail. Não compartilhe esse suas credenciais com ninguém.
+                        Caso esse email não faça sentido para você por favor ignore este e-mail. Não compartilhe suas credenciais com ninguém.
                     </p>
                     <div class="footer"></div>
                         Obrigado por usar a plataforma da <a href="${process.env.URL}">BOOT</a>, seu pontapé para o mercado de trabalho!
