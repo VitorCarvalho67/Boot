@@ -36,7 +36,9 @@ export class GetMessagesBetweenUseCase {
                     { empresaRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
                     { empresaRemetenteId: entidade2Id, alunoDestinatarioId: entidade1Id },
                     { professorRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
+                    { professorRemetenteId: entidade2Id, alunoDestinatarioId: entidade1Id },
                     { alunoRemetenteId: entidade1Id, professorDestinatarioId: entidade2Id },
+                    { alunoRemetenteId: entidade2Id, professorDestinatarioId: entidade1Id },
                 ]
             },
             orderBy: {
@@ -50,7 +52,10 @@ export class GetMessagesBetweenUseCase {
                 sender = 'me';
             } else if (message.empresaRemetenteId === entidade1Id) {
                 sender = 'me';
+            } else if (message.professorRemetenteId === entidade1Id) {
+                sender = 'me';
             }
+
             return {
                 ...message,
                 sender

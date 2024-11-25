@@ -57,14 +57,6 @@
                 <section class="sobreMim">
                     <h2>
                         Sobre mim 
-                        <div id="getCurriculo">
-                            <button @click="GetCurriculoFile" v-if="linkstatus == 0">Gerar Currículo</button>
-                            <p v-if="linkstatus == 1">Gerando currículo</p>
-                            <p v-if="linkstatus == 2">Currículo gerado</p>
-                            <a v-if="linkstatus == 2">
-                                <button @click="downloadFile">Baixar</button>
-                            </a>
-                        </div>
                     </h2>
                     <div>
                         <p v-show="mode === 'view'" v-html="professor.curriculo"></p>
@@ -199,11 +191,14 @@ export default {
 
             try {
                 if (response.status >= 200 && response.status < 300) {
-                    this.professor.curriculo = response.data.curriculo.replace(
-                        /\n/g,
-                        "<br>",
-                    );
-                    this.professor.curriculoEdit = response.data.curriculo;
+                    if(response.data.curriculo){
+                        this.professor.curriculo = response.data.curriculo.replace(
+                            /\n/g,
+                            "<br>",
+                        );
+                        this.professor.curriculoEdit = response.data.curriculo;
+                    }
+                    
                     this.professor.nome = response.data.nome;
                     this.professor.email = response.data.email;
                 } else {
@@ -214,7 +209,7 @@ export default {
                 }
             } catch (error) {
                 alert(
-                    "Ops.. Algo deu errado ao recuperar os dados. 😕\n" + error,
+                    "Ops.. Algo deu ERRADO ao recuperar os dados. 😕\n" + error,
                 );
             }
 

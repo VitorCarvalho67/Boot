@@ -16,8 +16,14 @@
                 </li>
                 <li :class="getClassForPage('estagios')">
                     <router-link to="/professor/vagas">
-                        <img :src="icons.formIcon" />
+                        <img :src="icons.form" />
                         <p v-if="showPs">Atividades</p>
+                    </router-link>
+                </li>
+                <li :class="getClassForPage('pesquisa')">
+                    <router-link to="/professor/search">
+                        <img :src="icons.search" />
+                        <p v-if="showPs">Pesquisa</p>
                     </router-link>
                 </li>
                 <li :class="getClassForPage('rankings')">
