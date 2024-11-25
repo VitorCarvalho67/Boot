@@ -1,14 +1,17 @@
 main {
-    min-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
     @include flex(row, flex-start, start);
     border-bottom: 1px solid #0000008f;
 
     .content {
         @include flex(row, center, start);
         width: calc(100% - 300px);
-        min-height: calc(100vh - 80px);
+        height: calc(100vh - 80px);
         padding: 0px 20px;
         background-color: $primary-color-dark;
+
+        overflow-y: auto; /* Ativa o scroll vertical */
+        max-height: calc(100vh - 80px);
 
         @include m-screen(700px) {
             @include flex(column-reverse, flex-start, start);
@@ -22,6 +25,18 @@ main {
         #box1 {
             padding: 50px 0px 0px 0px;
             width: 70%;
+
+            @include m-screen(1400px) {
+                width: 80%;
+            }
+
+            @include m-screen(1200px) {
+                width: 90%;
+            }
+
+            @include m-screen(900px) {
+                width: 95%;
+            }
 
             h1 {
                 font-size: 2rem;
@@ -49,26 +64,17 @@ main {
                 }
             }
 
-            @include m-screen(1000px) {
-                width: 60%;
-            }
-
-            @include m-screen(700px) {
-                width: 100%;
-                margin-bottom: 20px;
-            }
-
-            .alunos{
+            .alunos {
                 @include flex(column, flex-start, start);
                 width: 100%;
 
-                .info{
+                .info {
                     color: $primary-color-orange;
                     @include font-inter(bold);
                     margin-bottom: 10px;
                 }
 
-                .aluno{
+                .aluno {
                     position: relative;
                     width: 100%;
                     max-width: 1000px;
@@ -82,43 +88,131 @@ main {
                     text-decoration: none;
                     color: $font-color-dark;
 
-                    &:hover{
+                    @include m-screen(770px) {
+                        padding: 10px 10px;
+                    }
+
+                    @include m-screen(600px) {
+                        @include flex(column, center, start);
+                    }
+
+                    &:hover {
                         transform: scale(1.04);
                     }
 
-                    b{
+                    .xx{
+                        height: 100%;
+                        @include flex(row, flex-start, center);
+
+                        .pontos{
+                            display: none;
+                        }
+
+                        @include m-screen(600px) {
+                            width: 100%;
+                            @include flex(row, flex-start, center);
+
+                            .pontos{
+                                display: block;
+                                @include font-inter(bold);
+                            }
+                        }
+                    }
+
+                    b {
                         font-size: 1.8rem;
                         @include font-inter(bold);
                         margin-right: 30px;
+
+                        @include m-screen(1000px) {
+                            margin-right: 20px;
+                            font-size: 1.6rem;
+                        }
+
+                        @include m-screen(770px) {
+                            margin-right: 10px;
+                            font-size: 1.2rem;
+                        }
                     }
 
-                    img{
+                    img {
                         width: 40px;
                         margin-right: 30px;
+
+                        @include m-screen(1000px) {
+                            margin-right: 20px;
+                            width: 30px;
+                        }
+
+                        @include m-screen(770px) {
+                            margin-right: 10px;
+                        }
                     }
 
-                    img:nth-child(3){
+                    img:nth-child(3) {
                         width: 50px;
                         border-radius: 50%;
                         padding: 2px;
                         background-color: $secondary-color-dark;
+
+                        @include m-screen(770px) {
+                            width: 40px;
+                        }
                     }
 
                     .normal {
                         filter: saturate(0);
                     }
 
-                    .name{
-                        font-size: 1.2rem;
-                        @include font-inter(400);
-                        margin-right: 30px;
+                    .zz{
+                        height: 100%;
+                        @include flex(row, flex-start, center);
+
+                        @include m-screen(680px) {
+                            @include flex(column, center, start);
+                            margin-left: 10px;
+                        }
+
+                        @include m-screen(600px) {
+                            width: 100%;
+                            @include flex(row, flex-start, center);
+                            margin-left: 0px;
+                            .pontos{
+                                display: none;
+                            }
+                        }
+
+                        .name {
+                            font-size: 1.2rem;
+                            @include font-inter(400);
+                            margin-right: 30px;
+    
+                            @include m-screen(1000px) {
+                                margin-right: 20px;
+                                font-size: 1rem;
+                            }
+
+                            @include m-screen(680px) {
+                                margin-right: 0px;
+                            }
+                        }
+    
+                        .pontos {
+                            @include font-inter(bold);
+                            position: absolute;
+                            right: 20px;
+    
+                            @include m-screen(770px) {
+                                right: 10px;
+                            }
+    
+                            @include m-screen(680px) {
+                                position: relative;
+                                right: 0px;
+                            }
+                        }
                     }
 
-                    .pontos{
-                        @include font-inter(bold);
-                        position: absolute;
-                        right: 20px;
-                    }
                 }
 
                 .aluno:nth-child(2) {
