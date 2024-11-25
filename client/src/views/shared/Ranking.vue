@@ -11,13 +11,18 @@
                         <p class="info">Ranking geral:</p>
                 
                         <router-link v-for="(item, index) in ranking" :key="index" :to="`/aluno/profile/${item.aluno.rm}`" class="aluno">
-                            <b>#{{ index + 1 }}</b>
-                            <img :src="index + 1 < 4 ? medalhas[index] : medalhas[3]"
-                                :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
-                            <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
-                            <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
-                            <p class="name">{{ item.aluno.nome }} - 3º DS</p>
-                            <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }}</p>
+                            <div class="xx">
+                                <b>#{{ index + 1 }}</b>
+                                <img :src="index + 1 < 4 ? medalhas[index] : medalhas[3]"
+                                    :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
+                                <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
+                                <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
+                            </div>
+                            <div class="zz">
+                                <p class="name">{{ item.aluno.nome }} - 3º DS</p>
+                                <p class="pontos">{{ (item.rankingNota * 1000).toFixed(2) }} / {{ item.numeroNotas }} pontos</p>
+                            </div>
                         </router-link>
                     </div>
                 </div>
@@ -91,18 +96,18 @@ export default {
     #app {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 80px);
-    min-height: 510px;
+    height: calc(100vh - 80px);
+    overflow: hidden;
 
     main {
         display: flex;
         flex: 1;
-        min-height: calc(100vh - 80px);
+        height: calc(100vh - 80px);
         overflow: hidden;
 
         .content {
             flex: 1;
-            min-height: calc(100vh - 80px);
+            height: calc(100vh - 80px);
             padding: 20px;
             overflow-y: auto;
 
