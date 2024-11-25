@@ -5,6 +5,7 @@ export function enterSockets(token){
     socket.emit(
         'enter',
         {
+            type: "ALUNO",
             authorization: `${token}`
         }
     );
@@ -346,6 +347,7 @@ export const sendMessage = async (infoMesssage, token) => {
 
         socket.emit('send-message', {
             message: response.data.message,
+            sender: "ALUNO",
             authorization: `${token}`
         });
 

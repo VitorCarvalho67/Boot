@@ -36,7 +36,7 @@ export class CreateMessageUseCase {
         const senderId = senderData.id;
         const recipientId = recipientData.id;
 
-        console.log(senderId, senderIdentifier, recipientId, recipientIdentifier, message);
+        console.log("###\n\n\n\nNova mensagem: " + senderId, senderIdentifier, recipientId, recipientIdentifier, message);
 
         const data: any = {
             conteudo: message,

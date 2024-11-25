@@ -7,7 +7,7 @@ import { minioClient } from "../../../minioService";
 export class GetMessagesBetweenUseCase {
     async execute({ email1, identifier1, email2, identifier2 }: GetMessageBetweenDTO) {
         
-        console.log(email1, identifier1, email2, identifier2);
+        console.log("############\n\n\n\n\nPegando chat de: " + email1, identifier1, email2, identifier2);
 
         if (!email1 || !identifier1 || !email2 || !identifier2) {
             throw new AppError("Parâmetros insufientes ou inválidos.");
@@ -32,7 +32,11 @@ export class GetMessagesBetweenUseCase {
                 OR: [
                     { alunoRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
                     { alunoRemetenteId: entidade1Id, empresaDestinatarioId: entidade2Id },
+                    { alunoRemetenteId: entidade2Id, empresaDestinatarioId: entidade1Id },
                     { empresaRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
+                    { empresaRemetenteId: entidade2Id, alunoDestinatarioId: entidade1Id },
+                    { professorRemetenteId: entidade1Id, alunoDestinatarioId: entidade2Id },
+                    { alunoRemetenteId: entidade1Id, professorDestinatarioId: entidade2Id },
                 ]
             },
             orderBy: {
@@ -43,6 +47,8 @@ export class GetMessagesBetweenUseCase {
         const messagesWithSender = messages.map(message => {
             let sender = 'other';
             if (message.alunoRemetenteId === entidade1Id) {
+                sender = 'me';
+            } else if (message.empresaRemetenteId === entidade1Id) {
                 sender = 'me';
             }
             return {
