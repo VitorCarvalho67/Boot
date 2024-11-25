@@ -317,6 +317,11 @@ main {
                             @include m-screen(760px) {
                                 font-size: 0.9rem;
                             }
+
+                            a{
+                                text-decoration: none;
+                                color: $font-color-dark
+                            }
                         }
                     }
                 }
@@ -332,12 +337,127 @@ main {
                 margin-top: 60px;
             }
 
+            .vagas{
+                width: 100%;
+            }
+
+            .vaga {
+                @include flex(column, flex-end, start);
+                width: 70%;
+                height: 140px;
+                border-left: solid 5px $secondary-color-orange;
+                margin-bottom: 10px;
+
+                @include m-screen(1000px) {
+                    height: auto;
+                }
+
+                a {
+                    @include flex(row, space-between, start);
+                    width: 100%;
+                    height: 100%;
+                    background-color: $secondary-color-dark;
+                    padding: 15px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    color: $font-color-dark;
+
+                    img {
+                        height: 60px;
+                        width: 60px;
+                        object-fit: cover;
+                        border-radius: 50%;
+                        margin-right: 20px;
+                    }
+
+                    .infoVaga {
+                        @include flex(row, space-between, start);
+                        width: 100%;
+                        height: 100%;
+                        padding-right: 20px;
+
+                        @include m-screen(1000px) {
+                            @include flex(row, space-between, center);  
+                        }
+
+                        @include m-screen(600px) {
+                            @include flex(column, space-between, start);  
+                        }
+
+                        .who {
+                            color: $primary-color-orange;
+                            margin-right: 10px;
+                            margin-bottom: 10px;
+                        }
+
+                        .contentVaga {
+                            @include flex(column, flex-start, start);
+                            width: calc(100% - 120px);
+
+                            @include m-screen(600px) {
+                                width: 100%;
+                                margin-bottom: 10px;  
+                            }
+
+                            .info {
+                                @include flex(row, start, start);
+                                width: 100%;
+
+                                @include m-screen(1000px) {
+                                    @include flex(column, start, start);
+                                    margin-top: 5px;
+                                }
+
+                                label {
+                                    @include font-inter(300);
+                                    color: $font-color-dark-2;
+                                    min-width: 30%;
+                                }
+
+                                p {
+                                    @include font-inter(300);
+                                    color: $font-color-dark;
+                                }
+                            }
+                        }
+
+                        .box-button {
+                            height: 100%;
+                            @include flex(column, center, center);
+
+                            @include m-screen(600px) {
+                                width: 100%;
+                                @include flex(column, center, end);
+                            }
+
+                            button {
+                                padding: 10px 20px;
+                                border-radius: 10px;
+                                font-size: 1rem;
+                                border: solid 1px $secondary-color-orange;
+                                background-color: $secondary-color-dark;
+                                color: $secondary-color-orange;
+                                
+                                &:hover {
+                                    color: $secondary-color-dark;
+                                    background-color: $secondary-color-orange;
+                                }
+                            }
+                        }
+                    }
+
+                    p {
+                        @include font-inter(600);
+                    }
+                }
+            }
+
             h2 {
                 @include font-inter(700);
                 font-size: 1.5rem;
                 width: 100%;
                 color: $secondary-color-orange;
-                margin: 20px 0px 10px 0px;
+                margin: 20px 0px 30px 0px;
                 @include flex(row, space-between, center);
 
                 @include m-screen(760px) {
