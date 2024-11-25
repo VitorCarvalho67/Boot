@@ -6,14 +6,23 @@
             <section class="content">
                 <div class="box" id="box1">
                     <H1>Rankings</H1>
+<<<<<<< HEAD
                     <h2>Ranking gerado a partir das notas dos alunos. O objetivo desse ranking é proporcionar competitividade e destacar os alunos para as empresas.</h2>
                     
+=======
+                    <h2>Ranking gerados a partir das notas dos alunos. O objetivo desse ranking é proporcionar
+                        competitividade e destacar os alunos para as empresas.</h2>
+
+>>>>>>> 98d94fd9c72eb7e19323bc31ba76f488af0a0271
                     <div class="alunos">
                         <p class="info">Ranking geral:</p>
-                
-                        <router-link v-for="(item, index) in ranking" :key="index" :to="`/aluno/profile/${item.aluno.rm}`" class="aluno">
+
+                        <router-link v-for="(item, index) in ranking" :key="index"
+                            :to="`/aluno/profile/${item.aluno.rm}`" class="aluno">
                             <b>#{{ index + 1 }}</b>
-                            <img :src="(index + 1 < 4) ? '../assets/icons/m' + (index + 1) + '.png' : '../../assets/icons/m3.png'" :class="(index + 1 < 4) ? 'medalha' : 'medalha normal' " alt="">
+                            <img :src="index + 1 < 4 ? medalhas[index] : medalhas[3]"
+                                :class="(index + 1 < 4) ? 'medalha' : 'medalha normal'" alt="" />
+
                             <img v-if="item.aluno.imagem != 'default'" :src="item.aluno.imagem" alt="Foto do aluno">
                             <img v-else src="../../assets/icons/artwork.png" alt="Foto padrão">
                             <p class="name">{{ item.aluno.nome }} - 3º DS</p>
@@ -30,6 +39,10 @@
 import Header from '../../components/aluno/Header.vue';
 import AsideDashboard from '../../components/aluno/AsideDashboard.vue';
 import searchIcon from '../../assets/icons/procurar.png';
+import medalha1 from '../../assets/icons/m1.png';
+import medalha2 from '../../assets/icons/m2.png';
+import medalha3 from '../../assets/icons/m3.png';
+import medalhaDefault from '../../assets/icons/m3.png';
 
 import Cookies from 'js-cookie';
 
@@ -48,7 +61,8 @@ export default {
             },
             ranking: {
 
-            }
+            },
+            medalhas: [medalha1, medalha2, medalha3, medalhaDefault],
         };
     },
     methods: {
@@ -78,9 +92,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import "../../scss/pages/shared/_ranking.scss";
+@import "../../scss/pages/shared/_ranking.scss";
 
-    #app {
+#app {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 80px);

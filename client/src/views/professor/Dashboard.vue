@@ -220,7 +220,7 @@ export default {
 
             try {
                 const response = await getImage({
-                    identifier: "ALUNO",
+                    identifier: "PROFESSOR",
                     email: this.professor.email,
                 });
 
@@ -241,7 +241,7 @@ export default {
 
             try {
                 const responseBanner = await getBanner({
-                    identifier: "ALUNO",
+                    identifier: "PROFESSOR",
                     email: this.professor.email,
                 });
 

@@ -8,7 +8,8 @@ export interface VinculoDTO {
 
 export enum IdentificadorEnum {
     ALUNO = "ALUNO",
-    PROFESSOR = "PROFESSOR"
+    PROFESSOR = "PROFESSOR",
+    EMPRESA = "EMPRESA"
 }
 
 export interface ReagirVinculoDTO {

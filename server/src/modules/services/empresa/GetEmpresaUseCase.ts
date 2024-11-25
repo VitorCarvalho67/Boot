@@ -39,7 +39,7 @@ export class GetEmpresaUseCase {
             }
     
             if (!empresa) {
-                throw new AppError("Aluno não encontrado.");
+                throw new AppError("Empresa não encontrada.");
             }
     
             return {

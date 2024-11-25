@@ -21,13 +21,13 @@ export class GetVagaUseCase {
 
         const bucketName = 'boot';
         const imageName = vaga.empresa.imagem as string;
-                
-        let imgUrl = "default";
+    
+        let entityUrl = "default";
         
         if (imageName) {
             const objectExists = await minioClient.statObject(bucketName, imageName);
             if(objectExists){
-                imgUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
         }
 
@@ -37,8 +37,9 @@ export class GetVagaUseCase {
                 titulo: vaga.titulo,
                 empresa: {
                     cnpj: vaga.empresa.cnpj,
+                    email: vaga.empresa.email,
                     name: vaga.empresa.name,
-                    logo: imgUrl
+                    entityUrl: entityUrl
                 },
                 curso: vaga.curso.name,
                 remuneracao: vaga.remuneracao,

@@ -20,15 +20,15 @@
                     <div class="main-information">
                         <div class="enterprise">
                             <img
-                                :src="vaga.empresa.logo"
+                                :src="vaga.empresa.entityUrl"
                                 :alt="vaga.empresa.name"
                             />
                             <div class="info-enterprise">
                                 <strong>Empresa:</strong>
                                 <router-link
-                                    :to="'/empresa/' + vaga.empresa.cnpj"
-                                    >{{ vaga.empresa.name }}</router-link
-                                >
+                                    :to="'/aluno/empresa/' + vaga.empresa.email">
+                                    {{ vaga.empresa.name }}
+                                </router-link>
                             </div>
                         </div>
                         <div class="remuneracao">
