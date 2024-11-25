@@ -506,7 +506,7 @@ export default {
 
         async deleteActivity(activity, index) {
             const response = await deleteExtracurricular(
-                { extracurricularId: activity.id, alunoId: this.aluno.id },
+                { extracurricularId: activity.extracurricularId, alunoId: this.aluno.id },
                 this.aluno.token,
             );
             if (response.status >= 200 && response.status < 300) {
