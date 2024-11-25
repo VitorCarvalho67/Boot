@@ -100,11 +100,11 @@ main {
                         transform: scale(1.04);
                     }
 
-                    .xx{
+                    .xx {
                         height: 100%;
                         @include flex(row, flex-start, center);
 
-                        .pontos{
+                        .pontos {
                             display: none;
                         }
 
@@ -112,7 +112,7 @@ main {
                             width: 100%;
                             @include flex(row, flex-start, center);
 
-                            .pontos{
+                            .pontos {
                                 display: block;
                                 @include font-inter(bold);
                             }
@@ -151,12 +151,15 @@ main {
 
                     img:nth-child(3) {
                         width: 50px;
+                        height: 50px;
+                        object-fit: cover;
                         border-radius: 50%;
                         padding: 2px;
                         background-color: $secondary-color-dark;
 
                         @include m-screen(770px) {
                             width: 40px;
+                            height: 40px;
                         }
                     }
 
@@ -164,7 +167,7 @@ main {
                         filter: saturate(0);
                     }
 
-                    .zz{
+                    .zz {
                         height: 100%;
                         @include flex(row, flex-start, center);
 
@@ -177,7 +180,7 @@ main {
                             width: 100%;
                             @include flex(row, flex-start, center);
                             margin-left: 0px;
-                            .pontos{
+                            .pontos {
                                 display: none;
                             }
                         }
@@ -186,7 +189,7 @@ main {
                             font-size: 1.2rem;
                             @include font-inter(400);
                             margin-right: 30px;
-    
+
                             @include m-screen(1000px) {
                                 margin-right: 20px;
                                 font-size: 1rem;
@@ -196,23 +199,22 @@ main {
                                 margin-right: 0px;
                             }
                         }
-    
+
                         .pontos {
                             @include font-inter(bold);
                             position: absolute;
                             right: 20px;
-    
+
                             @include m-screen(770px) {
                                 right: 10px;
                             }
-    
+
                             @include m-screen(680px) {
                                 position: relative;
                                 right: 0px;
                             }
                         }
                     }
-
                 }
 
                 .aluno:nth-child(2) {
