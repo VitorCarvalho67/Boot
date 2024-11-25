@@ -55,7 +55,6 @@
                 </ul>
             </section>
         </main>
-        <Footer />
     </div>
 </template>
 
