@@ -1,4 +1,15 @@
+import { socket } from '../../socket';
 import api from '../api';
+
+export function enterSockets(token){
+    socket.emit(
+        'enter',
+        {
+            type: "PROFESSOR",
+            authorization: `${token}`
+        }
+    );
+}
 
 export const authProfessor = async(token) => {
     try {
@@ -191,6 +202,41 @@ export const updateBanner = async (file, token) => {
         });
         return response;
     } catch (error) {
+        return error.response.data;
+    }
+}
+
+export const getLastMessages = async(token) => {
+    try {
+        const response = await api.get('professor/messages', {
+            headers: {
+                Authorization: `${token}`
+            }
+        });
+
+        enterSockets(token);
+
+        return response;
+    } catch (error) {
+        console.log(error)
+        return error.response.data;
+    }
+}
+
+export const getMessages = async(info, token) => {
+    try {
+        const response = await api.get('professor/messages/between', {
+            params: info,
+            headers:{
+                Authorization: `${token}`
+            }
+        });
+
+        enterSockets(token);
+
+        return response;
+    } catch (error) {
+        console.log(error)
         return error.response.data;
     }
 }

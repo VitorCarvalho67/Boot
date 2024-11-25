@@ -24,8 +24,11 @@ export class RegisterProfessorUseCase {
             throw new AppError("Email já cadastrado!");
         } else {
             const salt = bcrypt.genSaltSync(10);
-            const password: string = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
+            const password = Array(8).fill(0).map(() => Math.random().toString(36).charAt(2)).join('').toUpperCase();
             const hash = bcrypt.hashSync(password, salt);
+
+            console.log("\n\n\n\n######\n\n\n\n\Senha temporária enviada: " +  password);
+
 
             const nome = name.split(' ').shift()?.toString() ?? 'professor(a)';
 

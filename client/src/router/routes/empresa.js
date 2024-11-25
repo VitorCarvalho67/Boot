@@ -9,12 +9,12 @@ import Ranking from '../../views/empresa/Ranking.vue';
 import Messages from '../../views/empresa/Mensagens.vue';
 import PublicPerfilAluno from '../../views/empresa/Aluno.vue';
 import ChatEmpresa from '../../views/empresa/Mensagem.vue'
+import Pesquisa from '../../views/empresa/Pesquisa.vue';
 
 import {
     isRegisteringEmpresa,
     isRecoveringEmpresa,
     isAuthEmpresa,
-    isAuthAluno
 } from '../guards/guards.js';
 
 
@@ -88,6 +88,14 @@ export const empresaRoutes = [
         component: ChatEmpresa,
         beforeEnter: async (to, from, next) => {
             (await isAuthEmpresa()) ? next() : next("/empresa/login");
+        }
+    },
+    {
+        path: "/empresa/search",
+        name: "PesquisaEmpresa",
+        component: Pesquisa,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthEmpresa()) ? next() : next("/buscar");
         }
     },
 ]

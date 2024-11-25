@@ -14,10 +14,10 @@
                         <p v-if="showPs">Mensagens</p>
                     </router-link>
                 </li>
-                <li :class="getClassForPage('estagios')">
-                    <router-link to="/empresa/vagas">
-                        <img :src="icons.job" />
-                        <p v-if="showPs">Estágios</p>
+                <li :class="getClassForPage('pesquisa')">
+                    <router-link to="/empresa/search">
+                        <img :src="icons.search" />
+                        <p v-if="showPs">Pesquisa</p>
                     </router-link>
                 </li>
                 <li :class="getClassForPage('rankings')">

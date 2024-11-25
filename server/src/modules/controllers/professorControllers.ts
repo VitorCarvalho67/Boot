@@ -7,12 +7,13 @@ import { RecoveryProfessorUseCase } from "../services/professor/RecoveryProfesso
 import { RefreshTokenUseCase } from "../services/professor/RefreshTokenUseCase";
 import { CreateActivityUseCase } from "../services/professor/CreateActivityUseCase";
 import { RelateAlunoAtividadeUseCase } from "../services/professor/LinkAlunoActivityUseCase";
-import { EntidadeEnum } from "../interfaces/sharedDTOs";
+import { EntidadeEnum, IdentificadorEnum } from "../interfaces/sharedDTOs";
 import { GetMessagesBetweenUseCase } from "../services/shared/GetChatUseCase";
 import { GetCurriculoUseCase } from "../services/professor/GetCurriculoUseCase";
 import { UpdateCurriculoUseCase } from "../services/professor/UodateCurriculoUseCase";
 import { UploadCapaUseCase } from "../services/professor/UploadCapaUseCase";
 import { UploadProfileUseCase } from "../services/professor/UploadProfileUseCase";
+import { GetLastMessagesUseCase } from "../services/shared/GetMessagesUseCase";
 
 export class InitProfessorController {
     async handle(req: Request, res: Response) {
@@ -179,6 +180,19 @@ export class UploadCapaController {
         const uploadCapaUseCase = new UploadCapaUseCase();
 
         const result = await uploadCapaUseCase.execute({ email, file });
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetLastMessagesController {
+    async handle(req: Request, res: Response) {
+        const email = req.body.entidade.email;
+        const identifier = "PROFESSOR" as IdentificadorEnum;
+
+        const getLastMessagesUseCase = new GetLastMessagesUseCase();
+
+        const result = await getLastMessagesUseCase.execute({ email, identifier });
 
         return res.status(201).json(result);
     }
