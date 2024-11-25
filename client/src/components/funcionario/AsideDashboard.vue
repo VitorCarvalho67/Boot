@@ -21,7 +21,14 @@
                     </router-link>
                 </li>
             </ul>
-            
+            <ul>
+                <li>
+                    <button @click="logout">
+                        <img :src="icons.config">
+                        <p v-if="showPs">Sair</p>
+                    </button>
+                </li>
+            </ul>
         </div>
         <button @click="changePsVisualization">
             <img :src="icons.angulo" alt="<">
@@ -42,9 +49,11 @@ import jobIcon from '../../assets/icons/estagio.png';
 import rankingIcon from '../../assets/icons/trofeu.png';
 import anguloIcon from '../../assets/icons/angulo.png';
 import userIcon from '../../assets/icons/user.png';
-import configIcon from '../../assets/icons/config.png';
+import configIcon from '../../assets/icons/saida.png';
 import formIcon from '../../assets/icons/forma.png';
 import tablesIcon from '../../assets/icons/grafico-horizontal-simples.png';
+
+import { mixinFuncionario } from '../../util/authMixins';
 
 
 export default defineComponent({
@@ -124,7 +133,8 @@ export default defineComponent({
     },
     beforeUnmount() {
         window.removeEventListener('resize', this.checkScreenWidth);
-    }
+    },
+    mixins: [mixinFuncionario]
 });
 </script>
 
