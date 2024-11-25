@@ -10,7 +10,7 @@
                         <img :src="imgHamburger" alt="">
                     </button>
                 </li>
-                <li><router-link to="/empresa">Home</router-link></li>
+                <li><router-link to="/funcionario">Home</router-link></li>
             </ul>
         </nav>
         <Aside :visible="showAside" @close="showAside = false" />
