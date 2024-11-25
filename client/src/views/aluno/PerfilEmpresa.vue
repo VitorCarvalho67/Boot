@@ -150,17 +150,15 @@ export default {
 #app {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 80px);
+    height: calc(100vh - 80px);
 
     main {
         display: flex;
         flex: 1;
-        overflow: hidden;
 
         .content {
             flex: 1;
             overflow-y: auto;
-            height: 100%;
 
             @media (max-width: 1000px) {
                 width: calc(100% - 100px);
