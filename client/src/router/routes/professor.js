@@ -8,6 +8,7 @@ import PerfilProfessor from '../../views/professor/Profile.vue';
 import Messages from '../../views/professor/Mensagens.vue';
 import ChatProfessor from '../../views/professor/Mensagem.vue';
 import PublicPerfilAluno from '../../views/professor/Aluno.vue';
+import Pesquisa from '../../views/professor/Pesquisa.vue';
 
 import {
     isAuthProfessor,
@@ -88,6 +89,14 @@ export const professorRoutes = [
         component: ChatProfessor,
         beforeEnter: async (to, from, next) => {
             (await isAuthProfessor()) ? next() : next("/professor/login");
+        }
+    },
+    {
+        path: "/professor/search",
+        name: "PesquisaProfessor",
+        component: Pesquisa,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthProfessor()) ? next() : next("/buscar");
         }
     },
 ]

@@ -20,6 +20,12 @@
                         <p v-if="showPs">Atividades</p>
                     </router-link>
                 </li>
+                <li :class="getClassForPage('pesquisa')">
+                    <router-link to="/professor/search">
+                        <img :src="icons.search" />
+                        <p v-if="showPs">Pesquisa</p>
+                    </router-link>
+                </li>
                 <li :class="getClassForPage('rankings')">
                     <router-link to="/professor/ranking">
                         <img :src="icons.ranking" />
