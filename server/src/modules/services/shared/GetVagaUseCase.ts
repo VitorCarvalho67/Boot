@@ -1,6 +1,6 @@
 import { AppError } from "../../../errors/error";
-import { prisma } from "../../../prisma/client";
 import { minioClient } from "../../../minioService";
+import { prisma } from "../../../prisma/client";
 
 export class GetVagaUseCase {
     async execute(id: string){

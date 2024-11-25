@@ -41,7 +41,7 @@ export class GenerateCurriculumUseCase {
             const endereco = JSON.parse(aluno.endereco) as Endereco;
 
             const { name, curriculo } = aluno;
-            const title = aluno.turmas[0]?.turma?.curso?.name ? `Técnico(a) em ${aluno.turmas[0].turma.curso.name}` : "Estudante";
+            const title = aluno.turmas[0]?.turma?.curso?.name ? `Formação em ${aluno.turmas[0].turma.curso.name}` : "Estudante";
             const academicTraining = aluno.cursosExtracurriculares
                 .map(course => {
                     const inicioFormatado = new Date(course.inicio).toLocaleDateString('pt-BR');

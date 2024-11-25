@@ -38,45 +38,54 @@ export class GetRankingUseCase {
       alunoNotas[alunoId].numeroNotas += 1;
     });
 
-    const ranking = Object.keys(alunoNotas).map(alunoId => {
+    const ranking = Object.keys(alunoNotas).map((alunoId) => {
       const { totalNotas, numeroNotas } = alunoNotas[alunoId];
       const notaMaximaPossivel = 10 * numeroNotas;
       const rankingNota = totalNotas / notaMaximaPossivel;
 
       return {
         alunoId,
-        rankingNota
+        rankingNota,
+        peso: rankingNota * numeroNotas,
+        numeroNotas,
       };
     });
 
-    ranking.sort((a, b) => b.rankingNota - a.rankingNota);
+    ranking.sort((a, b) => b.peso - a.peso);
 
     const alunos = await prisma.aluno.findMany({
       where: {
         id: {
-          in: ranking.map(r => r.alunoId)
-        }
-      }
+          in: ranking.map((r) => r.alunoId),
+        },
+      },
     });
 
     const rankingDetalhado = await Promise.all(
-      ranking.map(async rank => {
-        const aluno = alunos.find(a => a.id === rank.alunoId);
+      ranking.map(async (rank) => {
+        const aluno = alunos.find((a) => a.id === rank.alunoId);
         if (aluno) {
-          const bucketName = 'boot';
-          const imageName = aluno.imagem as string;
-    
+          const bucketName = "boot";
+          const imageName = aluno.imagem;
+
           let entityUrl = "default";
-    
+
           if (imageName) {
             try {
               await minioClient.statObject(bucketName, imageName);
-              entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+              entityUrl = await minioClient.presignedUrl(
+                "GET",
+                bucketName,
+                imageName,
+                24 * 60 * 60
+              );
             } catch (error) {
               console.error(`Erro ao verificar objeto ${imageName}:`, error);
             }
           }
-    
+
+          console.log("+++++++++\n\n\n\n" + rank.numeroNotas);
+
           return {
             aluno: {
               nome: aluno.name,
@@ -84,10 +93,11 @@ export class GetRankingUseCase {
               imagem: entityUrl,
             },
             rankingNota: rank.rankingNota,
+            numeroNotas: rank.numeroNotas,
           };
         }
-    
-        return null; // Retorna null caso não encontre o aluno
+
+        return null;
       })
     );
 
