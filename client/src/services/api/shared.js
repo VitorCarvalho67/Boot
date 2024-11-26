@@ -101,3 +101,17 @@ export const getEmpresa = async (email) => {
         return error.response.data;
     }
 }
+
+export const getProfessor = async (email) => {
+    try {
+        const response = await api.get('/shared/professor', {
+            params: {
+                email: email
+            }
+        });
+        return response;
+    } catch (error) {
+        console.log('Erro: ' + error);
+        return error.response.data;
+    }
+}

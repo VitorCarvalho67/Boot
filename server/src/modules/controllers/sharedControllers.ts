@@ -11,6 +11,7 @@ import { GetCurriculoUseCase } from "../services/shared/GetCurriculoUseCase";
 import { GetProfileImageUseCase } from '../services/shared/GetProfileImageUseCase';
 import { GetBannerUseCase } from '../services/shared/GetBannerUseCase';
 import { CreateMessageUseCase } from "../services/shared/CreateMessageUseCase";
+import { GetProfessorUseCase } from "../services/shared/GetProfessorUseCase";
 
 import { 
     CreateMessageDTO,
@@ -161,6 +162,18 @@ export class GetVagaController {
         const getVagaUseCase = new GetVagaUseCase();
 
         const result = await getVagaUseCase.execute(id as string);
+
+        return res.status(201).json(result);
+    }
+}
+
+export class GetProfessorController {
+    async handle(req: Request, res: Response) {
+        const email = req.query.email as string;
+
+        const getProfessorUseCase = new GetProfessorUseCase();
+
+        const result = await getProfessorUseCase.execute(email);
 
         return res.status(201).json(result);
     }

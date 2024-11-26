@@ -37,7 +37,7 @@ export const sharedRoutes = [
         component: PublicPerfilEmpresa
     },
     {
-        path: "/professor/profile/:name",
+        path: "/professor/profile/:email",
         name: "PublicPerfilProfessor",
         component: PublicPerfilProfessor
     },

@@ -15,7 +15,7 @@ import Pesquisa from '../../views/aluno/Pesquisa.vue';
 import Vagas from '../../views/aluno/Vagas.vue';
 import Ranking from '../../views/aluno/Ranking.vue';
 import AlunoPerfilEmpresa from '../../views/aluno/PerfilEmpresa.vue';
-import PublicPerfilEmpresa from '../../views/shared/PerfilEmpresa.vue';
+import AlunoPerfilProfessor from '../../views/aluno/PerfilProfessor.vue';
 
 import {
     isRecoveringAluno,
@@ -144,6 +144,14 @@ export const alunoRoutes = [
         component: AlunoPerfilEmpresa,
         beforeEnter: async (to, from, next) => {
             (await isAuthAluno()) ? next() : next(`/empresa/${to.params.email}`);
+        }
+    },
+    {
+        path: "/aluno/professor/:email",
+        name: "AlunoPerfilProfessor",
+        component: AlunoPerfilProfessor,
+        beforeEnter: async (to, from, next) => {
+            (await isAuthAluno()) ? next() : next(`/professor/${to.params.email}`);
         }
     },
     {
