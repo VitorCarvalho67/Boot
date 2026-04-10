@@ -1,5 +1,5 @@
 import { AppError } from "../../../errors/error";
-import { minioClient } from "../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../minioService";
 import { prisma } from "../../../prisma/client";
 
 export class GetVagaUseCase {
@@ -27,7 +27,7 @@ export class GetVagaUseCase {
         if (imageName) {
             const objectExists = await minioClient.statObject(bucketName, imageName);
             if(objectExists){
-                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                entityUrl = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
         }
 

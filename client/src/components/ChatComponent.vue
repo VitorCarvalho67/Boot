@@ -21,7 +21,7 @@ export default {
         };
     },
     created() {
-        this.socket = io('http://localhost:3333'); // Altere para o seu servidor se necessário
+        this.socket = io(import.meta.env.VITE_SERVER_URL || 'http://localhost:3333');
 
         // Escute eventos do servidor
         this.socket.on('connect', () => {

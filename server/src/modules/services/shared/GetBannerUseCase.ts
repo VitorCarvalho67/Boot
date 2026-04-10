@@ -1,7 +1,7 @@
 import { AppError } from "../../../errors/error";
 import { EntidadeEnum, GetEntidadeDTO } from "../../interfaces/sharedDTOs";
 import { FindEntidade } from "./helpers/helpers";
-import { minioClient } from '../../../minioService';
+import { minioClient, getPresignedUrl } from '../../../minioService';
 
 interface EntidadeComBanner {
     banner: string | null;
@@ -25,12 +25,12 @@ export class GetBannerUseCase {
         const entidadeComBanner = entidade as EntidadeComBanner;
         let url = "default";
 
-        if(entidadeComBanner){
+        if(entidadeComBanner && entidadeComBanner.banner){
             const imageName = entidadeComBanner.banner as string;
             const objectExists = await minioClient.statObject(bucketName, imageName);    
 
             if (objectExists) {
-                url = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                url = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
 
         }

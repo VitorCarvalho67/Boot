@@ -12,6 +12,27 @@ export const minioClient = new Client({
     secretKey: process.env.MINIO_SECRET_KEY as string
 });
 
+// Separate client for generating presigned URLs with the public hostname.
+// The AWS4 signature includes the 'host' header, so the client used for
+// URL generation must use the same hostname the browser will request from.
+const _publicUrl = new URL(process.env.MINIO_PUBLIC_URL || `http://${process.env.MINIO_END_POINT}:9000`);
+const minioUrlClient = new Client({
+    endPoint: _publicUrl.hostname,
+    port: _publicUrl.port ? parseInt(_publicUrl.port) : (_publicUrl.protocol === 'https:' ? 443 : 80),
+    useSSL: _publicUrl.protocol === 'https:',
+    accessKey: process.env.MINIO_ACCESS_KEY as string,
+    secretKey: process.env.MINIO_SECRET_KEY as string
+});
+
+export const getPresignedUrl = async (
+    method: 'GET' | 'PUT',
+    bucket: string,
+    objectName: string,
+    expiry: number
+): Promise<string> => {
+    return minioUrlClient.presignedUrl(method, bucket, objectName, expiry);
+};
+
 import * as path from 'path';
 
 export const uploadToMinio = async (bucketName: string, objectName: string, filePath: string) => {

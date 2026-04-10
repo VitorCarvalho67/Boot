@@ -2,7 +2,7 @@ import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
 import { EntidadeEnum, GetEntidadeDTO } from "../../interfaces/sharedDTOs";
 import { FindEntidade } from "./helpers/helpers";
-import { minioClient } from "../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../minioService";
 
 interface LastMessageDTO {
     entity: {
@@ -85,7 +85,7 @@ export class GetLastMessagesUseCase {
                 if(!objectExists){
                     imageName = "assets/img/default_profile_image.png"
                 }
-                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                entityUrl = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
 
             const sentBy = isSent ? 'sent' : 'received';

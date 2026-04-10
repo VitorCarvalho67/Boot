@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { minioClient } from "../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../minioService";
 
 export class GetEmpresaUseCase {
     async execute(email : string) {
@@ -23,7 +23,7 @@ export class GetEmpresaUseCase {
             if (imageName) {
                 const objectExists = await minioClient.statObject(bucketName, imageName);
                 if(objectExists){
-                    entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                    entityUrl = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
                 }
             }
 
@@ -34,7 +34,7 @@ export class GetEmpresaUseCase {
             if (bannerName) {
                 const objectExists = await minioClient.statObject(bucketName, bannerName);
                 if(objectExists){
-                    bannerUrl = await minioClient.presignedUrl('GET', bucketName, bannerName, 24 * 60 * 60);
+                    bannerUrl = await getPresignedUrl('GET', bucketName, bannerName, 24 * 60 * 60);
                 }
             }
     

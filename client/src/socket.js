@@ -2,9 +2,7 @@ import { io } from "socket.io-client";
 import { reactive } from 'vue';
 
 
-export const server_url = "http://localhost:3333";
-
-// export const server_url = import.meta.env.VITE_SERVER_URL;
+export const server_url = import.meta.env.VITE_SERVER_URL || "http://localhost:3333";
 
 export const socket = io(server_url);
 

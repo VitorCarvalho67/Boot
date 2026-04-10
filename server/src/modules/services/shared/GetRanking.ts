@@ -1,6 +1,6 @@
 import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
-import { minioClient } from "../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../minioService";
 
 const notaValores: { [key: string]: number } = {
   MB: 10,
@@ -73,7 +73,7 @@ export class GetRankingUseCase {
           if (imageName) {
             try {
               await minioClient.statObject(bucketName, imageName);
-              entityUrl = await minioClient.presignedUrl(
+              entityUrl = await getPresignedUrl(
                 "GET",
                 bucketName,
                 imageName,

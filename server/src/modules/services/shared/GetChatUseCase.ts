@@ -2,7 +2,7 @@ import { prisma } from "../../../prisma/client";
 import { AppError } from "../../../errors/error";
 import { EntidadeEnum, GetMessageBetweenDTO } from "../../interfaces/sharedDTOs";
 import { FindEntidade } from "./helpers/helpers";
-import { minioClient } from "../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../minioService";
 
 export class GetMessagesBetweenUseCase {
     async execute({ email1, identifier1, email2, identifier2 }: GetMessageBetweenDTO) {
@@ -70,7 +70,7 @@ export class GetMessagesBetweenUseCase {
         if (imageName) {
             const objectExists = await minioClient.statObject(bucketName, imageName);
             if(objectExists){
-                entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+                entityUrl = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
             }
         }
 

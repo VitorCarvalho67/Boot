@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import axios from 'axios';
 import { prisma } from '../../../prisma/client';
-import { minioClient } from '../../../minioService';
+import { minioClient, getPresignedUrl } from '../../../minioService';
 import { AppError } from '../../../errors/error';
 import { Endereco } from '../../interfaces/alunoDTOs';
 import puppeteer from 'puppeteer'; // Adicionando importação do Puppeteer
@@ -110,7 +110,7 @@ export class GenerateCurriculumUseCase {
                 await this.uploadToMinio(bucketName, pdfPath, tempFilePath);
                 fs.unlinkSync(tempFilePath); // Remover o arquivo temporário após o upload
 
-                const url = await minioClient.presignedUrl('GET', bucketName, pdfPath, 24 * 60 * 60);
+                const url = await getPresignedUrl('GET', bucketName, pdfPath, 24 * 60 * 60);
                 return { message: 'Currículo gerado com sucesso!', url };
             } catch (error) {
                 console.error('Falha ao fazer upload do arquivo:', error);

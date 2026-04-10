@@ -10,6 +10,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "prisma": {
+    "seed": "ts-node --transpile-only prisma/seed.ts"
+  },
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",

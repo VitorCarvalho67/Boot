@@ -2,7 +2,7 @@ import { EntidadeEnum } from "../../../interfaces/sharedDTOs";
 import { prisma } from "../../../../prisma/client";
 import path from 'path';
 import fs from 'fs/promises';
-import { minioClient } from "../../../../minioService";
+import { minioClient, getPresignedUrl } from "../../../../minioService";
 import { Aluno, Professor } from "@prisma/client";
 
 export const FindEntidade = async (email: string, identifier: EntidadeEnum) => {
@@ -52,7 +52,7 @@ export const getImgUrl = async (entidade: Professor | Aluno ) => {
     try {
         const objectExists = await minioClient.statObject(bucketName, imageName);
         if (objectExists) {
-            entityUrl = await minioClient.presignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
+            entityUrl = await getPresignedUrl('GET', bucketName, imageName, 24 * 60 * 60);
         } else {
             console.warn(`Imagem ${imageName} não encontrada no MinIO.`);
         }
